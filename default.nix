@@ -4,6 +4,8 @@ let
 
   callPackage = pkgs.lib.callPackageWith (pkgs // self);
 
-  self = {};
+  self = {
+    nimrod-portal-backend = callPackage ./pkgs/nimrod-portal-backend { jre = pkgs.openjdk11; };
+  };
 in
 self
