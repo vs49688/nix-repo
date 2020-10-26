@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, jre, which, makeWrapper }:
+{ stdenv, fetchurl, jre, busybox, makeWrapper }:
 stdenv.mkDerivation rec {
   pname   = "portal-client";
   version = "1.0.5";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
     mkdir -p "$out/bin"
     makeWrapper "$dest/bin/portal-client" \
         "$out/bin/portal-client" \
-        --prefix PATH : ${stdenv.lib.makeBinPath [ jre which ]} \
+        --prefix PATH : ${stdenv.lib.makeBinPath [ jre busybox ]} \
         --set JAVA_HOME ${jre.home}
   '';
 
