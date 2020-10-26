@@ -9,9 +9,7 @@ let
 
     portal-client = callPackage ./pkgs/portal-client { jre = pkgs.openjdk11; };
 
-    nimrodg-agent = callPackage ./pkgs/nimrodg-agent {
-      pkgs = pkgs.pkgsStatic;
-    };
+    nimrodg-agent = callPackage ./pkgs/nimrodg-agent { };
   };
 in
 self
