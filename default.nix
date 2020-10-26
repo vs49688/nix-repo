@@ -10,6 +10,10 @@ let
     portal-client = callPackage ./pkgs/portal-client { jre = pkgs.openjdk11; };
 
     nimrodg-agent = callPackage ./pkgs/nimrodg-agent { };
+
+    containers = {
+      nimrod-portal-backend = callPackage ./containers/nimrod-portal-backend {};
+    };
   };
 in
 self
