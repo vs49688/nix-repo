@@ -13,6 +13,8 @@ let
 
     containers = {
       nimrod-portal-backend = callPackage ./containers/nimrod-portal-backend {};
+
+      portal-client = callPackage ./containers/portal-client {};
     };
   };
 in
