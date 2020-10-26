@@ -1,4 +1,9 @@
-{ lib, fetchFromGitHub, pkgconfig, cmake, pkgs }:
+{ lib
+, fetchFromGitHub
+, pkgconfig
+, cmake
+, pkgs
+}:
 let
   ##
   # Use the stdenv of pkgs, so we get the static compiler.
@@ -58,14 +63,13 @@ stdenv.mkDerivation rec {
   inherit isStatic;
 
   pname   = "nimrodg-agent";
-  version = "6.0.1";
+  version = "6.0.2";
 
   src = fetchFromGitHub {
     owner  = "UQ-RCC";
-    repo   = "nimrodg-agent";
-    rev    = "7416a0110fe3448ec79ed59f25ba367fb0844b15"; # version;
-    #sha256 = "1565anbqp2c38i911p2w8d4k9rdwz3907qlw30pxpkjsx23ykajw";
-    sha256 = "1lqb5dkp998aklb4rcyqpxg9hk1fpf004vsd1di52hmklngzlf33";
+    repo   = pname;
+    rev    = version;
+    sha256 = "0hfm24jzbx2qknbkizp78ix10ar5i6hjfd9xs4wr3mw9z47ql17c";
     fetchSubmodules = true;
   };
 
@@ -92,8 +96,6 @@ stdenv.mkDerivation rec {
   ];
 
   enableParallelBuilding = true;
-
-  buildFlags=[ "VERBOSE=1" ];
 
   installPhase = ''
     mkdir -p "$out/bin"
