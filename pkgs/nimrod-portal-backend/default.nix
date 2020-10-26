@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, jre, which, makeWrapper }:
+{ stdenv, fetchurl, jre, busybox, makeWrapper }:
 stdenv.mkDerivation rec {
   pname   = "nimrod-portal-backend";
   version = "1.3.0";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
     mkdir -p "$out/bin"
     makeWrapper "$dest/bin/nimrod-portal-backend" \
         "$out/bin/nimrod-portal-backend" \
-        --prefix PATH : ${stdenv.lib.makeBinPath [ jre which ]} \
+        --prefix PATH : ${stdenv.lib.makeBinPath [ jre busybox ]} \
         --set JAVA_HOME ${jre.home}
   '';
 
