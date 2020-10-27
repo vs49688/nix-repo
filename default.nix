@@ -11,6 +11,8 @@ let
 
     nimrodg-agent = callPackage ./pkgs/nimrodg-agent { };
 
+    ims2tif = callPackage ./pkgs/ims2tif { };
+
     containers = {
       nimrod-portal-backend = callPackage ./containers/nimrod-portal-backend {};
 
