@@ -11,6 +11,8 @@ let
 
     nimrodg-agent = callPackage ./pkgs/nimrodg-agent { };
 
+    nimptool-legacy = callPackage ./pkgs/nimptool-legacy { };
+
     ims2tif = callPackage ./pkgs/ims2tif { };
 
     imsmeta = callPackage ./pkgs/imsmeta { };
