@@ -13,6 +13,8 @@ let
 
     ims2tif = callPackage ./pkgs/ims2tif { };
 
+    imsmeta = callPackage ./pkgs/imsmeta { };
+
     containers = {
       nimrod-portal-backend = callPackage ./containers/nimrod-portal-backend {};
 
