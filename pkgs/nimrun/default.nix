@@ -1,13 +1,14 @@
 { stdenv, cmake, fetchFromGitHub, openssl, makeWrapper }:
 stdenv.mkDerivation rec {
   name    = "nimrun";
-  version = "1.4.0";
+  # Not technically the version, just a placeholder
+  version = "0.0.1";
 
   src = fetchFromGitHub {
     owner  = "UQ-RCC";
     repo   = "nimrod-embedded";
-    rev    = "9f724e338ab02df270df9ffffabb83f3efa83ea8";
-    sha256 = "1k947nmxzgkq2pwvq5x1ylmcfi69klxif7slzl2lzckc16jsk27w";
+    rev    = "6e1cb0387b5f3df3380e2e7b56f0857eea84e37a";
+    sha256 = "15j458rkv5l54ad3i6nn0qyl5xjsl3f2magl0v3rl1y8g1kp7c0x";
   };
 
   sourceRoot = "source/nimrun";
