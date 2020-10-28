@@ -24,6 +24,22 @@ let
 
       portal-client = callPackage ./containers/portal-client {};
     };
+
+    ##
+    # NB: Not sure if this is the best way to do this.
+    #
+    # Also note that static cmake is completely broken.
+    ##
+    pkgsStatic = rec {
+      callPackage = pkgs.lib.callPackageWith (pkgs.pkgsStatic // self.pkgsStatic);
+
+      nimrun = callPackage ./pkgs/nimrun { cmake = pkgs.cmake; };
+
+      # No static build for this, hdf5 is being hdf5 again...
+      #ims2tif = callPackage ./pkgs/ims2tif { cmake = pkgs.cmake; };
+
+      imsmeta = callPackage ./pkgs/imsmeta { cmake = pkgs.cmake; };
+    };
   };
 in
 self
