@@ -4,7 +4,7 @@
 let
   callPackage = pkgs.lib.callPackageWith (pkgs // self);
 
-  self = {
+  self = rec {
     nimrod-portal-backend = callPackage ./pkgs/nimrod-portal-backend { jre = pkgs.openjdk11_headless; };
 
     portal-client = callPackage ./pkgs/portal-client { jre = pkgs.openjdk11_headless; };
@@ -23,6 +23,14 @@ let
       nimrod-portal-backend = callPackage ./containers/nimrod-portal-backend {};
 
       portal-client = callPackage ./containers/portal-client {};
+    };
+
+    hpc = {
+      nimrod-embedded = callPackage ./hpc/nimrod-embedded {
+        nimrun        = pkgsStatic.nimrun;
+        installPrefix = "/sw7/RCC/NimrodG";
+        modulePath    = "/sw7/Modules/RCC/local";
+      };
     };
 
     ##
