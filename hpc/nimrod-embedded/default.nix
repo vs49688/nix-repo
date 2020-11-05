@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
   rootDir       = "${installPrefix}/embedded-${moduleVersion}";
   nimrodHome    = "${rootDir}/opt/nimrod";
-  javaHome      = "${rootDir}/opt/jvm/jdk";
+  javaHome      = "${rootDir}/lib/jvm/jdk";
   qpidHome      = "${rootDir}/opt/qpid";
 
   jdkTarball = fetchurl {
