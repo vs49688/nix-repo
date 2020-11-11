@@ -9,6 +9,7 @@
 , modulePath
 , moduleName    ? "embedded-nimrod"
 , moduleVersion ? "1.11.0"
+, rootDir       ? "${installPrefix}/embedded-${moduleVersion}"
 }:
 stdenv.mkDerivation rec {
   inherit nimrun;
@@ -20,8 +21,8 @@ stdenv.mkDerivation rec {
   inherit modulePath;
   inherit moduleName; # module load ${moduleName}
   inherit moduleVersion;
+  inherit rootDir;
 
-  rootDir       = "${installPrefix}/embedded-${moduleVersion}";
   nimrodHome    = "${rootDir}/opt/nimrod";
   javaHome      = "${rootDir}/lib/jvm/jdk";
   qpidHome      = "${rootDir}/opt/qpid";
