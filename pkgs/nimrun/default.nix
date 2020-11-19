@@ -2,20 +2,23 @@
 stdenv.mkDerivation rec {
   name    = "nimrun";
   # Not technically the version, just a placeholder
-  version = "0.0.1";
+  version = "1.0.0";
 
   src = fetchFromGitHub {
     owner  = "UQ-RCC";
     repo   = "nimrod-embedded";
-    rev    = "6e1cb0387b5f3df3380e2e7b56f0857eea84e37a";
-    sha256 = "15j458rkv5l54ad3i6nn0qyl5xjsl3f2magl0v3rl1y8g1kp7c0x";
+    rev    = "dcc7f3411d56870dadbe33dd0d9794ff690b7681";
+    sha256 = "1y4glkdjlw8qmmv0kc42dlfayxbrqhqxd1bzijw18yms1ik1r4k2";
   };
 
   sourceRoot = "source/nimrun";
 
   nativeBuildInputs = [ cmake ];
   buildInputs       = [ openssl.dev makeWrapper ];
-  cmakeFlags        = [ "-DCMAKE_EXE_LINKER_FLAGS=\"-static-libstdc++\"" ];
+  cmakeFlags        = [
+    "-DCMAKE_EXE_LINKER_FLAGS=\"-static-libstdc++\""
+    "-DGIT_HASH=${src.rev}"
+  ];
 
   installPhase = ''
     mkdir -p $out/bin
