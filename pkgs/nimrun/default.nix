@@ -7,8 +7,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner  = "UQ-RCC";
     repo   = "nimrod-embedded";
-    rev    = "dcc7f3411d56870dadbe33dd0d9794ff690b7681";
-    sha256 = "1y4glkdjlw8qmmv0kc42dlfayxbrqhqxd1bzijw18yms1ik1r4k2";
+    rev    = "d8acd7776352cc8b770b347a824efed77a419579";
+    sha256 = "1jz904k3fsv3l3z7n2isf89sxhy9lzd35pxdwcjk1wsvw5wnvdcd";
   };
 
   sourceRoot = "source/nimrun";
