@@ -1,11 +1,11 @@
 { stdenv, cmake, fetchFromGitHub, makeWrapper }:
 stdenv.mkDerivation rec {
-  name    = "imsmeta";
+  pname    = "imsmeta";
   version = "1.0.1";
 
   src = fetchFromGitHub {
     owner  = "UQ-RCC";
-    repo   = name;
+    repo   = pname;
     rev    = version;
     sha256 = "16rvnyp65zd4hm176alf3hylrqw4vammws6gir8ssya9kmcv6qa6";
   };

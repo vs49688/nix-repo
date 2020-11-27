@@ -1,6 +1,6 @@
 { stdenv, cmake, fetchgit, makeWrapper }:
 stdenv.mkDerivation rec {
-  name    = "nimptool-legacy";
+  pname    = "nimptool-legacy";
   version = "0.0.1";
 
   ##

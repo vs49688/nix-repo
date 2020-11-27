@@ -1,11 +1,11 @@
 { stdenv, cmake, fetchFromGitHub, libtiff, hdf5, makeWrapper }:
 stdenv.mkDerivation rec {
-  name    = "ims2tif";
+  pname    = "ims2tif";
   version = "2.0.3";
 
   src = fetchFromGitHub {
     owner  = "UQ-RCC";
-    repo   = name;
+    repo   = pname;
     rev    = version;
     sha256 = "0fmlb8kcdqf2h9x2gif4lfwf1acwx2kci2lky00p4b5hfxrv2239";
   };

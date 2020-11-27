@@ -1,6 +1,6 @@
 { stdenv, cmake, fetchFromGitHub, openssl, makeWrapper }:
 stdenv.mkDerivation rec {
-  name    = "nimrun";
+  pname    = "nimrun";
   # Not technically the version, just a placeholder
   version = "1.0.0";
 
