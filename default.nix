@@ -33,6 +33,10 @@ let
       nimrod-portal-backend = callPackage ./containers/nimrod-portal-backend {};
 
       portal-client = callPackage ./containers/portal-client {};
+
+      portal-client_1_0_4 = callPackage ./containers/portal-client {
+        portal-client = portal-client_1_0_4;
+      };
     };
 
     hpc = rec {
