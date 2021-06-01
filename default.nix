@@ -9,6 +9,16 @@ let
 
     portal-client = callPackage ./pkgs/portal-client { jre = pkgs.openjdk11_headless; };
 
+    # This doesn't have schema validation for the old imb portal
+    portal-client_1_0_4 = portal-client.overrideDerivation(old: rec {
+      version = "1.0.4";
+      name    = "${old.pname}-${version}";
+      src = pkgs.fetchurl {
+        url    = "https://github.com/UQ-RCC/portal-client/releases/download/${version}/portal-client-${version}.tar.gz";
+        sha256 = "0cdcwjbfixb3b77hqg0jif94q6a6ybp9wnlx8qqv1vnr45vnla1x";
+      };
+    });
+
     nimrodg-agent = callPackage ./pkgs/nimrodg-agent { };
 
     nimrun = callPackage ./pkgs/nimrun { };
