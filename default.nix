@@ -5,6 +5,11 @@ let
   callPackage = pkgs.lib.callPackageWith (pkgs // self);
 
   self = rec {
+
+    buildWrappedSpringDockerImage = { pkg }: callPackage ./containers/spring-base {
+      pkg  = pkg;
+    };
+
     nimrod-portal-backend = callPackage ./pkgs/nimrod-portal-backend { jre = pkgs.openjdk11_headless; };
 
     portal-client = callPackage ./pkgs/portal-client { jre = pkgs.openjdk11_headless; };
