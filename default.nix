@@ -19,6 +19,8 @@ let
       };
     });
 
+    portal-resource-server = callPackage ./pkgs/portal-resource-server { jre = pkgs.openjdk11_headless; };
+
     nimrodg-agent = callPackage ./pkgs/nimrodg-agent { };
 
     nimrun = callPackage ./pkgs/nimrun { };
