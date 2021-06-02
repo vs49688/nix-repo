@@ -37,12 +37,20 @@ let
     imsmeta = callPackage ./pkgs/imsmeta { };
 
     containers = {
-      nimrod-portal-backend = callPackage ./containers/nimrod-portal-backend {};
+      nimrod-portal-backend = buildWrappedSpringDockerImage {
+        pkg = nimrod-portal-backend;
+      };
 
-      portal-client = callPackage ./containers/portal-client {};
+      portal-client = buildWrappedSpringDockerImage {
+        pkg = portal-client;
+      };
 
-      portal-client_1_0_4 = callPackage ./containers/portal-client {
-        portal-client = portal-client_1_0_4;
+      portal-client_1_0_4 = buildWrappedSpringDockerImage {
+        pkg = portal-client_1_0_4;
+      };
+
+      portal-resource-server = buildWrappedSpringDockerImage {
+        pkg = portal-resource-server;
       };
     };
 
