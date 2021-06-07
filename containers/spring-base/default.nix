@@ -3,6 +3,7 @@
 , name    ? "uq-rcc/${pkg.pname}"
 , tag     ? pkg.version
 , command ? "${pkg}/bin/${pkg.pname}"
+, args    ? []
 , uid     ? 1000
 , gid     ? 1000
 }:
@@ -34,7 +35,7 @@ with pkgs; dockerTools.buildImage {
     Cmd = [
       "${tini}/bin/tini" "--"
       command "--spring.config.location=/config/application.yml"
-    ];
+    ] ++ args;
 
     Volumes = {
       "/config" = {};

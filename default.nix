@@ -6,10 +6,6 @@ let
 
   self = rec {
 
-    buildWrappedSpringDockerImage = { pkg }: callPackage ./containers/spring-base {
-      pkg  = pkg;
-    };
-
     nimrod-portal-backend = callPackage ./pkgs/nimrod-portal-backend { jre = pkgs.openjdk11_headless; };
 
     portal-client = callPackage ./pkgs/portal-client { jre = pkgs.openjdk11_headless; };
@@ -37,19 +33,20 @@ let
     imsmeta = callPackage ./pkgs/imsmeta { };
 
     containers = {
-      nimrod-portal-backend = buildWrappedSpringDockerImage {
+      nimrod-portal-backend = callPackage ./containers/spring-base {
         pkg = nimrod-portal-backend;
       };
 
-      portal-client = buildWrappedSpringDockerImage {
-        pkg = portal-client;
+      portal-client = callPackage ./containers/spring-base {
+        pkg  = portal-client;
+        args = ["run"];
       };
 
-      portal-client_1_0_4 = buildWrappedSpringDockerImage {
+      portal-client_1_0_4 = callPackage ./containers/spring-base {
         pkg = portal-client_1_0_4;
       };
 
-      portal-resource-server = buildWrappedSpringDockerImage {
+      portal-resource-server = callPackage ./containers/spring-base {
         pkg = portal-resource-server;
       };
     };
