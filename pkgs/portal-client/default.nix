@@ -1,11 +1,11 @@
 { stdenv, fetchurl, jre, busybox, makeWrapper }:
 stdenv.mkDerivation rec {
   pname   = "portal-client";
-  version = "1.0.5";
+  version = "1.0.7";
 
   src = fetchurl {
     url    = "https://github.com/UQ-RCC/portal-client/releases/download/${version}/portal-client-${version}.tar.gz";
-    sha256 = "1hdhk5nrqi60kqwl7ddfydszq00mlfjwn5yz8rbwx26q3qrr78dd";
+    sha256 = "13q6h2swi8whylkmahvnabpvfxsgkiqsr9x9i5ap1ap8y5wpqbn2";
   };
 
   buildInputs = [ makeWrapper ];
