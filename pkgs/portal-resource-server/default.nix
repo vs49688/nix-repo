@@ -1,11 +1,11 @@
 { stdenv, lib, fetchurl, jre, busybox, makeWrapper }:
 stdenv.mkDerivation rec {
   pname   = "portal-resource-server";
-  version = "1.0.7";
+  version = "1.0.9";
 
   src = fetchurl {
     url    = "https://github.com/UQ-RCC/portal-resource-server/releases/download/${version}/portal-resource-server-${version}.tar.gz";
-    sha256 = "1q7km7425v1jpsr39ap7bj4ky4dj5cp3zlvvp67l3fk0gw7fbn7w";
+    sha256 = "1b83nf5x0qfyif420dlxyxqnchypiiv0q20w8i9df842v601my1a";
   };
 
   buildInputs = [ makeWrapper ];
