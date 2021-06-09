@@ -32,6 +32,8 @@ let
 
     imsmeta = callPackage ./pkgs/imsmeta { };
 
+    nimrod-portal = callPackage ./pkgs/nimrod-portal { };
+
     containers = {
       nimrod-portal-backend = callPackage ./containers/spring-base {
         pkg = nimrod-portal-backend;
@@ -48,6 +50,12 @@ let
 
       portal-resource-server = callPackage ./containers/spring-base {
         pkg = portal-resource-server;
+      };
+
+      nimrod-portal = callPackage ./containers/static-serve-base {
+        pkg       = nimrod-portal;
+        tini      = pkgsStatic.tini;
+        darkhttpd = pkgsStatic.darkhttpd;
       };
     };
 
@@ -80,6 +88,11 @@ let
       #ims2tif = callPackage ./pkgs/ims2tif { cmake = pkgs.cmake; };
 
       imsmeta = callPackage ./pkgs/imsmeta { cmake = pkgs.cmake; };
+
+      # Upstream tini depends directly on glibc
+      tini = callPackage ./pkgs/tini { cmake = pkgs.cmake; };
+
+      darkhttpd = callPackage ./pkgs/darkhttpd { };
     };
   };
 in
