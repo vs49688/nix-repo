@@ -34,6 +34,15 @@ let
 
     nimrod-portal = callPackage ./pkgs/nimrod-portal { };
 
+    lib = rec {
+      makeStaticServeContainer = { pkg }: callPackage ./containers/static-serve-base {
+        inherit pkg;
+
+        tini      = pkgsStatic.tini;
+        darkhttpd = pkgsStatic.darkhttpd;
+      };
+    };
+
     containers = {
       nimrod-portal-backend = callPackage ./containers/spring-base {
         pkg = nimrod-portal-backend;
@@ -52,11 +61,7 @@ let
         pkg = portal-resource-server;
       };
 
-      nimrod-portal = callPackage ./containers/static-serve-base {
-        pkg       = nimrod-portal;
-        tini      = pkgsStatic.tini;
-        darkhttpd = pkgsStatic.darkhttpd;
-      };
+      nimrod-portal = lib.makeStaticServeContainer { pkg = nimrod-portal; };
     };
 
     hpc = rec {
