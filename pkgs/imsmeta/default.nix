@@ -1,4 +1,4 @@
-{ stdenv, lib, cmake, fetchFromGitHub, makeWrapper }:
+{ stdenv, lib, cmake, fetchFromGitHub }:
 stdenv.mkDerivation rec {
   pname    = "imsmeta";
   version = "1.0.1";
@@ -11,7 +11,6 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ cmake ];
-  buildInputs       = [ makeWrapper ];
 
   installPhase = ''
     mkdir -p $out/bin
