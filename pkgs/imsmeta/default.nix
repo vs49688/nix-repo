@@ -1,4 +1,4 @@
-{ stdenv, cmake, fetchFromGitHub, makeWrapper }:
+{ stdenv, lib, cmake, fetchFromGitHub, makeWrapper }:
 stdenv.mkDerivation rec {
   pname    = "imsmeta";
   version = "1.0.1";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
     cp imsmeta $out/bin
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Dragonfly Metadata to JSON converter";
     homepage    = "https://github.com/UQ-RCC/ims2tif";
     platforms   = platforms.all;

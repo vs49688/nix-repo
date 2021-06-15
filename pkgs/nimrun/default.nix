@@ -1,4 +1,4 @@
-{ stdenv, cmake, fetchFromGitHub, openssl, makeWrapper }:
+{ stdenv, lib, cmake, fetchFromGitHub, openssl, makeWrapper }:
 stdenv.mkDerivation rec {
   pname    = "nimrun";
   # Not technically the version, just a placeholder
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
     cp nimrun $out/bin
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Nimrod/G Embedded Launch Utility";
     homepage    = "https://github.com/UQ-RCC/nimrod-embedded";
     platforms   = platforms.all;

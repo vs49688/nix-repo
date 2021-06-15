@@ -1,4 +1,4 @@
-{ stdenv, cmake, fetchFromGitHub, libtiff, hdf5, makeWrapper }:
+{ stdenv, lib, cmake, fetchFromGitHub, libtiff, hdf5, makeWrapper }:
 stdenv.mkDerivation rec {
   pname    = "ims2tif";
   version = "2.0.3";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
     cp ims2tif $out/bin
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Dragonfly IMS to TIFF converter";
     homepage    = "https://github.com/UQ-RCC/ims2tif";
     platforms   = platforms.all;

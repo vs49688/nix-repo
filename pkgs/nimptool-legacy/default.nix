@@ -1,4 +1,4 @@
-{ stdenv, cmake, fetchgit, makeWrapper }:
+{ stdenv, lib, cmake, fetchgit, makeWrapper }:
 stdenv.mkDerivation rec {
   pname    = "nimptool-legacy";
   version = "0.0.1";
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     cp nimptool $out/bin
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Nimrod Portal Tool (Legacy)";
     homepage    = "https://github.com/UQ-RCC/nimptool";
     platforms   = platforms.all;

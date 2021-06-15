@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, jre, busybox, makeWrapper }:
+{ stdenv, lib, fetchurl, jre, busybox, makeWrapper }:
 stdenv.mkDerivation rec {
   pname   = "portal-client";
   version = "1.0.7";
@@ -18,11 +18,11 @@ stdenv.mkDerivation rec {
     mkdir -p "$out/bin"
     makeWrapper "$dest/bin/portal-client" \
         "$out/bin/portal-client" \
-        --prefix PATH : ${stdenv.lib.makeBinPath [ jre busybox ]} \
+        --prefix PATH : ${lib.makeBinPath [ jre busybox ]} \
         --set JAVA_HOME ${jre.home}
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "RCC Portal Client";
     homepage    = "https://rcc.uq.edu.au/nimrod";
     license     = licenses.asl20;
