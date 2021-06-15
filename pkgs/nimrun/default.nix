@@ -1,4 +1,4 @@
-{ stdenv, lib, cmake, fetchFromGitHub, openssl, makeWrapper }:
+{ stdenv, lib, cmake, fetchFromGitHub, openssl }:
 stdenv.mkDerivation rec {
   pname    = "nimrun";
   # Not technically the version, just a placeholder
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   sourceRoot = "source/nimrun";
 
   nativeBuildInputs = [ cmake ];
-  buildInputs       = [ openssl.dev makeWrapper ];
+  buildInputs       = [ openssl.dev ];
   cmakeFlags        = [
     "-DCMAKE_EXE_LINKER_FLAGS=\"-static-libstdc++\""
     "-DGIT_HASH=${src.rev}"
