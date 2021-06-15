@@ -34,7 +34,7 @@ let
 
     nimrod-portal = callPackage ./pkgs/nimrod-portal { };
 
-    lib = rec {
+    lib = pkgs.lib // rec {
       makeStaticServeContainer = { pkg }: callPackage ./containers/static-serve-base {
         inherit pkg;
 
