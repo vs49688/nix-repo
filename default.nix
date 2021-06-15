@@ -58,7 +58,12 @@ let
       };
 
       portal-resource-server = callPackage ./containers/spring-base {
-        pkg = portal-resource-server;
+        pkg   = portal-resource-server;
+        ##
+        # NB: The OpenSSH closure is huge! It should probably be split into
+        #     separate server/client packages...
+        ##
+        extra = with pkgs; [ openssh ];
       };
 
       nimrod-portal = lib.makeStaticServeContainer { pkg = nimrod-portal; };
