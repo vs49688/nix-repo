@@ -105,6 +105,8 @@ let
       tini = callPackage ./pkgs/tini { cmake = pkgs.cmake; };
 
       darkhttpd = callPackage ./pkgs/darkhttpd { };
+
+      nimrodg-agent = callPackage ./pkgs/nimrodg-agent { cmake = pkgs.cmake; };
     };
   };
 in
