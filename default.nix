@@ -34,6 +34,8 @@ let
 
     nimrod-portal = callPackage ./pkgs/nimrod-portal { };
 
+    globusconnectpersonal = callPackage ./pkgs/globusconnectpersonal { };
+
     lib = pkgs.lib // rec {
       makeStaticServeContainer = { pkg }: callPackage ./containers/static-serve-base {
         inherit pkg;
