@@ -2,7 +2,7 @@
 , pkg
 , tini
 , darkhttpd
-, name       ? "uq-rcc/${pkg.pname}"
+, name       ? "uqrcc/${pkg.pname}"
 , tag        ? pkg.version
 , staticPath ? "/share/${pkg.pname}"
 , listenPort ? 8080

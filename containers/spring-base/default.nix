@@ -1,6 +1,6 @@
 { pkgs
 , pkg
-, name    ? "uq-rcc/${pkg.pname}"
+, name    ? "uqrcc/${pkg.pname}"
 , tag     ? pkg.version
 , command ? "${pkg}/bin/${pkg.pname}"
 , args    ? []
