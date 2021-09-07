@@ -34,6 +34,8 @@ let
 
     nimrod-portal = callPackage ./pkgs/nimrod-portal { };
 
+    ipp_1_1 = callPackage ./pkgs/ipp { };
+
     globusconnectpersonal = callPackage ./pkgs/globusconnectpersonal { };
 
     lib = pkgs.lib // rec {
