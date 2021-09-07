@@ -47,7 +47,8 @@ let
 
     containers = {
       nimrod-portal-backend = callPackage ./containers/spring-base {
-        pkg = nimrod-portal-backend;
+        pkg  = nimrod-portal-backend;
+        args = ["run"];
       };
 
       portal-client = callPackage ./containers/spring-base {
