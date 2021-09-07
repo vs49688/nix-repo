@@ -72,6 +72,8 @@ let
       };
 
       nimrod-portal = lib.makeStaticServeContainer { pkg = nimrod-portal; };
+
+      ipp_1_1 = lib.makeStaticServeContainer { pkg = ipp_1_1; };
     };
 
     hpc = rec {
