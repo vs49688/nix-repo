@@ -1,11 +1,11 @@
 { stdenv, lib, fetchurl, jre, busybox, makeWrapper }:
 stdenv.mkDerivation rec {
   pname   = "nimrod-portal-backend";
-  version = "1.13.0";
+  version = "1.13.1";
 
   src = fetchurl {
     url    = "https://github.com/UQ-RCC/nimrod-portal-backend/releases/download/${version}/nimrod-portal-backend-${version}.tar.gz";
-    sha256 = "1hw4k8qqm9mij0hvb7kyaam291sg7c1m3hv5a07sf7f7q348s22p";
+    sha256 = "1k13w1s19n5f7dp2wc977l7zz1chk9gchr46n0wk1bmady35s199";
   };
 
   buildInputs = [ makeWrapper ];
