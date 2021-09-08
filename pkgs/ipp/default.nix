@@ -1,11 +1,11 @@
 { stdenv, fetchurl }:
 stdenv.mkDerivation rec {
   pname   = "ipp";
-  version = "1.1.1";
+  version = "1.1.2";
 
   src = fetchurl {
     url    = "https://github.com/UQ-RCC/ipp/releases/download/${version}/ipp-${version}.tar.gz";
-    sha256 = "1v7d5qrfs1fnxglrqjdnmzlcl6n254s82xc8hp9d43g8bzxlnccx";
+    sha256 = "1fpynsys8pjh4sww9i1ibc8rq950k0l5cfq5c8vrl751nn92059q";
   };
 
   dontConfigure = true;
