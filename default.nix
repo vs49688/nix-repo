@@ -39,12 +39,17 @@ let
     globusconnectpersonal = callPackage ./pkgs/globusconnectpersonal { };
 
     lib = pkgs.lib // rec {
-      makeStaticServeContainer = { pkg }: callPackage ./containers/static-serve-base {
-        inherit pkg;
-
-        tini      = pkgsStatic.tini;
-        darkhttpd = pkgsStatic.darkhttpd;
-      };
+      makeStaticServeContainer = a@{ pkg ? null, ... }:
+      let
+        args = {
+          tini       = pkgsStatic.tini;
+          darkhttpd  = pkgsStatic.darkhttpd;
+        } // pkgs.lib.optionalAttrs (pkg != null) {
+          name       = "uqrcc/${pkg.pname}";
+          tag        = pkg.version;
+          staticPath = "/share/${pkg.pname}";
+        } // a;
+      in callPackage ./containers/static-serve-base args;
     };
 
     containers = {
