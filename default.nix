@@ -79,6 +79,13 @@ let
       nimrod-portal = lib.makeStaticServeContainer { pkg = nimrod-portal; };
 
       ipp_1_1 = lib.makeStaticServeContainer { pkg = ipp_1_1; };
+
+      darkhttpd = lib.makeStaticServeContainer {
+        name       = "uqrcc/${pkgs.darkhttpd.pname}";
+        tag        = pkgs.darkhttpd.version;
+        staticPath = "/data";
+        noListing  = false;
+      };
     };
 
     hpc = rec {
