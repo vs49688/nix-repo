@@ -86,6 +86,8 @@ let
         staticPath = "/data";
         noListing  = false;
       };
+
+      keycloak-rcc = callPackage ./containers/keycloak-rcc { };
     };
 
     hpc = rec {
