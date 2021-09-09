@@ -18,12 +18,21 @@ dockerTools.buildLayeredImage {
     sha256      = "16av7vinn884gnq91a45ny1jx7aqjqwki1ja6b1gk6hg0g79hkd5";
   };
 
-  extraCommands = ''
+  fakeRootCommands = ''
     mkdir -p opt/jboss/keycloak/standalone/deployments
     cp ${kcPlugin} opt/jboss/keycloak/standalone/deployments/$(stripHash ${kcPlugin})
     chmod 0664 opt/jboss/keycloak/standalone/deployments/$(stripHash ${kcPlugin})
+    chown -R 1000:0 opt/jboss
   '';
 
   # Nix doesn't preserve this for some reason...
-  config.Entrypoint = ["/opt/jboss/tools/docker-entrypoint.sh"];
+  config = {
+    User       = "1000";
+    Entrypoint = ["/opt/jboss/tools/docker-entrypoint.sh"];
+    Cmd        = ["-b" "0.0.0.0"];
+    ExposedPorts = {
+      "8080" = {};
+      "8443" = {};
+    };
+  };
 }
