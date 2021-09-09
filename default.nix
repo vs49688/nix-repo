@@ -38,19 +38,37 @@ let
 
     globusconnectpersonal = callPackage ./pkgs/globusconnectpersonal { };
 
-    lib = pkgs.lib // rec {
-      makeStaticServeContainer = a@{ pkg ? null, ... }:
-      let
-        args = {
-          tini       = pkgsStatic.tini;
-          darkhttpd  = pkgsStatic.darkhttpd;
-        } // pkgs.lib.optionalAttrs (pkg != null) {
-          name       = "uqrcc/${pkg.pname}";
-          tag        = pkg.version;
-          staticPath = "/share/${pkg.pname}";
-        } // a;
-      in callPackage ./containers/static-serve-base args;
-    };
+    lib = let
+      self = rec {
+        makeStaticServeContainer = a@{ pkg ? null, ... }: let
+          args = {
+            tini       = pkgsStatic.tini;
+            darkhttpd  = pkgsStatic.darkhttpd;
+          } // pkgs.lib.optionalAttrs (pkg != null) {
+            name       = "uqrcc/${pkg.pname}";
+            tag        = pkg.version;
+            staticPath = "/share/${pkg.pname}";
+          } // a;
+        in callPackage ./containers/static-serve-base args;
+
+        makeMaintContainer = { name, tag, text }: let
+          index = pkgs.writeTextDir "index.html" ''<!DOCTYPE html>
+<html>
+    <head>
+        <title>Down for Maintenance</title>
+    </head>
+    <body>
+        <h1>Down for Maintenance</h1>
+        <p>The ${text} is currently down for maintenance.</p>
+        <p>Please try again later.</p>
+    </body>
+</html>'';
+        in makeStaticServeContainer {
+          inherit name tag;
+          staticPath = "${index}";
+        };
+      };
+    in pkgs.lib // self;
 
     containers = {
       nimrod-portal-backend = callPackage ./containers/spring-base {
@@ -77,8 +95,18 @@ let
       };
 
       nimrod-portal = lib.makeStaticServeContainer { pkg = nimrod-portal; };
+      nimrod-portal-maint = lib.makeMaintContainer {
+        name = "uqrcc/nimrod-portal-maint";
+        tag  = "1.0.0";
+        text = "Nimrod Portal";
+      };
 
       ipp_1_1 = lib.makeStaticServeContainer { pkg = ipp_1_1; };
+      ipp-maint = lib.makeMaintContainer {
+        name = "uqrcc/ipp-maint";
+        tag  = "1.0.0";
+        text = "IMB Portal";
+      };
 
       darkhttpd = lib.makeStaticServeContainer {
         name       = "uqrcc/${pkgs.darkhttpd.pname}";
