@@ -1,0 +1,293 @@
+From 7503979d1727ef6a411215fcdbdc0161f0e241da Mon Sep 17 00:00:00 2001
+From: Zane van Iperen <zane@zanevaniperen.com>
+Date: Sun, 5 Sep 2021 23:26:30 +1000
+Subject: [PATCH] Squashed path fixes
+
+utils: add Application#get{Config,Share}Resource()
+cfg fixes
+missed some logs
+jsonconfig path fixes
+storage handler fixes
+
+find . -type f -name '*.java' -print0 | xargs -0 sed -i 's/Application.getResource("log/Application.getShareResource("log/g'
+find . -type f -name '*.java' -print0 | xargs -0 sed -i 's/Application.getResource("cfg/Application.getConfigResource("cfg/g'
+---
+ .../appwork/storage/JsonKeyValueStorage.java  |  2 +-
+ .../appwork/storage/config/JsonConfig.java    |  4 +-
+ .../config/handler/StorageHandler.java        | 10 ++--
+ .../swing/components/tooltips/ExtTooltip.java |  2 +-
+ src/org/appwork/utils/Application.java        | 57 ++++++++++++++++++-
+ .../appwork/utils/logging/ErrRedirect.java    |  2 +-
+ .../utils/logging/ExceptionLogHandler.java    |  2 +-
+ .../utils/logging/LogToFileHandler.java       |  2 +-
+ .../utils/logging2/LogSourceProvider.java     |  2 +-
+ .../logging2/sendlogs/AbstractLogAction.java  |  2 +-
+ .../swing/dialog/ExtFileChooserDialog.java    |  2 +-
+ .../locationstore/LocationStorageManager.java |  2 +-
+ 12 files changed, 72 insertions(+), 17 deletions(-)
+
+diff --git a/src/org/appwork/storage/JsonKeyValueStorage.java b/src/org/appwork/storage/JsonKeyValueStorage.java
+index 17db4de..980271d 100644
+--- a/src/org/appwork/storage/JsonKeyValueStorage.java
++++ b/src/org/appwork/storage/JsonKeyValueStorage.java
+@@ -161,7 +161,7 @@ public class JsonKeyValueStorage extends Storage {
+         this.internalMap = new HashMap<String, Object>();
+         this.name = name;
+         this.plain = plain;
+-        this.file = Application.getResource("cfg/" + name + (plain ? ".json" : ".ejs"));
++        this.file = Application.getConfigResource("cfg/" + name + (plain ? ".json" : ".ejs"));
+         getDefaultLogger().finer("Read Config: " + this.file.getAbsolutePath());
+         this.key = key;
+         final HashMap<String, Object> load = JSonStorage.restoreFrom(this.file, plain, key, TypeRef.HASHMAP, new HashMap<String, Object>());
+diff --git a/src/org/appwork/storage/config/JsonConfig.java b/src/org/appwork/storage/config/JsonConfig.java
+index 3c5a6b7..69bdcf0 100644
+--- a/src/org/appwork/storage/config/JsonConfig.java
++++ b/src/org/appwork/storage/config/JsonConfig.java
+@@ -114,7 +114,7 @@ public class JsonConfig {
+                 final ClassLoader cl = configInterface.getClassLoader();
+                 if (lock.getStorageHandler() == null) {
+                     StorageHandlerFactoryAnnotation factoryClass = configInterface.getAnnotation(StorageHandlerFactoryAnnotation.class);
+-                    File f = Application.getResource("cfg/" + path);
++                    File f = Application.getConfigResource("cfg/" + path);
+                     if (factoryClass != null) {
+                         lock.setStorageHandler(((StorageHandlerFactory<T>) factoryClass.value().newInstance()).create(f, configInterface));
+                     } else {
+@@ -189,7 +189,7 @@ public class JsonConfig {
+ 
+     @SuppressWarnings("unchecked")
+     public static <T extends ConfigInterface> T create(final String urlPath, final Class<T> configInterface) {
+-        final String id = urlPath + getStorageName(configInterface);
++        final String id = Application.getConfigResource(urlPath) + getStorageName(configInterface);
+         synchronized (JsonConfig.CACHE) {
+             final ConfigInterface ret = JsonConfig.CACHE.get(id);
+             if (ret != null) {
+diff --git a/src/org/appwork/storage/config/handler/StorageHandler.java b/src/org/appwork/storage/config/handler/StorageHandler.java
+index baef4c1..54f0a9e 100644
+--- a/src/org/appwork/storage/config/handler/StorageHandler.java
++++ b/src/org/appwork/storage/config/handler/StorageHandler.java
+@@ -313,7 +313,7 @@ public class StorageHandler<T extends ConfigInterface> implements InvocationHand
+         if (filePath.getName().endsWith(".json") || filePath.getName().endsWith(".ejs")) {
+             org.appwork.loggingv3.LogV3.warning(filePath + " should not have an extension!!");
+         }
+-        final File expected = Application.getResource("cfg/" + configInterface.getName());
++        final File expected = Application.getConfigResource("cfg/" + configInterface.getName());
+         String storageID = null;
+         if (!this.path.equals(expected)) {
+             storageID = Files.getRelativePath(expected.getParentFile().getParentFile(), this.path);
+@@ -365,7 +365,7 @@ public class StorageHandler<T extends ConfigInterface> implements InvocationHand
+         this.path = new File(storagePath);
+         this.configInterface = configInterface;
+         preInit(path, configInterface);
+-        final File expected = Application.getResource("cfg/" + configInterface.getName());
++        final File expected = Application.getConfigResource("cfg/" + configInterface.getName());
+         String storageID = null;
+         if (!this.path.equals(expected)) {
+             storageID = Files.getRelativePath(expected.getParentFile().getParentFile(), this.path);
+@@ -420,9 +420,9 @@ public class StorageHandler<T extends ConfigInterface> implements InvocationHand
+         if (classPath.endsWith(".json") || classPath.endsWith(".ejs")) {
+             org.appwork.loggingv3.LogV3.warning(classPath + " should not have an extension!!");
+         }
+-        this.path = Application.getResource(classPath);
++        this.path = Application.getConfigResource(classPath);
+         preInit(path, configInterface);
+-        final File expected = Application.getResource("cfg/" + configInterface.getName());
++        final File expected = Application.getConfigResource("cfg/" + configInterface.getName());
+         String storageID = null;
+         if (!this.path.equals(expected)) {
+             storageID = Files.getRelativePath(expected.getParentFile().getParentFile(), this.path);
+@@ -431,7 +431,7 @@ public class StorageHandler<T extends ConfigInterface> implements InvocationHand
+             }
+         }
+         this.storageID = storageID;
+-        this.primitiveStorage = StorageHandler.createPrimitiveStorage(Application.getResource(classPath), classPath, configInterface);
++        this.primitiveStorage = StorageHandler.createPrimitiveStorage(Application.getConfigResource(classPath), classPath, configInterface);
+         final CryptedStorage cryptedStorage = configInterface.getAnnotation(CryptedStorage.class);
+         if (cryptedStorage != null) {
+             this.validateKeys(cryptedStorage);
+diff --git a/src/org/appwork/swing/components/tooltips/ExtTooltip.java b/src/org/appwork/swing/components/tooltips/ExtTooltip.java
+index e81abac..94e94b5 100644
+--- a/src/org/appwork/swing/components/tooltips/ExtTooltip.java
++++ b/src/org/appwork/swing/components/tooltips/ExtTooltip.java
+@@ -76,7 +76,7 @@ public abstract class ExtTooltip extends JToolTip implements AncestorListener {
+      */
+     public static ExtTooltipSettings createConfig(final String id) {
+ 
+-        return JsonConfig.create(Application.getResource("cfg/ExtTooltipSettings_" + id), ExtTooltipSettings.class);
++        return JsonConfig.create(Application.getConfigResource("cfg/ExtTooltipSettings_" + id), ExtTooltipSettings.class);
+     }
+ 
+     /**
+diff --git a/src/org/appwork/utils/Application.java b/src/org/appwork/utils/Application.java
+index d810d6c..ae1f394 100644
+--- a/src/org/appwork/utils/Application.java
++++ b/src/org/appwork/utils/Application.java
+@@ -85,6 +85,9 @@ public class Application {
+     public static PauseableOutputStream STD_OUT;
+     public static PauseableOutputStream ERR_OUT;
+     private static boolean              DID_INIT      = false;
++    private static File                 USER_HOME     = null;
++    private static File                 USER_CONFIG   = null;
++    private static File                 USER_SHARE    = null;
+     static {
+         // its important to do this AFTER the variables init. else statics like REDIRECTED will get overwritten
+         if (System.getProperty("NO_SYSOUT_REDIRECT") == null) {
+@@ -476,7 +479,7 @@ public class Application {
+      * @return
+      */
+     public static File getTemp() {
+-        final File ret = Application.getResource("tmp");
++        final File ret = Application.getShareResource("tmp");
+         if (!ret.exists()) {
+             ret.mkdirs();
+         }
+@@ -966,4 +969,56 @@ public class Application {
+     public static boolean isFrameWorkInitDone() {
+         return DID_INIT;
+     }
++
++    private static File getUserHome() {
++        if(USER_HOME != null) {
++            return USER_HOME;
++        }
++
++        String home = System.getenv("HOME");
++        if(home == null || home.isEmpty()) {
++            home = System.getProperty("user.home");
++        }
++
++        USER_HOME = new File(home);
++        return USER_HOME;
++    }
++
++    private static File getConfigPath() {
++        if(USER_CONFIG != null) {
++            return USER_CONFIG;
++        }
++
++        String env = System.getenv("XDG_CONFIG_HOME");
++        if(env != null && !env.isEmpty()) {
++            USER_CONFIG = new File(env, "jdownloader");
++        } else {
++            USER_CONFIG = new File(Application.getUserHome(), ".config/jdownloader");
++        }
++
++        return USER_CONFIG;
++    }
++
++    private static File getSharePath() {
++        if(USER_SHARE != null) {
++            return USER_SHARE;
++        }
++
++        String env = System.getenv("XDG_DATA_HOME");
++        if(env != null && !env.isEmpty()) {
++            USER_SHARE = new File(env, "jdownloader");
++        } else {
++            USER_SHARE = new File(Application.getUserHome(), ".local/share/jdownloader");
++        }
++
++        return USER_SHARE;
++    }
++
++    public static File getConfigResource(final String relative) {
++        return new File(Application.getConfigPath(), relative);
++    }
++
++    public static File getShareResource(final String relative) {
++        return new File(Application.getSharePath(), relative);
++    }
+ }
+diff --git a/src/org/appwork/utils/logging/ErrRedirect.java b/src/org/appwork/utils/logging/ErrRedirect.java
+index 19957f6..e4abe54 100644
+--- a/src/org/appwork/utils/logging/ErrRedirect.java
++++ b/src/org/appwork/utils/logging/ErrRedirect.java
+@@ -53,7 +53,7 @@ public class ErrRedirect extends Thread {
+ 
+         cal.setTimeInMillis(new Date().getTime());
+ 
+-        this.file = Application.getResource("logs/error_cerr_" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DATE) + "-" + System.currentTimeMillis() + ".log");
++        this.file = Application.getShareResource("logs/error_cerr_" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DATE) + "-" + System.currentTimeMillis() + ".log");
+ 
+         try {
+             this.file.getParentFile().mkdirs();
+diff --git a/src/org/appwork/utils/logging/ExceptionLogHandler.java b/src/org/appwork/utils/logging/ExceptionLogHandler.java
+index db74192..aa6c126 100644
+--- a/src/org/appwork/utils/logging/ExceptionLogHandler.java
++++ b/src/org/appwork/utils/logging/ExceptionLogHandler.java
+@@ -60,7 +60,7 @@ public class ExceptionLogHandler extends java.util.logging.Handler {
+         try {
+             final Calendar cal = Calendar.getInstance();
+             cal.setTimeInMillis(new Date().getTime());
+-            this.file = Application.getResource("logs/error_" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DATE) + "-" + System.currentTimeMillis() + ".log");
++            this.file = Application.getShareResource("logs/error_" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DATE) + "-" + System.currentTimeMillis() + ".log");
+             this.file.getParentFile().mkdirs();
+             this.file.deleteOnExit();
+             if (!this.file.isFile()) {
+diff --git a/src/org/appwork/utils/logging/LogToFileHandler.java b/src/org/appwork/utils/logging/LogToFileHandler.java
+index 87d98eb..22841d6 100644
+--- a/src/org/appwork/utils/logging/LogToFileHandler.java
++++ b/src/org/appwork/utils/logging/LogToFileHandler.java
+@@ -60,7 +60,7 @@ public class LogToFileHandler extends java.util.logging.Handler {
+         super();
+         final Calendar cal = Calendar.getInstance();
+         cal.setTimeInMillis(new Date().getTime());
+-        this.file = Application.getResource("logs/" + cal.get(Calendar.YEAR) + "-" + (1 + cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DATE) + ".log");
++        this.file = Application.getShareResource("logs/" + cal.get(Calendar.YEAR) + "-" + (1 + cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DATE) + ".log");
+         this.file.getParentFile().mkdirs();
+         this.file.deleteOnExit();
+         if (!this.file.isFile()) {
+diff --git a/src/org/appwork/utils/logging2/LogSourceProvider.java b/src/org/appwork/utils/logging2/LogSourceProvider.java
+index 960c75c..05d583a 100644
+--- a/src/org/appwork/utils/logging2/LogSourceProvider.java
++++ b/src/org/appwork/utils/logging2/LogSourceProvider.java
+@@ -143,7 +143,7 @@ public abstract class LogSourceProvider {
+             this.logTimeout = config.getLogFlushTimeout() * 1000l;
+             debugMode = config.isDebugModeEnabled();
+             instantFlushDefault = debugMode;
+-            logBaseFolder = Application.getResource("logs");
++            logBaseFolder = Application.getShareResource("logs");
+             if (System.getProperty("LOG_BASE_DIRECTORY") != null) {
+                 logBaseFolder = new File(System.getProperty("LOG_BASE_DIRECTORY"));
+             }
+diff --git a/src/org/appwork/utils/logging2/sendlogs/AbstractLogAction.java b/src/org/appwork/utils/logging2/sendlogs/AbstractLogAction.java
+index 8da9155..21c63e8 100644
+--- a/src/org/appwork/utils/logging2/sendlogs/AbstractLogAction.java
++++ b/src/org/appwork/utils/logging2/sendlogs/AbstractLogAction.java
+@@ -167,7 +167,7 @@ public abstract class AbstractLogAction extends BasicAction {
+      * @return
+      */
+     public static ArrayList<LogFolder> getLogFolders() {
+-        final File[] logs = Application.getResource("logs").listFiles();
++        final File[] logs = Application.getShareResource("logs").listFiles();
+         final ArrayList<LogFolder> folders = new ArrayList<LogFolder>();
+         if (logs != null) {
+             for (final File f : logs) {
+diff --git a/src/org/appwork/utils/swing/dialog/ExtFileChooserDialog.java b/src/org/appwork/utils/swing/dialog/ExtFileChooserDialog.java
+index a15e3c0..a032259 100644
+--- a/src/org/appwork/utils/swing/dialog/ExtFileChooserDialog.java
++++ b/src/org/appwork/utils/swing/dialog/ExtFileChooserDialog.java
+@@ -556,7 +556,7 @@ public class ExtFileChooserDialog extends AbstractDialog<File[]> {
+      * @return
+      */
+     protected ExtFileChooserIdConfig getIDConfig() {
+-        final File path = Application.getResource("cfg/FileChooser/" + getStorageID());
++        final File path = Application.getConfigResource("cfg/FileChooser/" + getStorageID());
+         path.getParentFile().mkdirs();
+         return JsonConfig.create(path, ExtFileChooserIdConfig.class);
+     }
+diff --git a/src/org/appwork/utils/swing/locationstore/LocationStorageManager.java b/src/org/appwork/utils/swing/locationstore/LocationStorageManager.java
+index 43b3769..5d0fc18 100644
+--- a/src/org/appwork/utils/swing/locationstore/LocationStorageManager.java
++++ b/src/org/appwork/utils/swing/locationstore/LocationStorageManager.java
+@@ -80,7 +80,7 @@ public class LocationStorageManager extends ShutdownEvent {
+     }
+ 
+     protected File getStorageFile() {
+-        return Application.getResource("cfg/locations.json");
++        return Application.getConfigResource("cfg/locations.json");
+     }
+ 
+     public static final LocationStorageManager INSTANCE = new LocationStorageManager();
+-- 
+2.31.1
+

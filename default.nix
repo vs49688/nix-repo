@@ -17,6 +17,8 @@ let
     extract-glb = lib.callPackage ./pkgs/extract-glb { };
 
     pimidid = lib.callPackage ./pkgs/pimidid { };
+
+    jdownloader = lib.callPackage ./pkgs/jdownloader { };
   };
 in
 { pkgs = self; } // self

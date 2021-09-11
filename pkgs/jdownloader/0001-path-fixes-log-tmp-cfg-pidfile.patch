@@ -1,0 +1,746 @@
+From 81fbf64be0556659d4e60c430c98e42b504cc851 Mon Sep 17 00:00:00 2001
+From: Zane van Iperen <zane@zanevaniperen.com>
+Date: Sun, 5 Sep 2021 23:28:42 +1000
+Subject: [PATCH] path fixes - log, tmp, cfg, pidfile
+
+find trunk/ -type f -name '*.java' -print0 | xargs -0 sed -i 's/Application.getResource("tmp/Application.getShareResource("tmp/g'
+find . -type f -name '*.java' -print0 | xargs -0 sed -i 's/Application.getResource("cfg/Application.getConfigResource("cfg/g'
+---
+ trunk/src/jd/SecondLevelLaunch.java                |  4 ++--
+ trunk/src/jd/config/SubConfiguration.java          |  2 +-
+ .../downloadcontroller/DownloadController.java     | 14 +++++++-------
+ .../controlling/linkcollector/LinkCollector.java   | 14 +++++++-------
+ .../src/jd/controlling/proxy/ProxyController.java  |  2 +-
+ .../jdgui/views/settings/panels/GUISettings.java   |  6 +++---
+ .../jd/plugins/decrypter/GenericAutoContainer.java |  2 +-
+ trunk/src/org/jdownloader/api/logs/LogAPIImpl.java |  4 ++--
+ .../keycaptcha/jac/KeyCaptchaAutoSolver.java       | 14 +++++++-------
+ .../recaptcha/v2/RecaptchaV2Challenge.java         |  2 +-
+ .../contextmenu/ContextMenuManager.java            |  2 +-
+ .../hosterrule/HosterRuleController.java           |  2 +-
+ .../org/jdownloader/donate/DonationManager.java    |  2 +-
+ .../jdownloader/extensions/AbstractExtension.java  |  4 ++--
+ .../extensions/antistandby/CFG_ANTISTANDBY.java    |  2 +-
+ .../org/jdownloader/extensions/chat/CFG_CHAT.java  |  2 +-
+ .../extensions/eventscripter/CFG_EVENT_CALLER.java |  2 +-
+ .../extensions/extraction/ArchiveController.java   |  2 +-
+ .../extensions/extraction/CFG_EXTRACTION.java      |  2 +-
+ .../extensions/folderwatchV2/CFG_FOLDER_WATCH.java |  2 +-
+ .../extensions/infobar/CFG_INFOBAR.java            |  2 +-
+ .../extensions/schedulerV2/CFG_SCHEDULER.java      |  2 +-
+ .../extensions/shutdown/CFG_SHUTDOWN.java          |  2 +-
+ .../extensions/translator/CFG_TRANSLATOR.java      |  2 +-
+ .../gui/jdtrayicon/CFG_TRAY_CONFIG.java            |  2 +-
+ .../gui/laf/jddefault/JDDefaultLookAndFeel.java    |  2 +-
+ .../gui/laf/plain/PlainLookAndFeel.java            |  2 +-
+ .../gui/mainmenu/BackupCreateAction.java           |  2 +-
+ .../gui/mainmenu/BackupRestoreAction.java          | 14 +++++++-------
+ .../jdownloader/launcher/StandaloneLauncher.java   |  2 +-
+ .../plugins/components/abstractSafeLinking.java    |  2 +-
+ .../plugins/components/youtube/ItagHelper.java     |  2 +-
+ .../YoutubeCompatibility.java                      |  2 +-
+ .../plugins/config/PluginJsonConfig.java           |  6 +++---
+ .../settings/advanced/AdvancedConfigAPIEntry.java  |  2 +-
+ trunk/src/org/jdownloader/startup/Main.java        |  2 +-
+ .../gui/LAFSettingsStorageHandlerFactory.java      |  2 +-
+ trunk/src/org/jdownloader/webcache/WebCache.java   |  2 +-
+ 38 files changed, 69 insertions(+), 69 deletions(-)
+
+diff --git a/trunk/src/jd/SecondLevelLaunch.java b/trunk/src/jd/SecondLevelLaunch.java
+index 0c5859a..9a3bbba 100644
+--- a/trunk/src/jd/SecondLevelLaunch.java
++++ b/trunk/src/jd/SecondLevelLaunch.java
+@@ -534,7 +534,7 @@ public class SecondLevelLaunch {
+             if (StringUtils.isEmpty(System.getProperty(jnaNoSysKey))) {
+                 System.setProperty(jnaNoSysKey, "true");
+             }
+-            final File jnaTmp = Application.getResource("tmp/jna");
++            final File jnaTmp = Application.getShareResource("tmp/jna");
+             if (!jnaTmp.isDirectory()) {
+                 jnaTmp.mkdir();
+             }
+@@ -553,7 +553,7 @@ public class SecondLevelLaunch {
+         } catch (java.lang.UnsatisfiedLinkError e) {
+             if (e.getMessage() != null && e.getMessage().contains("Can't find dependent libraries")) {
+                 // probably the path contains unsupported special chars
+-                LoggerFactory.getDefaultLogger().info("The Library Path probably contains special chars: " + Application.getResource("tmp/jna").getAbsolutePath());
++                LoggerFactory.getDefaultLogger().info("The Library Path probably contains special chars: " + Application.getShareResource("tmp/jna").getAbsolutePath());
+                 if (!Application.isHeadless()) {
+                     final ExceptionDialog d = new ExceptionDialog(UIOManager.STYLE_SHOW_DO_NOT_DISPLAY_AGAIN | UIOManager.LOGIC_COUNTDOWN | UIOManager.BUTTONS_HIDE_OK, _GUI.T.lit_error_occured(), _GUI.T.special_char_lib_loading_problem(Application.getHome(), "Java Native Interface"), e, null, _GUI.T.lit_close()) {
+                         @Override
+diff --git a/trunk/src/jd/config/SubConfiguration.java b/trunk/src/jd/config/SubConfiguration.java
+index 8fd6f14..604857f 100644
+--- a/trunk/src/jd/config/SubConfiguration.java
++++ b/trunk/src/jd/config/SubConfiguration.java
+@@ -87,7 +87,7 @@ public class SubConfiguration extends Property implements Serializable {
+     }
+ 
+     public static File getSubConfigurationFile(final String name) {
+-        return Application.getResource("cfg/subconf_" + name + ".ejs");
++        return Application.getConfigResource("cfg/subconf_" + name + ".ejs");
+     }
+ 
+     private SubConfiguration(final String name) {
+diff --git a/trunk/src/jd/controlling/downloadcontroller/DownloadController.java b/trunk/src/jd/controlling/downloadcontroller/DownloadController.java
+index 3ff28b6..8ab3453 100644
+--- a/trunk/src/jd/controlling/downloadcontroller/DownloadController.java
++++ b/trunk/src/jd/controlling/downloadcontroller/DownloadController.java
+@@ -427,7 +427,7 @@ public class DownloadController extends PackageController<FilePackage, DownloadL
+     private ArrayList<File> findAvailableDownloadLists() {
+         logger.info("Collect Lists");
+         File[] filesInCfg = null;
+-        final File cfg = Application.getResource("cfg/");
++        final File cfg = Application.getConfigResource("cfg/");
+         if (Application.getJavaVersion() >= Application.JAVA17) {
+             try {
+                 filesInCfg = J7FileList.findFiles(Pattern.compile("^downloadList.*?\\.zip$", Pattern.CASE_INSENSITIVE), cfg, true).toArray(new File[0]);
+@@ -436,7 +436,7 @@ public class DownloadController extends PackageController<FilePackage, DownloadL
+             }
+         }
+         if (filesInCfg == null) {
+-            filesInCfg = Application.getResource("cfg/").listFiles();
++            filesInCfg = Application.getConfigResource("cfg/").listFiles();
+         }
+         ArrayList<Long> sortedAvailable = new ArrayList<Long>();
+         ArrayList<File> ret = new ArrayList<File>();
+@@ -453,10 +453,10 @@ public class DownloadController extends PackageController<FilePackage, DownloadL
+             Collections.sort(sortedAvailable, Collections.reverseOrder());
+         }
+         for (Long loadOrder : sortedAvailable) {
+-            ret.add(Application.getResource("cfg/downloadList" + loadOrder + ".zip"));
++            ret.add(Application.getConfigResource("cfg/downloadList" + loadOrder + ".zip"));
+         }
+-        if (Application.getResource("cfg/downloadList.zip").exists()) {
+-            ret.add(Application.getResource("cfg/downloadList.zip"));
++        if (Application.getConfigResource("cfg/downloadList.zip").exists()) {
++            ret.add(Application.getConfigResource("cfg/downloadList.zip"));
+         }
+         logger.info("Lists: " + ret);
+         downloadLists.addAll(ret);
+@@ -986,10 +986,10 @@ public class DownloadController extends PackageController<FilePackage, DownloadL
+                     if (counter != null) {
+                         count = Long.parseLong(counter) + 1;
+                     }
+-                    file = Application.getResource("cfg/downloadList" + count + ".zip");
++                    file = Application.getConfigResource("cfg/downloadList" + count + ".zip");
+                 }
+                 if (file == null) {
+-                    file = Application.getResource("cfg/downloadList.zip");
++                    file = Application.getConfigResource("cfg/downloadList.zip");
+                 }
+             }
+             final int bufferSize;
+diff --git a/trunk/src/jd/controlling/linkcollector/LinkCollector.java b/trunk/src/jd/controlling/linkcollector/LinkCollector.java
+index 64ec6d3..bb1efd7 100644
+--- a/trunk/src/jd/controlling/linkcollector/LinkCollector.java
++++ b/trunk/src/jd/controlling/linkcollector/LinkCollector.java
+@@ -1714,7 +1714,7 @@ public class LinkCollector extends PackageController<CrawledPackage, CrawledLink
+     private ArrayList<File> findAvailableCollectorLists() {
+         logger.info("Collect Lists");
+         File[] filesInCfg = null;
+-        final File cfg = Application.getResource("cfg/");
++        final File cfg = Application.getConfigResource("cfg/");
+         if (Application.getJavaVersion() >= Application.JAVA17) {
+             try {
+                 filesInCfg = J7FileList.findFiles(Pattern.compile("^linkcollector.*?\\.zip$", Pattern.CASE_INSENSITIVE), cfg, true).toArray(new File[0]);
+@@ -1723,7 +1723,7 @@ public class LinkCollector extends PackageController<CrawledPackage, CrawledLink
+             }
+         }
+         if (filesInCfg == null) {
+-            filesInCfg = Application.getResource("cfg/").listFiles();
++            filesInCfg = Application.getConfigResource("cfg/").listFiles();
+         }
+         ArrayList<Long> sortedAvailable = new ArrayList<Long>();
+         ArrayList<File> ret = new ArrayList<File>();
+@@ -1740,10 +1740,10 @@ public class LinkCollector extends PackageController<CrawledPackage, CrawledLink
+             Collections.sort(sortedAvailable, Collections.reverseOrder());
+         }
+         for (Long loadOrder : sortedAvailable) {
+-            ret.add(Application.getResource("cfg/linkcollector" + loadOrder + ".zip"));
++            ret.add(Application.getConfigResource("cfg/linkcollector" + loadOrder + ".zip"));
+         }
+-        if (Application.getResource("cfg/linkcollector.zip").exists()) {
+-            ret.add(Application.getResource("cfg/linkcollector.zip"));
++        if (Application.getConfigResource("cfg/linkcollector.zip").exists()) {
++            ret.add(Application.getConfigResource("cfg/linkcollector.zip"));
+         }
+         logger.info("Lists: " + ret);
+         linkcollectorLists.addAll(ret);
+@@ -2256,10 +2256,10 @@ public class LinkCollector extends PackageController<CrawledPackage, CrawledLink
+                         if (counter != null) {
+                             count = Long.parseLong(counter) + 1;
+                         }
+-                        file = Application.getResource("cfg/linkcollector" + count + ".zip");
++                        file = Application.getConfigResource("cfg/linkcollector" + count + ".zip");
+                     }
+                     if (file == null) {
+-                        file = Application.getResource("cfg/linkcollector.zip");
++                        file = Application.getConfigResource("cfg/linkcollector.zip");
+                     }
+                 }
+                 boolean deleteFile = true;
+diff --git a/trunk/src/jd/controlling/proxy/ProxyController.java b/trunk/src/jd/controlling/proxy/ProxyController.java
+index a12d787..7d13806 100644
+--- a/trunk/src/jd/controlling/proxy/ProxyController.java
++++ b/trunk/src/jd/controlling/proxy/ProxyController.java
+@@ -698,7 +698,7 @@ public class ProxyController implements ProxySelectorInterface {
+                             } catch (java.lang.UnsatisfiedLinkError e) {
+                                 if (e.getMessage() != null && e.getMessage().contains("Can't find dependent libraries")) {
+                                     // probably the path contains unsupported special chars
+-                                    logger.info("The Library Path probably contains special chars: " + Application.getResource("tmp/jna").getAbsolutePath());
++                                    logger.info("The Library Path probably contains special chars: " + Application.getShareResource("tmp/jna").getAbsolutePath());
+                                     logger.log(e);
+                                     // ExceptionDialog d = new ExceptionDialog(UIOManager.STYLE_SHOW_DO_NOT_DISPLAY_AGAIN |
+                                     // UIOManager.LOGIC_COUNTDOWN|UIOManager.BUTTONS_HIDE_OK, _GUI.T.lit_error_occured(),
+diff --git a/trunk/src/jd/gui/swing/jdgui/views/settings/panels/GUISettings.java b/trunk/src/jd/gui/swing/jdgui/views/settings/panels/GUISettings.java
+index d1caa08..dbca356 100644
+--- a/trunk/src/jd/gui/swing/jdgui/views/settings/panels/GUISettings.java
++++ b/trunk/src/jd/gui/swing/jdgui/views/settings/panels/GUISettings.java
+@@ -213,7 +213,7 @@ public class GUISettings extends AbstractConfigPanel implements StateUpdateListe
+                         try {
+                             Dialog.getInstance().showConfirmDialog(0, _GUI.T.GUISettings_save_language_changed_restart_required_title(), _GUI.T.GUISettings_save_language_changed_restart_required_msg(), NewTheme.getInstance().getIcon("language", 32), null, null);
+                             try {
+-                                IO.secureWrite(Application.getResource("cfg/language.json"), JSonStorage.serializeToJsonByteArray(newLng), SYNC.NONE);
++                                IO.secureWrite(Application.getConfigResource("cfg/language.json"), JSonStorage.serializeToJsonByteArray(newLng), SYNC.NONE);
+                             } catch (IOException e1) {
+                                 throw new WTFException(e1);
+                             }
+@@ -267,7 +267,7 @@ public class GUISettings extends AbstractConfigPanel implements StateUpdateListe
+         // public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+         // String newLng = lng.getSelectedItem();
+         // if (!newLng.equals(TranslationFactory.getDesiredLanguage())) {
+-        // JSonStorage.saveTo(Application.getResource("cfg/language.json"), newLng);
++        // JSonStorage.saveTo(Application.getConfigResource("cfg/language.json"), newLng);
+         //
+         // try {
+         // Dialog.getInstance().showConfirmDialog(0, _GUI.T.GUISettings_save_language_changed_restart_required_title(),
+@@ -312,7 +312,7 @@ public class GUISettings extends AbstractConfigPanel implements StateUpdateListe
+             public void actionPerformed(ActionEvent e) {
+                 final boolean reset = LocationStorageManager.INSTANCE.reset();
+                 /* cleanup old cfg files */
+-                Application.getResource("cfg/").listFiles(new FileFilter() {
++                Application.getConfigResource("cfg/").listFiles(new FileFilter() {
+                     @Override
+                     public boolean accept(final File file) {
+                         final String fileName = file.getName();
+diff --git a/trunk/src/jd/plugins/decrypter/GenericAutoContainer.java b/trunk/src/jd/plugins/decrypter/GenericAutoContainer.java
+index 2bb5332..079b986 100644
+--- a/trunk/src/jd/plugins/decrypter/GenericAutoContainer.java
++++ b/trunk/src/jd/plugins/decrypter/GenericAutoContainer.java
+@@ -60,7 +60,7 @@ public class GenericAutoContainer extends PluginForDecrypt {
+                     boolean seemsValidContainer = StringUtils.containsIgnoreCase(con.getContentType(), type);
+                     seemsValidContainer = seemsValidContainer | (con.isContentDisposition() && StringUtils.containsIgnoreCase(Plugin.getFileNameFromHeader(con), type)) || (con.getContentLength() > 100 && (con.getContentType() == null || !StringUtils.containsIgnoreCase(con.getContentType(), "text")));
+                     if (seemsValidContainer) {
+-                        containerTemp = org.appwork.utils.Application.getResource("tmp/autocontainer/" + System.nanoTime() + "." + type);
++                        containerTemp = org.appwork.utils.Application.getShareResource("tmp/autocontainer/" + System.nanoTime() + "." + type);
+                         br.downloadConnection(containerTemp, con);
+                         if (containerTemp.exists() && containerTemp.length() > 100) {
+                             ret.addAll(loadContainerFile(containerTemp));
+diff --git a/trunk/src/org/jdownloader/api/logs/LogAPIImpl.java b/trunk/src/org/jdownloader/api/logs/LogAPIImpl.java
+index e7e3b41..898f877 100644
+--- a/trunk/src/org/jdownloader/api/logs/LogAPIImpl.java
++++ b/trunk/src/org/jdownloader/api/logs/LogAPIImpl.java
+@@ -115,7 +115,7 @@ public class LogAPIImpl implements LogAPI {
+     }
+ 
+     private File createPackage(final LogFolder lf) throws Exception {
+-        final File zip = Application.getTempResource("logs/logPackage" + System.currentTimeMillis() + ".zip");
++        final File zip = Application.getShareResource("logs/logPackage" + System.currentTimeMillis() + ".zip");
+         zip.delete();
+         zip.getParentFile().mkdirs();
+         ZipIOWriter writer = null;
+@@ -133,7 +133,7 @@ public class LogAPIImpl implements LogAPI {
+                 }
+             };
+             final String name = lf.getFolder().getName() + "-" + DATE_FORMAT.format(lf.getCreated()) + " to " + DATE_FORMAT.format(lf.getLastModified());
+-            final File folder = Application.getTempResource("logs/" + name);
++            final File folder = Application.getShareResource("logs/" + name);
+             if (lf.isNeedsFlush()) {
+                 LogController.getInstance().flushSinks(FLUSH.FORCE);
+             }
+diff --git a/trunk/src/org/jdownloader/captcha/v2/challenge/keycaptcha/jac/KeyCaptchaAutoSolver.java b/trunk/src/org/jdownloader/captcha/v2/challenge/keycaptcha/jac/KeyCaptchaAutoSolver.java
+index e55adb4..184cf0b 100644
+--- a/trunk/src/org/jdownloader/captcha/v2/challenge/keycaptcha/jac/KeyCaptchaAutoSolver.java
++++ b/trunk/src/org/jdownloader/captcha/v2/challenge/keycaptcha/jac/KeyCaptchaAutoSolver.java
+@@ -133,12 +133,12 @@ public class KeyCaptchaAutoSolver {
+         Application.setApplication(".jd_home");
+         // helper method to create masks from pieces
+         // main2(args);
+-        File masks = Application.getResource("tmp/masks");
++        File masks = Application.getShareResource("tmp/masks");
+         if (masks.exists()) {
+             Files.deleteRecursiv(masks);
+         }
+         masks.mkdirs();
+-        for (File folder : Application.getResource("tmp").listFiles()) {
++        for (File folder : Application.getShareResource("tmp").listFiles()) {
+             if (folder.isDirectory() && folder.getName().contains(".png_col")) {
+                 BufferedImage merge = IconIO.createEmptyImage(60, 60);
+                 Graphics2D g = (Graphics2D) merge.getGraphics();
+@@ -200,7 +200,7 @@ public class KeyCaptchaAutoSolver {
+             File copy = new File(dest, orgFile.getName());
+             copy.delete();
+             IO.copyFile(orgFile, copy);
+-            fileloop: for (File f : Application.getResource("tmp").listFiles()) {
++            fileloop: for (File f : Application.getShareResource("tmp").listFiles()) {
+                 if (dupe.contains(f)) {
+                     continue;
+                 }
+@@ -345,19 +345,19 @@ public class KeyCaptchaAutoSolver {
+             // collect_pieces
+             // write images to jd_home
+             int j = 0;
+-            File backf = Application.getResource("tmp/background_" + Hash.getMD5(IconIO.toJpgBytes(images.backgroundImage)) + "_" + j + ".png");
++            File backf = Application.getShareResource("tmp/background_" + Hash.getMD5(IconIO.toJpgBytes(images.backgroundImage)) + "_" + j + ".png");
+             while (backf.exists()) {
+                 j++;
+-                backf = Application.getResource("tmp/background_" + Hash.getMD5(IconIO.toJpgBytes(images.backgroundImage)) + "_" + j + ".png");
++                backf = Application.getShareResource("tmp/background_" + Hash.getMD5(IconIO.toJpgBytes(images.backgroundImage)) + "_" + j + ".png");
+             }
+             backf.delete();
+             ImageProvider.writeImage(images.backgroundImage, "png", backf);
+             for (int i = 0; i < images.pieces.size(); i++) {
+                 j = 0;
+-                File file = Application.getResource("tmp/" + "piece_" + j + ".png");
++                File file = Application.getShareResource("tmp/" + "piece_" + j + ".png");
+                 while (file.exists()) {
+                     j++;
+-                    file = Application.getResource("tmp/" + "piece_" + j + ".png");
++                    file = Application.getShareResource("tmp/" + "piece_" + j + ".png");
+                 }
+                 file.delete();
+                 ImageProvider.writeImage(images.pieces.get(i), "png", file);
+diff --git a/trunk/src/org/jdownloader/captcha/v2/challenge/recaptcha/v2/RecaptchaV2Challenge.java b/trunk/src/org/jdownloader/captcha/v2/challenge/recaptcha/v2/RecaptchaV2Challenge.java
+index 88308e6..5f2c434 100644
+--- a/trunk/src/org/jdownloader/captcha/v2/challenge/recaptcha/v2/RecaptchaV2Challenge.java
++++ b/trunk/src/org/jdownloader/captcha/v2/challenge/recaptcha/v2/RecaptchaV2Challenge.java
+@@ -566,7 +566,7 @@ public abstract class RecaptchaV2Challenge extends AbstractBrowserChallenge {
+         int i = 0;
+         File file = null;
+         do {
+-            file = Application.getResource("tmp/rc2/" + (UrlQuery.parse(url).get("id") == null ? "grid" : "tile") + "/" + i + "_" + Hash.getMD5(bytes) + ".png");
++            file = Application.getShareResource("tmp/rc2/" + (UrlQuery.parse(url).get("id") == null ? "grid" : "tile") + "/" + i + "_" + Hash.getMD5(bytes) + ".png");
+             i++;
+         } while (file.exists());
+         file.getParentFile().mkdirs();
+diff --git a/trunk/src/org/jdownloader/controlling/contextmenu/ContextMenuManager.java b/trunk/src/org/jdownloader/controlling/contextmenu/ContextMenuManager.java
+index 8d6dd8e..ceec7de 100644
+--- a/trunk/src/org/jdownloader/controlling/contextmenu/ContextMenuManager.java
++++ b/trunk/src/org/jdownloader/controlling/contextmenu/ContextMenuManager.java
+@@ -47,7 +47,7 @@ public abstract class ContextMenuManager<PackageType extends AbstractPackageNode
+             updateDelayer = null;
+             return;
+         }
+-        config = JsonConfig.create(Application.getResource("cfg/menus_v2/" + getStorageKey()), ContextMenuConfigInterface.class);
++        config = JsonConfig.create(Application.getConfigResource("cfg/menus_v2/" + getStorageKey()), ContextMenuConfigInterface.class);
+         logger = LogController.getInstance().getLogger(getClass().getName());
+         updateDelayer = new DelayedRunnable(SERVICE, 1000l, 2000) {
+             @Override
+diff --git a/trunk/src/org/jdownloader/controlling/hosterrule/HosterRuleController.java b/trunk/src/org/jdownloader/controlling/hosterrule/HosterRuleController.java
+index 81b285f..f1b491a 100644
+--- a/trunk/src/org/jdownloader/controlling/hosterrule/HosterRuleController.java
++++ b/trunk/src/org/jdownloader/controlling/hosterrule/HosterRuleController.java
+@@ -63,7 +63,7 @@ public class HosterRuleController implements AccountControllerListener {
+      */
+     private HosterRuleController() {
+         eventSender = new HosterRuleControllerEventSender();
+-        configFile = Application.getResource("cfg/accountUsageRules.json");
++        configFile = Application.getConfigResource("cfg/accountUsageRules.json");
+         if (!configFile.getParentFile().exists()) {
+             configFile.getParentFile().mkdirs();
+         }
+diff --git a/trunk/src/org/jdownloader/donate/DonationManager.java b/trunk/src/org/jdownloader/donate/DonationManager.java
+index 5ac374a..93f04cb 100644
+--- a/trunk/src/org/jdownloader/donate/DonationManager.java
++++ b/trunk/src/org/jdownloader/donate/DonationManager.java
+@@ -12,7 +12,7 @@ public class DonationManager {
+     private final long                   donationThankYou   = 3 * 30 * 24 * 60 * 60 * 1000l;
+ 
+     private DonationManager() {
+-        final File donation = Application.getResource("cfg/donation_0.json");
++        final File donation = Application.getConfigResource("cfg/donation_0.json");
+         switch (CFG_GUI.CFG.getDonateButtonState()) {
+         case AUTO_VISIBLE:
+             if (donation.isFile()) {
+diff --git a/trunk/src/org/jdownloader/extensions/AbstractExtension.java b/trunk/src/org/jdownloader/extensions/AbstractExtension.java
+index b34bcad..6d9d48a 100644
+--- a/trunk/src/org/jdownloader/extensions/AbstractExtension.java
++++ b/trunk/src/org/jdownloader/extensions/AbstractExtension.java
+@@ -223,7 +223,7 @@ public abstract class AbstractExtension<ConfigType extends ExtensionConfigInterf
+      * @return
+      */
+     private ConfigType buildStore() {
+-        return JsonConfig.create(Application.getResource("cfg/" + getClass().getName()), getConfigClass());
++        return JsonConfig.create(Application.getConfigResource("cfg/" + getClass().getName()), getConfigClass());
+ 
+     }
+ 
+@@ -243,7 +243,7 @@ public abstract class AbstractExtension<ConfigType extends ExtensionConfigInterf
+     }
+ 
+     public static ExtensionConfigInterface createStore(String className, Class<? extends ExtensionConfigInterface> interfaceClass) {
+-        return JsonConfig.create(Application.getResource("cfg/" + className), interfaceClass);
++        return JsonConfig.create(Application.getConfigResource("cfg/" + className), interfaceClass);
+     }
+ 
+     /**
+diff --git a/trunk/src/org/jdownloader/extensions/antistandby/CFG_ANTISTANDBY.java b/trunk/src/org/jdownloader/extensions/antistandby/CFG_ANTISTANDBY.java
+index d62c88e..99cb6c7 100644
+--- a/trunk/src/org/jdownloader/extensions/antistandby/CFG_ANTISTANDBY.java
++++ b/trunk/src/org/jdownloader/extensions/antistandby/CFG_ANTISTANDBY.java
+@@ -12,7 +12,7 @@ public class CFG_ANTISTANDBY {
+     // }
+     // Static Mappings for interface
+     // org.jdownloader.extensions.shutdown.AntiStandbyConfig
+-    public static final AntiStandbyConfig                 CFG              = JsonConfig.create(Application.getResource("cfg/" + AntiStandbyExtension.class.getName()), AntiStandbyConfig.class);
++    public static final AntiStandbyConfig                 CFG              = JsonConfig.create(Application.getConfigResource("cfg/" + AntiStandbyExtension.class.getName()), AntiStandbyConfig.class);
+     public static final StorageHandler<AntiStandbyConfig> SH               = (StorageHandler<AntiStandbyConfig>) CFG._getStorageHandler();
+     // true
+     public static final BooleanKeyHandler                 FRESH_INSTALL    = SH.getKeyHandler("FreshInstall", BooleanKeyHandler.class);
+diff --git a/trunk/src/org/jdownloader/extensions/chat/CFG_CHAT.java b/trunk/src/org/jdownloader/extensions/chat/CFG_CHAT.java
+index b0ee90e..4d31f39 100644
+--- a/trunk/src/org/jdownloader/extensions/chat/CFG_CHAT.java
++++ b/trunk/src/org/jdownloader/extensions/chat/CFG_CHAT.java
+@@ -13,7 +13,7 @@ public class CFG_CHAT {
+     // ".class.getName())");
+     // }
+     // Static Mappings for interface org.jdownloader.extensions.chat.ChatConfig
+-    public static final ChatConfig                 CFG                       = JsonConfig.create(Application.getResource("cfg/" + ChatExtension.class.getName()), ChatConfig.class);
++    public static final ChatConfig                 CFG                       = JsonConfig.create(Application.getConfigResource("cfg/" + ChatExtension.class.getName()), ChatConfig.class);
+     public static final StorageHandler<ChatConfig> SH                        = (StorageHandler<ChatConfig>) CFG._getStorageHandler();
+     // let's do this mapping here. If we map all methods to static handlers, access is faster, and we get an error on init if mappings are
+     // wrong.
+diff --git a/trunk/src/org/jdownloader/extensions/eventscripter/CFG_EVENT_CALLER.java b/trunk/src/org/jdownloader/extensions/eventscripter/CFG_EVENT_CALLER.java
+index 9fd3366..97788d2 100644
+--- a/trunk/src/org/jdownloader/extensions/eventscripter/CFG_EVENT_CALLER.java
++++ b/trunk/src/org/jdownloader/extensions/eventscripter/CFG_EVENT_CALLER.java
+@@ -12,7 +12,7 @@ public class CFG_EVENT_CALLER {
+     // EventScripterExtension.class.getSimpleName() + ".class.getName())");
+     // }
+     // Static Mappings for interface org.jdownloader.extensions.schedulerV2.SchedulerConfig
+-    public static final EventScripterConfig                 CFG           = JsonConfig.create(Application.getResource("cfg/" + EventScripterExtension.class.getName()), EventScripterConfig.class);
++    public static final EventScripterConfig                 CFG           = JsonConfig.create(Application.getConfigResource("cfg/" + EventScripterExtension.class.getName()), EventScripterConfig.class);
+     public static final StorageHandler<EventScripterConfig> SH            = (StorageHandler<EventScripterConfig>) CFG._getStorageHandler();
+     // let's do this mapping here. If we map all methods to static handlers, access is faster, and we get an error on init if mappings are
+     // wrong.
+diff --git a/trunk/src/org/jdownloader/extensions/extraction/ArchiveController.java b/trunk/src/org/jdownloader/extensions/extraction/ArchiveController.java
+index 381c781..ea3d178 100644
+--- a/trunk/src/org/jdownloader/extensions/extraction/ArchiveController.java
++++ b/trunk/src/org/jdownloader/extensions/extraction/ArchiveController.java
+@@ -89,7 +89,7 @@ public class ArchiveController {
+     }
+ 
+     protected File getPathByID(String internalID) {
+-        return Application.getResource("cfg/archives/v2_" + internalID + ".json");
++        return Application.getConfigResource("cfg/archives/v2_" + internalID + ".json");
+     }
+ 
+     public ArchiveSettings getArchiveSettings(final String archiveID, final ArchiveFactory archiveFactory) {
+diff --git a/trunk/src/org/jdownloader/extensions/extraction/CFG_EXTRACTION.java b/trunk/src/org/jdownloader/extensions/extraction/CFG_EXTRACTION.java
+index 6bba059..65b005d 100644
+--- a/trunk/src/org/jdownloader/extensions/extraction/CFG_EXTRACTION.java
++++ b/trunk/src/org/jdownloader/extensions/extraction/CFG_EXTRACTION.java
+@@ -16,7 +16,7 @@ public class CFG_EXTRACTION {
+     // ExtractionExtension.class.getSimpleName() + ".class.getName())");
+     // }
+     // Static Mappings for interface org.jdownloader.extensions.extraction.ExtractionConfig
+-    public static final ExtractionConfig                 CFG                                                              = JsonConfig.create(Application.getResource("cfg/" + ExtractionExtension.class.getName()), ExtractionConfig.class);
++    public static final ExtractionConfig                 CFG                                                              = JsonConfig.create(Application.getConfigResource("cfg/" + ExtractionExtension.class.getName()), ExtractionConfig.class);
+     public static final StorageHandler<ExtractionConfig> SH                                                               = (StorageHandler<ExtractionConfig>) CFG._getStorageHandler();
+     // let's do this mapping here. If we map all methods to static handlers, access is faster, and we get an error on init if mappings are
+     // wrong.
+diff --git a/trunk/src/org/jdownloader/extensions/folderwatchV2/CFG_FOLDER_WATCH.java b/trunk/src/org/jdownloader/extensions/folderwatchV2/CFG_FOLDER_WATCH.java
+index 1af05cc..696425e 100644
+--- a/trunk/src/org/jdownloader/extensions/folderwatchV2/CFG_FOLDER_WATCH.java
++++ b/trunk/src/org/jdownloader/extensions/folderwatchV2/CFG_FOLDER_WATCH.java
+@@ -13,7 +13,7 @@ public class CFG_FOLDER_WATCH {
+     // FolderWatchExtension.class.getSimpleName() + ".class.getName())");
+     // }
+     // Static Mappings for interface org.jdownloader.extensions.folderwatch.FolderWatchConfig
+-    public static final FolderWatchConfig                 CFG            = JsonConfig.create(Application.getResource("cfg/" + FolderWatchExtension.class.getName()), FolderWatchConfig.class);
++    public static final FolderWatchConfig                 CFG            = JsonConfig.create(Application.getConfigResource("cfg/" + FolderWatchExtension.class.getName()), FolderWatchConfig.class);
+     public static final StorageHandler<FolderWatchConfig> SH             = (StorageHandler<FolderWatchConfig>) CFG._getStorageHandler();
+     // let's do this mapping here. If we map all methods to static handlers, access is faster, and we get an error on init if mappings are
+     // wrong.
+diff --git a/trunk/src/org/jdownloader/extensions/infobar/CFG_INFOBAR.java b/trunk/src/org/jdownloader/extensions/infobar/CFG_INFOBAR.java
+index 0ac32db..6990445 100644
+--- a/trunk/src/org/jdownloader/extensions/infobar/CFG_INFOBAR.java
++++ b/trunk/src/org/jdownloader/extensions/infobar/CFG_INFOBAR.java
+@@ -12,7 +12,7 @@ public class CFG_INFOBAR {
+     // ".class.getName())");
+     // }
+     // Static Mappings for interface org.jdownloader.extensions.infobar.InfoBarConfig
+-    public static final InfoBarConfig                 CFG                          = JsonConfig.create(Application.getResource("cfg/" + InfoBarExtension.class.getName()), InfoBarConfig.class);
++    public static final InfoBarConfig                 CFG                          = JsonConfig.create(Application.getConfigResource("cfg/" + InfoBarExtension.class.getName()), InfoBarConfig.class);
+     public static final StorageHandler<InfoBarConfig> SH                           = (StorageHandler<InfoBarConfig>) CFG._getStorageHandler();
+     // let's do this mapping here. If we map all methods to static handlers, access is faster, and we get an error on init if mappings are
+     // wrong.
+diff --git a/trunk/src/org/jdownloader/extensions/schedulerV2/CFG_SCHEDULER.java b/trunk/src/org/jdownloader/extensions/schedulerV2/CFG_SCHEDULER.java
+index e0a3630..277136e 100644
+--- a/trunk/src/org/jdownloader/extensions/schedulerV2/CFG_SCHEDULER.java
++++ b/trunk/src/org/jdownloader/extensions/schedulerV2/CFG_SCHEDULER.java
+@@ -12,7 +12,7 @@ public class CFG_SCHEDULER {
+     // SchedulerExtension.class.getSimpleName() + ".class.getName())");
+     // }
+     // Static Mappings for interface org.jdownloader.extensions.schedulerV2.SchedulerConfig
+-    public static final SchedulerConfig                 CFG           = JsonConfig.create(Application.getResource("cfg/" + SchedulerExtension.class.getName()), SchedulerConfig.class);
++    public static final SchedulerConfig                 CFG           = JsonConfig.create(Application.getConfigResource("cfg/" + SchedulerExtension.class.getName()), SchedulerConfig.class);
+     public static final StorageHandler<SchedulerConfig> SH            = (StorageHandler<SchedulerConfig>) CFG._getStorageHandler();
+     // let's do this mapping here. If we map all methods to static handlers, access is faster, and we get an error on init if mappings are
+     // wrong.
+diff --git a/trunk/src/org/jdownloader/extensions/shutdown/CFG_SHUTDOWN.java b/trunk/src/org/jdownloader/extensions/shutdown/CFG_SHUTDOWN.java
+index e9f8adc..391e3b1 100644
+--- a/trunk/src/org/jdownloader/extensions/shutdown/CFG_SHUTDOWN.java
++++ b/trunk/src/org/jdownloader/extensions/shutdown/CFG_SHUTDOWN.java
+@@ -13,7 +13,7 @@ public class CFG_SHUTDOWN {
+     // + ".class.getName())");
+     // }
+     // Static Mappings for interface org.jdownloader.extensions.shutdown.ShutdownConfig
+-    public static final ShutdownConfig                 CFG                                = JsonConfig.create(Application.getResource("cfg/" + ShutdownExtension.class.getName()), ShutdownConfig.class);
++    public static final ShutdownConfig                 CFG                                = JsonConfig.create(Application.getConfigResource("cfg/" + ShutdownExtension.class.getName()), ShutdownConfig.class);
+     public static final StorageHandler<ShutdownConfig> SH                                 = (StorageHandler<ShutdownConfig>) CFG._getStorageHandler();
+     // let's do this mapping here. If we map all methods to static handlers, access is faster, and we get an error on init if mappings are
+     // wrong.
+diff --git a/trunk/src/org/jdownloader/extensions/translator/CFG_TRANSLATOR.java b/trunk/src/org/jdownloader/extensions/translator/CFG_TRANSLATOR.java
+index 1091d5f..c33612a 100644
+--- a/trunk/src/org/jdownloader/extensions/translator/CFG_TRANSLATOR.java
++++ b/trunk/src/org/jdownloader/extensions/translator/CFG_TRANSLATOR.java
+@@ -13,7 +13,7 @@ public class CFG_TRANSLATOR {
+     // TranslatorExtension.class.getSimpleName() + ".class.getName())");
+     // }
+     // Static Mappings for interface org.jdownloader.extensions.translator.TranslatorConfig
+-    public static final TranslatorConfig                 CFG                     = JsonConfig.create(Application.getResource("cfg/" + TranslatorExtension.class.getName()), TranslatorConfig.class);
++    public static final TranslatorConfig                 CFG                     = JsonConfig.create(Application.getConfigResource("cfg/" + TranslatorExtension.class.getName()), TranslatorConfig.class);
+     public static final StorageHandler<TranslatorConfig> SH                      = (StorageHandler<TranslatorConfig>) CFG._getStorageHandler();
+     // let's do this mapping here. If we map all methods to static handlers, access is faster, and we get an error on init if mappings are
+     // wrong.
+diff --git a/trunk/src/org/jdownloader/gui/jdtrayicon/CFG_TRAY_CONFIG.java b/trunk/src/org/jdownloader/gui/jdtrayicon/CFG_TRAY_CONFIG.java
+index 885145b..cf1cd07 100644
+--- a/trunk/src/org/jdownloader/gui/jdtrayicon/CFG_TRAY_CONFIG.java
++++ b/trunk/src/org/jdownloader/gui/jdtrayicon/CFG_TRAY_CONFIG.java
+@@ -12,7 +12,7 @@ public class CFG_TRAY_CONFIG {
+     // ".class.getName())");
+     // }
+     // Static Mappings for interface org.jdownloader.gui.jdtrayicon.TrayConfig
+-    public static final TrayConfig                 CFG                                            = JsonConfig.create(Application.getResource("cfg/" + TrayExtension.class.getName()), TrayConfig.class);
++    public static final TrayConfig                 CFG                                            = JsonConfig.create(Application.getConfigResource("cfg/" + TrayExtension.class.getName()), TrayConfig.class);
+     public static final StorageHandler<TrayConfig> SH                                             = (StorageHandler<TrayConfig>) CFG._getStorageHandler();
+     // let's do this mapping here. If we map all methods to static handlers, access is faster, and we get an error on init if mappings are
+     // wrong.
+diff --git a/trunk/src/org/jdownloader/gui/laf/jddefault/JDDefaultLookAndFeel.java b/trunk/src/org/jdownloader/gui/laf/jddefault/JDDefaultLookAndFeel.java
+index ff6d698..48b511c 100644
+--- a/trunk/src/org/jdownloader/gui/laf/jddefault/JDDefaultLookAndFeel.java
++++ b/trunk/src/org/jdownloader/gui/laf/jddefault/JDDefaultLookAndFeel.java
+@@ -41,7 +41,7 @@ public class JDDefaultLookAndFeel extends SyntheticaLookAndFeel {
+         FileInputStream fis = null;
+         if (!initDone) {
+             try {
+-                File custom = Application.getResource("cfg/laf/" + JDDefaultLookAndFeel.class.getSimpleName() + ".xml");
++                File custom = Application.getConfigResource("cfg/laf/" + JDDefaultLookAndFeel.class.getSimpleName() + ".xml");
+                 LoggerFactory.getDefaultLogger().info("Custom LAF XML: " + custom);
+                 if (custom.exists()) {
+                     super.load(new BufferedInputStream(fis = new FileInputStream(custom)), resourceBase);
+diff --git a/trunk/src/org/jdownloader/gui/laf/plain/PlainLookAndFeel.java b/trunk/src/org/jdownloader/gui/laf/plain/PlainLookAndFeel.java
+index a9d264b..c76afe6 100644
+--- a/trunk/src/org/jdownloader/gui/laf/plain/PlainLookAndFeel.java
++++ b/trunk/src/org/jdownloader/gui/laf/plain/PlainLookAndFeel.java
+@@ -40,7 +40,7 @@ public class PlainLookAndFeel extends SyntheticaLookAndFeel {
+         FileInputStream fis = null;
+         if (!initDone) {
+             try {
+-                File custom = Application.getResource("cfg/laf/" + PlainLookAndFeel.class.getSimpleName() + ".xml");
++                File custom = Application.getConfigResource("cfg/laf/" + PlainLookAndFeel.class.getSimpleName() + ".xml");
+                 if (custom.exists()) {
+                     LoggerFactory.getDefaultLogger().info("Custom LAF XML: " + custom);
+                     super.load(new BufferedInputStream(fis = new FileInputStream(custom)), resourceBase);
+diff --git a/trunk/src/org/jdownloader/gui/mainmenu/BackupCreateAction.java b/trunk/src/org/jdownloader/gui/mainmenu/BackupCreateAction.java
+index f9da805..4be5685 100644
+--- a/trunk/src/org/jdownloader/gui/mainmenu/BackupCreateAction.java
++++ b/trunk/src/org/jdownloader/gui/mainmenu/BackupCreateAction.java
+@@ -242,7 +242,7 @@ public class BackupCreateAction extends CustomizableAppAction {
+                     }
+                 }
+             };
+-            zipper.addDirectory(Application.getResource("cfg"), false, null);
++            zipper.addDirectory(Application.getConfigResource("cfg"), false, null);
+             if (backupErrors.length() > 0) {
+                 zipper.addByteArry(backupErrors.toString().getBytes("UTF-8"), true, "cfg", "BackupErrors.txt");
+             }
+diff --git a/trunk/src/org/jdownloader/gui/mainmenu/BackupRestoreAction.java b/trunk/src/org/jdownloader/gui/mainmenu/BackupRestoreAction.java
+index 8dc220f..5899ccb 100644
+--- a/trunk/src/org/jdownloader/gui/mainmenu/BackupRestoreAction.java
++++ b/trunk/src/org/jdownloader/gui/mainmenu/BackupRestoreAction.java
+@@ -211,9 +211,9 @@ public class BackupRestoreAction extends CustomizableAppAction implements Action
+                                 while (tmp.exists()) {
+                                     tmp = Application.getTempResource("restorebackup_" + System.currentTimeMillis());
+                                 }
+-                                File backup = Application.getResource("cfg_backup_" + System.currentTimeMillis());
++                                File backup = Application.getConfigResource("cfg_backup_" + System.currentTimeMillis());
+                                 while (backup.exists()) {
+-                                    backup = Application.getResource("cfg_backup_" + System.currentTimeMillis());
++                                    backup = Application.getConfigResource("cfg_backup_" + System.currentTimeMillis());
+                                 }
+                                 final ZipIOReader zip = new ZipIOReader(file);
+                                 try {
+@@ -224,18 +224,18 @@ public class BackupRestoreAction extends CustomizableAppAction implements Action
+                                     } catch (Throwable e) {
+                                     }
+                                 }
+-                                Application.getResource("cfg").renameTo(backup);
++                                Application.getConfigResource("cfg").renameTo(backup);
+                                 if (getMaxCFGBackupFolders() >= 0) {
+                                     cleanupCFGBackFolders(getMaxCFGBackupFolders());
+                                 }
+-                                if (Application.getResource("cfg").exists()) {
+-                                    throw new Exception("Could not delete " + Application.getResource("cfg"));
++                                if (Application.getConfigResource("cfg").exists()) {
++                                    throw new Exception("Could not delete " + Application.getConfigResource("cfg"));
+                                 } else {
+-                                    new File(tmp, "cfg").renameTo(Application.getResource("cfg"));
++                                    new File(tmp, "cfg").renameTo(Application.getConfigResource("cfg"));
+                                 }
+                             } catch (Exception e) {
+                                 LogV3.defaultLogger().log(e);
+-                                Dialog.getInstance().showExceptionDialog(_GUI.T.lit_error_occured(), e.getMessage() + "\r\nPlease try to close JDownloader, and extract the file\r\n" + file.getAbsolutePath() + "\r\nto " + Application.getResource("cfg").getParent() + "\r\nusing an application like WinZip, 7Zip or Winrar.\r\nIf this does not work, feel free to contact our support.", e);
++                                Dialog.getInstance().showExceptionDialog(_GUI.T.lit_error_occured(), e.getMessage() + "\r\nPlease try to close JDownloader, and extract the file\r\n" + file.getAbsolutePath() + "\r\nto " + Application.getConfigResource("cfg").getParent() + "\r\nusing an application like WinZip, 7Zip or Winrar.\r\nIf this does not work, feel free to contact our support.", e);
+                             }
+                         }
+                     });
+diff --git a/trunk/src/org/jdownloader/launcher/StandaloneLauncher.java b/trunk/src/org/jdownloader/launcher/StandaloneLauncher.java
+index a1ed348..ccd3247 100644
+--- a/trunk/src/org/jdownloader/launcher/StandaloneLauncher.java
++++ b/trunk/src/org/jdownloader/launcher/StandaloneLauncher.java
+@@ -117,7 +117,7 @@ public class StandaloneLauncher {
+                 final long pid = CrossSystem.getPID();
+                 if (pid >= 1) {
+                     final String jarName = Application.getJarName(StandaloneLauncher.class).replaceFirst("(?i)\\.jar$", ".pid");
+-                    final File pidFile = Application.getResource(jarName);
++                    final File pidFile = Application.getShareResource(jarName);
+                     if (!pidFile.exists() || (pidFile.isFile() && pidFile.delete())) {
+                         pidFile.deleteOnExit();
+                         IO.writeStringToFile(pidFile, Long.toString(pid) + "\n");
+diff --git a/trunk/src/org/jdownloader/plugins/components/abstractSafeLinking.java b/trunk/src/org/jdownloader/plugins/components/abstractSafeLinking.java
+index 38c8b11..f7b4f12 100644
+--- a/trunk/src/org/jdownloader/plugins/components/abstractSafeLinking.java
++++ b/trunk/src/org/jdownloader/plugins/components/abstractSafeLinking.java
+@@ -842,7 +842,7 @@ public abstract class abstractSafeLinking extends antiDDoSForDecrypt {
+             if (con.getResponseCode() == 200) {
+                 try {
+                     /* does not exist in 09581 */
+-                    file = org.appwork.utils.Application.getResource("tmp/generalsafelinking/" + JDHash.getSHA1(test) + format);
++                    file = org.appwork.utils.Application.getShareResource("tmp/generalsafelinking/" + JDHash.getSHA1(test) + format);
+                 } catch (Throwable e) {
+                     file = JDUtilities.getResourceFile("tmp/generalsafelinking/" + JDHash.getSHA1(test) + format);
+                 }
+diff --git a/trunk/src/org/jdownloader/plugins/components/youtube/ItagHelper.java b/trunk/src/org/jdownloader/plugins/components/youtube/ItagHelper.java
+index ebbf854..870ab96 100644
+--- a/trunk/src/org/jdownloader/plugins/components/youtube/ItagHelper.java
++++ b/trunk/src/org/jdownloader/plugins/components/youtube/ItagHelper.java
+@@ -670,7 +670,7 @@ public class ItagHelper {
+                 return logger;
+             }
+         };
+-        file = Application.getResource("tmp/ytdev/stream_" + itag + "_" + vid.videoID + ".dat");
++        file = Application.getShareResource("tmp/ytdev/stream_" + itag + "_" + vid.videoID + ".dat");
+         if (!file.exists()) {
+             final URLConnectionAdapter con = br.openGetConnection(url);
+             FileOutputStream fos = null;
+diff --git a/trunk/src/org/jdownloader/plugins/components/youtube/keepForCompatibilitye/YoutubeCompatibility.java b/trunk/src/org/jdownloader/plugins/components/youtube/keepForCompatibilitye/YoutubeCompatibility.java
+index 442774b..41dbcf1 100644
+--- a/trunk/src/org/jdownloader/plugins/components/youtube/keepForCompatibilitye/YoutubeCompatibility.java
++++ b/trunk/src/org/jdownloader/plugins/components/youtube/keepForCompatibilitye/YoutubeCompatibility.java
+@@ -13,7 +13,7 @@ import org.jdownloader.plugins.components.youtube.variants.VariantBase;
+ public class YoutubeCompatibility {
+ 
+     public static Object moveJSonFiles(final String newID) {
+-        File folder = Application.getResource("cfg/plugins/");
++        File folder = Application.getConfigResource("cfg/plugins/");
+         if (folder.exists()) {
+             // rename old config files
+             Files.walkThroughStructure(new FileHandler<RuntimeException>() {
+diff --git a/trunk/src/org/jdownloader/plugins/config/PluginJsonConfig.java b/trunk/src/org/jdownloader/plugins/config/PluginJsonConfig.java
+index e6c0709..4a755cc 100644
+--- a/trunk/src/org/jdownloader/plugins/config/PluginJsonConfig.java
++++ b/trunk/src/org/jdownloader/plugins/config/PluginJsonConfig.java
+@@ -51,7 +51,7 @@ public class PluginJsonConfig {
+     };
+     private final static boolean                                                                   DEBUG         = false;
+     static {
+-        final File pluginsFolder = Application.getResource("cfg/plugins/");
++        final File pluginsFolder = Application.getConfigResource("cfg/plugins/");
+         if (!pluginsFolder.exists()) {
+             pluginsFolder.mkdirs();
+         }
+@@ -163,7 +163,7 @@ public class PluginJsonConfig {
+         }
+         final ClassLoader cl = configInterface.getClassLoader();
+         if (!(cl instanceof PluginClassLoaderChild)) {
+-            final File storageFile = Application.getResource("cfg/plugins/" + ID);
++            final File storageFile = Application.getConfigResource("cfg/plugins/" + ID);
+             return JsonConfig.create(storageFile, configInterface);
+         }
+         HashMap<String, WeakReference<ConfigInterface>> classLoaderMap = CONFIG_CACHE.get(cl);
+@@ -185,7 +185,7 @@ public class PluginJsonConfig {
+         }
+         JsonKeyValueStorage storage = STORAGE_CACHE.get(ID);
+         if (storage == null) {
+-            final File storageFile = Application.getResource("cfg/plugins/" + ID);
++            final File storageFile = Application.getConfigResource("cfg/plugins/" + ID);
+             if (DEBUG) {
+                 System.out.println("Create PluginJsonConfig for " + ID);
+             }
+diff --git a/trunk/src/org/jdownloader/settings/advanced/AdvancedConfigAPIEntry.java b/trunk/src/org/jdownloader/settings/advanced/AdvancedConfigAPIEntry.java
+index be09452..25557ad 100644
+--- a/trunk/src/org/jdownloader/settings/advanced/AdvancedConfigAPIEntry.java
++++ b/trunk/src/org/jdownloader/settings/advanced/AdvancedConfigAPIEntry.java
+@@ -33,7 +33,7 @@ public class AdvancedConfigAPIEntry extends AdvancedConfigEntryDataStorable impl
+ 
+         }
+ 
+-        File expectedPath = Application.getResource("cfg/" + i);
++        File expectedPath = Application.getConfigResource("cfg/" + i);
+         String storage = null;
+         if (!expectedPath.equals(kh.getStorageHandler().getPath())) {
+             storage = Files.getRelativePath(Application.getTemp().getParentFile(), kh.getStorageHandler().getPath());
+diff --git a/trunk/src/org/jdownloader/startup/Main.java b/trunk/src/org/jdownloader/startup/Main.java
+index e8f214e..9bc6021 100644
+--- a/trunk/src/org/jdownloader/startup/Main.java
++++ b/trunk/src/org/jdownloader/startup/Main.java
+@@ -80,7 +80,7 @@ public class Main {
+ 
+     public static void checkLanguageSwitch(final String[] args) {
+         try {
+-            final File language = Application.getResource("cfg/language.json");
++            final File language = Application.getConfigResource("cfg/language.json");
+             String lng = null;
+             if (language.isFile()) {
+                 lng = JSonStorage.restoreFrom(language, true, JSonStorage.KEY, TypeRef.STRING, TranslationFactory.getDesiredLanguage());
+diff --git a/trunk/src/org/jdownloader/updatev2/gui/LAFSettingsStorageHandlerFactory.java b/trunk/src/org/jdownloader/updatev2/gui/LAFSettingsStorageHandlerFactory.java
+index 00c7a9d..9055400 100644
+--- a/trunk/src/org/jdownloader/updatev2/gui/LAFSettingsStorageHandlerFactory.java
++++ b/trunk/src/org/jdownloader/updatev2/gui/LAFSettingsStorageHandlerFactory.java
+@@ -57,7 +57,7 @@ public class LAFSettingsStorageHandlerFactory implements StorageHandlerFactory<L
+         }
+         // restore old storage
+         try {
+-            final File oldLafSettingsFile = Application.getResource("cfg/org.appwork.swing.synthetica.SyntheticaSettings.json");
++            final File oldLafSettingsFile = Application.getConfigResource("cfg/org.appwork.swing.synthetica.SyntheticaSettings.json");
+             if (oldLafSettingsFile.exists()) {
+                 final JsonKeyValueStorage prim = (JsonKeyValueStorage) JsonConfig.create(SyntheticaSettings.class)._getStorageHandler().getPrimitiveStorage();
+                 for (final String s : prim.getKeys()) {
+diff --git a/trunk/src/org/jdownloader/webcache/WebCache.java b/trunk/src/org/jdownloader/webcache/WebCache.java
+index f2cb3db..9b30714 100644
+--- a/trunk/src/org/jdownloader/webcache/WebCache.java
++++ b/trunk/src/org/jdownloader/webcache/WebCache.java
+@@ -24,7 +24,7 @@ public class WebCache {
+     protected final HashMap<String, MinTimeWeakReference<CachedRequest>> cache;
+ 
+     public WebCache(String cacheID) {
+-        folder = Application.getResource("tmp/webcache/" + cacheID);
++        folder = Application.getShareResource("tmp/webcache/" + cacheID);
+         folder.mkdirs();
+         logger = LoggerFactory.getDefaultLogger();
+         cache = new HashMap<String, MinTimeWeakReference<CachedRequest>>();
+-- 
+2.31.1
+
