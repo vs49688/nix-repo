@@ -9,6 +9,8 @@ let
 
   self = {
     inherit lib;
+
+    crocutils = lib.callPackage ./pkgs/crocutils { };
   };
 in
 { pkgs = self; } // self
