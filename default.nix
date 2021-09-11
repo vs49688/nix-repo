@@ -19,6 +19,8 @@ let
     pimidid = lib.callPackage ./pkgs/pimidid { };
 
     jdownloader = lib.callPackage ./pkgs/jdownloader { };
+
+    mangostwo-server = lib.callPackage ./pkgs/mangostwo-server { };
   };
 in
 { pkgs = self; } // self
