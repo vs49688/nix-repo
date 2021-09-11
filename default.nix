@@ -21,6 +21,8 @@ let
     jdownloader = lib.callPackage ./pkgs/jdownloader { };
 
     mangostwo-server = lib.callPackage ./pkgs/mangostwo-server { };
+
+    mangostwo-database = lib.callPackage ./pkgs/mangostwo-database { };
   };
 in
 { pkgs = self; } // self

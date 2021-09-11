@@ -1,0 +1,130 @@
+From adf907cf72845a1d7dea12308f5528e866396536 Mon Sep 17 00:00:00 2001
+From: Zane van Iperen <zane@zanevaniperen.com>
+Date: Tue, 17 Aug 2021 00:57:04 +1000
+Subject: [PATCH 2/2] InstallDatabases.sh: fix importing with mariadb
+
+You get errors like this otherwise:
+
+> Updating data into the Realm database mangos_auth
+> Applying update Realm/Updates/Rel21/Rel21_03_001_Update_ROW_FORMAT_and_engine.sql
+> ./InstallDatabases.sh: line 236: Character: command not found
+> File Realm/Updates/Rel21/Rel21_03_001_Update_ROW_FORMAT_and_engine.sql imported
+> Applying update Realm/Updates/Rel21/Rel21_04_001_Fix_account_table_errors.sql
+> ./InstallDatabases.sh: line 236: Character: command not found
+> File Realm/Updates/Rel21/Rel21_04_001_Fix_account_table_errors.sql imported
+> Applying update Realm/Updates/Rel22/Rel22_01_001_Release_22.sql
+> ./InstallDatabases.sh: line 244: Character: command not found
+> File Realm/Updates/Rel22/Rel22_01_001_Release_22.sql imported
+> Adding realm list entries
+> ./InstallDatabases.sh: line 252: Realm: command not found
+> ./InstallDatabases.sh: line 49: clear: command not found
+---
+ InstallDatabases.sh | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/InstallDatabases.sh b/InstallDatabases.sh
+index c12bc13..058c324 100755
+--- a/InstallDatabases.sh
++++ b/InstallDatabases.sh
+@@ -115,7 +115,7 @@ determineDBCommand()
+ createCharDB()
+ {
+ 	printf "Creating Character database ${cdb}\n"
+-	$(${dbcommand} -e "Create database ${cdb}")
++	${dbcommand} -e "Create database ${cdb}"
+ 
+ 	if [ "${loadcharDB}" = "YES" ]; then
+ 		loadCharDB
+@@ -125,7 +125,7 @@ createCharDB()
+ loadCharDB()
+ {
+ 	printf "Loading data into character database ${cdb}\n"
+-	$(${dbcommand} ${cdb} < Character/Setup/characterLoadDB.sql)
++	${dbcommand} ${cdb} < Character/Setup/characterLoadDB.sql
+ 
+ 	if [ "${updatecharDB}" = "YES" ]; then
+ 		updateCharDB
+@@ -155,7 +155,7 @@ updateCharDB()
+ createWorldDB()
+ {
+ 	printf "Creating World database ${wdb}\n"
+-	$(${dbcommand} -e "Create database ${wdb}")
++	${dbcommand} -e "Create database ${wdb}"
+ 
+ 	if [ "${loadworldDB}" = "YES" ]; then
+ 		loadWorldDB
+@@ -165,7 +165,7 @@ createWorldDB()
+ loadWorldDB()
+ {
+ 	printf "Loading data into world database ${wdb}\n"
+-	$(${dbcommand} ${wdb} < World/Setup/mangosdLoadDB.sql)
++	${dbcommand} ${wdb} < World/Setup/mangosdLoadDB.sql
+ 
+ 	if [ "${dbType}" = "POPULATED" ]; then
+ 		populateWorldDB
+@@ -179,7 +179,7 @@ populateWorldDB()
+ 	do
+ 		file=$(echo ${file} | tr '|' ' ')
+ 		printf "Importing file ${file}\n"
+-		$(${dbcommand} ${wdb} < ${file})
++		${dbcommand} ${wdb} < ${file}
+ 		printf "File ${file} imported\n"
+ 	done
+ 
+@@ -187,7 +187,7 @@ populateWorldDB()
+ 	do
+ 		file=$(echo ${file} | tr '|' ' ')
+ 		printf "Importing file ${file}\n"
+-		$(${dbcommand} ${wdb} < ${file})
++		${dbcommand} ${wdb} < ${file}
+ 		printf "File ${file} imported\n"
+ 	done
+ }
+@@ -213,7 +213,7 @@ updateWorldDB()
+ createRealmDB()
+ {
+ 	printf "Creating realm database ${rdb}\n"
+-	$(${dbcommand} -e "Create database ${rdb}")
++	${dbcommand} -e "Create database ${rdb}"
+ 
+ 	if [ "${loadrealmDB}" = "YES" ]; then
+ 		loadRealmDB
+@@ -223,7 +223,7 @@ createRealmDB()
+ loadRealmDB()
+ {
+ 	printf "Loading data into realm database ${rdb}\n"	
+-	$(${dbcommand} ${rdb} < Realm/Setup/realmdLoadDB.sql)
++	${dbcommand} ${rdb} < Realm/Setup/realmdLoadDB.sql
+ }
+ 
+ updateRealmDB()
+@@ -233,7 +233,7 @@ updateRealmDB()
+ 	do
+ 		file=$(echo ${file} | tr '|' ' ')
+ 		printf "Applying update ${file}\n"
+-		$(${dbcommand} ${rdb} < ${file})
++		${dbcommand} ${rdb} < ${file}
+ 		printf "File ${file} imported\n"
+ 	done
+ 
+@@ -241,7 +241,7 @@ updateRealmDB()
+ 	do
+ 		file=$(echo ${file} | tr '|' ' ')
+ 		printf "Applying update ${file}\n"
+-		$(${dbcommand} ${rdb} < ${file})
++		${dbcommand} ${rdb} < ${file}
+ 		printf "File ${file} imported\n"
+ 	done
+ }
+@@ -249,7 +249,7 @@ updateRealmDB()
+ addRealmList()
+ {
+ 	printf "Adding realm list entries\n"
+-	$(${dbcommand} ${rdb} < Tools/updateRealm.sql)
++	${dbcommand} ${rdb} < Tools/updateRealm.sql
+ }
+ 
+ activity=""
+-- 
+2.31.1
+

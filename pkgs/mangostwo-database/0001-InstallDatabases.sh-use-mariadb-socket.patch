@@ -1,0 +1,28 @@
+From 4004fafe356d458dceca4c17a2cb24630d99882b Mon Sep 17 00:00:00 2001
+From: Zane van Iperen <zane@zanevaniperen.com>
+Date: Mon, 16 Aug 2021 23:33:23 +1000
+Subject: [PATCH 1/2] InstallDatabases.sh: use mariadb socket
+
+---
+ InstallDatabases.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/InstallDatabases.sh b/InstallDatabases.sh
+index 4d8e9f9..c12bc13 100755
+--- a/InstallDatabases.sh
++++ b/InstallDatabases.sh
+@@ -104,9 +104,9 @@ mysqlconfigeditor()
+ determineDBCommand()
+ {
+ 	if [ $dbname = "MariaDB" ]; then
+-		dbcommand="mariadb -u ${user} -p${pass} -q -s"
++		dbcommand="mariadb -u ${user} -q -s --socket=/run/mysqld/mysqld.sock"
+ 	elif [ $dbname = "MySQL" ]; then
+-		dbcommand="mysql --login-path=local -q -s"
++		dbcommand="mysql --login-path=local -q -s --socket=/run/mysqld/mysqld.sock"
+ 	else
+ 		printf "Did not find mariadb or mysql.\n"
+ 	fi
+-- 
+2.31.1
+
