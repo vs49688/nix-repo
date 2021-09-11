@@ -27,4 +27,4 @@ let
     ancestris = lib.callPackage ./pkgs/ancestris { };
   };
 in
-{ pkgs = self; } // self
+{ pkgs = pkgs // self; } // self
