@@ -11,6 +11,8 @@ let
     inherit lib;
 
     crocutils = lib.callPackage ./pkgs/crocutils { };
+
+    extract-drs = lib.callPackage ./pkgs/extract-drs { };
   };
 in
 { pkgs = self; } // self
