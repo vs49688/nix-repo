@@ -23,6 +23,8 @@ let
     mangostwo-server = lib.callPackage ./pkgs/mangostwo-server { };
 
     mangostwo-database = lib.callPackage ./pkgs/mangostwo-database { };
+
+    ancestris = lib.callPackage ./pkgs/ancestris { };
   };
 in
 { pkgs = self; } // self
