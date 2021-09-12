@@ -25,6 +25,8 @@ let
     mangostwo-database = lib.callPackage ./pkgs/mangostwo-database { };
 
     ancestris = lib.callPackage ./pkgs/ancestris { };
+
+    containers = lib.callPackages ./containers { };
   };
 in
 { pkgs = pkgs // self; } // self
