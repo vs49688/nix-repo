@@ -11,6 +11,6 @@ let
     inherit lib;
     callPackage = lib.callPackage;
     callPackages = lib.callPackages;
-  } // (import ./overlay.nix) self self;
+  } // (import ./overlay.nix) self pkgs;
 in
 { pkgs = pkgs // self; } // self

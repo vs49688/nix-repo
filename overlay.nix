@@ -1,4 +1,4 @@
-self: super: rec {
+self: super: {
   crocutils = super.callPackage ./pkgs/crocutils { };
 
   extract-drs = super.callPackage ./pkgs/extract-drs { };
@@ -21,7 +21,7 @@ self: super: rec {
 
   terraform-bin_1_0 = super.callPackage ./pkgs/terraform-bin_1_0 {};
 
-  terraform-bin = terraform-bin_1_0;
+  terraform-bin = self.terraform-bin_1_0;
 
   containers = super.callPackages ./containers { };
 }
