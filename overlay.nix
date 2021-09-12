@@ -19,5 +19,9 @@ self: super: rec {
 
   zane-scripts = super.callPackages ./pkgs/zane-scripts { };
 
+  terraform-bin_1_0 = super.callPackage ./pkgs/terraform-bin_1_0 {};
+
+  terraform-bin = terraform-bin_1_0;
+
   containers = super.callPackages ./containers { };
 }
