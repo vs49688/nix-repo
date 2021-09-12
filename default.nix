@@ -3,30 +3,14 @@
 }:
 let
   lib = pkgs.lib // {
-    callPackage = pkgs.lib.callPackageWith (pkgs // self);
-    callPackages = pkgs.lib.callPackagesWith (pkgs // self);
+    callPackage = pkgs.lib.callPackageWith (pkgs // self // { inherit lib; });
+    callPackages = pkgs.lib.callPackagesWith (pkgs // self // { inherit lib; });
   };
 
   self = {
     inherit lib;
-
-    crocutils = lib.callPackage ./pkgs/crocutils { };
-
-    extract-drs = lib.callPackage ./pkgs/extract-drs { };
-
-    extract-glb = lib.callPackage ./pkgs/extract-glb { };
-
-    pimidid = lib.callPackage ./pkgs/pimidid { };
-
-    jdownloader = lib.callPackage ./pkgs/jdownloader { };
-
-    mangostwo-server = lib.callPackage ./pkgs/mangostwo-server { };
-
-    mangostwo-database = lib.callPackage ./pkgs/mangostwo-database { };
-
-    ancestris = lib.callPackage ./pkgs/ancestris { };
-
-    containers = lib.callPackages ./containers { };
-  };
+    callPackage = lib.callPackage;
+    callPackages = lib.callPackages;
+  } // (import ./overlay.nix) self self;
 in
 { pkgs = pkgs // self; } // self
