@@ -152,8 +152,5 @@ else
     exit 1
 fi
 
-
-
-cat $MANGOSD_CONFIG_PATH
 echo "[*] Exec'ing /bin/mangosd"
 exec /bin/mangosd -c "$MANGOSD_CONFIG_PATH"
