@@ -15,5 +15,7 @@ self: super: rec {
 
   ancestris = super.callPackage ./pkgs/ancestris { };
 
+  k0sctl = super.callPackage ./pkgs/k0sctl { };
+
   containers = super.callPackages ./containers { };
 }
