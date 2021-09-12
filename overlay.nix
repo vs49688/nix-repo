@@ -17,5 +17,7 @@ self: super: rec {
 
   k0sctl = super.callPackage ./pkgs/k0sctl { };
 
+  zane-scripts = super.callPackages ./pkgs/zane-scripts { };
+
   containers = super.callPackages ./containers { };
 }
