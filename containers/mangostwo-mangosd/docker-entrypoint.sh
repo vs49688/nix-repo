@@ -24,11 +24,11 @@
 
 
 # Put any default overrides go here
-[ -z "$MANGOSD_CONF_RealmID" ]      && export MANGOSD_CONF_RealmID=1
-[ -z "$MANGOSD_CONF_DataDir" ]      && export MANGOSD_CONF_DataDir=/data
-[ -z "$MANGOSD_CONF_LogFile" ]      && export MANGOSD_CONF_LogFile=
-[ -z "$MANGOSD_CONF_Ra.Enable" ]    && export MANGOSD_CONF_Ra.Enable=1
-[ -z "$MANGOSD_CONF_SOAP.Enabled" ] && export MANGOSD_CONF_SOAP.Enabled=1
+[ -z "$MANGOSD_CONF_RealmID" ]       && export MANGOSD_CONF_RealmID=1
+[ -z "$MANGOSD_CONF_DataDir" ]       && export MANGOSD_CONF_DataDir=/data
+[ -z "$MANGOSD_CONF_LogFile" ]       && export MANGOSD_CONF_LogFile=
+[ -z "$MANGOSD_CONF_Ra__Enable" ]    && export MANGOSD_CONF_Ra__Enable=1
+[ -z "$MANGOSD_CONF_SOAP__Enabled" ] && export MANGOSD_CONF_SOAP__Enabled=1
 
 # Unset any MANGOSD_CONF_* vars we don't want overridden
 unset \
@@ -39,7 +39,7 @@ unset \
     MANGOSD_CONF_LoginDatabaseInfo \
     MANGOSD_CONF_WorldDatabaseInfo \
     MANGOSD_CONF_CharacterDatabaseInfo \
-    MANGOSD_CONF_Console.Enable
+    MANGOSD_CONF_Console__Enable
 
 if [ ! -f "$MANGOSD_CONFIG_PATH" ]; then
     echo "[*] Generating $MANGOSD_CONFIG_PATH..."
@@ -47,10 +47,10 @@ if [ ! -f "$MANGOSD_CONFIG_PATH" ]; then
     ##
     # Convert environment vars of the form "MANGOSD_CONF_XXXX=YYYY"
     # into "XXXX = YYYYY" in mangos.conf. If YYYY is empty, it is surrounded
-    # by empty quotes.
+    # by empty quotes. For a period, use two underscores (__)
     # Honestly, I feel kind of dirty...
     ##
-    envconf=$(env | awk -F= '{ $2 = substr($0, index($0, "=") + 1); if ($1 ~ /^MANGOSD_CONF_/) { gsub(/^MANGOSD_CONF_/, "", $1); val = ($2 == "") ? "\"\"" : $2; printf "%s = %s\n", $1, val; } }' | sort)
+    envconf=$(env | awk -F= '{ $2 = substr($0, index($0, "=") + 1); if ($1 ~ /^MANGOSD_CONF_/) { gsub(/^MANGOSD_CONF_/, "", $1); gsub(/__/, ".", $1); val = ($2 == "") ? "\"\"" : $2; printf "%s = %s\n", $1, val; } }' | sort)
 
     cat <<EOF > "$MANGOSD_CONFIG_PATH"
 # See https://github.com/mangos/mangosd/blob/master/mangos2.conf.dist.in
