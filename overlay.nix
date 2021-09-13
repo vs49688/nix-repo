@@ -28,6 +28,4 @@ self: super: {
   # Temporary until after 21.05
   ##
   tini = super.callPackage ./pkgs/tini { };
-
-  containers = super.callPackages ./containers { };
 }

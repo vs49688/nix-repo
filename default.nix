@@ -13,4 +13,8 @@ let
     callPackages = lib.callPackages;
   } // (import ./overlay.nix) self pkgs;
 in
-{ pkgs = pkgs // self; } // self
+{
+  pkgs = pkgs // self;
+
+  containers = lib.callPackages ./containers { };
+} // self
