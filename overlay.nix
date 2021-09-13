@@ -23,5 +23,11 @@ self: super: {
 
   terraform-bin = self.terraform-bin_1_0;
 
+  ##
+  # Upstream tini depends directly on glibc
+  # Temporary until after 21.05
+  ##
+  tini = super.callPackage ./pkgs/tini { };
+
   containers = super.callPackages ./containers { };
 }
