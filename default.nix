@@ -11,10 +11,20 @@ let
     inherit lib;
     callPackage = lib.callPackage;
     callPackages = lib.callPackages;
-  } // (import ./overlay.nix) self pkgs;
-in
-{
-  pkgs = pkgs // self;
+  } // ((import ./overlay.nix) self pkgs) // {
+    pkgsStatic = pkgs.pkgsStatic // rec {
+      callPackage = pkgs.lib.callPackageWith (pkgs.pkgsStatic // self.pkgsStatic);
+      callPackages = pkgs.lib.callPackagesWith (pkgs.pkgsStatic // self.pkgsStatic);
 
-  containers = lib.callPackages ./containers { };
-} // self
+      tini = callPackage ./pkgs/tini { cmake = pkgs.cmake; };
+    };
+
+    pkgs = pkgs // self;
+
+    containers = import ./containers {
+      inherit lib;
+
+      pkgs = self.pkgs;
+    };
+  };
+in self
