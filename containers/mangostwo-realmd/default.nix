@@ -1,4 +1,5 @@
 { dockerTools
+, imagePrefix
 , lib
 , mangostwo-server
 , mangostwo-database
@@ -21,7 +22,7 @@ let
   '';
 
 in dockerTools.buildLayeredImage {
-  name = "ghcr.io/vs49688/mangostwo-realmd";
+  name = "${imagePrefix}/mangostwo-realmd";
   tag  = mangostwo-server.version;
 
   contents = [

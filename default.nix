@@ -25,6 +25,7 @@ let
       inherit lib;
 
       pkgs = self.pkgs;
+      imagePrefix = "ghcr.io/vs49688";
     };
   };
 in self
