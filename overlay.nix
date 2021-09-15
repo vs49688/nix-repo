@@ -7,7 +7,14 @@ self: super: {
 
   pimidid = super.callPackage ./pkgs/pimidid { };
 
-  jdownloader = super.callPackage ./pkgs/jdownloader { };
+  jdownloader = super.callPackage ./pkgs/jdownloader {
+    ##
+    # Needs to be built with max 11:
+    #   [javac] error: Source option 6 is no longer supported. Use 7 or later.
+    #   [javac] error: Target option 6 is no longer supported. Use 7 or later.
+    ##
+    jdk = super.jdk11;
+  };
 
   mangostwo-server = super.callPackage ./pkgs/mangostwo-server { };
 
