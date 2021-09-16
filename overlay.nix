@@ -29,10 +29,4 @@ self: super: {
   terraform-bin_1_0 = super.callPackage ./pkgs/terraform-bin_1_0 { };
 
   terraform-bin = self.terraform-bin_1_0;
-
-  ##
-  # Upstream tini depends directly on glibc
-  # Temporary until after 21.05
-  ##
-  tini = super.callPackage ./pkgs/tini { };
 }
