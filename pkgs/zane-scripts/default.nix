@@ -12,8 +12,8 @@ let
   src = fetchFromGitHub {
     owner  = "vs49688";
     repo   = "scripts";
-    rev    = "d0e25b16898a544245ec21ea3e8aea7a94b65270";
-    sha256 = "114m5v899g8rapz11jkmblrwkpf1iz6293fqz3j0bdci5fzjk1wr";
+    rev    = "6c27edd25f63944d64786452ebf3e6098c34d078";
+    sha256 = "0vj2hy6j5q7scf6x5is3z8bprfn02hc25kc1s7xxy7pd35lzsrqn";
   };
 
   mkScriptDerivation = args@{ pname, script ? "${pname}.sh", buildInputs ? [], ... }: stdenv.mkDerivation {
