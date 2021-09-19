@@ -29,4 +29,8 @@ self: super: {
   terraform-bin_1_0 = super.callPackage ./pkgs/terraform-bin_1_0 { };
 
   terraform-bin = self.terraform-bin_1_0;
+
+  clion-2018_3 = super.callPackage ./pkgs/clion-2018_3 {
+    jdk = super.openjdk11;
+  };
 }
