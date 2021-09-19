@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchsvn, ant, jdk, jre ? jdk, makeDesktopItem, desktop-file-utils, imagemagick, makeWrapper }:
+{ stdenv, lib, fetchsvn, ant, jdk, jre ? jdk, makeDesktopItem, makeWrapper }:
 let
   svnRevision = "44937";
 
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
     sha256 = "12nlqi6lmx6lmajr37h3nli56lg6hqi4pnk8lchgi204i5paj0bh";
   };
 
-  nativeBuildInputs = [ jdk ant imagemagick desktop-file-utils makeWrapper ];
+  nativeBuildInputs = [ jdk ant makeWrapper ];
   buildInputs = [ jre ];
 
   patches = [ ./0001-path-fixes-log-tmp-cfg-pidfile.patch ];
@@ -68,17 +68,14 @@ stdenv.mkDerivation rec {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/{bin,jdownloader,share/icons/hicolor/256x256/apps}
+    mkdir -p $out/{bin,jdownloader,share/pixmaps}
     cp -Rv dist/standalone/dist/* $out/jdownloader
 
     makeWrapper ${jre}/bin/java $out/bin/jdownloader \
       --add-flags "-cp $out/jdownloader/JDownloader.jar org.jdownloader.launcher.JDLauncher"
 
-    convert -resize 256x256 \
-      "${src}/artwork/icons/by TRazo/JDownloader/JDownloader.png" \
-      $out/share/icons/hicolor/256x256/apps/jdownloader.png
-
-    ${desktopItem.buildCommand}
+    ln -s "${src}/artwork/icons/by TRazo/JDownloader/JDownloader.png" $out/share/pixmaps/jdownloader.png
+    ln -s "${desktopItem}/share/applications" $out/share
 
     runHook postInstall
   '';
