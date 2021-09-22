@@ -33,4 +33,8 @@ self: super: {
   clion-2018_3 = super.callPackage ./pkgs/clion-2018_3 {
     jdk = super.openjdk11;
   };
+
+  jpsxdec = super.callPackage ./pkgs/jpsxdec {
+    jdk = super.openjdk8;
+  };
 }
