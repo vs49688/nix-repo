@@ -37,4 +37,6 @@ self: super: {
   jpsxdec = super.callPackage ./pkgs/jpsxdec {
     jdk = super.openjdk8;
   };
+
+  cmdpack = super.callPackages ./pkgs/cmdpack { };
 }
