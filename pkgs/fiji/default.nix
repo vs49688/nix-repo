@@ -10,15 +10,25 @@ let
   pname   = "fiji";
   version = "20201104-1356";
 
-  description = "An image processing package - a “batteries-included” distribution of ImageJ2, bundling a lot of plugins which facilitate scientific image analysis";
-
-  desktopItem = makeDesktopItem {
+  desktopItem = let
+    niceName = "Fiji Is Just ImageJ";
+  in makeDesktopItem {
     name        = "fiji";
-    exec        = "fiji";
+    exec        = "fiji %F";
     icon        = "fiji";
-    comment     = description;
-    desktopName = "Fiji";
-    categories  = "Graphics;";
+    mimeType    = "image/*;";
+    comment     = "Scientific Image Analysis";
+    desktopName = niceName;
+    genericName = niceName;
+    categories  = "Education;Science;ImageProcessing;";
+    terminal    = false;
+    startupNotify = true;
+    extraEntries = ''
+      Version=1.0
+      TryExec=fiji
+      X-GNOME-FullName=${niceName}
+      StartupWMClass=fiji-Main
+    '';
   };
 in
 stdenv.mkDerivation {
@@ -40,6 +50,7 @@ stdenv.mkDerivation {
     mkdir -p $out/{bin,fiji,share/pixmaps}
 
     cp -R * $out/fiji
+
     makeWrapper $out/fiji/ImageJ-linux64 $out/bin/fiji \
       --prefix PATH : ${lib.makeBinPath [ openjdk11 ]} \
       --set JAVA_HOME ${openjdk11.home}
@@ -51,8 +62,8 @@ stdenv.mkDerivation {
   '';
 
   meta = with lib; {
-    inherit description;
     homepage    = "https://imagej.net/software/fiji/";
+    description = "An image processing package - a “batteries-included” distribution of ImageJ2, bundling a lot of plugins which facilitate scientific image analysis";
     platforms   = [ "x86_64-linux" ];
     license     = with lib.licenses; [
       gpl2Plus gpl3Plus bsd2 publicDomain
