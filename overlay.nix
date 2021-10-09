@@ -39,4 +39,6 @@ self: super: {
   };
 
   cmdpack = super.callPackages ./pkgs/cmdpack { };
+
+  fiji = super.callPackage ./pkgs/fiji { };
 }
