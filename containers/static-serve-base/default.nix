@@ -3,17 +3,22 @@
 , pkg ? null
 , tini
 , darkhttpd
+, busybox
 , name
 , tag
 , staticPath
 , listenPort ? 8080
 , noListing ? true
+, noShell ? false
 }:
 dockerTools.buildLayeredImage {
   inherit name;
   inherit tag;
 
-  contents = [ tini darkhttpd ] ++ lib.optionals (pkg != null) [ pkg ];
+  contents = [ tini darkhttpd ]
+    ++ lib.optionals (pkg != null) [ pkg ]
+    ++ lib.optionals (!noShell) [ busybox ]
+  ;
 
   config = {
     Cmd = [

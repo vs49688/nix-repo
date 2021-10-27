@@ -42,6 +42,7 @@ let
       self = rec {
         makeStaticServeContainer = a@{ pkg ? null, ... }: let
           args = {
+            busybox    = pkgsStatic.busybox;
             tini       = pkgsStatic.tini;
             darkhttpd  = pkgsStatic.darkhttpd;
           } // pkgs.lib.optionalAttrs (pkg != null) {
@@ -138,7 +139,7 @@ let
     #
     # Also note that static cmake is completely broken.
     ##
-    pkgsStatic = rec {
+    pkgsStatic = pkgs.pkgsStatic // rec {
       callPackage = pkgs.lib.callPackageWith (pkgs.pkgsStatic // self.pkgsStatic);
 
       nimrun = callPackage ./pkgs/nimrun { cmake = pkgs.cmake; };
