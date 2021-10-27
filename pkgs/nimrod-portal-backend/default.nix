@@ -4,7 +4,7 @@ stdenv.mkDerivation rec {
   version = "1.13.1";
 
   src = fetchurl {
-    url    = "https://github.com/UQ-RCC/nimrod-portal-backend/releases/download/${version}/nimrod-portal-backend-${version}.tar.gz";
+    url    = "https://github.com/UQ-RCC/nimrodg/releases/download/${version}/nimrod-portal-backend-${version}.tar.gz";
     sha256 = "1k13w1s19n5f7dp2wc977l7zz1chk9gchr46n0wk1bmady35s199";
   };
 
