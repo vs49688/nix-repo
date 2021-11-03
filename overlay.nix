@@ -41,4 +41,6 @@ self: super: {
   cmdpack = super.callPackages ./pkgs/cmdpack { };
 
   fiji = super.callPackage ./pkgs/fiji { };
+
+  protoc-gen-go-vtproto = super.callPackage ./pkgs/protoc-gen-go-vtproto { };
 }
