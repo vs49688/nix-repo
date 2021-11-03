@@ -9,13 +9,11 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "planetscale";
     repo = "vtprotobuf";
-    rev = "${version}";
+    rev = "v${version}";
     sha256 = "0kjjpfsiws4vi36ha1gajb97rwcggqw753mv2jqf09kdfszz9p63";
   };
 
-  vendorSha256 = "0cak3f70pb20m6n9hskxqld0lgk00ffypkil2zxa4fcp9yc787ms";
-
-  runVend = true;
+  vendorSha256 = "01lxwlgh3y3gp22gk5qx7r60c1j63pnpi6jnri8gf2lmiiib8fdc";
 
   # conformance_test.go:55: execution error: fork/exec conformance/conformance-test-runner: no such file or directory
   doCheck = false;
