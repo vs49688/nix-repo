@@ -47,6 +47,8 @@ stdenv.mkDerivation rec {
     sha256 = jdownloaderHash;
   };
 
+  passthru.updateScript = ./update.sh;
+
   nativeBuildInputs = [ jdk ant makeWrapper ];
   buildInputs = [ jre ];
 
