@@ -1,11 +1,11 @@
 { stdenv, lib, fetchsvn, ant, jdk, jre ? jdk, makeDesktopItem, makeWrapper }:
 let
-  jdRevision = "44937";
-  appWorkRevision = "3570";
+  jdRevision = "45198";
+  appWorkRevision = "3602";
 
-  appWorkHash = "0h0p0j3r7fdg3vjggwsx8lav4w4jm02ci233wld4irzm6qmr5f6i";
-  jdownloaderHash = "12nlqi6lmx6lmajr37h3nli56lg6hqi4pnk8lchgi204i5paj0bh";
-  jdbrowserHash = "0nsavm4gnq19hgrmak5knpnw1gl8d3m39fq8fm9wv62k05xz9n2r";
+  appWorkHash = "1l1va39vxpxb20lkk64nxm8igih7c8hmkb416jvyl6ad1awyinrl";
+  jdownloaderHash = "0k2cmzwvv7g6q6gh7xg7n7d0884d4fpdsx1ipmd28s1wd9mnimjs";
+  jdbrowserHash = "1p1b3b99p20g790nyp91wz3pqxmkyv9ckl4sqpf1gcdldgff9ak0";
   myJDownloaderHash = "19b1h52lwykz4ksljfa1rrvcjr5k1kmlf5d9favmm403sfngm3m4";
 
   appWorkUtilsSrc = fetchsvn {
