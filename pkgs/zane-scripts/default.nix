@@ -7,6 +7,7 @@
 , ghostscript
 , python3
 , ffmpeg
+, parallel
 }:
 let
   src = fetchFromGitHub {
@@ -62,5 +63,15 @@ in
     pname       = "ofxfix";
     script      = "ofxfix.py";
     buildInputs = [ python3 ];
+  };
+
+  flalac = mkScriptDerivation {
+    pname       = "flalac";
+    buildInputs = [ ffmpeg parallel ];
+  };
+
+  alflac = mkScriptDerivation {
+    pname       = "alflac";
+    buildInputs = [ ffmpeg parallel ];
   };
 }
