@@ -1,23 +1,29 @@
 { stdenv, lib, fetchsvn, ant, jdk, jre ? jdk, makeDesktopItem, makeWrapper }:
 let
-  svnRevision = "44937";
+  jdRevision = "44937";
+  appWorkRevision = "3570";
+
+  appWorkHash = "0h0p0j3r7fdg3vjggwsx8lav4w4jm02ci233wld4irzm6qmr5f6i";
+  jdownloaderHash = "12nlqi6lmx6lmajr37h3nli56lg6hqi4pnk8lchgi204i5paj0bh";
+  jdbrowserHash = "0nsavm4gnq19hgrmak5knpnw1gl8d3m39fq8fm9wv62k05xz9n2r";
+  myJDownloaderHash = "19b1h52lwykz4ksljfa1rrvcjr5k1kmlf5d9favmm403sfngm3m4";
 
   appWorkUtilsSrc = fetchsvn {
     url    = "svn://svn.appwork.org/utils";
-    rev    = "3570";
-    sha256 = "0h0p0j3r7fdg3vjggwsx8lav4w4jm02ci233wld4irzm6qmr5f6i";
+    rev    = appWorkRevision;
+    sha256 = appWorkHash;
   };
 
   jdbrowserSrc = fetchsvn {
     url    = "svn://svn.jdownloader.org/jdownloader/browser";
-    rev    = svnRevision;
-    sha256 = "0nsavm4gnq19hgrmak5knpnw1gl8d3m39fq8fm9wv62k05xz9n2r";
+    rev    = jdRevision;
+    sha256 = jdbrowserHash;
   };
 
   myJDownloaderSrc = fetchsvn {
     url    = "svn://svn.jdownloader.org/jdownloader/MyJDownloaderClient";
-    rev    = svnRevision;
-    sha256 = "19b1h52lwykz4ksljfa1rrvcjr5k1kmlf5d9favmm403sfngm3m4";
+    rev    = jdRevision;
+    sha256 = myJDownloaderHash;
   };
 
   description = "JDownloader is a free, open-source download management tool";
@@ -33,12 +39,12 @@ let
 in
 stdenv.mkDerivation rec {
   pname   = "jdownloader";
-  version = "2.${svnRevision}";
+  version = "2.${jdRevision}";
 
   src = fetchsvn {
     url    = "svn://svn.jdownloader.org/jdownloader/trunk";
-    rev    = svnRevision;
-    sha256 = "12nlqi6lmx6lmajr37h3nli56lg6hqi4pnk8lchgi204i5paj0bh";
+    rev    = jdRevision;
+    sha256 = jdownloaderHash;
   };
 
   nativeBuildInputs = [ jdk ant makeWrapper ];
