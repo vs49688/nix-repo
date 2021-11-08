@@ -51,6 +51,7 @@ stdenv.mkDerivation {
     mkdir -p $out/{bin,fiji,share/pixmaps}
 
     cp -R * $out/fiji
+    rm -f $out/fiji/jars/imagej-updater-*.jar
 
     # Disgusting hack to stop a local desktop entry being created
     cat <<EOF > $out/bin/.fiji-launcher-hack
