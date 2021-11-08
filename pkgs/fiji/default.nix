@@ -3,7 +3,7 @@
 , fetchurl
 , makeWrapper
 , autoPatchelfHook
-, openjdk11
+, jdk11
 , makeDesktopItem
 , runtimeShell
 }:
@@ -55,8 +55,8 @@ stdenv.mkDerivation {
 
     # Disgusting hack to stop a local desktop entry being created
     makeWrapper ${runtimeShell} $out/bin/fiji \
-      --prefix PATH : ${lib.makeBinPath [ openjdk11 ]} \
-      --set JAVA_HOME ${openjdk11.home} \
+      --prefix PATH : ${lib.makeBinPath [ jdk11 ]} \
+      --set JAVA_HOME ${jdk11.home} \
       --add-flags "-c 'exec \$($out/fiji/ImageJ-linux64 --dry-run "\$@")'"
 
     ln $out/fiji/images/icon.png $out/share/pixmaps/fiji.png
