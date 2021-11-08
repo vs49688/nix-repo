@@ -8,21 +8,21 @@
 , runtimeShell
 }:
 let
-  pname   = "fiji";
+  pname = "fiji";
   version = "20201104-1356";
 
-  desktopItem = let
-    niceName = "Fiji Is Just ImageJ";
-  in makeDesktopItem {
-    name        = "fiji";
-    exec        = "fiji %F";
-    icon        = "fiji";
-    mimeType    = "image/*;";
-    comment     = "Scientific Image Analysis";
+  niceName = "Fiji Is Just ImageJ";
+
+  desktopItem = makeDesktopItem {
+    name = "fiji";
+    exec = "fiji %F";
+    icon = "fiji";
+    mimeType = "image/*;";
+    comment = "Scientific Image Analysis";
     desktopName = niceName;
     genericName = niceName;
-    categories  = "Education;Science;ImageProcessing;";
-    terminal    = false;
+    categories = "Education;Science;ImageProcessing;";
+    terminal = false;
     startupNotify = true;
     extraEntries = ''
       Version=1.0
@@ -36,14 +36,14 @@ stdenv.mkDerivation {
   inherit pname version;
 
   src = fetchurl {
-    url    = "https://downloads.imagej.net/${pname}/archive/${version}/${pname}-nojre.tar.gz";
+    url = "https://downloads.imagej.net/${pname}/archive/${version}/${pname}-nojre.tar.gz";
     sha256 = "1jv4wjjkpid5spr2nk5xlvq3hg687qx1n5zh8zlw48y1y09c4q7a";
   };
 
   dontBuild = true;
 
   nativeBuildInputs = [ autoPatchelfHook makeWrapper ];
-  buildInputs       = [ stdenv.cc.cc.lib ];
+  buildInputs = [ stdenv.cc.cc.lib ];
 
   installPhase = ''
     runHook preInstall
@@ -66,11 +66,14 @@ stdenv.mkDerivation {
   '';
 
   meta = with lib; {
-    homepage    = "https://imagej.net/software/fiji/";
+    homepage = "https://imagej.net/software/fiji/";
     description = "An image processing package - a “batteries-included” distribution of ImageJ2, bundling a lot of plugins which facilitate scientific image analysis";
-    platforms   = [ "x86_64-linux" ];
-    license     = with lib.licenses; [
-      gpl2Plus gpl3Plus bsd2 publicDomain
+    platforms = [ "x86_64-linux" ];
+    license = with lib.licenses; [
+      gpl2Plus
+      gpl3Plus
+      bsd2
+      publicDomain
     ];
     maintainers = with maintainers; [ zane ];
   };
