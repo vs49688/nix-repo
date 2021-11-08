@@ -54,15 +54,10 @@ stdenv.mkDerivation {
     rm -f $out/fiji/jars/imagej-updater-*.jar
 
     # Disgusting hack to stop a local desktop entry being created
-    cat <<EOF > $out/bin/.fiji-launcher-hack
-    #!${runtimeShell}
-    exec \$($out/fiji/ImageJ-linux64 --dry-run "\$@")
-    EOF
-    chmod +x $out/bin/.fiji-launcher-hack
-
-    makeWrapper $out/bin/.fiji-launcher-hack $out/bin/fiji \
+    makeWrapper ${runtimeShell} $out/bin/fiji \
       --prefix PATH : ${lib.makeBinPath [ openjdk11 ]} \
-      --set JAVA_HOME ${openjdk11.home}
+      --set JAVA_HOME ${openjdk11.home} \
+      --add-flags "-c 'exec \$($out/fiji/ImageJ-linux64 --dry-run "\$@")'"
 
     ln $out/fiji/images/icon.png $out/share/pixmaps/fiji.png
     ln -s "${desktopItem}/share/applications" $out/share
