@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchsvn, ant, jdk, jre ? jdk, makeDesktopItem, makeWrapper }:
+{ stdenv, lib, fetchsvn, ant, jdk, jre ? jdk, makeDesktopItem, copyDesktopItems, makeWrapper }:
 let
   jdRevision = "45198";
   appWorkRevision = "3602";
@@ -27,15 +27,6 @@ let
   };
 
   description = "JDownloader is a free, open-source download management tool";
-
-  desktopItem = makeDesktopItem {
-    name        = "JDownloader";
-    exec        = "jdownloader";
-    icon        = "jdownloader";
-    comment     = description;
-    desktopName = "JDownloader";
-    categories  = "Network;FileTransfer;";
-  };
 in
 stdenv.mkDerivation rec {
   pname   = "jdownloader";
@@ -49,10 +40,21 @@ stdenv.mkDerivation rec {
 
   passthru.updateScript = ./update.sh;
 
-  nativeBuildInputs = [ jdk ant makeWrapper ];
+  nativeBuildInputs = [ jdk ant makeWrapper copyDesktopItems ];
   buildInputs = [ jre ];
 
   patches = [ ./0001-path-fixes-log-tmp-cfg-pidfile.patch ];
+
+  desktopItems = [
+    (makeDesktopItem {
+      name        = pname;
+      exec        = pname;
+      icon        = pname;
+      comment     = description;
+      desktopName = "JDownloader";
+      categories  = "Network;FileTransfer;";
+    })
+  ];
 
   # We need to also patch the appwork sources
   postPatch = ''
@@ -82,8 +84,7 @@ stdenv.mkDerivation rec {
     makeWrapper ${jre}/bin/java $out/bin/jdownloader \
       --add-flags "-cp $out/jdownloader/JDownloader.jar org.jdownloader.launcher.JDLauncher"
 
-    ln -s "${src}/artwork/icons/by TRazo/JDownloader/JDownloader.png" $out/share/pixmaps/jdownloader.png
-    ln -s "${desktopItem}/share/applications" $out/share
+    cp "${src}/artwork/icons/by TRazo/JDownloader/JDownloader.png" $out/share/pixmaps/jdownloader.png
 
     runHook postInstall
   '';
