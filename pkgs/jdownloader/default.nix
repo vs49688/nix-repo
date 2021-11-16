@@ -1,4 +1,5 @@
-{ stdenv, lib, fetchsvn, ant, jdk, jre ? jdk, makeDesktopItem, copyDesktopItems, makeWrapper }:
+{ stdenv, lib, fetchsvn, ant, jdk, jre ? jdk, makeDesktopItem, copyDesktopItems, makeWrapper
+, ffmpeg, rtmpdump }:
 let
   jdRevision = "45214";
   appWorkRevision = "3607";
@@ -79,20 +80,27 @@ stdenv.mkDerivation rec {
     runHook preInstall
 
     mkdir -p $out/{bin,jdownloader,share/pixmaps}
-    cp -Rv dist/standalone/dist/* $out/jdownloader
+    cp -R dist/standalone/dist/* $out/jdownloader
 
     makeWrapper ${jre}/bin/java $out/bin/jdownloader \
       --add-flags "-cp $out/jdownloader/JDownloader.jar org.jdownloader.launcher.JDLauncher"
 
     cp "${src}/artwork/icons/by TRazo/JDownloader/JDownloader.png" $out/share/pixmaps/jdownloader.png
 
+    rm -rf $out/jdownloader/tools/{mac,Windows}
+    rm -rf $out/jdownloader/tools/linux/{ffmpeg/{i386,x64},rtmpdump}/*
+    ln -s ${rtmpdump}/bin/rtmpdump $out/jdownloader/tools/linux/rtmpdump/rtmpdump
+    ln -s ${ffmpeg}/bin/ffprobe $out/jdownloader/tools/linux/ffmpeg/i386/ffprobe
+    ln -s ${ffmpeg}/bin/ffmpeg $out/jdownloader/tools/linux/ffmpeg/i386/ffmpeg
+    ln -s ${ffmpeg}/bin/ffprobe $out/jdownloader/tools/linux/ffmpeg/x64/ffprobe
+    ln -s ${ffmpeg}/bin/ffmpeg $out/jdownloader/tools/linux/ffmpeg/x64/ffmpeg
     runHook postInstall
   '';
 
   meta = with lib; {
     inherit description;
     homepage = "https://jdownloader.org/";
-    platforms = platforms.all;
+    platforms = [ "x86_64-linux" "i686-linux" ];
     license = licenses.gpl3Only;
     maintainers = with maintainers; [ zane ];
   };
