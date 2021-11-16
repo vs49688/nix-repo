@@ -5,35 +5,12 @@
 , autoPatchelfHook
 , jdk11
 , makeDesktopItem
+, copyDesktopItems
 , runtimeShell
 }:
-let
+stdenv.mkDerivation rec {
   pname = "fiji";
   version = "20201104-1356";
-
-  niceName = "Fiji Is Just ImageJ";
-
-  desktopItem = makeDesktopItem {
-    name = "fiji";
-    exec = "fiji %F";
-    icon = "fiji";
-    mimeType = "image/*;";
-    comment = "Scientific Image Analysis";
-    desktopName = niceName;
-    genericName = niceName;
-    categories = "Education;Science;ImageProcessing;";
-    terminal = false;
-    startupNotify = true;
-    extraEntries = ''
-      Version=1.0
-      TryExec=fiji
-      X-GNOME-FullName=${niceName}
-      StartupWMClass=fiji-Main
-    '';
-  };
-in
-stdenv.mkDerivation {
-  inherit pname version;
 
   src = fetchurl {
     url = "https://downloads.imagej.net/${pname}/archive/${version}/${pname}-nojre.tar.gz";
@@ -42,8 +19,29 @@ stdenv.mkDerivation {
 
   dontBuild = true;
 
-  nativeBuildInputs = [ autoPatchelfHook makeWrapper ];
+  nativeBuildInputs = [ autoPatchelfHook makeWrapper copyDesktopItems ];
   buildInputs = [ stdenv.cc.cc.lib ];
+
+  desktopItems = [
+    (makeDesktopItem {
+      name = "fiji";
+      exec = "fiji %F";
+      icon = "fiji";
+      mimeType = "image/*;";
+      comment = "Scientific Image Analysis";
+      desktopName = "Fiji Is Just ImageJ";
+      genericName = "Fiji Is Just ImageJ";
+      categories = "Education;Science;ImageProcessing;";
+      terminal = false;
+      startupNotify = true;
+      extraEntries = ''
+        Version=1.0
+        TryExec=fiji
+        X-GNOME-FullName=Fiji Is Just ImageJ
+        StartupWMClass=fiji-Main
+      '';
+    })
+  ];
 
   installPhase = ''
     runHook preInstall
@@ -54,27 +52,26 @@ stdenv.mkDerivation {
     rm -f $out/fiji/jars/imagej-updater-*.jar
 
     # Disgusting hack to stop a local desktop entry being created
-    makeWrapper ${runtimeShell} $out/bin/fiji \
+    cat <<EOF > $out/bin/.fiji-launcher-hack
+    #!${runtimeShell}
+    exec \$($out/fiji/ImageJ-linux64 --dry-run "\$@")
+    EOF
+    chmod +x $out/bin/.fiji-launcher-hack
+
+    makeWrapper $out/bin/.fiji-launcher-hack $out/bin/fiji \
       --prefix PATH : ${lib.makeBinPath [ jdk11 ]} \
-      --set JAVA_HOME ${jdk11.home} \
-      --add-flags "-c 'exec \$($out/fiji/ImageJ-linux64 --dry-run "\$@")'"
+      --set JAVA_HOME ${jdk11.home}
 
     ln $out/fiji/images/icon.png $out/share/pixmaps/fiji.png
-    ln -s "${desktopItem}/share/applications" $out/share
 
     runHook postInstall
   '';
 
   meta = with lib; {
     homepage = "https://imagej.net/software/fiji/";
-    description = "An image processing package - a “batteries-included” distribution of ImageJ2, bundling a lot of plugins which facilitate scientific image analysis";
+    description = "batteries-included distribution of ImageJ2, bundling a lot of plugins which facilitate scientific image analysis";
     platforms = [ "x86_64-linux" ];
-    license = with lib.licenses; [
-      gpl2Plus
-      gpl3Plus
-      bsd2
-      publicDomain
-    ];
+    license = with lib.licenses; [ gpl2Plus gpl3Plus bsd2 publicDomain ];
     maintainers = with maintainers; [ zane ];
   };
 }
