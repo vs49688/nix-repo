@@ -9,32 +9,32 @@ let
   myJDownloaderHash = "19b1h52lwykz4ksljfa1rrvcjr5k1kmlf5d9favmm403sfngm3m4";
 
   appWorkUtilsSrc = fetchsvn {
-    url    = "svn://svn.appwork.org/utils";
-    rev    = appWorkRevision;
+    url = "svn://svn.appwork.org/utils";
+    rev = appWorkRevision;
     sha256 = appWorkHash;
   };
 
   jdbrowserSrc = fetchsvn {
-    url    = "svn://svn.jdownloader.org/jdownloader/browser";
-    rev    = jdRevision;
+    url = "svn://svn.jdownloader.org/jdownloader/browser";
+    rev = jdRevision;
     sha256 = jdbrowserHash;
   };
 
   myJDownloaderSrc = fetchsvn {
-    url    = "svn://svn.jdownloader.org/jdownloader/MyJDownloaderClient";
-    rev    = jdRevision;
+    url = "svn://svn.jdownloader.org/jdownloader/MyJDownloaderClient";
+    rev = jdRevision;
     sha256 = myJDownloaderHash;
   };
 
   description = "JDownloader is a free, open-source download management tool";
 in
 stdenv.mkDerivation rec {
-  pname   = "jdownloader";
+  pname = "jdownloader";
   version = "2.${jdRevision}";
 
   src = fetchsvn {
-    url    = "svn://svn.jdownloader.org/jdownloader/trunk";
-    rev    = jdRevision;
+    url = "svn://svn.jdownloader.org/jdownloader/trunk";
+    rev = jdRevision;
     sha256 = jdownloaderHash;
   };
 
@@ -47,12 +47,12 @@ stdenv.mkDerivation rec {
 
   desktopItems = [
     (makeDesktopItem {
-      name        = pname;
-      exec        = pname;
-      icon        = pname;
-      comment     = description;
+      name = pname;
+      exec = pname;
+      icon = pname;
+      comment = description;
       desktopName = "JDownloader";
-      categories  = "Network;FileTransfer;";
+      categories = "Network;FileTransfer;";
     })
   ];
 
@@ -91,9 +91,9 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     inherit description;
-    homepage    = "https://jdownloader.org/";
-    platforms   = platforms.all;
-    license     = licenses.gpl3Only;
+    homepage = "https://jdownloader.org/";
+    platforms = platforms.all;
+    license = licenses.gpl3Only;
     maintainers = with maintainers; [ zane ];
   };
 }
