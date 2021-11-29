@@ -38,7 +38,5 @@ self: super: {
 
   fiji = super.callPackage ./pkgs/fiji { };
 
-  protoc-gen-go-vtproto = super.callPackage ./pkgs/protoc-gen-go-vtproto { };
-
   _010editor = super.callPackage ./pkgs/010editor { };
 }
