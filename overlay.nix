@@ -1,6 +1,8 @@
 self: super: {
   crocutils = super.callPackage ./pkgs/crocutils { };
 
+  croc-lotg = super.callPackage ./pkgs/croc-lotg { };
+
   extract-drs = super.callPackage ./pkgs/extract-drs { };
 
   extract-glb = super.callPackage ./pkgs/extract-glb { };
