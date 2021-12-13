@@ -1,4 +1,6 @@
 self: super: {
+  awesfx = super.callPackage ./pkgs/awesfx { };
+
   crocutils = super.callPackage ./pkgs/crocutils { };
 
   croc-lotg = super.callPackage ./pkgs/croc-lotg { };
