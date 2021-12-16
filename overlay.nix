@@ -34,10 +34,6 @@ self: super: {
 
   terraform-bin = self.terraform-bin_1_0;
 
-  jpsxdec = super.callPackage ./pkgs/jpsxdec {
-    jdk = super.openjdk8;
-  };
-
   cmdpack = super.callPackages ./pkgs/cmdpack { };
 
   fiji = super.callPackage ./pkgs/fiji { };
