@@ -35,4 +35,6 @@ self: super: {
   cmdpack = super.callPackages ./pkgs/cmdpack { };
 
   _010editor = super.callPackage ./pkgs/010editor { };
+
+  vgmtrans = super.libsForQt5.callPackage ./pkgs/vgmtrans { };
 }
