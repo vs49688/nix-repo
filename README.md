@@ -1,5 +1,29 @@
 # Personal Nix Packages Repository
 
+## Usage
+
+### Nix
+
+```
+nix-build -A <packagename>
+```
+
+### NixOS, system-wide
+
+Assuming this is in a git submodule called `nix-repo`, add this to
+your `configuration.nix`:
+
+```nix
+imports = [
+  /* your imports */
+] ++ (import ./nix-repo/modules);
+
+nixpkgs.overlays = [
+  /* your overlays */
+  (import ./nix-repo/overlay.nix)
+];
+```
+
 ## License
 This project is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0):
 
