@@ -20,6 +20,8 @@ self: super: {
     jdk = super.jdk11;
   };
 
+  mailpump = super.callPackage ./pkgs/mailpump { };
+
   mangostwo-server = super.callPackage ./pkgs/mangostwo-server { };
 
   mangostwo-database = super.callPackage ./pkgs/mangostwo-database { };
