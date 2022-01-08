@@ -28,7 +28,11 @@
 [ -z "$MANGOSD_CONF_DataDir" ]       && export MANGOSD_CONF_DataDir=/data
 [ -z "$MANGOSD_CONF_LogFile" ]       && export MANGOSD_CONF_LogFile=
 [ -z "$MANGOSD_CONF_Ra__Enable" ]    && export MANGOSD_CONF_Ra__Enable=1
+[ -z "$MANGOSD_CONF_Ra__IP" ]        && export MANGOSD_CONF_Ra__IP=127.0.0.1
+[ -z "$MANGOSD_CONF_Ra__Port" ]      && export MANGOSD_CONF_Ra__Port=3443
 [ -z "$MANGOSD_CONF_SOAP__Enabled" ] && export MANGOSD_CONF_SOAP__Enabled=1
+[ -z "$MANGOSD_CONF_SOAP__IP" ]      && export MANGOSD_CONF_SOAP__IP=127.0.0.1
+[ -z "$MANGOSD_CONF_SOAP_Port" ]     && export MANGOSD_CONF_SOAP__Port=7878
 
 # Unset any MANGOSD_CONF_* vars we don't want overridden
 unset \
@@ -89,30 +93,13 @@ else
     echo "[*] Character: Found version table, skipping initialisation..."
 fi
 
-CHAR_VERSION=$($MARIADB -e "SELECT version FROM db_version ORDER BY "version" DESC LIMIT 0,1")
+CHAR_VERSION=$($MARIADB -e "SELECT CONCAT(version,'.',structure,'.',content) FROM db_version ORDER BY "version" DESC LIMIT 0,1")
 
-if [ "$CHAR_VERSION" = "22" ]; then
-    echo "[*] Database version 22, nothing to do..."
-elif [ "$CHAR_VERSION" = "21" ]; then
-    echo "[*] Database version 21, upgrading to 22..."
-    # Updates are idempotent, just run them all
-    for i in /share/mangos/database/Character/Updates/Rel21/*.sql; do
-        echo "[*] $i"
-        $MARIADB < "$i" > /dev/null
-    done
-
-    for i in /share/mangos/database/Character/Updates/Rel22/*.sql; do
-        echo "[*] $i"
-        $MARIADB < "$i" > /dev/null
-    done
-else
-    echo "[*] Unknown database version ${CHAR_VERSION}, aborting..."
-    exit 1
-fi
-
-
-
-
+echo "[*] Character: Version ${CHAR_VERSION}, running migrations..."
+for i in /share/mangos/database/Character/Updates/Rel??/*.sql; do
+    echo "[*] $i"
+    $MARIADB < "$i" > /dev/null
+done
 
 ##
 # Initialise the world database
@@ -131,26 +118,13 @@ else
     echo "[*] World: Found version table, skipping initialisation..."
 fi
 
-WORLD_VERSION=$($MARIADB -e "SELECT version FROM db_version ORDER BY "version" DESC LIMIT 0,1")
+WORLD_VERSION=$($MARIADB -e "SELECT CONCAT(version,'.',structure,'.',content) FROM db_version ORDER BY "version" DESC LIMIT 0,1")
 
-if [ "$WORLD_VERSION" = "22" ]; then
-    echo "[*] Database version 22, nothing to do..."
-elif [ "$WORLD_VERSION" = "21" ]; then
-    echo "[*] Database version 21, upgrading to 22..."
-    # Updates are idempotent, just run them all
-    for i in /share/mangos/database/World/Updates/Rel21/*.sql; do
-        echo "[*] $i"
-        $MARIADB < "$i" > /dev/null
-    done
-
-    for i in /share/mangos/database/World/Updates/Rel22/*.sql; do
-        echo "[*] $i"
-        $MARIADB < "$i" > /dev/null
-    done
-else
-    echo "[*] Unknown database version ${WORLD_VERSION}, aborting..."
-    exit 1
-fi
+echo "[*] World: Version ${WORLD_VERSION}, running migrations..."
+for i in /share/mangos/database/World/Updates/Rel??/*.sql; do
+    echo "[*] $i"
+    $MARIADB < "$i" > /dev/null
+done
 
 echo "[*] Exec'ing /bin/mangosd"
 exec /bin/mangosd -c "$MANGOSD_CONFIG_PATH"
