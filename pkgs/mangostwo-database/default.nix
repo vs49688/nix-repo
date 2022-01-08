@@ -1,14 +1,14 @@
 { stdenv, lib, fetchFromGitHub, makeWrapper, mysql-client, which, busybox }:
 stdenv.mkDerivation {
   pname   = "mangostwo-database";
-  version = "20210816";
+  version = "20211231";
 
   src = fetchFromGitHub {
     owner           = "mangostwo";
     repo            = "database";
-    rev             = "550a412918f03863e8c47c2c4bb8c4b5f7501cf9";
+    rev             = "bbaf1232605614eb8aabe6e967cc4191ef62886b";
     fetchSubmodules = true;
-    sha256          = "1wk1315cwxf99bql9k2jf9hj8w4qmj99rxhff2jgrp0k2y2dgl21";
+    sha256          = "1432y1m0z05b3p631j900f8y0h85ix8irryzk9sqmy0wj6awgg0k";
   };
 
   dontConfigure = true;
