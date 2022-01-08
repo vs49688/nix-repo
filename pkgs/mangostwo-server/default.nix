@@ -4,14 +4,14 @@
 }:
 stdenv.mkDerivation rec {
   pname   = "mangostwo";
-  version = "22.01.81";
+  version = "22.01.94";
 
   src = fetchFromGitHub {
     owner           = pname;
     repo            = "server";
     rev             = "v${version}";
     fetchSubmodules = true;
-    sha256          = "1ka5if8bjkvqclln4n2pq9w7yxgfadydlgz1z93dv5jipdbwpdlf";
+    sha256          = "0v44wa2ydls2hnzg65l7ikqccpmf6gjdvgk99hka8cjpc5fdd77x";
   };
 
   nativeBuildInputs = [ cmake pkg-config ];
