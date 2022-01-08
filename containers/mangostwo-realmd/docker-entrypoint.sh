@@ -49,32 +49,19 @@ fi
 MARIADB="mariadb --host=$DB_HOST --user=$DB_USER --password=$DB_PASS --port=$DB_PORT -sN ${DB_NAME}"
 
 if [ -z "$($MARIADB -e "SHOW TABLES LIKE 'db_version'")" ]; then
-    echo "[*] No version table, initialising..."
+    echo "[*] Realm: No version table, initialising..."
     $MARIADB < /share/mangos/database/Realm/Setup/realmdLoadDB.sql
 else
-    echo "[*] Found version table, skipping initialisation..."
+    echo "[*] Realm: Found version table, skipping initialisation..."
 fi
 
-REALM_VERSION=$($MARIADB -e "SELECT version FROM db_version ORDER BY "version" DESC LIMIT 0,1")
+REALM_VERSION=$($MARIADB -e "SELECT CONCAT(version,'.',structure,'.',content) FROM db_version ORDER BY "version" DESC LIMIT 0,1")
 
-if [ "$REALM_VERSION" = "22" ]; then
-    echo "[*] Database version 22, nothing to do..."
-elif [ "$REALM_VERSION" = "21" ]; then
-    echo "[*] Database version 21, upgrading to 22..."
-    # Updates are idempotent, just run them all
-    for i in /share/mangos/database/Realm/Updates/Rel21/*.sql; do
-        echo "[*] $i"
-        $MARIADB < "$i" > /dev/null
-    done
-
-    for i in /share/mangos/database/Realm/Updates/Rel22/*.sql; do
-        echo "[*] $i"
-        $MARIADB < "$i" > /dev/null
-    done
-else
-    echo "[*] Unknown database version ${REALM_VERSION}, aborting..."
-    exit 1
-fi
+echo "[*] Realm: Version ${REALM_VERSION}, running migrations..."
+for i in /share/mangos/database/Realm/Updates/Rel??/*.sql; do
+    echo "[*] $i"
+    $MARIADB < "$i" > /dev/null
+done
 
 ##
 # Add a dummy realm if none already
