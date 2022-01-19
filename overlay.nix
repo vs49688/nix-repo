@@ -39,4 +39,6 @@ self: super: {
   _010editor = super.callPackage ./pkgs/010editor { };
 
   vgmtrans = super.libsForQt5.callPackage ./pkgs/vgmtrans { };
+
+  revive = super.callPackage ./pkgs/revive { };
 }
