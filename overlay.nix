@@ -41,4 +41,6 @@ self: super: {
   vgmtrans = super.libsForQt5.callPackage ./pkgs/vgmtrans { };
 
   revive = super.callPackage ./pkgs/revive { };
+
+  bloomrpc = super.callPackage ./pkgs/bloomrpc { };
 }
