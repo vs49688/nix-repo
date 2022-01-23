@@ -74,4 +74,10 @@ in
     pname       = "alflac";
     buildInputs = [ ffmpeg parallel ];
   };
+
+  stuntxtract = mkScriptDerivation {
+    pname       = "stuntxtract";
+    script      = "stuntxtract.py";
+    buildInputs = [ python3 ];
+  };
 }
