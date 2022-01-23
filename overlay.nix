@@ -30,10 +30,6 @@ self: super: {
 
   zane-scripts = super.callPackages ./pkgs/zane-scripts { };
 
-  terraform-bin_1_0 = super.callPackage ./pkgs/terraform-bin_1_0 { };
-
-  terraform-bin = self.terraform-bin_1_0;
-
   cmdpack = super.callPackages ./pkgs/cmdpack { };
 
   offzip = super.callPackage ./pkgs/offzip { };
