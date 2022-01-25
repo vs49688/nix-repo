@@ -41,4 +41,6 @@ self: super: {
   revive = super.callPackage ./pkgs/revive { };
 
   bloomrpc = super.callPackage ./pkgs/bloomrpc { };
+
+  raftools = super.callPackage ./pkgs/raftools { };
 }
