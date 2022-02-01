@@ -1,20 +1,20 @@
-{ stdenv, lib, fetchurl, makeWrapper, jdk, makeDesktopItem, copyDesktopItems }:
+{ stdenv, lib, fetchurl, makeWrapper, unzip, jdk, makeDesktopItem, copyDesktopItems }:
 let
   description = "A viewer/extraction toolkit for League of Legends";
 in
 stdenv.mkDerivation rec {
   pname = "raftools";
-  version = "0.6.0";
+  version = "0.6.1";
 
   src = fetchurl {
-    url    = "https://github.com/vs49688/RAFTools/releases/download/v${version}/RAFTools.jar";
-    sha256 = "1cinyxafvjw26sxrmn63w87c6pf01cdg7sy97l1dc2akjjmbk1y6";
+    url    = "https://github.com/vs49688/RAFTools/releases/download/v${version}/raftools-${version}.jar";
+    sha256 = "15ndg544h8rd5s2jc31sjqfrg8x20vjn33m08dj5zj5lri105vy1";
   };
 
   dontUnpack = true;
   dontBuild = true;
 
-  nativeBuildInputs = [ makeWrapper copyDesktopItems ];
+  nativeBuildInputs = [ unzip makeWrapper copyDesktopItems ];
 
   desktopItems = [
     (makeDesktopItem {
@@ -36,7 +36,8 @@ stdenv.mkDerivation rec {
     makeWrapper ${jdk}/bin/java $out/bin/raftools \
       --add-flags "-jar $out/share/raftools/$(stripHash ${src})"
 
-    cp ${./icon256.png} $out/share/pixmaps/raftools.png
+    unzip -j $src net/vs49688/rafview/gui/icon256.png
+    cp icon256.png $out/share/pixmaps/raftools.png
 
     runHook postInstall
   '';
