@@ -43,4 +43,6 @@ self: super: {
   bloomrpc = super.callPackage ./pkgs/bloomrpc { };
 
   raftools = super.callPackage ./pkgs/raftools { };
+
+  unifi-backup-decrypt = super.callPackage ./pkgs/unifi-backup-decrypt { };
 }
