@@ -7,11 +7,13 @@ let
     callPackages = pkgs.lib.callPackagesWith (pkgs // self // { inherit lib; });
   };
 
+  overlay = import ./overlay.nix;
+
   self = {
-    inherit lib;
+    inherit lib overlay;
     callPackage = lib.callPackage;
     callPackages = lib.callPackages;
-  } // ((import ./overlay.nix) self pkgs) // {
+  } // (overlay self pkgs) // {
     pkgsStatic = pkgs.pkgsStatic // rec {
       callPackage = pkgs.lib.callPackageWith (pkgs.pkgsStatic // self.pkgsStatic);
       callPackages = pkgs.lib.callPackagesWith (pkgs.pkgsStatic // self.pkgsStatic);
