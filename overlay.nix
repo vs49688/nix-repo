@@ -26,8 +26,6 @@ self: super: {
 
   mangostwo-database = super.callPackage ./pkgs/mangostwo-database { };
 
-  k0sctl = super.callPackage ./pkgs/k0sctl { };
-
   zane-scripts = super.callPackages ./pkgs/zane-scripts { };
 
   cmdpack = super.callPackages ./pkgs/cmdpack { };
