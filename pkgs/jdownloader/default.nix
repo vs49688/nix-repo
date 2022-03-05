@@ -53,7 +53,7 @@ stdenv.mkDerivation rec {
       icon = pname;
       comment = description;
       desktopName = "JDownloader";
-      categories = "Network;FileTransfer;";
+      categories = [ "Network" "FileTransfer" ];
     })
   ];
 

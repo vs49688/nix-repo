@@ -98,7 +98,7 @@ stdenv.mkDerivation rec {
       icon = "010editor";
       comment = description;
       desktopName = "010 Editor";
-      categories = "Utility;TextEditor;Development;IDE;";
+      categories = [ "Utility" "TextEditor" "Development" "IDE" ];
     })
   ];
 

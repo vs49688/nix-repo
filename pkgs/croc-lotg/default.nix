@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
       icon = pname;
       comment = "Croc! Legend of the Gobbos Definitive Edition";
       desktopName = "Croc! Legend of the Gobbos";
-      categories = "Game;";
+      categories = [ "Game" ];
     })
     (makeDesktopItem {
       name = "crocdemo64";
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
       icon = pname;
       comment = "Croc! Legend of the Gobbos Definitive Edition Demo";
       desktopName = "Croc! Legend of the Gobbos Demo";
-      categories = "Game;";
+      categories = [ "Game" ];
     })
   ];
 

@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
       icon = pname;
       comment = description;
       desktopName = "RAFTools";
-      categories = "Utility;";
+      categories = [ "Utility" ];
     })
   ];
 
