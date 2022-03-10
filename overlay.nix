@@ -41,4 +41,6 @@ self: super: {
   raftools = super.callPackage ./pkgs/raftools { };
 
   unifi-backup-decrypt = super.callPackage ./pkgs/unifi-backup-decrypt { };
+
+  kafkactl = super.callPackage ./pkgs/kafkactl { };
 }
