@@ -43,4 +43,6 @@ self: super: {
   unifi-backup-decrypt = super.callPackage ./pkgs/unifi-backup-decrypt { };
 
   kafkactl = super.callPackage ./pkgs/kafkactl { };
+
+  kubefwd = super.callPackage ./pkgs/kubefwd { };
 }
