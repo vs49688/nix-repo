@@ -9,6 +9,12 @@ let
   jdbrowserHash = "1p1b3b99p20g790nyp91wz3pqxmkyv9ckl4sqpf1gcdldgff9ak0";
   myJDownloaderHash = "19b1h52lwykz4ksljfa1rrvcjr5k1kmlf5d9favmm403sfngm3m4";
 
+  description = "JDownloader is a free, open-source download management tool";
+in
+stdenv.mkDerivation rec {
+  pname = "jdownloader";
+  version = "2.${jdRevision}";
+
   appWorkUtilsSrc = fetchsvn {
     url = "svn://svn.appwork.org/utils";
     rev = appWorkRevision;
@@ -26,12 +32,6 @@ let
     rev = jdRevision;
     sha256 = myJDownloaderHash;
   };
-
-  description = "JDownloader is a free, open-source download management tool";
-in
-stdenv.mkDerivation rec {
-  pname = "jdownloader";
-  version = "2.${jdRevision}";
 
   src = fetchsvn {
     url = "svn://svn.jdownloader.org/jdownloader/trunk";
