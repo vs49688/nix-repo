@@ -1,3 +1,4 @@
 [
   ./unifi.nix
+  ./navidrome.nix
 ]
