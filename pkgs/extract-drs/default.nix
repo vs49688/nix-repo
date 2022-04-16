@@ -1,11 +1,11 @@
 { stdenv, lib, cmake, fetchFromGitHub }:
 stdenv.mkDerivation rec {
-  name    = "extract-drs";
+  pname   = "extract-drs";
   version = "1.0.0";
 
   src = fetchFromGitHub {
     owner  = "vs49688";
-    repo   = name;
+    repo   = pname;
     rev    = version;
     sha256 = "1833946x9aj2n0a0b3sn7zlmcm36vdkjn66qhdk73v754754b6qs";
   };

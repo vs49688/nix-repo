@@ -1,11 +1,11 @@
 { stdenv, lib, cmake, fetchFromGitHub }:
 stdenv.mkDerivation rec {
-  name    = "CrocUtils";
+  pname   = "CrocUtils";
   version = "1.3.0";
 
   src = fetchFromGitHub {
     owner  = "vs49688";
-    repo   = name;
+    repo   = pname;
     rev    = version;
     sha256 = "01q8m08fjj77zkzxdd00c8wp8fczva1npncjyjs0jcnk40by0ypq";
     fetchSubmodules = true;

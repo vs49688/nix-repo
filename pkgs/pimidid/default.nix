@@ -1,11 +1,11 @@
 { stdenv, lib, cmake, fetchFromGitHub, alsaLib, libudev }:
 stdenv.mkDerivation rec {
-  name    = "pimidid";
+  pname   = "pimidid";
   version = "0.0.1";
 
   src = fetchFromGitHub {
     owner  = "vs49688";
-    repo   = name;
+    repo   = pname;
     rev    = "173b0993a2739ed9434ac9e7d24459876990dc5e";
     sha256 = "0a6qflp0fy819i5a05q26rpaljqjkzi8jxri3i7qwx5lgppjblb8";
   };

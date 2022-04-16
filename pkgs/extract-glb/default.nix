@@ -1,11 +1,11 @@
 { stdenv, lib, cmake, fetchFromGitHub }:
 stdenv.mkDerivation rec {
-  name    = "extract-glb";
+  pname   = "extract-glb";
   version = "1.0.0";
 
   src = fetchFromGitHub {
     owner  = "vs49688";
-    repo   = name;
+    repo   = pname;
     rev    = version;
     sha256 = "10slj158fh43sq1sqaqbn55js6h3n3dr0ysxz27jk2z1v0rlx73h";
   };
