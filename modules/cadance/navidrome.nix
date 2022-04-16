@@ -67,6 +67,8 @@ let
           "LastFM.Language"       = "en";
           "Spotify.ID"            = "";
           "Spotify.Secret"        = "";
+          "ListenBrainz.Enabled"  = false;
+          EnableExternalServices  = false;
         };
       };
 
