@@ -51,6 +51,45 @@ in {
     adminpassFile = mkOption {
       type = types.str;
     };
+
+    extraConfig = {
+      dbtype = mkOption {
+        type = types.enum [ "sqlite" "pgsql" "mysql" ];
+        default = "sqlite";
+        description = "Database type.";
+      };
+      dbname = mkOption {
+        type = types.nullOr types.str;
+        default = "nextcloud";
+        description = "Database name.";
+      };
+      dbuser = mkOption {
+        type = types.nullOr types.str;
+        default = "nextcloud";
+        description = "Database user.";
+      };
+      dbpassFile = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = ''
+          The full path to a file that contains the database password.
+        '';
+      };
+      dbhost = mkOption {
+        type = types.nullOr types.str;
+        default = "localhost";
+        description = ''
+          Database host.
+          Note: for using Unix authentication with PostgreSQL, this should be
+          set to <literal>/run/postgresql</literal>.
+        '';
+      };
+      dbport = mkOption {
+        type = with types; nullOr (either int str);
+        default = null;
+        description = "Database port.";
+      };
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -93,7 +132,7 @@ in {
           https    = true;
           hostName = cfg.virtualHost;
           package  = cfg.package;
-          config = {
+          config = cfg.extraConfig // {
             adminpassFile = "/adminpass";
           };
         };
