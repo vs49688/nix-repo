@@ -1,5 +1,5 @@
 {
-  outputs = { self }: {
+  outputs = { self, nixpkgs }: {
     overlays = {
       default = final: prev: (import ./overlay.nix final prev);
     };
@@ -17,5 +17,17 @@
     };
 
     nixosModule = self.nixosModules.default;
+
+    containers = let
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        overlays = [ self.overlays.default ];
+        config.allowUnfree = true;
+      };
+    in import ./containers {
+      inherit pkgs;
+      lib = nixpkgs.lib;
+      imagePrefix = "ghcr.io/vs49688";
+    };
   };
 }
