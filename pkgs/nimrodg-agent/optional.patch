@@ -1,0 +1,10 @@
+--- a/agent/messages/messages.hpp
++++ b/agent/messages/messages.hpp
+@@ -23,6 +23,7 @@
+ 
+ #include <string_view>
+ #include <variant>
++#include <optional>
+ #include <nim1/time.hpp>
+ #include <job_definition.hpp>
+ #include <process/command_result.hpp>

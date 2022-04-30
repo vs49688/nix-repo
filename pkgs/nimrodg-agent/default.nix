@@ -26,7 +26,7 @@ let
     http2Support   = true;
     idnSupport     = !stdenv.hostPlatform.isWindows;
     zlibSupport    = true;
-    sslSupport     = true;
+    opensslSupport = true;
     scpSupport     = true;
     c-aresSupport  = !stdenv.hostPlatform.isWindows;
 
@@ -35,6 +35,7 @@ let
     wolfsslSupport = false;
     gssSupport     = false;
     brotliSupport  = false;
+    rtmpSupport    = false;
   }).overrideAttrs(old: rec {
     configureFlags = old.configureFlags ++ [
       "--disable-file"   "--disable-ldap"  "--disable-ldaps"
@@ -82,6 +83,11 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ pkgconfig cmake ];
+
+  patches = [
+    ./optional.patch
+    ./ssl-refcount.patch
+  ];
 
   buildInputs = [ xlibressl.dev xcurlFull.dev xuriparser ];
 
