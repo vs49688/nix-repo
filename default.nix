@@ -36,8 +36,6 @@ let
 
     ipp_1_1 = callPackage ./pkgs/ipp { };
 
-    globusconnectpersonal = callPackage ./pkgs/globusconnectpersonal { };
-
     lib = let
       self = rec {
         makeStaticServeContainer = a@{ pkg ? null, ... }: let
