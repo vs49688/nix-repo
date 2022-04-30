@@ -1,16 +1,16 @@
 { lib, buildGoModule, fetchFromGitHub, fetchpatch }:
 buildGoModule rec {
   pname = "revive";
-  version = "1.1.2";
+  version = "1.2.1";
 
   src = fetchFromGitHub {
     owner = "mgechev";
     repo = pname;
     rev = "v${version}";
-    sha256 = "1n4ivw04c9yccaxjalm7rb7gmrks2dkh6rrhfl7ia50pq34632cx";
+    sha256 = "sha256-V0YWp4zQduW+cnuiVoEAPxDnsA4OR0TnJdoOF9TdRjw=";
   };
 
-  vendorSha256 = "0i28zahy1nby788j150vvzmvl49x0gq75y9fhxicsmlbq1z3vfcd";
+  vendorSha256 = "sha256-Fpl5i+qMvJ/CDh8X0gps9C/BxF7/Uvln+3DpVOXE0WQ=";
 
   # Some screwy "don't use unit-specific suffix" errors happening
   doCheck = false;
