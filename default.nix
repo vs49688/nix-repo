@@ -27,5 +27,10 @@ let
       pkgs = self.pkgs;
       imagePrefix = "ghcr.io/vs49688";
     };
+
+    hpc = import ./hpc {
+      inherit lib;
+      pkgs = self.pkgs;
+    };
   };
 in self

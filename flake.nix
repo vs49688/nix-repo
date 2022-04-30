@@ -29,5 +29,16 @@
       lib = nixpkgs.lib;
       imagePrefix = "ghcr.io/vs49688";
     };
+
+    hpc = let
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        overlays = [ self.overlays.default ];
+        config.allowUnfree = true;
+      };
+    in import ./hpc {
+      inherit pkgs;
+      lib = nixpkgs.lib;
+    };
   };
 }

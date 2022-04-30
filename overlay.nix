@@ -1,4 +1,4 @@
-self: super: {
+self: super: rec {
   awesfx = super.callPackage ./pkgs/awesfx { };
 
   crocutils = super.callPackage ./pkgs/crocutils { };
@@ -45,4 +45,44 @@ self: super: {
   kafkactl = super.callPackage ./pkgs/kafkactl { };
 
   kubefwd = super.callPackage ./pkgs/kubefwd { };
+
+  ##
+  # Old RCC packages, for posterity.
+  ##
+
+  nimrod-portal-backend = super.callPackage ./pkgs/nimrod-portal-backend {
+    jre = super.openjdk11_headless;
+  };
+
+  portal-client = super.callPackage ./pkgs/portal-client {
+    jre = super.openjdk11_headless;
+  };
+
+  # This doesn't have schema validation for the old imb portal
+  portal-client_1_0_4 = self.portal-client.overrideDerivation(old: rec {
+    version = "1.0.4";
+    name    = "${old.pname}-${version}";
+    src = super.fetchurl {
+      url    = "https://github.com/UQ-RCC/portal-client/releases/download/${version}/portal-client-${version}.tar.gz";
+      sha256 = "0cdcwjbfixb3b77hqg0jif94q6a6ybp9wnlx8qqv1vnr45vnla1x";
+    };
+  });
+
+  portal-resource-server = super.callPackage ./pkgs/portal-resource-server {
+    jre = super.openjdk8_headless;
+  };
+
+  nimrodg-agent = super.callPackage ./pkgs/nimrodg-agent { };
+
+  nimrun = super.callPackage ./pkgs/nimrun { };
+
+  nimptool-legacy = super.callPackage ./pkgs/nimptool-legacy { };
+
+  ims2tif = super.callPackage ./pkgs/ims2tif { };
+
+  imsmeta = super.callPackage ./pkgs/imsmeta { };
+
+  nimrod-portal = super.callPackage ./pkgs/nimrod-portal { };
+
+  ipp_1_1 = super.callPackage ./pkgs/ipp { };
 }
