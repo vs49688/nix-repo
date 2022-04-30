@@ -149,9 +149,6 @@ let
 
       imsmeta = callPackage ./pkgs/imsmeta { cmake = pkgs.cmake; };
 
-      # Upstream tini depends directly on glibc
-      tini = callPackage ./pkgs/tini { cmake = pkgs.cmake; };
-
       nimrodg-agent = callPackage ./pkgs/nimrodg-agent { cmake = pkgs.cmake; };
     };
   };
