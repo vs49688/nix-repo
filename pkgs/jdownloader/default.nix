@@ -1,5 +1,5 @@
 { stdenv, lib, fetchsvn, writeText, ant, jdk, jre ? jdk, makeDesktopItem, copyDesktopItems, makeWrapper
-, ffmpeg, rtmpdump }:
+, ffmpeg }:
 let
   jdRevision = "45214";
   appWorkRevision = "3607";
@@ -95,17 +95,12 @@ stdenv.mkDerivation rec {
     cp -R dist/standalone/dist/* $out/jdownloader
 
     makeWrapper ${jre}/bin/java $out/bin/jdownloader \
-      --add-flags "-cp $out/jdownloader/JDownloader.jar org.jdownloader.launcher.JDLauncher"
+      --add-flags "-cp $out/jdownloader/JDownloader.jar org.jdownloader.launcher.JDLauncher" \
+      --prefix PATH : ${lib.makeBinPath [ ffmpeg ]}
 
     cp "${src}/artwork/icons/by TRazo/JDownloader/JDownloader.png" $out/share/pixmaps/jdownloader.png
 
-    rm -rf $out/jdownloader/tools/{mac,Windows}
-    rm -rf $out/jdownloader/tools/linux/{ffmpeg/{i386,x64},rtmpdump}/*
-    ln -s ${rtmpdump}/bin/rtmpdump $out/jdownloader/tools/linux/rtmpdump/rtmpdump
-    ln -s ${ffmpeg}/bin/ffprobe $out/jdownloader/tools/linux/ffmpeg/i386/ffprobe
-    ln -s ${ffmpeg}/bin/ffmpeg $out/jdownloader/tools/linux/ffmpeg/i386/ffmpeg
-    ln -s ${ffmpeg}/bin/ffprobe $out/jdownloader/tools/linux/ffmpeg/x64/ffprobe
-    ln -s ${ffmpeg}/bin/ffmpeg $out/jdownloader/tools/linux/ffmpeg/x64/ffmpeg
+    rm -rf $out/jdownloader/tools
 
     cp ${buildJson} $out/jdownloader/build.json
 
@@ -115,7 +110,7 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     inherit description;
     homepage = "https://jdownloader.org/";
-    platforms = [ "x86_64-linux" "i686-linux" ];
+    platforms = platforms.all;
     license = licenses.gpl3Only;
     maintainers = with maintainers; [ zane ];
   };
