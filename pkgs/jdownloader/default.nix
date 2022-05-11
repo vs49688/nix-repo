@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchsvn, ant, jdk, jre ? jdk, makeDesktopItem, copyDesktopItems, makeWrapper
+{ stdenv, lib, fetchsvn, writeText, ant, jdk, jre ? jdk, makeDesktopItem, copyDesktopItems, makeWrapper
 , ffmpeg, rtmpdump }:
 let
   jdRevision = "45214";
@@ -10,6 +10,18 @@ let
   myJDownloaderHash = "19b1h52lwykz4ksljfa1rrvcjr5k1kmlf5d9favmm403sfngm3m4";
 
   description = "JDownloader is a free, open-source download management tool";
+
+  buildJson = let
+    jdRevInt = lib.strings.toInt jdRevision;
+  in writeText "build.json" (lib.generators.toJSON {} {
+    AppWorkUtilsRevision = lib.strings.toInt appWorkRevision;
+    JDBrowserRevision = jdRevInt;
+    MyJDownloaderClientRevision = jdRevInt;
+    JDownloaderRevision = jdRevInt;
+
+    buildTimestamp = 0;
+    buildDate = "Thu 01 Jan 1970 00:00:00 UTC";
+  });
 in
 stdenv.mkDerivation rec {
   pname = "jdownloader";
@@ -94,6 +106,9 @@ stdenv.mkDerivation rec {
     ln -s ${ffmpeg}/bin/ffmpeg $out/jdownloader/tools/linux/ffmpeg/i386/ffmpeg
     ln -s ${ffmpeg}/bin/ffprobe $out/jdownloader/tools/linux/ffmpeg/x64/ffprobe
     ln -s ${ffmpeg}/bin/ffmpeg $out/jdownloader/tools/linux/ffmpeg/x64/ffmpeg
+
+    cp ${buildJson} $out/jdownloader/build.json
+
     runHook postInstall
   '';
 
