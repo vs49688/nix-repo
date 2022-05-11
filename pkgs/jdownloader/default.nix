@@ -1,5 +1,5 @@
-{ stdenv, lib, fetchsvn, writeText, ant, jdk, jre ? jdk, makeDesktopItem, copyDesktopItems, makeWrapper
-, ffmpeg }:
+{ stdenv, lib, fetchsvn, writeText, ant, jdk, jre ? jdk
+, makeDesktopItem, copyDesktopItems, makeWrapper, ffmpeg }:
 let
   jdRevision = "45214";
   appWorkRevision = "3607";
