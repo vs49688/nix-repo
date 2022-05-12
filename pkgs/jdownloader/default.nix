@@ -1,9 +1,6 @@
 { stdenv, lib, fetchsvn, writeText, ant, jdk, jre ? jdk
 , makeDesktopItem, copyDesktopItems, makeWrapper, ffmpeg }:
 let
-  jdRevision = "45214";
-  appWorkRevision = "3607";
-
   appWorkHash = "1ngnxm0n2jh4smdylcxw4pr99mnqccf70cmypnyjqby37hmwqmnx";
   jdownloaderHash = "143cjdbq5bdpy8d598ij1bpry0wwmh94d366n04h65p7apjjs539";
   jdbrowserHash = "1p1b3b99p20g790nyp91wz3pqxmkyv9ckl4sqpf1gcdldgff9ak0";
@@ -11,50 +8,39 @@ let
 
   description = "JDownloader is a free, open-source download management tool";
 
-  buildJson = let
-    jdRevInt = lib.strings.toInt jdRevision;
-  in writeText "build.json" (lib.generators.toJSON {} {
-    AppWorkUtilsRevision = lib.strings.toInt appWorkRevision;
-    JDBrowserRevision = jdRevInt;
-    MyJDownloaderClientRevision = jdRevInt;
-    JDownloaderRevision = jdRevInt;
-
-    buildTimestamp = 0;
-    buildDate = "Thu 01 Jan 1970 00:00:00 UTC";
-  });
+  buildJson = lib.importJSON ./build.json;
 in
 stdenv.mkDerivation rec {
   pname = "jdownloader";
-  version = "2.${jdRevision}";
+  version = "2.${toString buildJson.JDownloaderRevision}";
 
   appWorkUtilsSrc = fetchsvn {
     url = "svn://svn.appwork.org/utils";
-    rev = appWorkRevision;
+    rev = buildJson.AppWorkUtilsRevision;
     sha256 = appWorkHash;
   };
 
   jdbrowserSrc = fetchsvn {
     url = "svn://svn.jdownloader.org/jdownloader/browser";
-    rev = jdRevision;
+    rev = buildJson.JDBrowserRevision;
     sha256 = jdbrowserHash;
   };
 
   myJDownloaderSrc = fetchsvn {
     url = "svn://svn.jdownloader.org/jdownloader/MyJDownloaderClient";
-    rev = jdRevision;
+    rev = buildJson.MyJDownloaderClientRevision;
     sha256 = myJDownloaderHash;
   };
 
   src = fetchsvn {
     url = "svn://svn.jdownloader.org/jdownloader/trunk";
-    rev = jdRevision;
+    rev = buildJson.JDownloaderRevision;
     sha256 = jdownloaderHash;
   };
 
   passthru.updateScript = ./update.sh;
 
   nativeBuildInputs = [ jdk ant makeWrapper copyDesktopItems ];
-  buildInputs = [ jre ];
 
   patches = [ ./0001-path-fixes-log-tmp-cfg-pidfile.patch ];
 
@@ -102,7 +88,7 @@ stdenv.mkDerivation rec {
 
     rm -rf $out/jdownloader/tools
 
-    cp ${buildJson} $out/jdownloader/build.json
+    cp ${./build.json} $out/jdownloader/build.json
 
     runHook postInstall
   '';

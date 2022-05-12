@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p subversion gnugrep nix-prefetch-svn
+#!nix-shell -i bash -p curl subversion gnugrep nix-prefetch-svn jq
 
 set -euo pipefail
 
@@ -13,11 +13,25 @@ if [[ ! "$(basename $ROOT)" == "jdownloader" || ! -f "$ROOT/default.nix" ]]; the
     exit 1
 fi
 
-AWU_REV=$(svn info --show-item=revision svn://svn.appwork.org/utils)
-echo "INFO: AppWorkUtils revision is $AWU_REV"
+# TODO: fetch build.json when they provide it
+# curl -o build.json https://jdownloader.org/path/to/build.json
 
-JD2_REV=$(svn info --show-item=revision svn://svn.jdownloader.org/jdownloader)
-echo "INFO: JDownloader2 revision is $JD2_REV"
+AWU_REV=$(jq .AppWorkUtilsRevision build.json)
+[[ $AWU_REV != "null" ]] || (echo "build.json missing 'AppWorkUtilsRevision' key." && exit 1)
+
+JD2_REV=$(jq .JDownloaderRevision build.json)
+[[ $JD2_REV != "null" ]] || (echo "build.json missing 'JDownloaderRevision' key." && exit 1)
+
+JDBROWSER_REV=$(jq .JDBrowserRevision build.json)
+[[ $JDBROWSER_REV != "null" ]] || (echo "build.json missing 'JDBrowserRevision' key." && exit 1)
+
+MYJDOWNLOADER_REV=$(jq .MyJDownloaderClientRevision build.json)
+[[ $MYJDOWNLOADER_REV != "null" ]] || (echo "build.json missing 'MyJDownloaderClientRevision' key." && exit 1)
+
+echo "INFO: AppWorkUtils        revision is $AWU_REV"
+echo "INFO: JDownloader2        revision is $JD2_REV"
+echo "INFO: JDBrowser           revision is $JDBROWSER_REV"
+echo "INFO: MyJDownloaderClient revision is $MYJDOWNLOADER_REV"
 
 APPWORK_HASH=$(prefetch svn://svn.appwork.org/utils "$AWU_REV")
 echo "INFO: AppWorkUtils SHA256 is $APPWORK_HASH"
@@ -25,15 +39,13 @@ echo "INFO: AppWorkUtils SHA256 is $APPWORK_HASH"
 JDOWNLOADER_HASH=$(prefetch svn://svn.jdownloader.org/jdownloader/trunk "$JD2_REV")
 echo "INFO: JDownloader2 SHA256 is $JDOWNLOADER_HASH"
 
-JDBROWSER_HASH=$(prefetch svn://svn.jdownloader.org/jdownloader/browser "$JD2_REV")
+JDBROWSER_HASH=$(prefetch svn://svn.jdownloader.org/jdownloader/browser "$JDBROWSER_REV")
 echo "INFO: JDBrowser SHA256 is $JDBROWSER_HASH"
 
-MYJDOWNLOADER_HASH=$(prefetch svn://svn.jdownloader.org/jdownloader/MyJDownloaderClient "$JD2_REV")
+MYJDOWNLOADER_HASH=$(prefetch svn://svn.jdownloader.org/jdownloader/MyJDownloaderClient "$MYJDOWNLOADER_REV")
 echo "INFO: MyJDownloader SHA256 is $MYJDOWNLOADER_HASH"
 
 sed -i -E \
-	-e "s/jdRevision\s*=.*$/jdRevision = \"${JD2_REV}\";/g" \
-    -e "s/appWorkRevision\s*=.*$/appWorkRevision = \"${AWU_REV}\";/g" \
 	-e "s/appWorkHash\s*=.*$/appWorkHash = \"${APPWORK_HASH}\";/g" \
 	-e "s/jdownloaderHash\s*=.*$/jdownloaderHash = \"${JDOWNLOADER_HASH}\";/g" \
 	-e "s/jdbrowserHash\s*=.*$/jdbrowserHash = \"${JDBROWSER_HASH}\";/g" \
