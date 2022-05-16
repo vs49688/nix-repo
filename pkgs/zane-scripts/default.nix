@@ -13,15 +13,15 @@ let
   src = fetchFromGitHub {
     owner  = "vs49688";
     repo   = "scripts";
-    rev    = "39ddecc9aabfcc8a8f115b376d3fd71709553b41";
-    sha256 = "088r6gh6xcp5alxf7l6m9k8g77nnfcxnfkccc0i37795zn1953pf";
+    rev    = "b9f30525a8ea4488e5cc5b773b181ba5c03f8a2f";
+    sha256 = "sha256-H0KXZL2i8pu995RbEHCW/OX1ACxKy+4GnNO0iXeZeJo=";
   };
 
   mkScriptDerivation = args@{ pname, script ? "${pname}.sh", buildInputs ? [], ... }: stdenv.mkDerivation {
     inherit src;
     inherit pname;
 
-    version = "0.0.0";
+    version = "unstable-2022-05-14";
 
     nativeBuildInputs = [ makeWrapper ];
 
