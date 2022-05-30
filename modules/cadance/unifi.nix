@@ -85,8 +85,8 @@ in {
         networking.firewall.allowedTCPPorts = [ 8443 ];
 
         services.unifi = {
-          enable    = true;
-          openPorts = true;
+          enable       = true;
+          openFirewall = true;
         };
 
         system.stateVersion = "21.05";
