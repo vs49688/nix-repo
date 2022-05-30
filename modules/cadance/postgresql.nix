@@ -142,6 +142,8 @@ in {
             ${cfg.extraAuth}
           '';
         };
+
+        system.stateVersion = "21.11";
       };
     };
   };
