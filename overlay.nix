@@ -44,8 +44,6 @@ self: super: rec {
 
   kafkactl = super.callPackage ./pkgs/kafkactl { };
 
-  kubefwd = super.callPackage ./pkgs/kubefwd { };
-
   ##
   # Old RCC packages, for posterity.
   ##
