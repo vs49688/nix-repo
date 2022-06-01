@@ -44,6 +44,10 @@ self: super: rec {
 
   kafkactl = super.callPackage ./pkgs/kafkactl { };
 
+  navidrome-mbz = super.callPackage ./pkgs/navidrome-mbz {
+    nodejs = super.nodejs-16_x;
+  };
+
   ##
   # Old RCC packages, for posterity.
   ##
