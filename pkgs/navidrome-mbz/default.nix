@@ -76,6 +76,7 @@ buildGoModule {
   };
 
   preBuild = ''
+    rm -rf ui/build
     cp -R ${ui} ui/build
   '';
 
