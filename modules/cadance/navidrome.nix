@@ -72,6 +72,10 @@ let
         };
       };
 
+      systemd.services.navidrome.path = with pkgs; [
+        ffmpeg
+      ];
+
       systemd.services.navidrome.serviceConfig = {
         DynamicUser = lib.mkForce false;
         User        = "navidrome";
