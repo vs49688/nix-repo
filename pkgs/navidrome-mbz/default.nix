@@ -1,13 +1,13 @@
 { stdenv, pkgs, lib, buildGoModule, fetchFromGitHub, pkg-config, zlib, taglib, nodejs }:
 let
   pname = "navidrome-mbz";
-  version = "unstable-2022-06-01";
+  version = "unstable-2022-06-04";
 
   src = fetchFromGitHub {
     owner = "vs49688";
     repo = "navidrome";
-    rev = "be61bcdf98b3cd8cf3a4f398287eb93022ec66dc";
-    sha256 = "sha256-sw/PQzo9B+JOzkKVYXoIkNOXRzVIL2fq8iUQQBzO0PQ=";
+    rev = "c094922cffeefc1c71283239ae1ee15f24a2035c";
+    sha256 = "sha256-l1Kf4PnoLGagkoUiZXZ9KQOw2zwXLKEC9zSPP7ji/sE=";
   };
 
   nodeDependencies = ((import ./node-composition.nix {
