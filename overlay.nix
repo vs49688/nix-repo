@@ -48,6 +48,8 @@ self: super: rec {
     nodejs = super.nodejs-16_x;
   };
 
+  hg659-voip-password = super.callPackage ./pkgs/hg659-voip-password {};
+
   ##
   # Old RCC packages, for posterity.
   ##
