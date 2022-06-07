@@ -1,5 +1,11 @@
 {
-  outputs = { self, nixpkgs }: {
+  outputs = { self, nixpkgs }: let
+    mkNixpkgs = { system }: import self.inputs.nixpkgs {
+      inherit system;
+      overlays = [ self.overlays.default ];
+      config.allowUnfree = true;
+    };
+  in {
     overlays = {
       default = final: prev: (import ./overlay.nix final prev);
     };
@@ -16,14 +22,50 @@
       };
     };
 
+    packages = let
+      mkPackages = { system }: {
+        inherit (mkNixpkgs { inherit system; })
+          awesfx
+          crocutils
+          extract-drs
+          extract-glb
+          pimidid
+          jdownloader
+          mailpump
+          mangostwo-server
+          mangostwo-database
+          # zane-scripts
+          offzip
+          _010editor
+          vgmtrans
+          revive
+          raftools
+          unifi-backup-decrypt
+          kafkactl
+          navidrome-mbz
+          hg659-voip-password
+
+          nimrod-portal-backend
+          portal-client
+          portal-client_1_0_4
+          portal-resource-server
+          nimrodg-agent
+          nimrun
+          nimptool-legacy
+          ims2tif
+          imsmeta
+          nimrod-portal
+          ipp_1_1
+        ;
+      };
+    in {
+      x86_64-linux = mkPackages { system = "x86_64-linux"; };
+    };
+
     nixosModule = self.nixosModules.default;
 
     containers = let
-      pkgs = import nixpkgs {
-        system = "x86_64-linux";
-        overlays = [ self.overlays.default ];
-        config.allowUnfree = true;
-      };
+      pkgs = mkNixpkgs { system = "x86_64-linux"; };
     in import ./containers {
       inherit pkgs;
       lib = nixpkgs.lib;
@@ -31,11 +73,7 @@
     };
 
     hpc = let
-      pkgs = import nixpkgs {
-        system = "x86_64-linux";
-        overlays = [ self.overlays.default ];
-        config.allowUnfree = true;
-      };
+      pkgs = mkNixpkgs { system = "x86_64-linux"; };
     in import ./hpc {
       inherit pkgs;
       lib = nixpkgs.lib;
