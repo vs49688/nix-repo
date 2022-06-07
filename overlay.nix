@@ -28,8 +28,6 @@ self: super: rec {
 
   zane-scripts = super.callPackages ./pkgs/zane-scripts { };
 
-  cmdpack = super.callPackages ./pkgs/cmdpack { };
-
   offzip = super.callPackage ./pkgs/offzip { };
 
   _010editor = super.callPackage ./pkgs/010editor { };
