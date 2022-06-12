@@ -7,6 +7,7 @@
 , staticPath
 , listenPort ? 8080
 , noListing ? true
+, ...
 }:
 dockerTools.buildLayeredImage {
   inherit name;
