@@ -1,16 +1,10 @@
 { lib, imagePrefix, pkgs }: let
   callPackage = lib.callPackageWith (pkgs // { inherit imagePrefix; });
 
-  makeStaticServeContainer = a@{ pkg ? null, ... }: let
-    args = {
-      darkhttpd  = pkgs.pkgsStatic.darkhttpd;
-    } // lib.optionalAttrs (pkg != null) {
-      name       = "${imagePrefix}/${pkg.pname}";
-      tag        = pkg.version;
-      staticPath = "${pkg}";
-    } // a;
-  in callPackage ./static-serve-base args;
-  
+  makeStaticServeContainer = a@{ ... }: pkgs.makeStaticServeContainer ({
+    inherit imagePrefix;
+  } // a);
+
   makeMaintContainer = { name, tag, text }: makeStaticServeContainer {
     inherit name tag;
     staticPath = pkgs.writeTextDir "index.html" ''<!DOCTYPE html>

@@ -1,4 +1,14 @@
 self: super: rec {
+  makeStaticServeContainer = a@{ pkg ? null, imagePrefix ? "", ... }: let
+    args = {
+      darkhttpd  = super.pkgsStatic.darkhttpd;
+    } // super.lib.optionalAttrs (pkg != null) {
+      name       = if (imagePrefix == "") then pkg.pname else "${imagePrefix}/${pkg.pname}";
+      tag        = pkg.version;
+      staticPath = "${pkg}";
+    } // a;
+  in super.callPackage ./containers/static-serve-base args;
+
   awesfx = super.callPackage ./pkgs/awesfx { };
 
   crocutils = super.callPackage ./pkgs/crocutils { };
