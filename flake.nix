@@ -66,17 +66,12 @@
 
     containers = let
       pkgs = mkNixpkgs { system = "x86_64-linux"; };
-    in import ./containers {
-      inherit pkgs;
-      lib = nixpkgs.lib;
+    in pkgs.callPackage ./containers {
       imagePrefix = "ghcr.io/vs49688";
     };
 
     hpc = let
       pkgs = mkNixpkgs { system = "x86_64-linux"; };
-    in import ./hpc {
-      inherit pkgs;
-      lib = nixpkgs.lib;
-    };
+    in pkgs.callPackage ./hpc { };
   };
 }
