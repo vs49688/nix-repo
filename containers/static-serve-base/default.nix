@@ -7,6 +7,7 @@
 , staticPath
 , listenPort ? 8080
 , noListing ? true
+, chroot ? false
 , ...
 }:
 dockerTools.buildLayeredImage {
@@ -18,8 +19,12 @@ dockerTools.buildLayeredImage {
   config = {
     Cmd = [
       "/bin/darkhttpd" staticPath "--port" "${toString listenPort}"
-      "--no-server-id" "--chroot"
-    ] ++ lib.optionals noListing ["--no-listing"];
+      "--no-server-id"
+    ] ++ lib.optionals chroot [
+      "--chroot"
+    ] ++ lib.optionals noListing [
+      "--no-listing"
+    ];
 
     ExposedPorts = {
       "${toString listenPort}/tcp" = {};
