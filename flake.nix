@@ -45,6 +45,8 @@
           navidrome-mbz
           hg659-voip-password
 
+          protobuf3_13
+
           nimrod-portal-backend
           portal-client
           portal-client_1_0_4
