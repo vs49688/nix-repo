@@ -82,6 +82,7 @@ in {
 
     systemd.tmpfiles.rules = [
       "d '${cfg.stateDir}' 0700 postgres postgres -"
+      "d '/run/postgresql' 0755 postgres postgres -"
     ];
 
     networking.nat.internalInterfaces   = [ "ve-${cfg.containerName}" ];
@@ -96,6 +97,11 @@ in {
 
       bindMounts."/var/lib/postgresql" = {
         hostPath   = cfg.stateDir;
+        isReadOnly = false;
+      };
+
+      bindMounts."/run/postgresql" = {
+        hostPath   = "/run/postgresql";
         isReadOnly = false;
       };
 
