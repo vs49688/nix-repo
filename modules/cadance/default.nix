@@ -1,6 +1,6 @@
 [
   ./postgresql.nix
   ./unifi.nix
-  ./navidrome.nix
+  ./navidrome
   ./nextcloud.nix
 ]
