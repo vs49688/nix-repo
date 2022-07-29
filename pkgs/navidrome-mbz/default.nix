@@ -1,4 +1,6 @@
-{ stdenv, pkgs, lib, buildGoModule, fetchFromGitHub, pkg-config, zlib, taglib, nodejs }:
+{ stdenv, pkgs, lib, buildGoModule, fetchFromGitHub, pkg-config, makeWrapper
+, zlib, taglib, nodejs
+, ffmpeg, ffmpegSupport ? true }:
 let
   pname = "navidrome-mbz";
   version = "unstable-2022-07-24";
@@ -38,8 +40,8 @@ buildGoModule {
   vendorSha256 = "sha256-3vVoA/V6WjJbYOjZnNVOHiKZPBYYuoV9aczMYI2ZizM=";
 
   nativeBuildInputs = [
+    makeWrapper
     pkg-config
-    nodejs
   ];
 
   buildInputs = [
@@ -60,6 +62,11 @@ buildGoModule {
   preBuild = ''
     rm -rf ui/build
     cp -R ${ui} ui/build
+  '';
+
+  postFixup = lib.optionalString ffmpegSupport ''
+    wrapProgram $out/bin/navidrome \
+      --prefix PATH : ${lib.makeBinPath [ ffmpeg ]}
   '';
 
   preCheck = ''
