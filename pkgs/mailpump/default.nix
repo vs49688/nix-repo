@@ -1,13 +1,13 @@
-{ buildGoModule, lib, fetchFromGitHub }:
-buildGoModule rec {
+{ buildGo118Module, lib, fetchFromGitHub }:
+buildGo118Module rec {
   pname = "mailpump";
-  version = "1.0.0";
+  version = "unstable-2022-07-31";
 
   src = fetchFromGitHub {
     owner = "vs49688";
     repo = pname;
-    rev = "v${version}";
-    sha256 = "13k0dgpivb8lsgmvcdf0plif90v873xy8vp78fx2589awris55xx";
+    rev = "c68bab6f603065261ca69c9a3c9196c194c42936";
+    sha256 = "sha256-ST1bKDr5CGDICHeWnsGZWlB/breA2rQP2jD8vFCP7do=";
   };
 
   vendorSha256 = null;
