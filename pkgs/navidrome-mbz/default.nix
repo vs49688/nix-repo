@@ -8,8 +8,8 @@ let
   src = fetchFromGitHub {
     owner = "vs49688";
     repo = "navidrome";
-    rev = "159c53ad13e8e7412ff7ddf01d40cfeed049871f";
-    sha256 = "sha256-P+KYNnZKpR+732+bdlDmvo8djlvLi0wwGdap/R0/Tis=";
+    rev = "e19c817217f5a0ea07d0bf17d961ef9c6ece6257";
+    sha256 = "sha256-4yySWRGdGHJyriu2GqPzf8FPrvdyuQig0het3jJAFWk=";
   };
 
   nodeComposition = import ./node-composition.nix {
@@ -37,7 +37,7 @@ in
 buildGoModule {
   inherit pname version src;
 
-  vendorSha256 = "sha256-3vVoA/V6WjJbYOjZnNVOHiKZPBYYuoV9aczMYI2ZizM=";
+  vendorSha256 = "sha256-59UDD8zjmI7TsL+FgiiFux11jqgqqxL6/Vrx6pwyGOg=";
 
   nativeBuildInputs = [
     makeWrapper

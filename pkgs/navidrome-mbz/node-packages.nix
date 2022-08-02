@@ -3577,13 +3577,13 @@ let
         sha512 = "bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==";
       };
     };
-    "caniuse-lite-1.0.30001272" = {
+    "caniuse-lite-1.0.30001370" = {
       name = "caniuse-lite";
       packageName = "caniuse-lite";
-      version = "1.0.30001272";
+      version = "1.0.30001370";
       src = fetchurl {
-        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001272.tgz";
-        sha512 = "DV1j9Oot5dydyH1v28g25KoVm7l8MTxazwuiH3utWiAS6iL/9Nh//TGwqFEeqqN8nnWYQ8HHhUq+o4QPt9kvYw==";
+        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001370.tgz";
+        sha512 = "3PDmaP56wz/qz7G508xzjx8C+MC2qEm4SYhSEzC9IBROo+dGXFWRuaXkWti0A9tuI00g+toiriVqxtWMgl350g==";
       };
     };
     "capture-exit-2.0.0" = {
@@ -14793,7 +14793,7 @@ let
       })
       sources."camelcase-6.2.0"
       sources."caniuse-api-3.0.0"
-      sources."caniuse-lite-1.0.30001272"
+      sources."caniuse-lite-1.0.30001370"
       sources."capture-exit-2.0.0"
       sources."case-sensitive-paths-webpack-plugin-2.3.0"
       sources."char-regex-1.0.2"
