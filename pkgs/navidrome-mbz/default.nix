@@ -8,8 +8,8 @@ let
   src = fetchFromGitHub {
     owner = "vs49688";
     repo = "navidrome";
-    rev = "e19c817217f5a0ea07d0bf17d961ef9c6ece6257";
-    sha256 = "sha256-4yySWRGdGHJyriu2GqPzf8FPrvdyuQig0het3jJAFWk=";
+    rev = "030e63b91de0f0da87513b3914f7235ec24ae250";
+    sha256 = "sha256-GfJCLB55FMnoWQCHJEATdI1KPGwwHafPdYMnzJFiAiY=";
   };
 
   nodeComposition = import ./node-composition.nix {
