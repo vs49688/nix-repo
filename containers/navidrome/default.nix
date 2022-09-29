@@ -1,10 +1,10 @@
-{ dockerTools, lib, pkgs, navidrome, cacert
+{ dockerTools, lib, pkgs, navidrome, cacert, imagePrefix 
 , withShell ? false, bashInteractive
 }: let
   # Because the nixpkgs one has a 500mb closure
   ffmpeg = pkgs.callPackage ./ffmpeg.nix { };
 in dockerTools.buildLayeredImage {
-  name = navidrome.pname;
+  name = "${imagePrefix}/${navidrome.pname}";
   tag  = navidrome.version;
 
   contents = [

@@ -25,7 +25,9 @@ in {
   mangostwo-realmd = callPackage ./mangostwo-realmd { };
   mangostwo-mangosd = callPackage ./mangostwo-mangosd { };
 
-  navidrome-mbz = callPackage ./navidrome { 
+  navidrome = callPackage ./navidrome { };
+
+  navidrome-mbz = callPackage ./navidrome {
     navidrome = pkgs.navidrome-mbz;
   };
 

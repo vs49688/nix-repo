@@ -11,7 +11,8 @@ let
 
   makeContainer = instance: let
     container = pkgs.callPackage ../../containers/navidrome {
-      navidrome = instance.package;
+      imagePrefix = "localhost";
+      navidrome   = instance.package;
     };
 
     configFile = format.generate "navidrome.json" (instance.extraSettings // {
