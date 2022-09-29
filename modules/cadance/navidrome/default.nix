@@ -13,6 +13,7 @@ let
     container = pkgs.callPackage ../../containers/navidrome {
       imagePrefix = "localhost";
       navidrome   = instance.package;
+      withShell   = instance.withShell;
     };
 
     configFile = format.generate "navidrome.json" (instance.extraSettings // {
@@ -142,6 +143,11 @@ in {
           extraSettings = mkOption {
             type = with types; attrsOf (oneOf [ bool int str ]);
             default = {};
+          };
+
+          withShell = mkOption {
+            type    = types.bool;
+            default = false;
           };
         };
       }));
