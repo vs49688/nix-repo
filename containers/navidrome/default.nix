@@ -1,5 +1,5 @@
 { dockerTools, lib, pkgs, navidrome, cacert, imagePrefix 
-, withShell ? false, bashInteractive, coreutils
+, withShell ? false, busybox
 }: let
   # Because the nixpkgs one has a 500mb closure
   ffmpeg = pkgs.callPackage ./ffmpeg.nix { };
@@ -11,8 +11,7 @@ in dockerTools.buildLayeredImage {
     (navidrome.override { inherit ffmpeg; })
     cacert
   ] ++ lib.optionals withShell [
-    bashInteractive
-    coreutils
+    busybox
   ];
 
   config = {
