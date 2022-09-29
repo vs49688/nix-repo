@@ -10,7 +10,7 @@ let
   httpPort = 4533;
 
   makeContainer = instance: let
-    container = pkgs.callPackage ./container.nix {
+    container = pkgs.callPackage ../../containers/navidrome {
       navidrome = instance.package;
     };
 
