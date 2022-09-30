@@ -1,4 +1,4 @@
-{ stdenv, fetchurl }:
+{ stdenv, lib, fetchurl }:
 stdenv.mkDerivation rec {
   pname   = "nimrod-portal";
   version = "1.2.2";
@@ -21,4 +21,11 @@ stdenv.mkDerivation rec {
 
     runHook postInstall
   '';
+
+  meta = with lib; {
+    description = "Nimrod Portal Frontend";
+    homepage    = "https://nimrod.rcc.uq.edu.au";
+    license     = licenses.asl20;
+    platforms   = platforms.all;
+  };
 }
