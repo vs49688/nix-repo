@@ -1,4 +1,4 @@
-{ stdenv, fetchurl }:
+{ stdenv, lib, fetchurl }:
 stdenv.mkDerivation rec {
   pname   = "ipp";
   version = "1.1.2";
@@ -21,4 +21,11 @@ stdenv.mkDerivation rec {
 
     runHook postInstall
   '';
+
+  meta = with lib; {
+    description = "IMB Image Processing Portal";
+    homepage    = "https://ipp.rcc.uq.edu.au";
+    license     = licenses.asl20;
+    platforms   = platforms.all;
+  };
 }
