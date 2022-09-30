@@ -1,4 +1,4 @@
-{ stdenv, lib, cmake, fetchFromGitHub, alsaLib, udev }:
+{ stdenv, lib, cmake, fetchFromGitHub, alsa-lib, udev }:
 stdenv.mkDerivation rec {
   pname   = "pimidid";
   version = "0.0.1";
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ cmake ];
-  buildInputs       = [ alsaLib udev ];
+  buildInputs       = [ alsa-lib udev ];
 
   installPhase = ''
     mkdir -p $out/bin
