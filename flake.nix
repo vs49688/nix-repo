@@ -1,5 +1,7 @@
 {
   outputs = { self, nixpkgs }: let
+    lib = nixpkgs.lib;
+
     mkNixpkgs = { system }: import self.inputs.nixpkgs {
       inherit system;
       overlays = [ self.overlays.default ];
@@ -23,7 +25,7 @@
     };
 
     packages = let
-      mkPackages = { system }: {
+      mkFlakePackages = { system }: {
         inherit (mkNixpkgs { inherit system; })
           awesfx
           crocutils
@@ -60,10 +62,18 @@
           ipp_1_1
         ;
       };
+
+      mkPackages = { system }: lib.filterAttrs
+        (name: pkg:
+          pkg?meta && pkg.meta?platforms && (builtins.elem system pkg.meta.platforms)
+        )
+        (mkFlakePackages { inherit system; })
+      ;
+
     in {
-      x86_64-linux = mkPackages { system = "x86_64-linux"; };
+      x86_64-linux   = mkPackages { system = "x86_64-linux";   };
       aarch64-darwin = mkPackages { system = "aarch64-darwin"; };
-      x86_64-darwin  = mkPackages { system = "x86_64-darwin"; };
+      x86_64-darwin  = mkPackages { system = "x86_64-darwin";  };
     };
 
     nixosModule = self.nixosModules.default;
