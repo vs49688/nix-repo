@@ -7,6 +7,7 @@ in dockerTools.buildLayeredImage {
 
   contents = [
     (navidrome.override { inherit ffmpeg; })
+    ffmpeg
     cacert
   ];
 
