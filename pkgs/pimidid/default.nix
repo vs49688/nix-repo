@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "Small daemon to automatically connect MIDI devices to FluidSynth";
     homepage    = "https://github.com/vs49688/pimidid";
-    platforms   = platforms.all;
+    platforms   = platforms.linux;
     license     = licenses.gpl2;
     maintainers = with maintainers; [ zane ];
   };
