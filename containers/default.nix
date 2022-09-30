@@ -25,6 +25,12 @@ in {
   mangostwo-realmd = callPackage ./mangostwo-realmd { };
   mangostwo-mangosd = callPackage ./mangostwo-mangosd { };
 
+  navidrome = callPackage ./navidrome { };
+
+  navidrome-mbz = callPackage ./navidrome {
+    navidrome = pkgs.navidrome-mbz;
+  };
+
   nimrod-portal-backend = callPackage ./spring-base {
     pkg  = pkgs.nimrod-portal-backend;
     args = ["run"];

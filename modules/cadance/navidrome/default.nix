@@ -10,8 +10,9 @@ let
   httpPort = 4533;
 
   makeContainer = instance: let
-    container = pkgs.callPackage ./container.nix {
-      navidrome = instance.package;
+    container = pkgs.callPackage ../../../containers/navidrome {
+      imagePrefix = "localhost";
+      navidrome   = instance.package;
     };
 
     configFile = format.generate "navidrome.json" (instance.extraSettings // {
