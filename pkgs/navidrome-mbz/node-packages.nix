@@ -2254,13 +2254,13 @@ let
         sha512 = "aj/L7RIMsRlWML3YB6KZiXB3fV2t41+5RBGYF8z+tAKU43Px8C3cYUZsDvf1/+Bm4FK21QWBrDutu8ZJ/70qOw==";
       };
     };
-    "@types/react-redux-7.1.16" = {
+    "@types/react-redux-7.1.24" = {
       name = "_at_types_slash_react-redux";
       packageName = "@types/react-redux";
-      version = "7.1.16";
+      version = "7.1.24";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@types/react-redux/-/react-redux-7.1.16.tgz";
-        sha512 = "f/FKzIrZwZk7YEO9E1yoxIuDNRiDducxkFlkw/GNMGEnK9n4K8wJzlJBghpSuOVDgEUHoDkDF7Gi9lHNQR4siw==";
+        url = "https://registry.npmjs.org/@types/react-redux/-/react-redux-7.1.24.tgz";
+        sha512 = "7FkurKcS1k0FHZEtdbbgN8Oc6b+stGSfZYjQGicofJ0j4U0qIn/jaSvnP2pLwZKiai3/17xqqxkkrxTgN8UNbQ==";
       };
     };
     "@types/react-transition-group-4.4.1" = {
@@ -3397,13 +3397,13 @@ let
         sha512 = "bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==";
       };
     };
-    "caniuse-lite-1.0.30001412" = {
+    "caniuse-lite-1.0.30001414" = {
       name = "caniuse-lite";
       packageName = "caniuse-lite";
-      version = "1.0.30001412";
+      version = "1.0.30001414";
       src = fetchurl {
-        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001412.tgz";
-        sha512 = "+TeEIee1gS5bYOiuf+PS/kp2mrXic37Hl66VY6EAfxasIk5fELTktK2oOezYed12H8w7jt3s512PpulQidPjwA==";
+        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001414.tgz";
+        sha512 = "t55jfSaWjCdocnFdKQoO+d2ct9C59UZg4dY3OnUlSZ447r8pUtIKdp0hpAzrGFultmTC+Us+KpKi4GZl/LXlFg==";
       };
     };
     "case-sensitive-paths-webpack-plugin-2.4.0" = {
@@ -9256,13 +9256,13 @@ let
         sha512 = "o8gvvCOFaG1T7W6JUvsYjRjMVToLZgLIsi5kdhFIQCtHxDkA47LznX62j+l6YQkpXDbvQegsDyxe/+JJsFQN7w==";
       };
     };
-    "react-redux-7.2.5" = {
+    "react-redux-7.2.9" = {
       name = "react-redux";
       packageName = "react-redux";
-      version = "7.2.5";
+      version = "7.2.9";
       src = fetchurl {
-        url = "https://registry.npmjs.org/react-redux/-/react-redux-7.2.5.tgz";
-        sha512 = "Dt29bNyBsbQaysp6s/dN0gUodcq+dVKKER8Qv82UrpeygwYeX1raTtil7O/fftw/rFqzaf6gJhDZRkkZnn6bjg==";
+        url = "https://registry.npmjs.org/react-redux/-/react-redux-7.2.9.tgz";
+        sha512 = "Gx4L3uM182jEEayZfRbI/G11ZpYdNAnBs70lFVMNdHJI76XYtR+7m0MN+eAs7UHBPhWXcnFPaS+9owSCJQHNpQ==";
       };
     };
     "react-refresh-0.11.0" = {
@@ -9355,13 +9355,13 @@ let
         sha512 = "nRCcW9Sj7NuZwa2XvH9co8NPeXUBhZP7CRKJtU+cS6PW9FpCIFoI5ib0NT1ZrbNuPoRy0ylyCaUL8Gih4LSyFg==";
       };
     };
-    "redux-4.1.1" = {
+    "redux-4.2.0" = {
       name = "redux";
       packageName = "redux";
-      version = "4.1.1";
+      version = "4.2.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/redux/-/redux-4.1.1.tgz";
-        sha512 = "hZQZdDEM25UY2P493kPYuKqviVwZ58lEmGQNeQ+gXa+U0gYPUBf7NKYazbe3m+bs/DzM/ahN12DbF+NG8i0CWw==";
+        url = "https://registry.npmjs.org/redux/-/redux-4.2.0.tgz";
+        sha512 = "oSBmcKKIuIR4ME29/AeNUnl5L+hvBq7OaJWzaptTQJAntaPvxIJqfnjbaEiCzzaIz+XmVILfqAM3Ob0aXLPfjA==";
       };
     };
     "redux-saga-1.1.3" = {
@@ -11856,7 +11856,7 @@ let
           sources."csstype-3.0.6"
         ];
       })
-      sources."@types/react-redux-7.1.16"
+      sources."@types/react-redux-7.1.24"
       sources."@types/react-transition-group-4.4.1"
       sources."@types/resolve-1.17.1"
       sources."@types/retry-0.12.0"
@@ -12008,7 +12008,7 @@ let
       sources."camelcase-6.3.0"
       sources."camelcase-css-2.0.1"
       sources."caniuse-api-3.0.0"
-      sources."caniuse-lite-1.0.30001412"
+      sources."caniuse-lite-1.0.30001414"
       sources."case-sensitive-paths-webpack-plugin-2.4.0"
       sources."char-regex-1.0.2"
       sources."check-types-11.1.2"
@@ -13096,9 +13096,9 @@ let
       sources."react-lifecycles-compat-3.0.4"
       sources."react-measure-2.5.2"
       sources."react-modal-3.11.2"
-      (sources."react-redux-7.2.5" // {
+      (sources."react-redux-7.2.9" // {
         dependencies = [
-          sources."react-is-16.13.1"
+          sources."react-is-17.0.2"
         ];
       })
       sources."react-refresh-0.11.0"
@@ -13126,7 +13126,7 @@ let
           sources."minimatch-3.0.4"
         ];
       })
-      sources."redux-4.1.1"
+      sources."redux-4.2.0"
       sources."redux-saga-1.1.3"
       sources."regenerate-1.4.2"
       sources."regenerate-unicode-properties-10.1.0"
