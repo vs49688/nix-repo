@@ -162,5 +162,9 @@ in {
         '';
       };
     };
+
+    services.caddy.virtualHosts.${cfg.virtualHost}.extraConfig = ''
+      reverse_proxy http://${cfg.localAddress}:80
+    '';
   };
 }
