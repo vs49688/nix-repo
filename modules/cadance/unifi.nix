@@ -107,5 +107,9 @@ in {
         extraConfig     = cfg.extraNginxConfig;
       };
     };
+
+    services.caddy.virtualHosts.${cfg.virtualHost}.extraConfig = ''
+      reverse_proxy https://${cfg.localAddress}:8443
+    '';
   };
 }
