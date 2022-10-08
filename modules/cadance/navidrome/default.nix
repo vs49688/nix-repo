@@ -83,6 +83,17 @@ let
     };
   };
 
+  caddyVirtualHosts = let
+    instancesByHost = builtins.groupBy (i: i.virtualHost) (builtins.attrValues cfg.instances);
+
+    makeOptions = i: ''
+      redir ${i.baseUrl} ${i.baseUrl}/
+      reverse_proxy ${i.baseUrl}/* http://localhost:${toString i.port}
+    '';
+
+    configByHost = lib.mapAttrs (x: y: builtins.concatStringsSep "\n" (builtins.map makeOptions y)) instancesByHost;
+  in lib.mapAttrs (host: config: {extraConfig = config;}) configByHost;
+
   recursiveMerge = with lib; attrList:
     let f = attrPath:
       zipAttrsWith (n: values:
@@ -178,6 +189,7 @@ in {
     ) cfg.instances;
 
     services.nginx.virtualHosts = recursiveMerge (lib.mapAttrsToList makeVirtualHost cfg.instances);
+    services.caddy.virtualHosts = caddyVirtualHosts;
 
     users.groups.navidrome.gid = cfg.gid;
     users.users.navidrome = {
