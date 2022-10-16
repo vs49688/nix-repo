@@ -87,6 +87,7 @@ in {
         services.unifi = {
           enable       = true;
           openFirewall = true;
+          jrePackage   = pkgs.jre8_headless;
         };
 
         system.stateVersion = "21.05";
