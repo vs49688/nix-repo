@@ -3,13 +3,13 @@
 , ffmpeg, ffmpegSupport ? true }:
 let
   pname = "navidrome-mbz";
-  version = "unstable-2022-10-07";
+  version = "0.48.0-mbz";
 
   src = fetchFromGitHub {
     owner = "vs49688";
     repo = "navidrome";
-    rev = "b422d1359bfa43d27ca3e436b4f061239d1c5c60";
-    sha256 = "sha256-klwnqF1DKR/EHtNbNKo/CWdeUUu2ToEx9md0pSBEiL8=";
+    rev = "baf9baf009846919e1dab1a043e21aa5a9b4ba5d";
+    sha256 = "sha256-RQBfM2Ct14/RAvwYDigUJr+heJmlmUr26iPVzjVKx+Y=";
   };
 
   nodeComposition = import ./node-composition.nix {
