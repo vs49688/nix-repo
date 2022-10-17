@@ -51,7 +51,7 @@ buildGoModule {
 
   ldflags = [
     "-X github.com/navidrome/navidrome/consts.gitSha=${lib.substring 0 7 src.rev}"
-    "-X github.com/navidrome/navidrome/consts.gitTag=v0.47.5-mbz-SNAPSHOT"
+    "-X github.com/navidrome/navidrome/consts.gitTag=v${version}-SNAPSHOT"
   ];
 
   passthru = {
