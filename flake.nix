@@ -46,6 +46,7 @@
           kafkactl
           navidrome-mbz
           hg659-voip-password
+          solar2
 
           protobuf3_13
 

@@ -59,6 +59,8 @@ self: super: rec {
 
   hg659-voip-password = super.callPackage ./pkgs/hg659-voip-password {};
 
+  solar2 = super.callPackage ./pkgs/solar2 { };
+
   ##
   # For work.
   ##
