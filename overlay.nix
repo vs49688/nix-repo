@@ -61,6 +61,8 @@ self: super: rec {
 
   solar2 = super.callPackage ./pkgs/solar2 { };
 
+  supermeatboy = super.callPackage ./pkgs/supermeatboy { };
+
   ##
   # For work.
   ##
