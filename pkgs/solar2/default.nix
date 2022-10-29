@@ -7,13 +7,13 @@ stdenv.mkDerivation rec {
   pname   = "solar2";
   version = "1.25";
 
-  src = requireFile {
+  src = (requireFile {
     message = ''
       Please prefetch "Solar2_v1.25_amd64.tar" from Humble Bundle.
     '';
     name   = "Solar2_v1.25_amd64.tar";
     sha256 = "sha256-cHQVjUQG4C3YUab7i7MzWwE/+pZBrts8HyU/6JMpnAY=";
-  };
+  }).overrideAttrs(old: { allowSubstitutes = true; });
 
   nativeBuildInputs = [
     autoPatchelfHook
