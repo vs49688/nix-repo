@@ -6,13 +6,13 @@ stdenv.mkDerivation rec {
   pname = "supermeatboy";
   version = "11112013";
 
-  src = requireFile {
+  src = (requireFile {
     message = ''
       Please prefetch "supermeatboy-linux-11112013-bin" from Humble Bundle.
     '';
     name   = "supermeatboy-linux-11112013-bin";
     sha256 = "sha256-bCZcPsGh0Rq3BTiE/VgF8+PDtO4jR7yL6Egc/HgHF4w=";
-  };
+  }).overrideAttrs(old: { allowSubstitutes = true; });
 
   nativeBuildInputs = [
     unzip
