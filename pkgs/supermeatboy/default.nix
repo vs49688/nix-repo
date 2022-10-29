@@ -17,6 +17,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     unzip
     autoPatchelfHook
+    copyDesktopItems
   ];
 
   buildInputs = [
