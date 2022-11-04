@@ -50,6 +50,7 @@
           supermeatboy
 
           protobuf3_13
+          protoc-gen-gogo
 
           nimrod-portal-backend
           portal-client
