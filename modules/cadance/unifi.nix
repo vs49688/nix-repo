@@ -110,7 +110,11 @@ in {
     };
 
     services.caddy.virtualHosts.${cfg.virtualHost}.extraConfig = ''
-      reverse_proxy https://${cfg.localAddress}:8443
+      reverse_proxy https://${cfg.localAddress}:8443 {
+          transport http {
+              tls_insecure_skip_verify
+          }
+      }
     '';
   };
 }
