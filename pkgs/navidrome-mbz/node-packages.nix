@@ -7087,13 +7087,13 @@ let
         sha512 = "3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==";
       };
     };
-    "loader-utils-2.0.0" = {
+    "loader-utils-2.0.3" = {
       name = "loader-utils";
       packageName = "loader-utils";
-      version = "2.0.0";
+      version = "2.0.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/loader-utils/-/loader-utils-2.0.0.tgz";
-        sha512 = "rP4F0h2RaWSvPEkD7BLDFQnvSf+nK+wr3ESUjNTyAGobqrijmW92zc+SO6d4p4B1wh7+B/Jg1mkQe5NYUEHtHQ==";
+        url = "https://registry.npmjs.org/loader-utils/-/loader-utils-2.0.3.tgz";
+        sha512 = "THWqIsn8QRnvLl0shHYVBN9syumU8pYWEHPTmkiVGd+7K5eFNVSY6AJhRvgGF70gg1Dz+l/k8WicvFCxdEs60A==";
       };
     };
     "loader-utils-3.2.0" = {
@@ -12798,7 +12798,7 @@ let
       sources."lilconfig-2.0.6"
       sources."lines-and-columns-1.1.6"
       sources."loader-runner-4.3.0"
-      sources."loader-utils-2.0.0"
+      sources."loader-utils-2.0.3"
       sources."locate-path-5.0.0"
       sources."lodash-4.17.21"
       sources."lodash.debounce-4.0.8"
