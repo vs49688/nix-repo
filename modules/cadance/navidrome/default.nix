@@ -14,6 +14,7 @@ let
       imagePrefix = "localhost";
       navidrome   = instance.package;
       withShell   = instance.withShell;
+      withSqlite  = instance.withSqlite;
     };
 
     configFile = format.generate "navidrome.json" (instance.extraSettings // {
@@ -158,6 +159,11 @@ in {
 
           withShell = mkOption {
             type    = types.bool;
+            default = false;
+          };
+
+          withSqlite = mkOption {
+            type = types.bool;
             default = false;
           };
         };
