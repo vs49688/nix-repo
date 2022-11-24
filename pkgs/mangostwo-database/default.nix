@@ -44,7 +44,7 @@ stdenv.mkDerivation {
   meta = with lib; {
     description = "The Mangos TWO world database contains creatures, NPCs, Quests, Items/objects & gossip information to populate the in-game world with";
     homepage    = "https://www.getmangos.eu/bug-tracker/mangos-two/";
-    platforms   = platforms.all;
+    platforms   = platforms.linux;
     license     = licenses.cc-by-nc-sa-30;
     maintainers = with maintainers; [ zane ];
   };

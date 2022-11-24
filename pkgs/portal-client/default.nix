@@ -26,6 +26,6 @@ stdenv.mkDerivation rec {
     description = "RCC Portal Client";
     homepage    = "https://rcc.uq.edu.au/nimrod";
     license     = licenses.asl20;
-    platforms   = platforms.all;
+    platforms   = platforms.linux;
   };
 }

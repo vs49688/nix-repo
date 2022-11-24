@@ -26,6 +26,6 @@ stdenv.mkDerivation rec {
     description = "RCC Portal Resource Server";
     homepage    = "https://github.com/UQ-RCC/portal-resource-server";
     license     = licenses.asl20;
-    platforms   = platforms.all;
+    platforms   = platforms.linux;
   };
 }

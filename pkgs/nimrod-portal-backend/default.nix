@@ -28,6 +28,6 @@ in stdenv.mkDerivation {
     description = "Nimrod Portal Backend Server";
     homepage    = "https://rcc.uq.edu.au/nimrod";
     license     = licenses.asl20;
-    platforms   = platforms.all;
+    platforms   = platforms.linux;
   };
 }
