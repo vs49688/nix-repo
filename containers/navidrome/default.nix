@@ -9,7 +9,7 @@ in dockerTools.buildLayeredImage {
   tag  = navidrome.version;
 
   contents = [
-    (navidrome.override { inherit ffmpeg; })
+    (navidrome.override { ffmpeg-headless = ffmpeg; })
     ffmpeg
     cacert
   ] ++ lib.optionals withShell [

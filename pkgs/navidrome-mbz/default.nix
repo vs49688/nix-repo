@@ -1,6 +1,6 @@
 { stdenv, pkgs, lib, buildGoModule, fetchFromGitHub, pkg-config, makeWrapper
 , zlib, taglib, nodejs
-, ffmpeg, ffmpegSupport ? true }:
+, ffmpeg-headless, ffmpegSupport ? true }:
 let
   pname = "navidrome-mbz";
   version = "unstable-2022-11-24";
@@ -65,7 +65,7 @@ buildGoModule {
 
   postFixup = lib.optionalString ffmpegSupport ''
     wrapProgram $out/bin/navidrome \
-      --prefix PATH : ${lib.makeBinPath [ ffmpeg ]}
+      --prefix PATH : ${lib.makeBinPath [ ffmpeg-headless ]}
   '';
 
   preCheck = ''
