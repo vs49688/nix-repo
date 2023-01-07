@@ -88,6 +88,25 @@ in {
           enable       = true;
           openFirewall = true;
           jrePackage   = pkgs.jre8_headless;
+          unifiPackage = pkgs.unifiStable;
+          mongodbPackage = pkgs.writeShellScriptBin "mongod" ''
+            ARR=()
+            while [[ $# -gt 0 ]]; do
+              key="$1"
+              case $key in
+                --nohttpinterface)
+                  shift
+                  ;;
+                *)
+                  ARR+=("$1")
+                  shift
+                  ;;
+              esac
+            done
+
+            set -- "''${ARR[@]}"
+            exec ${pkgs.mongodb_3_6-bin}/bin/mongod $*
+          '';
         };
 
         system.stateVersion = "21.05";
