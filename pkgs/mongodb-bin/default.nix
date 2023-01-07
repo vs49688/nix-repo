@@ -1,12 +1,9 @@
-{ stdenv, lib, fetchurl, autoPatchelfHook, curl, lzma, openssl_1_1 }:
+{ stdenv, lib, fetchurl, autoPatchelfHook, curl, lzma, openssl_1_1
+, src, version }:
 stdenv.mkDerivation {
-  pname = "mongodb";
-  version = "6.0.3";
+  inherit version src;
 
-  src = fetchurl {
-    url = "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-6.0.3.tgz";
-    sha256 = "sha256-CpWInJ6EhqDKMLAEZJBv/9X0QhcFgpQYP3J6kZLrD+k=";
-  };
+  pname = "mongodb";
 
   dontBuild = true;
 
@@ -26,6 +23,7 @@ stdenv.mkDerivation {
     mkdir -p $out
 
     mv bin $out
+    rm -f $out/bin/mongoreplay
 
     runHook postInstall
   '';

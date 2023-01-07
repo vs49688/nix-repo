@@ -48,6 +48,11 @@
           hg659-voip-password
           solar2
           supermeatboy
+          mongodb_3_6-bin
+          mongodb_4_0-bin
+          mongodb_4_2-bin
+          mongodb_4_4-bin
+          mongodb_5_0-bin
           mongodb_6_0-bin
 
           protobuf3_13
