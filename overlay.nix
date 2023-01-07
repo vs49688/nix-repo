@@ -63,6 +63,8 @@ self: super: rec {
 
   supermeatboy = super.callPackage ./pkgs/supermeatboy { };
 
+  mongodb_6_0-bin = super.callPackage ./pkgs/mongodb_6_0-bin { };
+
   ##
   # For work.
   ##

@@ -48,6 +48,7 @@
           hg659-voip-password
           solar2
           supermeatboy
+          mongodb_6_0-bin
 
           protobuf3_13
           protoc-gen-gogo
