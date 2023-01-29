@@ -59,6 +59,7 @@
           protoc-gen-gogo
 
           linearmouse-bin
+          scroll-reverser-bin
 
           nimrod-portal-backend
           portal-client

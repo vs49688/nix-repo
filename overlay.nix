@@ -122,6 +122,8 @@ self: super: rec {
   ##
   linearmouse-bin = super.callPackage ./pkgs/linearmouse { };
 
+  scroll-reverser-bin = super.callPackage ./pkgs/scroll-reverser { };
+
   ##
   # For work.
   ##
