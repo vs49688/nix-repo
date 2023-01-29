@@ -118,6 +118,11 @@ self: super: rec {
   };
 
   ##
+  # For macOS
+  ##
+  linearmouse-bin = super.callPackage ./pkgs/linearmouse { };
+
+  ##
   # For work.
   ##
   protobuf3_13 = super.callPackage (import "${super.path}/pkgs/development/libraries/protobuf/generic-v3.nix") {

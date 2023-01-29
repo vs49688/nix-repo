@@ -58,6 +58,8 @@
           protobuf3_13
           protoc-gen-gogo
 
+          linearmouse-bin
+
           nimrod-portal-backend
           portal-client
           portal-client_1_0_4
