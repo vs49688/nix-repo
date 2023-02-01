@@ -1588,13 +1588,13 @@ let
         sha512 = "GKHlJqLxUeHH3L3dGQ48ZavYrqGOTXkFkiEiuYMAnAvXAZP4rhMIqeHOPXSUQan4Bd8QnafDcpovOSLnadDmKw==";
       };
     };
-    "@material-ui/styles-4.11.4" = {
+    "@material-ui/styles-4.11.5" = {
       name = "_at_material-ui_slash_styles";
       packageName = "@material-ui/styles";
-      version = "4.11.4";
+      version = "4.11.5";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@material-ui/styles/-/styles-4.11.4.tgz";
-        sha512 = "KNTIZcnj/zprG5LW0Sao7zw+yG3O35pviHzejMdcSGCdWbiO8qzRgOYL8JAxAsWBKOKYwVZxXtHWaB5T2Kvxew==";
+        url = "https://registry.npmjs.org/@material-ui/styles/-/styles-4.11.5.tgz";
+        sha512 = "o/41ot5JJiUsIETME9wVLAJrmIWL3j0R0Bj2kCOLbSfqEkKf0fmaPt+5vtblUh5eXr2S+J/8J3DaCb10+CzPGA==";
       };
     };
     "@material-ui/system-4.11.3" = {
@@ -1615,13 +1615,13 @@ let
         sha512 = "7cqRjrY50b8QzRSYyhSpx4WRw2YuO0KKIGQEVk5J8uoz2BanawykgZGoWEqKm7pVIbzFDN0SpPcVV4IhOFkl8A==";
       };
     };
-    "@material-ui/utils-4.11.2" = {
+    "@material-ui/utils-4.11.3" = {
       name = "_at_material-ui_slash_utils";
       packageName = "@material-ui/utils";
-      version = "4.11.2";
+      version = "4.11.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@material-ui/utils/-/utils-4.11.2.tgz";
-        sha512 = "Uul8w38u+PICe2Fg2pDKCaIG7kOyhowZ9vjiC1FsVwPABTW8vPPKfF6OvxRq3IiBaI1faOJmgdvMG7rMJARBhA==";
+        url = "https://registry.npmjs.org/@material-ui/utils/-/utils-4.11.3.tgz";
+        sha512 = "ZuQPV4rBK/V1j2dIkSSEcH5uT6AaHuKWFfotADHsC0wVL1NLd2WkFCm4ZZbX33iO4ydl6V0GPngKm8HZQ2oujg==";
       };
     };
     "@nicolo-ribaudo/eslint-scope-5-internals-5.1.1-v1" = {
@@ -2020,13 +2020,13 @@ let
         sha512 = "tzRNp7pzd5QmbtXNG/mhdcl7Awfu/Iz1RaVHY75zTdOkmHCuzMhRL83gWHSgOAcjS3CCbyfwUHMZgRJb4kAfpA==";
       };
     };
-    "@testing-library/react-12.1.2" = {
+    "@testing-library/react-12.1.5" = {
       name = "_at_testing-library_slash_react";
       packageName = "@testing-library/react";
-      version = "12.1.2";
+      version = "12.1.5";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@testing-library/react/-/react-12.1.2.tgz";
-        sha512 = "ihQiEOklNyHIpo2Y8FREkyD1QAea054U0MVbwH1m8N9TxeFz+KoJ9LkqoKqJlzx2JDm56DVwaJ1r36JYxZM05g==";
+        url = "https://registry.npmjs.org/@testing-library/react/-/react-12.1.5.tgz";
+        sha512 = "OfTXCJUFgjd/digLUuPxa0+/3ZxsQmE7ub9kcbW/wi96Bh3o/p5vrETcBGfP17NWPGqeYYl5LTRpwyGoMC4ysg==";
       };
     };
     "@testing-library/react-hooks-7.0.2" = {
@@ -13107,10 +13107,10 @@ let
       sources."@material-ui/core-4.11.4"
       sources."@material-ui/icons-4.11.2"
       sources."@material-ui/lab-4.0.0-alpha.58"
-      sources."@material-ui/styles-4.11.4"
+      sources."@material-ui/styles-4.11.5"
       sources."@material-ui/system-4.11.3"
       sources."@material-ui/types-5.1.0"
-      sources."@material-ui/utils-4.11.2"
+      sources."@material-ui/utils-4.11.3"
       (sources."@nicolo-ribaudo/eslint-scope-5-internals-5.1.1-v1" // {
         dependencies = [
           sources."eslint-scope-5.1.1"
@@ -13176,7 +13176,7 @@ let
           sources."aria-query-5.0.2"
         ];
       })
-      sources."@testing-library/react-12.1.2"
+      sources."@testing-library/react-12.1.5"
       sources."@testing-library/react-hooks-7.0.2"
       sources."@testing-library/user-event-13.5.0"
       sources."@tootallnate/once-1.1.2"

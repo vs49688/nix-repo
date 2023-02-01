@@ -3,13 +3,15 @@
 , ffmpeg-headless, ffmpegSupport ? true }:
 let
   pname = "navidrome-mbz";
-  version = "unstable-2023-01-13-mbz";
+  #version = "unstable-0.49.0-mbz";
+  version = "0.49.0";
 
   src = fetchFromGitHub {
-    owner = "vs49688";
+    owner = "navidrome";
     repo = "navidrome";
-    rev = "404d3f8ae122da9d70e82157b3dc3e1dd3a0716f";
-    sha256 = "sha256-QMZ9Z2ibeb0V2F7zDR4bnRfvOoDZbTPKLFbR6L+zmdw=";
+    rev = "v0.49.0";
+    #rev = "b1f90865b1195bd4651751de33ebb5a883111498";
+    sha256 = "sha256-FC9nesnyRnhg5+aDOwEAgD4q672smJFDPqwGZipBe1c=";
   };
 
   nodeComposition = import ./node-composition.nix {
@@ -37,7 +39,7 @@ in
 buildGoModule {
   inherit pname version src;
 
-  vendorSha256 = "sha256-jUPAP266V73YGtogZpdJYwFqXaq7/inI47CsNVGv6YU=";
+  vendorSha256 = "sha256-afIRr9aKzMKRrkH9nUDXE4HEcShjPj8W5rpf94nE6Rg=";
 
   nativeBuildInputs = [
     makeWrapper
@@ -51,7 +53,7 @@ buildGoModule {
 
   ldflags = [
     "-X github.com/navidrome/navidrome/consts.gitSha=${lib.substring 0 7 src.rev}"
-    "-X github.com/navidrome/navidrome/consts.gitTag=v${version}-SNAPSHOT"
+    "-X github.com/navidrome/navidrome/consts.gitTag=v${version}"
   ];
 
   passthru = {
