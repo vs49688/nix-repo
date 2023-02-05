@@ -124,6 +124,8 @@ self: super: rec {
 
   scroll-reverser-bin = super.callPackage ./pkgs/scroll-reverser { };
 
+  hammerspoon-bin = super.callPackage ./pkgs/hammerspoon { };
+
   ##
   # For work.
   ##

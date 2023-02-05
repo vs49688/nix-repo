@@ -60,6 +60,7 @@
 
           linearmouse-bin
           scroll-reverser-bin
+          hammerspoon-bin
 
           nimrod-portal-backend
           portal-client
