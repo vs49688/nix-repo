@@ -53,7 +53,7 @@ self: super: rec {
   kafkactl = super.callPackage ./pkgs/kafkactl { };
 
   navidrome-mbz = super.callPackage ./pkgs/navidrome-mbz {
-    buildGoModule = super.buildGo118Module;
+    buildGoModule = super.buildGo119Module;
     nodejs = super.nodejs-16_x;
   };
 
