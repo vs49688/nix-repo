@@ -135,6 +135,7 @@ in {
           config = cfg.extraConfig // {
             adminpassFile = "/adminpass";
           };
+          enableBrokenCiphersForSSE = false;
         };
 
         systemd.services.nextcloud-setup = {
