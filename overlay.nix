@@ -63,6 +63,12 @@ self: super: rec {
 
   supermeatboy = super.callPackage ./pkgs/supermeatboy { };
 
+  xash3d-fwgs = super.callPackage ./pkgs/xash3d-fwgs { };
+
+  xash3d-sdks = super.callPackage ./pkgs/xash3d-fwgs/hlsdk.nix { };
+
+  xash3d-games = self.callPackage ./pkgs/xash3d-fwgs/gamedir.nix { };
+
   mongodb_3_6-bin = super.callPackage ./pkgs/mongodb-bin {
     version = "3.6.23";
 

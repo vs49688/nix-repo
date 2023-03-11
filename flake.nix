@@ -25,7 +25,7 @@
     };
 
     packages = let
-      mkFlakePackages = { system }: {
+      mkFlakePackages = { system }: rec {
         inherit (mkNixpkgs { inherit system; })
           awesfx
           crocutils
@@ -48,6 +48,7 @@
           hg659-voip-password
           solar2
           supermeatboy
+          xash3d-fwgs
           mongodb_3_6-bin
           mongodb_4_0-bin
           mongodb_4_2-bin
@@ -74,6 +75,12 @@
           nimrod-portal
           ipp_1_1
         ;
+
+        xash3d-fwgs-full = xash3d-fwgs.withGames (g: [
+          g.valve g.valve_hd
+          g.bshift g.bshift_hd
+          g.dmc
+        ]);
       };
 
       mkPackages = { system }: lib.filterAttrs
