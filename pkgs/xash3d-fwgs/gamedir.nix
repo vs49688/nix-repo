@@ -1,7 +1,7 @@
 { stdenv, lib, requireFile, xash3d-sdks }:
 let
   makeGame = { src, sdk ? null, gamedir, gameName ? null, ... }@args: stdenv.mkDerivation ({
-    inherit src;
+    src = src.overrideAttrs(old: { allowSubstitutes = true; });
 
     dontBuild = true;
 
