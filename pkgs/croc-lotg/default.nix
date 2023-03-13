@@ -1,20 +1,20 @@
 { stdenv, lib, requireFile, makeDesktopItem, copyDesktopItems
-, icoutils, imagemagick
+, icoutils, imagemagick_light
 , autoPatchelfHook, glfw3, openalSoft
 }:
 stdenv.mkDerivation rec {
   pname = "croc64";
   version = "1.3.0";
 
-  src = requireFile {
+  src = (requireFile {
     name = "croc64-1.3.0.tar.xz";
     message = "Please prefetch croc64-1.3.0.tar.xz into the Nix store";
-    sha256 = "1cljdkrzds89bajmhfd58y7rr631yiaahzd7gjhp0c925qm629si";
-  };
+    sha256 = "sha256-USdhKi4iMXChfKd9qFT0YZicj0elOVilWgnp9vNskrI=";
+  }).overrideAttrs(old: { allowSubstitutes = true; });
 
   dontBuild = true;
 
-  nativeBuildInputs = [ autoPatchelfHook copyDesktopItems icoutils imagemagick ];
+  nativeBuildInputs = [ autoPatchelfHook copyDesktopItems icoutils imagemagick_light ];
   buildInputs = [ glfw3 openalSoft ];
 
   desktopItems = [
@@ -38,7 +38,6 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     runHook preInstall
-
 
     mkdir -p $out/{croc64-${version},bin} $out/share/pixmaps
     wrestool -x -t 14 -n 101 Croc64.exe | convert ico:- $out/share/pixmaps/${pname}.png
