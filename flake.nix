@@ -49,6 +49,7 @@
           solar2
           supermeatboy
           xash3d-fwgs
+          croc-lotg
           mongodb_3_6-bin
           mongodb_4_0-bin
           mongodb_4_2-bin
