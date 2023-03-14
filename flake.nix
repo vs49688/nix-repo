@@ -81,6 +81,7 @@
           g.valve g.valve_hd
           g.bshift g.bshift_hd
           g.dmc
+          g.gearbox g.gearbox_hd
         ]);
       };
 

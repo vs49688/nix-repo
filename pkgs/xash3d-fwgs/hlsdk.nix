@@ -41,4 +41,11 @@ in {
     rev = "e4f5e3d9d38b49a4da4aee3f3bad7c48dcc4c510";
     sha256 = "sha256-0ts6n9+TWxuEa5cML7T/0XjEX8Z+dTLvQU2JJNnE6cQ=";
   };
+
+  gearbox = makeSDK {
+    name = "gearbox";
+    version = "unstable-2023-03-11";
+    rev = "942500309b11bdd17e72d111bf76ba303d36b6dd";
+    sha256 = "sha256-6dcURN2DKy3jYOm1Ld1pwx+A9X2aD6gJ2mHvbQCCqJU=";
+  };
 }

@@ -90,4 +90,33 @@ in
     gamedir = "dmc";
     gameName = "Deathmatch Classic";
   };
+
+  gearbox = makeGame {
+    pname = "gearbox-gamedir";
+    version = "unstable-2023-03-05";
+
+    src = requireFile {
+      name = "gearbox.tar";
+      message = "Please prefetch gearbox.tar into the Nix store";
+      sha256 = "sha256-IgjyeDbVabR06Ubgs01ma+BR0inoFQAv9sEAC1SLRNc=";
+    };
+
+    sdk = xash3d-sdks.gearbox;
+
+    gamedir = "gearbox";
+    gameName = "Half-Life: Opposing Force";
+  };
+
+  gearbox_hd = makeGame {
+    pname = "gearbox-hd-gamedir";
+    version = "unstable-2023-03-05";
+
+    src = requireFile {
+      name = "gearbox_hd.tar";
+      message = "Please prefetch gearbox_hd.tar into the Nix store";
+      sha256 = "sha256-Zm9/UJJw8j+F6QeWoOltuyLFt6kaTNEYf+kv7+/605g=";
+    };
+
+    gamedir = "gearbox_hd";
+  };
 }
