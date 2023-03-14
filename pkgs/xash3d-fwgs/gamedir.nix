@@ -59,7 +59,7 @@ in
     sdk = xash3d-sdks.bshift;
 
     gamedir = "bshift";
-    gameName = "Half-Life: Blue-Shift";
+    gameName = "Half-Life: Blue Shift";
   };
 
   bshift_hd = makeGame {
