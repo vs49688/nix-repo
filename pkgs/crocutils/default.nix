@@ -13,6 +13,11 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ cmake ];
 
+  cmakeFlags = [
+    "-DCROCTOOL_VERSION_STRING=${version}"
+    "-DCROCTOOL_COMMIT_HASH=${src.rev}"
+  ];
+
   postInstall = ''
     ln -s croctool $out/bin/maptool
     ln -s croctool $out/bin/cfextract
