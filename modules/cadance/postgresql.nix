@@ -68,6 +68,16 @@ in {
 
   config = lib.mkIf cfg.enable {
 
+    environment.systemPackages = [
+      ##
+      # https://nicolaiarocci.com/how-to-restore-a-single-postgres-database-from-a-pg_dumpall-dump/
+      ##
+      (pkgs.writeShellScriptBin "pg_extract" ''
+        [ $# -lt 2 ] && { echo "Usage: $0 <postgresql dump> <dbname>"; exit 1; }
+        sed  "/connect.*$2/,\$!d" $1 | sed "/PostgreSQL database dump complete/,\$d"
+      '')
+    ];
+
     users.groups.postgres.gid = lib.mkForce cfg.gid;
     users.users.postgres = {
       ##
