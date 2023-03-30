@@ -14,6 +14,7 @@ let
 
     passthru.gamedir = gamedir;
     passthru.gameName = gameName;
+    passthru.sdk = sdk;
   } // (builtins.removeAttrs args ["src" "sdk" "gamedir" "gameName" ]));
 in
 {
