@@ -81,7 +81,7 @@ let
     meta = with lib; {
       description = "Xash3D FWGS engine";
       homepage = "https://github.com/FWGS/xash3d-fwgs";
-      platforms = [ "x86_64-linux" ];
+      platforms = [ "x86_64-linux" "aarch64-linux" ];
       maintainers = with maintainers; [ zane ];
     };
   };
