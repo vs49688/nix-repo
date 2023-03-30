@@ -69,6 +69,13 @@ self: super: rec {
 
   xash3d-games = self.callPackage ./pkgs/xash3d-fwgs/gamedir.nix { };
 
+  xash3d-fwgs-full = self.xash3d-fwgs.withGames (g: [
+    g.valve g.valve_hd
+    g.bshift g.bshift_hd
+    g.dmc
+    g.gearbox g.gearbox_hd
+  ]);
+
   mongodb_3_6-bin = super.callPackage ./pkgs/mongodb-bin {
     version = "3.6.23";
 

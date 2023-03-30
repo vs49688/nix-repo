@@ -49,6 +49,7 @@
           solar2
           supermeatboy
           xash3d-fwgs
+          xash3d-fwgs-full
           croc-lotg
           mongodb_3_6-bin
           mongodb_4_0-bin
@@ -76,13 +77,6 @@
           nimrod-portal
           ipp_1_1
         ;
-
-        xash3d-fwgs-full = xash3d-fwgs.withGames (g: [
-          g.valve g.valve_hd
-          g.bshift g.bshift_hd
-          g.dmc
-          g.gearbox g.gearbox_hd
-        ]);
       };
 
       mkPackages = { system }: lib.filterAttrs
