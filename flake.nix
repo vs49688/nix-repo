@@ -94,6 +94,7 @@
 
     in {
       x86_64-linux   = mkPackages { system = "x86_64-linux";   };
+      aarch64-linux  = mkPackages { system = "aarch64-linux";  };
       aarch64-darwin = mkPackages { system = "aarch64-darwin"; };
       x86_64-darwin  = mkPackages { system = "x86_64-darwin";  };
     };
