@@ -12,6 +12,7 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
+    stdenv.cc.cc.libgcc or null
     curl
     lzma
     openssl_1_1
