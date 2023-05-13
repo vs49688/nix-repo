@@ -13,8 +13,8 @@ let
   src = fetchFromGitHub {
     owner  = "vs49688";
     repo   = "scripts";
-    rev    = "b9f30525a8ea4488e5cc5b773b181ba5c03f8a2f";
-    sha256 = "sha256-H0KXZL2i8pu995RbEHCW/OX1ACxKy+4GnNO0iXeZeJo=";
+    rev    = "47f1d22a3bf83006d864bd3dd7f8659616591937";
+    hash   = "sha256-XC0JujZicv8tIVKcXDIjwNPIaF+Ts+Phz1EI32vKPzc=";
   };
 
   mkScriptDerivation = args@{ pname, script ? "${pname}.sh", buildInputs ? [], ... }: stdenv.mkDerivation {
@@ -79,5 +79,13 @@ in
     pname       = "stuntxtract";
     script      = "stuntxtract.py";
     buildInputs = [ python3 ];
+  };
+
+  gocheck = mkScriptDerivation {
+    pname = "gocheck";
+    script = "gocheck.sh";
+    # NB: Deliberately not including the go tools here
+    # because this may be used with different versions.
+    buildInputs = [ ];
   };
 }
