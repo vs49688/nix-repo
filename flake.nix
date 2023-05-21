@@ -58,8 +58,6 @@
           mongodb_5_0-bin
           mongodb_6_0-bin
 
-          protobuf3_13
-
           linearmouse-bin
           scroll-reverser-bin
           hammerspoon-bin

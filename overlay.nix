@@ -140,14 +140,6 @@ self: super: rec {
   hammerspoon-bin = super.callPackage ./pkgs/hammerspoon { };
 
   ##
-  # For work.
-  ##
-  protobuf3_13 = super.callPackage (import "${super.path}/pkgs/development/libraries/protobuf/generic-v3.nix") {
-    version = "3.13.0.1";
-    sha256 = "1r3hvbvjjww6pdk0mlg1lym7avxn8851xm8dg98bf4zq4vyrcw12";
-  };
-
-  ##
   # Old RCC packages, for posterity.
   ##
 
