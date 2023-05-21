@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     mkdir -p $out/{croc64-${version},bin} $out/share/pixmaps
     wrestool -x -t 14 -n 101 Croc64.exe | convert ico:- $out/share/pixmaps/${pname}.png
     mv * $out/croc64-${version}
-    rm -rf $out/croc64-${version}/{config,Croc{,Demo}64.exe}
+    rm -rf $out/croc64-${version}/{config,Croc{,Demo}64.exe,{OpenAL64,SDL2}.dll}
 
     ln -s $out/croc64-${version}/Croc64 $out/bin/Croc64
     ln -s $out/croc64-${version}/CrocDemo64 $out/bin/CrocDemo64
