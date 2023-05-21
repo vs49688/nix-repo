@@ -147,8 +147,6 @@ self: super: rec {
     sha256 = "1r3hvbvjjww6pdk0mlg1lym7avxn8851xm8dg98bf4zq4vyrcw12";
   };
 
-  protoc-gen-gogo = super.callPackage ./pkgs/protoc-gen-gogo { };
-
   ##
   # Old RCC packages, for posterity.
   ##

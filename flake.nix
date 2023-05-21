@@ -59,7 +59,6 @@
           mongodb_6_0-bin
 
           protobuf3_13
-          protoc-gen-gogo
 
           linearmouse-bin
           scroll-reverser-bin
