@@ -1,5 +1,11 @@
 { stdenv, lib, fetchurl, autoPatchelfHook, curl, lzma, openssl_1_1
 , src, version }:
+let
+  # This is fine for a game.
+  xssl = openssl_1_1.overrideAttrs(old: {
+    meta = old.meta // { insecure = false; knownVulnerabilities = []; };
+  });
+in
 stdenv.mkDerivation {
   inherit version src;
 
@@ -15,7 +21,7 @@ stdenv.mkDerivation {
     stdenv.cc.cc.libgcc or null
     curl
     lzma
-    openssl_1_1
+    xssl
   ];
 
   installPhase = ''
