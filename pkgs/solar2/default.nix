@@ -1,8 +1,15 @@
 { stdenv, lib, requireFile, autoPatchelfHook, makeWrapper
 , makeDesktopItem, copyDesktopItems
 , curl, zlib, lttng-ust
-, icu58, SDL2, openalSoft, openssl_1_1
+, icu58, SDL2, openssl_1_1
+, alsa-lib, libpulseaudio
 }:
+let
+  # This is fine for a game.
+  xssl = openssl_1_1.overrideAttrs(old: {
+    meta = old.meta // { insecure = false; knownVulnerabilities = []; };
+  });
+in
 stdenv.mkDerivation rec {
   pname   = "solar2";
   version = "1.25";
@@ -39,10 +46,9 @@ stdenv.mkDerivation rec {
     mv * $out/share/solar2
 
     rm -f $out/share/solar2/libSDL2-2.0.so.0
-    rm -f $out/share/solar2/libopenal.so.1
 
     makeWrapper $out/share/solar2/Solar2 $out/bin/Solar2 \
-      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ icu58 SDL2 openalSoft openssl_1_1 ]}:/run/opengl-driver/lib
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ icu58 SDL2 xssl alsa-lib libpulseaudio ]}:/run/opengl-driver/lib
 
     ln -s $out/share/solar2/solar2icon_512x512_transparent.png $out/share/pixmaps/${pname}.png
 
