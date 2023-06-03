@@ -53,8 +53,7 @@ self: super: rec {
   kafkactl = super.callPackage ./pkgs/kafkactl { };
 
   navidrome-mbz = super.callPackage ./pkgs/navidrome-mbz {
-    buildGoModule = super.buildGo119Module;
-    nodejs = super.nodejs-16_x;
+    nodejs = super.nodejs-18_x;
   };
 
   hg659-voip-password = super.callPackage ./pkgs/hg659-voip-password {};
