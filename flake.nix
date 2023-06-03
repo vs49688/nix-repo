@@ -52,11 +52,6 @@
           xash3d-fwgs-full
           croc-lotg
           mongodb_3_6-bin
-          mongodb_4_0-bin
-          mongodb_4_2-bin
-          mongodb_4_4-bin
-          mongodb_5_0-bin
-          mongodb_6_0-bin
 
           linearmouse-bin
           scroll-reverser-bin
