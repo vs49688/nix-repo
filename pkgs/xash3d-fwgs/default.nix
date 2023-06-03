@@ -15,8 +15,8 @@ let
     src = fetchFromGitHub {
       owner = "FWGS";
       repo  = pname;
-      rev = "f13c28528706aee2b8a86ef58f8d32b3d934d502";
-      hash = "sha256-wIYQcrt9sqEspvHt0n0lpQq4Ve11yn4SSPEmyyggANM=";
+      rev = "48ca8f9a707d6980d8665351fe97d593c97a8286";
+      sha256 = "sha256-xgiwYJ3aSijQQl+EW6ySr4PXktrHhj/MD/BluQ9AUUg=";
 
       fetchSubmodules = true;
     };
