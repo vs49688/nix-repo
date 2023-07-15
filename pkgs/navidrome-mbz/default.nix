@@ -9,7 +9,7 @@ let
     owner = "vs49688";
     repo = "navidrome";
     rev = "v${version}";
-    sha256 = "sha256-BqY9sL6NU48pzGvgtl/VnGwfGwADsroKO3ajylkhM6Q=";
+    hash = "sha256-/7By3jYYCwYSg44lAYm/OgSeB1EfIyA/Covsdsp58XM";
   };
 
   nodeComposition = import ./node-composition.nix {
