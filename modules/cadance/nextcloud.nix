@@ -151,7 +151,7 @@ in {
           serviceConfig.Type = "oneshot";
           serviceConfig.ExecStartPre = [ "${occ}/bin/nextcloud-occ maintenance:mode --on" ];
 
-          serviceConfig.ExecStart = [];
+          serviceConfig.ExecStart = [ "sleep 5" ];
 
           serviceConfig.ExecStopPost = [ "${occ}/bin/nextcloud-occ maintenance:mode --off" ];
 
