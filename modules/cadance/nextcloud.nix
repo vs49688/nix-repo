@@ -150,20 +150,6 @@ in {
       };
     };
 
-    services.nginx.virtualHosts.${cfg.virtualHost} = {
-      locations."/" = {
-        priority  = 1;
-        proxyPass = "http://${cfg.localAddress}:80";
-        extraConfig = ''
-          proxy_request_buffering off;
-          proxy_buffering         off;
-          proxy_connect_timeout   60m;
-          proxy_read_timeout      60m;
-          proxy_send_timeout      60m;
-        '';
-      };
-    };
-
     services.caddy.virtualHosts.${cfg.virtualHost}.extraConfig = ''
       reverse_proxy http://${cfg.localAddress}:80
     '';
