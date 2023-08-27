@@ -143,6 +143,21 @@ in {
           wants = [ "network-online.target" ];
         };
 
+        systemd.services.nextcloud-backup = let
+          occ = config.services.nextcloud.occ;
+        in {
+          wants = [ "nextcloud-setup.service" ];
+
+          serviceConfig.Type = "oneshot";
+          serviceConfig.ExecStartPre = [ "${occ}/bin/nextcloud-occ maintenance:mode --on" ];
+
+          serviceConfig.ExecStart = [];
+
+          serviceConfig.ExecStopPost = [ "${occ}/bin/nextcloud-occ maintenance:mode --off" ];
+
+          serviceConfig.User = "nextcloud";
+        };
+
         users.groups.nextcloud.gid = cfg.gid;
         users.users.nextcloud.uid  = cfg.uid;
 
