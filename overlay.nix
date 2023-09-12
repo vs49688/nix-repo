@@ -84,6 +84,8 @@ self: super: rec {
     };
   };
 
+  rom-parser = super.callPackage ./pkgs/rom-parser { };
+
   ##
   # For macOS
   ##

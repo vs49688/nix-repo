@@ -53,6 +53,8 @@
           croc-lotg
           mongodb_3_6-bin
 
+          rom-parser
+
           linearmouse-bin
           scroll-reverser-bin
           hammerspoon-bin
