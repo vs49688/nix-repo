@@ -53,6 +53,7 @@
           croc-lotg
           mongodb_3_6-bin
 
+          supersonic
           rom-parser
 
           linearmouse-bin

@@ -84,6 +84,8 @@ self: super: rec {
     };
   };
 
+  supersonic = super.callPackage ./pkgs/supersonic { };
+
   rom-parser = super.callPackage ./pkgs/rom-parser { };
 
   ##
