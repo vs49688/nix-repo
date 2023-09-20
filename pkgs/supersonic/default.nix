@@ -13,16 +13,16 @@
 
 buildGoModule rec {
   pname = "supersonic";
-  version = "unstable-2023-08-29";
+  version = "0.5.2";
 
   src = fetchFromGitHub {
     owner = "dweymouth";
     repo = "supersonic";
-    rev = "ce685933be4ea7632fc9087269246e40c0d0a284";
-    hash = "sha256-AEcPrvVbtDG63s9M/+bwbAC/2SWeUnPqdi3gE4AaTlc=";
+    rev = "v${version}";
+    hash = "sha256-4SLAUqLMoUxTSi4I/QeHqudO62Gmhpm1XbCGf+3rPlc=";
   };
 
-  vendorHash = "sha256-Pm3xuEWECBsga8oT+IYJpL4gAI7WcTizCd8twKBQ284=";
+  vendorHash = "sha256-6Yp5OoybFpoBuIKodbwnyX3crLCl8hJ2r4plzo0plsY=";
 
   nativeBuildInputs = [
     copyDesktopItems
