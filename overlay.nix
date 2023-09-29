@@ -86,6 +86,10 @@ self: super: rec {
 
   supersonic = super.callPackage ./pkgs/supersonic { };
 
+  supersonic-wayland = self.supersonic.override {
+    waylandSupport = true;
+  };
+
   rom-parser = super.callPackage ./pkgs/rom-parser { };
 
   ##

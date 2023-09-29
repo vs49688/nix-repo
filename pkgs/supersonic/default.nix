@@ -12,7 +12,7 @@
 }:
 
 buildGoModule rec {
-  pname = "supersonic";
+  pname = "supersonic" + lib.optionalString waylandSupport "-wayland";
   version = "0.5.2";
 
   src = fetchFromGitHub {
@@ -29,28 +29,32 @@ buildGoModule rec {
     pkg-config
   ];
 
+  # go-glfw doesn't support both X11 and Wayland in single build
+  tags = lib.optionals waylandSupport [ "wayland" ];
+
   buildInputs = [
     libglvnd
     mpv
     xorg.libXxf86vm
+    xorg.libX11
   ] ++ (glfw3.override { inherit waylandSupport; }).buildInputs;
 
   postInstall = ''
-    mkdir -p $out/share/icons/hicolor/{128x128,256x256,512x512}/apps
-
-    for i in 128 256 512; do
-      install -D $src/res/appicon-$i.png $out/share/icons/hicolor/''${i}x''${i}/apps/${meta.mainProgram}.png
+    for dimension in 128 256 512;do
+        dimensions=''${dimension}x''${dimension}
+        mkdir -p $out/share/icons/hicolor/$dimensions/apps
+        cp res/appicon-$dimension.png $out/share/icons/hicolor/$dimensions/apps/${meta.mainProgram}.png
     done
+  '' + lib.optionalString waylandSupport ''
+    mv $out/bin/supersonic $out/bin/${meta.mainProgram}
   '';
-
-  tags = lib.optionals waylandSupport [ "wayland" ];
 
   desktopItems = [
     (makeDesktopItem {
       name = meta.mainProgram;
       exec = meta.mainProgram;
       icon = meta.mainProgram;
-      desktopName = "Supersonic";
+      desktopName = "Supersonic" + lib.optionalString waylandSupport " (Wayland)";
       genericName = "Subsonic Client";
       comment = meta.description;
       type = "Application";
@@ -59,7 +63,7 @@ buildGoModule rec {
   ];
 
   meta = with lib; {
-    mainProgram = "supersonic";
+    mainProgram = "supersonic" + lib.optionalString waylandSupport "-wayland";
     description = "A lightweight cross-platform desktop client for Subsonic music servers";
     homepage = "https://github.com/dweymouth/supersonic";
     platforms = platforms.linux;

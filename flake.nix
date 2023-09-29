@@ -54,6 +54,8 @@
           mongodb_3_6-bin
 
           supersonic
+          supersonic-wayland
+
           rom-parser
 
           linearmouse-bin
