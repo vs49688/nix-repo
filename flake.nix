@@ -57,6 +57,7 @@
           supersonic-wayland
 
           rom-parser
+          xboomer
 
           linearmouse-bin
           scroll-reverser-bin

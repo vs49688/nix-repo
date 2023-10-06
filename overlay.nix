@@ -92,6 +92,8 @@ self: super: rec {
 
   rom-parser = super.callPackage ./pkgs/rom-parser { };
 
+  xboomer = super.callPackage ./pkgs/xboomer { };
+
   ##
   # For macOS
   ##
