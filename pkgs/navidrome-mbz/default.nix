@@ -3,13 +3,13 @@
 , ffmpeg-headless, ffmpegSupport ? true }:
 let
   pname = "navidrome-mbz";
-  version = "0.49.3-mbz";
+  version = "0.50.0-mbz";
 
   src = fetchFromGitHub {
     owner = "vs49688";
     repo = "navidrome";
     rev = "v${version}";
-    hash = "sha256-/7By3jYYCwYSg44lAYm/OgSeB1EfIyA/Covsdsp58XM";
+    hash = "sha256-Z2eADOfPTXkZ/lDONJ3zxeziG7cgfnN1JQJggSwzpDM=";
   };
 
   nodeComposition = import ./node-composition.nix {
@@ -37,7 +37,7 @@ in
 buildGoModule {
   inherit pname version src;
 
-  vendorSha256 = "sha256-C8w/qCts8VqNDTQVXtykjmSbo5uDrvS9NOu3SHpAlDE=";
+  vendorSha256 = "sha256-aAJjDFnacY6A0fdODSJiFkeA8Gb9VCirUB3RcKatx0w=";
 
   nativeBuildInputs = [
     makeWrapper
@@ -66,10 +66,6 @@ buildGoModule {
   postFixup = lib.optionalString ffmpegSupport ''
     wrapProgram $out/bin/navidrome \
       --prefix PATH : ${lib.makeBinPath [ ffmpeg-headless ]}
-  '';
-
-  preCheck = ''
-    export GOFLAGS=''${GOFLAGS//-trimpath/}
   '';
 
   meta = with lib; {
