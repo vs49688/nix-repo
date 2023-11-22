@@ -4,13 +4,13 @@
 
 let
   sources = {
-    "@adobe/css-tools-4.0.1" = {
+    "@adobe/css-tools-4.3.1" = {
       name = "_at_adobe_slash_css-tools";
       packageName = "@adobe/css-tools";
-      version = "4.0.1";
+      version = "4.3.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@adobe/css-tools/-/css-tools-4.0.1.tgz";
-        sha512 = "+u76oB43nOHrF4DDWRLWDCtci7f3QJoEBigemIdIeTi1ODqjx6Tad9NCVnPRwewWlKkVab5PlK8DCtPTyX7S8g==";
+        url = "https://registry.npmjs.org/@adobe/css-tools/-/css-tools-4.3.1.tgz";
+        sha512 = "/62yikz7NLScCGAAST5SHdnjaDJQBDq0M2muyRTpf2VQhw6StBg2ALiu73zSJQ4fMVLA+0uBhBHAle7Wg+2kSg==";
       };
     };
     "@ampproject/remapping-2.2.0" = {
@@ -12818,7 +12818,7 @@ let
     version = "0.1.0";
     src = ./.;
     dependencies = [
-      sources."@adobe/css-tools-4.0.1"
+      sources."@adobe/css-tools-4.3.1"
       sources."@ampproject/remapping-2.2.0"
       (sources."@babel/code-frame-7.22.13" // {
         dependencies = [
