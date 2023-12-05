@@ -50,8 +50,6 @@ self: super: rec {
 
   unifi-backup-decrypt = super.callPackage ./pkgs/unifi-backup-decrypt { };
 
-  kafkactl = super.callPackage ./pkgs/kafkactl { };
-
   navidrome-mbz = super.callPackage ./pkgs/navidrome-mbz {
     nodejs = super.nodejs-18_x;
   };

@@ -43,7 +43,6 @@
           revive
           raftools
           unifi-backup-decrypt
-          kafkactl
           navidrome-mbz
           hg659-voip-password
           solar2
