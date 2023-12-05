@@ -40,7 +40,6 @@
           offzip
           _010editor
           vgmtrans
-          revive
           raftools
           unifi-backup-decrypt
           navidrome-mbz

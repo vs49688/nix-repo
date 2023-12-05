@@ -44,8 +44,6 @@ self: super: rec {
 
   vgmtrans = super.libsForQt5.callPackage ./pkgs/vgmtrans { };
 
-  revive = super.callPackage ./pkgs/revive { };
-
   raftools = super.callPackage ./pkgs/raftools { };
 
   unifi-backup-decrypt = super.callPackage ./pkgs/unifi-backup-decrypt { };
