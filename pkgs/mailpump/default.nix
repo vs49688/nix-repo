@@ -10,7 +10,7 @@ buildGoModule rec {
     hash = "sha256-Bt8UR9gmL+CiN7HUAcm1VBAVBnOwGmx+1sN0JrMle48";
   };
 
-  vendorSha256 = null;
+  vendorHash = null;
 
   meta = with lib; {
     description = "A service that monitors a mailbox for messages and will automatically move them to another, usually on a different server";
