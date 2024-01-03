@@ -2,6 +2,11 @@
   outputs = { self, nixpkgs }: let
     lib = nixpkgs.lib;
 
+    overlayPackages = overlay: pkgs: let
+      packageNames = builtins.attrNames (overlay null null);
+      packageSet = builtins.listToAttrs (builtins.map (u: { name = u; value = pkgs.${u}; }) packageNames);
+    in packageSet;
+
     mkNixpkgs = { system }: import self.inputs.nixpkgs {
       inherit system;
       overlays = [ self.overlays.default ];
@@ -25,52 +30,11 @@
     };
 
     packages = let
-      mkFlakePackages = { system }: rec {
-        inherit (mkNixpkgs { inherit system; })
-          awesfx
-          crocutils
-          extract-drs
-          extract-glb
-          pimidid
-          jdownloader
-          mailpump
-          mangostwo-server
-          mangostwo-database
-          # zane-scripts
-          offzip
-          _010editor
-          vgmtrans
-          raftools
-          unifi-backup-decrypt
-          navidrome-mbz
-          hg659-voip-password
-          solar2
-          supermeatboy
-          xash3d-fwgs
-          xash3d-fwgs-full
-          croc-lotg
-          mongodb_3_6-bin
-
-          rom-parser
-          xboomer
-
-          linearmouse-bin
-          scroll-reverser-bin
-          hammerspoon-bin
-
-          nimrod-portal-backend
-          portal-client
-          portal-client_1_0_4
-          portal-resource-server
-          nimrodg-agent
-          nimrun
-          nimptool-legacy
-          ims2tif
-          imsmeta
-          nimrod-portal
-          ipp_1_1
-        ;
-      };
+      mkFlakePackages = { system }: let
+        pkgs = mkNixpkgs { inherit system; };
+      in
+        (overlayPackages self.overlays.default pkgs)
+      ;
 
       mkPackages = { system }: lib.filterAttrs
         (name: pkg:
