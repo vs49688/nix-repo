@@ -9,12 +9,16 @@
 
     mkNixpkgs = { system }: import self.inputs.nixpkgs {
       inherit system;
-      overlays = [ self.overlays.default ];
+      overlays = [
+        self.overlays.default
+        self.overlays.rcc
+      ];
       config.allowUnfree = true;
     };
   in {
     overlays = {
       default = final: prev: (import ./overlay.nix final prev);
+      rcc = import ./rcc/overlay.nix;
     };
 
     nixosModules = {
@@ -33,7 +37,8 @@
       mkFlakePackages = { system }: let
         pkgs = mkNixpkgs { inherit system; };
       in
-        (overlayPackages self.overlays.default pkgs)
+        (overlayPackages self.overlays.default pkgs) //
+        (overlayPackages self.overlays.rcc pkgs)
       ;
 
       mkPackages = { system }: lib.filterAttrs
