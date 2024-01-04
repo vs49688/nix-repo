@@ -1,9 +1,17 @@
-{ stdenv, lib, fetchurl, autoPatchelfHook, curl, lzma, openssl_1_1
-, src, version }:
+{ stdenv
+, lib
+, fetchurl
+, autoPatchelfHook
+, curl
+, lzma
+, openssl_1_1
+, src
+, version
+}:
 let
   # This is fine for a game.
-  xssl = openssl_1_1.overrideAttrs(old: {
-    meta = old.meta // { insecure = false; knownVulnerabilities = []; };
+  xssl = openssl_1_1.overrideAttrs (old: {
+    meta = old.meta // { insecure = false; knownVulnerabilities = [ ]; };
   });
 in
 stdenv.mkDerivation {

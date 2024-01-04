@@ -12,6 +12,7 @@
       overlays = [
         self.overlays.default
         self.overlays.rcc
+        self.overlays.mongodb
       ];
       config.allowUnfree = true;
     };
@@ -19,6 +20,7 @@
     overlays = {
       default = final: prev: (import ./overlay.nix final prev);
       rcc = import ./rcc/overlay.nix;
+      mongodb = import ./mongodb/overlay.nix;
     };
 
     nixosModules = {
@@ -38,7 +40,8 @@
         pkgs = mkNixpkgs { inherit system; };
       in
         (overlayPackages self.overlays.default pkgs) //
-        (overlayPackages self.overlays.rcc pkgs)
+        (overlayPackages self.overlays.rcc pkgs) //
+        (overlayPackages self.overlays.mongodb pkgs)
       ;
 
       mkPackages = { system }: lib.filterAttrs
