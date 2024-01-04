@@ -18,38 +18,38 @@ final: prev: {
   };
 
   mongodb_4_2-bin = prev.callPackage ./mongodb-bin.nix {
-    version = "4.2.23";
+    version = "4.2.25";
 
     src = prev.fetchurl {
-      url = "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1804-4.2.23.tgz";
-      sha256 = "sha256-h5Y98F+LUQ7nxl6VkAKxo7H8Vnrb0IbhoKLouayiofo=";
+      url = "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1804-4.2.25.tgz";
+      sha256 = "sha256-4+4H9HRiJGAY+rvlrSIyk7zCYjEKU4HB13TJPgSoYbE=";
     };
   };
 
   mongodb_4_4-bin = prev.callPackage ./mongodb-bin.nix {
-    version = "4.4.18";
+    version = "4.4.27";
 
     src = prev.fetchurl {
-      url = "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-4.4.18.tgz";
-      sha256 = "sha256-iEJJccLiaS9wG26uGzXtS/OxVn6I7kOtluXrx+AHVSY=";
+      url = "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-4.4.27.tgz";
+      sha256 = "sha256-j/ucnmxHpVNZyrFyJ3ceI/2DKjxEu68eX5x4+DMl2Zk=";
     };
   };
 
   mongodb_5_0-bin = prev.callPackage ./mongodb-bin.nix {
-    version = "5.0.14";
+    version = "5.0.23";
 
     src = prev.fetchurl {
-      url = "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-5.0.14.tgz";
-      sha256 = "sha256-Y2v8lo27G8usxyma79sTuIafxeb3AP0OfhDKsm2QSAU=";
+      url = "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-5.0.23.tgz";
+      sha256 = "sha256-UqgY/PO0w++4duMlTJ8v55Hs8HcxrPmIIKNanYJ/icA=";
     };
   };
 
   mongodb_6_0-bin = prev.callPackage ./mongodb-bin.nix {
-    version = "6.0.3";
+    version = "6.0.12";
 
     src = prev.fetchurl {
-      url = "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-6.0.3.tgz";
-      sha256 = "sha256-CpWInJ6EhqDKMLAEZJBv/9X0QhcFgpQYP3J6kZLrD+k=";
+      url = "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-6.0.12.tgz";
+      sha256 = "sha256-X9EWIdsx3AIK3rORLzf+rvolVdBD2NomKA29EglDoOE=";
     };
   };
 }
