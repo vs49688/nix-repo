@@ -1,5 +1,5 @@
 { writeShellApplication, lib, bento4, xxd }:
-writeShellApplication {
+(writeShellApplication {
   name = "aaxm4bfix";
 
   runtimeInputs = [ bento4 xxd ];
@@ -23,11 +23,11 @@ writeShellApplication {
     mv -v "$f" "$old"
     mp4edit --replace        moov/trak/mdia/minf/stbl/stsd/mp4a/esds:"$t2"        "$old"        "$f"
   '';
-
+}).overrideAttrs(old: {
   meta = with lib; {
     homepage    = "https://rentry.co/n4ost";
     platforms   = platforms.linux;
     license     = licenses.free;
     maintainers = with maintainers; [ zane ];
   };
-}
+})
