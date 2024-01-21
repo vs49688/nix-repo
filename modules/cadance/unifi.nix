@@ -23,6 +23,20 @@ in {
       default = "/var/lib/unifi/data";
     };
 
+    mongodbPackage = mkPackageOption pkgs "mongodb" {
+      default = "mongodb-4_4";
+      extraDescription = ''
+        ::: {.note}
+        unifi7 officially only supports mongodb up until 3.6 but works with 4.4.
+        :::
+      '';
+    };
+
+    mongodbDataDir = mkOption {
+      type = types.str;
+      default = "/var/db/mongodb-unifi";
+    };
+
     hostAddress = mkOption {
       type = types.str;
     };
@@ -79,10 +93,27 @@ in {
         isReadOnly = false;
       };
 
+      bindMounts."/var/db/mongodb" = {
+        hostPath = cfg.mongodbDataDir;
+        isReadOnly = false;
+      };
+
       config = { config, pkgs, ... }: {
         nixpkgs.config.allowUnfree = true;
 
         networking.firewall.allowedTCPPorts = [ 8443 ];
+
+        environment.systemPackages = with pkgs; [
+          cfg.mongodbPackage
+          mongodb-tools
+          mongosh
+          jq
+        ];
+
+        services.mongodb.enable = true;
+        services.mongodb.package = cfg.mongodbPackage;
+        services.mongodb.enableAuth = false;
+        services.mongodb.bind_ip = "127.0.0.1";
 
         services.unifi = {
           enable       = true;
@@ -90,24 +121,12 @@ in {
           jrePackage   = pkgs.jre8_headless;
           unifiPackage = pkgs.unifiStable;
           mongodbPackage = pkgs.writeShellScriptBin "mongod" ''
-            ARR=()
-            while [[ $# -gt 0 ]]; do
-              key="$1"
-              case $key in
-                --nohttpinterface)
-                  shift
-                  ;;
-                *)
-                  ARR+=("$1")
-                  shift
-                  ;;
-              esac
-            done
-
-            set -- "''${ARR[@]}"
-            exec ${pkgs.mongodb_3_6-bin}/bin/mongod $*
+            exec ${pkgs.coreutils}/bin/true
           '';
         };
+
+        systemd.services.unifi.after = [ "mongodb.service" ];
+        systemd.services.unifi.requires = [ "mongodb.service" ];
 
         system.stateVersion = "21.05";
       };
