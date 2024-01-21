@@ -9,6 +9,8 @@ self: super: rec {
     } // a;
   in super.callPackage ./containers/static-serve-base args;
 
+  aaxm4bfix = super.callPackage ./pkgs/aaxm4bfix { };
+
   awesfx = super.callPackage ./pkgs/awesfx { };
 
   crocutils = super.callPackage ./pkgs/crocutils { };
