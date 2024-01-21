@@ -113,7 +113,7 @@ in {
       };
     };
 
-    services.nginx.virtualHosts.${cfg.virtualHost} = {
+    services.nginx.virtualHosts.${cfg.virtualHost} = lib.mkIf config.services.nginx.enable {
       locations."/" = {
         priority    = 1;
         proxyPass   = "https://${cfg.localAddress}:8443";
@@ -128,7 +128,7 @@ in {
       };
     };
 
-    services.caddy.virtualHosts.${cfg.virtualHost}.extraConfig = ''
+    services.caddy.virtualHosts.${cfg.virtualHost}.extraConfig = lib.mkIf config.services.caddy.enable ''
       reverse_proxy https://${cfg.localAddress}:8443 {
           transport http {
               tls_insecure_skip_verify
