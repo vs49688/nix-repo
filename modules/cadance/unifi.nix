@@ -75,6 +75,7 @@ in {
     ];
 
     containers.${cfg.containerName} = {
+      autoStart      = true;
       ephemeral      = true;
       privateNetwork = true;
       hostAddress    = cfg.hostAddress;
