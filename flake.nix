@@ -63,9 +63,5 @@
     in pkgs.callPackage ./containers {
       imagePrefix = "ghcr.io/vs49688";
     };
-
-    hpc = let
-      pkgs = mkNixpkgs { system = "x86_64-linux"; };
-    in pkgs.callPackage ./hpc { };
   };
 }

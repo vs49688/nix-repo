@@ -36,4 +36,21 @@ final: prev: {
   nimrod-portal = prev.callPackage ./nimrod-portal { };
 
   ipp_1_1 = prev.callPackage ./ipp { };
+
+  nimrod-embedded = final.callPackage ./nimrod-embedded {
+    nimrun = final.pkgsStatic.callPackage ./nimrun { };
+
+    installPrefix = "/sw7/RCC/NimrodG";
+    modulePath    = "/sw7/Modules/RCC/local";
+  };
+
+  nimrod-embedded-usq = let
+    moduleName = "nimrodg";
+  in final.callPackage ./nimrod-embedded {
+    inherit moduleName;
+
+    modulePath    = "/usr/local/opt/modules";
+    installPrefix = "/nonexistant";
+    rootDir       = "/usr/local/opt/software/${moduleName}/${final.nimrod-embedded.version}";
+  };
 }

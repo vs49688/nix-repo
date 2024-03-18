@@ -97,4 +97,8 @@ stdenv.mkDerivation rec {
   # This needs to run on CentOS7
   dontFixup = true;
   dontStrip = true;
+
+  meta = with lib; {
+    platforms = [ "x86_64-linux" ];
+  };
 }
