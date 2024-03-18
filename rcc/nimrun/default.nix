@@ -2,7 +2,7 @@
 stdenv.mkDerivation rec {
   pname    = "nimrun";
   # Not technically the version, just a placeholder
-  version = "1.0.0";
+  version = "unstable-2021-07-14";
 
   src = fetchFromGitHub {
     owner  = "UQ-RCC";
