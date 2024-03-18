@@ -14,17 +14,7 @@ stdenv.mkDerivation rec {
   sourceRoot = "source/nimrun";
 
   patches = [
-    (writeText "optional.patch" ''
---- a/nimrun.cpp
-+++ b/nimrun.cpp
-@@ -28,6 +28,7 @@
- #include <iomanip>
- #include <fstream>
- #include <iostream>
-+#include <optional>
- #include "config.h"
- #include "nimrun.hpp"
-'')
+    ./patch.patch
   ];
 
   nativeBuildInputs = [ cmake ];
