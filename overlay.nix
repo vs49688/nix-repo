@@ -77,6 +77,8 @@ self: super: rec {
 
   xboomer = super.callPackage ./pkgs/xboomer { };
 
+  redbean = super.callPackage ./pkgs/redbean { };
+
   ##
   # For macOS
   ##
