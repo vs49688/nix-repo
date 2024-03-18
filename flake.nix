@@ -1,7 +1,5 @@
 {
   outputs = { self, nixpkgs }: let
-    lib = nixpkgs.lib;
-
     overlayPackages = overlay: pkgs: let
       packageNames = builtins.attrNames (overlay null null);
       packageSet = builtins.listToAttrs (builtins.map (u: { name = u; value = pkgs.${u}; }) packageNames);
@@ -44,7 +42,7 @@
         (overlayPackages self.overlays.mongodb pkgs)
       ;
 
-      mkPackages = { system }: lib.filterAttrs
+      mkPackages = { system }: nixpkgs.lib.filterAttrs
         (name: pkg:
           pkg?meta && pkg.meta?platforms && (builtins.elem system pkg.meta.platforms)
         )
