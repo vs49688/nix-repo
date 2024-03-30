@@ -4,7 +4,7 @@
 }: let
   # Because the nixpkgs one has a 500mb closure
   ffmpeg = pkgs.callPackage ./ffmpeg.nix { };
-in dockerTools.buildLayeredImage {
+in (dockerTools.buildLayeredImage {
   name = "${imagePrefix}/${navidrome.pname}";
   tag  = navidrome.version;
 
@@ -33,4 +33,8 @@ in dockerTools.buildLayeredImage {
       "4533/tcp" = {};
     };
   };
-}
+}).overrideAttrs(old: {
+  passthru = old.passthru // {
+    inherit ffmpeg;
+  };
+})
