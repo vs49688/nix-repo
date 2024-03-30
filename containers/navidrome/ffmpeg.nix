@@ -1,21 +1,37 @@
-{ stdenv, lib, fetchurl, pkg-config, yasm
-, lame, libvorbis, libopus, fdk_aac
+{ stdenv
+, lib
+, fetchurl
+, pkg-config
+, yasm
+, lame
+, libvorbis
+, libopus
+, fdk_aac
 }:
-stdenv.mkDerivation rec {
+
+stdenv.mkDerivation(finalAttrs: {
   pname = "ffmpeg";
-  version = "5.1";
+  version = "6.1";
 
   src = fetchurl {
-    url = "https://ffmpeg.org/releases/ffmpeg-${version}.tar.gz";
-    sha256 = "sha256-wLLsKQq9WtMbXgqMRVw0+QMG7NLt5qzl21yjoH87hC8=";
+    url = "https://ffmpeg.org/releases/ffmpeg-${finalAttrs.version}.tar.gz";
+    sha256 = "sha256-k43XeLqgTTUxY8pcsGyQnJGIUAVfVJIFspsSJORaUxY=";
   };
 
-  nativeBuildInputs = [ pkg-config yasm ];
+  nativeBuildInputs = [
+    pkg-config
+    yasm
+  ];
 
-  buildInputs = [ lame libvorbis libopus fdk_aac ];
+  buildInputs = [
+    lame
+    libvorbis
+    libopus
+    fdk_aac
+  ];
 
   configureFlags = [
-    # Not redistributing it, built it yourself...
+    # Not redistributing it, build it yourself...
     "--enable-gpl"
     "--enable-version3"
     "--enable-nonfree"
@@ -40,4 +56,4 @@ stdenv.mkDerivation rec {
   ];
 
   enableParallelBuilding = true;
-}
+})
