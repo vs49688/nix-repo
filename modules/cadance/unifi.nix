@@ -119,7 +119,6 @@ in {
         services.unifi = {
           enable       = true;
           openFirewall = true;
-          jrePackage   = pkgs.jre8_headless;
           unifiPackage = pkgs.unifi;
           mongodbPackage = pkgs.writeShellScriptBin "mongod" ''
             exec ${pkgs.coreutils}/bin/true
