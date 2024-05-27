@@ -1,6 +1,6 @@
 { lib
 , fetchFromGitHub
-, pkgconfig
+, pkg-config
 , cmake
 , pkgs
 }:
@@ -82,7 +82,7 @@ stdenv.mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = [ pkgconfig cmake ];
+  nativeBuildInputs = [ pkg-config cmake ];
 
   patches = [
     ./optional.patch
