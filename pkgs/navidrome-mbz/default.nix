@@ -1,66 +1,67 @@
-{ stdenv, pkgs, lib, buildGoModule, fetchFromGitHub, pkg-config, makeWrapper
-, zlib, taglib, nodejs
-, ffmpeg-headless, ffmpegSupport ? true }:
-let
-  pname = "navidrome-mbz";
-  version = "0.50.1-mbz";
+{ buildGoModule
+, buildPackages
+, fetchFromGitHub
+, fetchNpmDeps
+, lib
+, nodejs
+, npmHooks
+, pkg-config
+, stdenv
+, ffmpeg-headless
+, taglib
+, zlib
+, nixosTests
+, nix-update-script
+, ffmpegSupport ? true
+}:
+
+buildGoModule rec {
+  pname = "navidrome";
+  version = "0.52.5-mbz";
 
   src = fetchFromGitHub {
     owner = "vs49688";
     repo = "navidrome";
     rev = "v${version}";
-    hash = "sha256-h5zHq1FdRrUTSWUos1f4aGZUo7iusaARgjVgAA0kNhY=";
+    hash = "sha256-WahslmFE6as3ccsVcmp+Cu2l4SgRK+awcKNCy5dV5FY=";
   };
 
-  nodeComposition = import ./node-composition.nix {
-    inherit pkgs nodejs;
-    inherit (stdenv.hostPlatform) system;
+  vendorHash = "sha256-puldHJs5GiaXvyvwuzAX00nMLUxoBESpxLOEtBYD7o4=";
+
+  npmRoot = "ui";
+
+  npmDeps = fetchNpmDeps {
+    inherit src;
+    sourceRoot = "${src.name}/ui";
+    hash = "sha256-OZvEPC+MobCJn16d3MsMtrStbsmRD9Ef0/leVSXtVZ8=";
   };
-
-  ui = nodeComposition.package.override {
-    inherit version;
-
-    pname = "${pname}-ui";
-
-    src = "${src}/ui";
-
-    dontNpmInstall = true;
-
-    postInstall = ''
-      npm run build
-      cd $out
-      mv lib/node_modules/navidrome-ui/build/* .
-      rm -rf lib
-    '';
-  };
-in
-buildGoModule {
-  inherit pname version src;
-
-  vendorHash = "sha256-PKj2zJhGR1yETLZ4as35cuwil3vfyFKfkKF/32YdAt8=";
 
   nativeBuildInputs = [
-    makeWrapper
+    buildPackages.makeWrapper
+    nodejs
+    npmHooks.npmConfigHook
     pkg-config
   ];
 
+  overrideModAttrs = oldAttrs: {
+    nativeBuildInputs = lib.filter (drv: drv != npmHooks.npmConfigHook) oldAttrs.nativeBuildInputs;
+    preBuild = null;
+  };
+
   buildInputs = [
-    zlib
     taglib
+    zlib
   ];
 
   ldflags = [
-    "-X github.com/navidrome/navidrome/consts.gitSha=${lib.substring 0 7 src.rev}"
-    "-X github.com/navidrome/navidrome/consts.gitTag=v${version}-SNAPSHOT"
+    "-X github.com/navidrome/navidrome/consts.gitSha=${src.rev}"
+    "-X github.com/navidrome/navidrome/consts.gitTag=v${version}"
   ];
 
-  passthru = {
-    inherit ui nodeComposition;
-  };
+  CGO_CFLAGS = lib.optionals stdenv.cc.isGNU [ "-Wno-return-local-addr" ];
 
   preBuild = ''
-    rm -rf ui/build
-    cp -R ${ui} ui/build
+    make buildjs
   '';
 
   postFixup = lib.optionalString ffmpegSupport ''
@@ -68,11 +69,19 @@ buildGoModule {
       --prefix PATH : ${lib.makeBinPath [ ffmpeg-headless ]}
   '';
 
-  meta = with lib; {
+  passthru = {
+    tests.navidrome = nixosTests.navidrome;
+    updateScript = nix-update-script { };
+  };
+
+  meta = {
     description = "Navidrome with MusicBrainz patches";
+    mainProgram = "navidrome";
     homepage = "https://github.com/vs49688/navidrome";
-    license = licenses.asl20;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ zane ];
+    license = lib.licenses.gpl3Only;
+    sourceProvenance = with lib.sourceTypes; [ fromSource ];
+    maintainers = with lib.maintainers; [ zane ];
+    # Broken on Darwin: sandbox-exec: pattern serialization length exceeds maximum (NixOS/nix#4119)
+    broken = stdenv.isDarwin;
   };
 }
