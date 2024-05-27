@@ -67,6 +67,10 @@ let
     ports = [
       "127.0.0.1:${toString instance.port}:${toString httpPort}"
     ];
+
+    extraOptions = [
+      "--mount" "type=tmpfs,destination=/tmp,tmpfs-size=268435456"
+    ];
   };
 
   makeVirtualHost = name: instance: {
