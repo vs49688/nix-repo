@@ -1,4 +1,6 @@
 {
+  inputs.nixpkgs.url = github:NixOS/nixpkgs;
+
   outputs = { self, nixpkgs }: let
     overlayPackages = overlay: pkgs: let
       packageNames = builtins.attrNames (overlay null null);
