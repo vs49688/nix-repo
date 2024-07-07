@@ -78,6 +78,11 @@ self: super: rec {
   redbean = super.callPackage ./pkgs/redbean { };
 
   ##
+  # NX
+  ##
+  nsz = super.python3Packages.callPackage ./pkgs/nsz { };
+
+  ##
   # For macOS
   ##
   linearmouse-bin = super.callPackage ./pkgs/linearmouse { };
