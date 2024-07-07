@@ -82,6 +82,8 @@ self: super: rec {
   ##
   nsz = super.python3Packages.callPackage ./pkgs/nsz { };
 
+  nstool = super.callPackage ./pkgs/nstool { };
+
   ##
   # For macOS
   ##
