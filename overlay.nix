@@ -84,6 +84,8 @@ self: super: rec {
 
   nstool = super.callPackage ./pkgs/nstool { };
 
+  dedbae = super.callPackage ./pkgs/dedbae { };
+
   ##
   # For macOS
   ##
