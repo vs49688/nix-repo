@@ -1,7 +1,7 @@
 { stdenv, lib, requireFile, autoPatchelfHook, makeWrapper
 , makeDesktopItem, copyDesktopItems
 , curl, zlib, lttng-ust
-, icu58, SDL2, openssl_1_1
+, icu69, SDL2, openssl_1_1
 , alsa-lib, libpulseaudio
 }:
 let
@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
     rm -f $out/share/solar2/libSDL2-2.0.so.0
 
     makeWrapper $out/share/solar2/Solar2 $out/bin/Solar2 \
-      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ icu58 SDL2 xssl alsa-lib libpulseaudio ]}:/run/opengl-driver/lib
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ icu69 SDL2 xssl alsa-lib libpulseaudio ]}:/run/opengl-driver/lib
 
     ln -s $out/share/solar2/solar2icon_512x512_transparent.png $out/share/pixmaps/${pname}.png
 
