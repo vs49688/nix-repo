@@ -5,6 +5,8 @@
 { config, pkgs, lib, ... }:
 let
   cfg = config.cadance.containers.unifi;
+  mvName = "mv-${cfg.managementInterface}";
+  vethName = "ve-${cfg.containerName}";
 in {
   options.cadance.containers.unifi = with lib; {
     enable = mkOption {
@@ -53,22 +55,14 @@ in {
       type = types.str;
       default = "";
     };
+
+    managementInterface = mkOption {
+      type = types.str;
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    networking.nat.internalInterfaces = [ "ve-${cfg.containerName}" ];
-    networking.networkmanager.unmanaged = [ "interface-name:ve-${cfg.containerName}" ];
-
-    networking.firewall = {
-      # https://help.ubnt.com/hc/en-us/articles/218506997
-      allowedTCPPorts = [
-        8080  # Port for UAP to inform controller.
-      ];
-      allowedUDPPorts = [
-        3478  # UDP port used for STUN.
-        10001 # UDP port used for device discovery.
-      ];
-    };
+    networking.networkmanager.unmanaged = [ "interface-name:${vethName}" ];
 
     systemd.tmpfiles.rules = [
       "d '${cfg.dataDir}' 0700 root - - -"
@@ -78,14 +72,17 @@ in {
       autoStart      = true;
       ephemeral      = true;
       privateNetwork = true;
-      hostAddress    = cfg.hostAddress;
-      localAddress   = cfg.localAddress;
 
-      forwardPorts = [
-        { protocol = "tcp"; hostPort = 8080;  containerPort = 8080; }
-        { protocol = "udp"; hostPort = 3478;  containerPort = 3478; }
-        { protocol = "udp"; hostPort = 10001; containerPort = 10001; }
-      ];
+      macvlans = [ cfg.managementInterface ];
+
+      ##
+      # NB: Use an "extra" veth instead of the primary one, as we don't
+      #  want a default route added.
+      ##
+      extraVeths.${vethName} = {
+        hostAddress     = cfg.hostAddress;
+        localAddress    = cfg.localAddress;
+      };
 
       # Can't bind directly to /var/lib/unifi as the
       # service already does this.
@@ -102,7 +99,24 @@ in {
       config = { config, pkgs, ... }: {
         nixpkgs.config.allowUnfree = true;
 
-        networking.firewall.allowedTCPPorts = [ 8443 ];
+        networking.interfaces.${mvName} = {
+          useDHCP = true;
+        };
+
+        networking.firewall.interfaces.${vethName} = {
+          allowedTCPPorts = [ 8443 ];
+        };
+
+        networking.firewall.interfaces.${mvName} = {
+          # https://help.ubnt.com/hc/en-us/articles/218506997
+          allowedTCPPorts = [
+            8080  # Port for UAP to inform controller.
+          ];
+          allowedUDPPorts = [
+            3478  # UDP port used for STUN.
+            10001 # UDP port used for device discovery.
+          ];
+        };
 
         environment.systemPackages = with pkgs; [
           cfg.mongodbPackage
