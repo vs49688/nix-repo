@@ -7,6 +7,7 @@ let
   cfg = config.cadance.containers.unifi;
   mvName = "mv-${cfg.managementInterface}";
   vethName = "ve-${cfg.containerName}";
+  netdevService = "${cfg.managementInterface}-netdev.service";
 in {
   options.cadance.containers.unifi = with lib; {
     enable = mkOption {
@@ -144,6 +145,11 @@ in {
 
         system.stateVersion = "21.05";
       };
+    };
+
+    systemd.services."container@${cfg.containerName}" = {
+      bindsTo = [ netdevService ];
+      after = [ netdevService ];
     };
 
     services.nginx.virtualHosts.${cfg.virtualHost} = lib.mkIf config.services.nginx.enable {
