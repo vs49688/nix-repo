@@ -1,0 +1,57 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f7763ea..ead6420 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -138,49 +138,9 @@ IF(NOT MUSL_STATIC)
+     ENDIF()
+ ENDIF()
+ 
+-# initalize cpm.CMake
+-INCLUDE(cmake/CPM.cmake)
+-
+-# fetch cpm.CMake dependencies
+-# Include JSON development library
+-CPMAddPackage(
+-        NAME nlohmann_json
+-        GITHUB_REPOSITORY nlohmann/json
+-        VERSION 3.11.2
+-)
+-
+-# Include fmt development library
+-CPMAddPackage(
+-        NAME fmt
+-        GITHUB_REPOSITORY fmtlib/fmt
+-        GIT_TAG 10.0.0
+-        VERSION 10.0.0
+-)
+-
+-# Include cmrc resource compiler
+-CPMAddPackage(
+-        NAME cmrc
+-        GITHUB_REPOSITORY vector-of-bool/cmrc
+-        GIT_TAG 2.0.1
+-        VERSION 2.0.1
+-)
+-
+-# Include Crypto++ development library
+-#CPMAddPackage(
+-#        NAME cryptopp-cmake
+-#        GITHUB_REPOSITORY abdes/cryptopp-cmake
+-#        GIT_TAG CRYPTOPP_8_8_0
+-#        VERSION 8.8.0
+-#        OPTIONS "CRYPTOPP_BUILD_TESTING OFF"
+-#)
+-
+-#include googletest unit testing library
+-#CPMAddPackage(
+-#        NAME googletest
+-#        GITHUB_REPOSITORY google/googletest
+-#        VERSION 1.13.0
+-#        OPTIONS "INSTALL_GTEST OFF" "gtest_force_shared_crt"
+-#)
++find_package(nlohmann_json 3.11 REQUIRED)
++find_package(fmt 10 REQUIRED)
++find_package(CMakeRC REQUIRED)
+ 
+ ### Resource compilation
+ CMRC_ADD_RESOURCE_LIBRARY(umskt-rc ALIAS umskt::rc NAMESPACE umskt keys.json)

@@ -77,6 +77,8 @@ self: super: rec {
 
   redbean = super.callPackage ./pkgs/redbean { };
 
+  umskt = super.callPackage ./pkgs/umskt { };
+
   ##
   # NX
   ##
