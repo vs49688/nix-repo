@@ -10,13 +10,13 @@ let
     gamesWithDesktopEntries = builtins.filter (g: g.gameName != null) games;
   in stdenv.mkDerivation rec {
     pname = "xash3d-fwgs";
-    version = "unstable-2023-03-02";
+    version = "unstable-2024-09-05";
 
     src = fetchFromGitHub {
       owner = "FWGS";
       repo  = pname;
-      rev = "48ca8f9a707d6980d8665351fe97d593c97a8286";
-      sha256 = "sha256-xgiwYJ3aSijQQl+EW6ySr4PXktrHhj/MD/BluQ9AUUg=";
+      rev = "178602ea1fa85f700a2a5873d983162b42b3e9f4";
+      sha256 = "sha256-IVLuZFxJJ+hO/XrdBcEuBb6Nj5SeInFQynFOzwfSq3Q=";
 
       fetchSubmodules = true;
     };
@@ -44,16 +44,24 @@ let
       done
     '';
 
-    ##
-    # NB: "--enable-lto" causes filesystem linker errors
-    ##
-    wafConfigureFlags = "--build-type=release --64bits --enable-all-renderers --enable-packaging";
+    wafConfigureFlags = [
+      "--build-type=humanrights"
+      "--64bits"
+      "--enable-all-renderers"
+      "--enable-packaging"
+      # "--enable-lto" # causes filesystem linker errors
+    ];
 
     dontUseWafInstall = false;
 
-    postInstall = ''
-      mkdir -p $out/bin $out/share/pixmaps
+    wafInstallFlags = [
+      "--destdir=/"
+    ];
 
+    postInstall = ''
+      mkdir -p $out/share/pixmaps
+
+      mv $out/bin/xash3d $out/bin/.xash3d-wrapped
       substitute ${./launch.sh} $out/bin/xash3d --subst-var out
 
       chmod +x $out/bin/xash3d

@@ -15,6 +15,8 @@ function die() {
 export XASH3D_RODIR="@out@/lib/xash3d"
 echo "XASH3D_RODIR is $XASH3D_RODIR"
 
+export LD_LIBRARY_PATH="$XASH3D_RODIR:$LD_LIBRARY_PATH"
+
 export XASH3D_EXTRAS_PAK1="@out@/share/xash3d/valve/extras.pk3"
 echo "XASH3D_EXTRAS_PAK1 is $XASH3D_EXTRAS_PAK1"
 
@@ -33,4 +35,4 @@ mkdir -p "$XASH3D_BASEDIR"
 cd "$XASH3D_BASEDIR" || die "Can't cd into $XASH3D_BASEDIR"
 echo "XASH3D_BASEDIR is $XASH3D_BASEDIR"
 
-exec "$XASH3D_RODIR/xash3d" "$@"
+exec "@out@/bin/.xash3d-wrapped" "$@"
