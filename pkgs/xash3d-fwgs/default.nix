@@ -77,14 +77,21 @@ let
       withGames = f: let packages = f xash3d-games; in buildXash packages;
     };
 
-    desktopItems = builtins.map (g: makeDesktopItem {
+    desktopItems = (builtins.map (g: makeDesktopItem {
       name = "xash3d-${g.gamedir}";
       exec = "xash3d -game ${g.gamedir}";
       icon = "xash3d-${g.gamedir}";
       comment = g.gameName;
       desktopName = g.gameName;
       categories = [ "Game" ];
-    }) gamesWithDesktopEntries;
+    }) gamesWithDesktopEntries) ++ (builtins.map (g: makeDesktopItem {
+      name = "xash3d-${g.gamedir}-console";
+      exec = "xash3d -game ${g.gamedir} -console";
+      icon = "xash3d-${g.gamedir}";
+      comment = "${g.gameName} (Console)";
+      desktopName = "${g.gameName} (Console)";
+      categories = [ "Game" ];
+    }) gamesWithDesktopEntries);
 
     meta = with lib; {
       description = "Xash3D FWGS engine";
