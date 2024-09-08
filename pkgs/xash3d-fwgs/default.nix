@@ -1,7 +1,7 @@
 { stdenv, lib, fetchFromGitHub, python3, wafHook, pkg-config, cmake
 , SDL2, libopus, freetype, fontconfig, makeWrapper
 , makeDesktopItem, copyDesktopItems
-, imagemagick_light
+, imagemagick
 , xash3d-games
 }:
 
@@ -68,7 +68,7 @@ let
     '' + (builtins.concatStringsSep "" (builtins.map (g: ''
       ln -s ${g} $out/lib/xash3d/${g.gamedir}
     '') games)) + (builtins.concatStringsSep "" (builtins.map (g: ''
-      ${imagemagick_light}/bin/convert ${g}/game.tga $out/share/pixmaps/xash3d-${g.gamedir}.png
+      ${imagemagick}/bin/magick convert ${g}/game.tga $out/share/pixmaps/xash3d-${g.gamedir}.png
     '') gamesWithDesktopEntries));
 
     passthru = {
