@@ -71,6 +71,8 @@ self: super: rec {
     g.gearbox g.gearbox_hd
   ]);
 
+  jack-editor = super.libsForQt5.callPackage ./pkgs/jack-editor { };
+
   rom-parser = super.callPackage ./pkgs/rom-parser { };
 
   xboomer = super.callPackage ./pkgs/xboomer { };
