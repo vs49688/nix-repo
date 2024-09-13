@@ -81,6 +81,18 @@ self: super: rec {
 
   umskt = super.callPackage ./pkgs/umskt { };
 
+  gogextract = super.python3Packages.callPackage ./pkgs/gogextract { };
+
+  gogLinuxInstaller = self.callPackage ({ runCommand, gogextract }: { src }: runCommand "${src.name}-data.zip" {} ''
+    ${gogextract}/bin/gogextract ${src} .
+    mv data.zip $out
+    # LANG=en_US.UTF-8 ''${unzip}/bin/unzip -qq -d $out data.zip
+  '') {};
+
+  x3-terran-war-pack = super.pkgsi686Linux.callPackage ./pkgs/x3-terran-war-pack {
+    inherit (self) gogLinuxInstaller;
+  };
+
   ##
   # NX
   ##
