@@ -89,6 +89,10 @@ self: super: rec {
     # LANG=en_US.UTF-8 ''${unzip}/bin/unzip -qq -d $out data.zip
   '') {};
 
+  x3-terran-war-pack = super.pkgsi686Linux.callPackage ./pkgs/x3-terran-war-pack {
+    inherit (self) gogLinuxInstaller;
+  };
+
   ##
   # NX
   ##
