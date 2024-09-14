@@ -81,6 +81,8 @@ self: super: rec {
 
   umskt = super.callPackage ./pkgs/umskt { };
 
+  gogextract = super.python3Packages.callPackage ./pkgs/gogextract { };
+
   ##
   # NX
   ##
