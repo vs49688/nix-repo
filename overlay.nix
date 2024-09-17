@@ -50,7 +50,7 @@ self: super: rec {
 
   unifi-backup-decrypt = super.callPackage ./pkgs/unifi-backup-decrypt { };
 
-  navidrome-mbz = super.callPackage ./pkgs/navidrome-mbz { };
+  navidrome-mbz = super.callPackage ./pkgs/navidrome-mbz { buildGoModule = super.buildGo123Module; };
 
   hg659-voip-password = super.callPackage ./pkgs/hg659-voip-password {};
 
