@@ -17,13 +17,13 @@
 
 buildGoModule rec {
   pname = "navidrome";
-  version = "0.53.0-mbz";
+  version = "0.53.1-mbz";
 
   src = fetchFromGitHub {
     owner = "vs49688";
     repo = "navidrome";
     rev = "v${version}";
-    hash = "sha256-4oIJBcLpmijQRyqOT4/Ns3Nsr5nRq4u3IRkhj5LOaNw=";
+    hash = "sha256-h5vndcz1MH9Ejye02PxQJXWQ4nVjyNkeOlcDbzQ58x8=";
   };
 
   vendorHash = "sha256-+acLAn9cicXYRVn3tL+GzFeCxHtXHDMgKisu4BzvGQs=";
