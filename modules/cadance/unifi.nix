@@ -27,7 +27,7 @@ in {
     };
 
     mongodbPackage = mkPackageOption pkgs "mongodb" {
-      default = "mongodb-4_4";
+      default = "mongodb-6_0";
       extraDescription = ''
         ::: {.note}
         unifi7 officially only supports mongodb up until 3.6 but works with 4.4.
@@ -41,7 +41,7 @@ in {
     };
 
     unifiPackage = mkPackageOption pkgs "unifi" {
-      default = "unifi";
+      default = "unifi8";
     };
 
     hostAddress = mkOption {
