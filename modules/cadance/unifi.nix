@@ -40,6 +40,10 @@ in {
       default = "/var/db/mongodb-unifi";
     };
 
+    unifiPackage = mkPackageOption pkgs "unifi" {
+      default = "unifi";
+    };
+
     hostAddress = mkOption {
       type = types.str;
     };
@@ -134,7 +138,7 @@ in {
         services.unifi = {
           enable       = true;
           openFirewall = true;
-          unifiPackage = pkgs.unifi;
+          unifiPackage = cfg.unifiPackage;
           mongodbPackage = pkgs.writeShellScriptBin "mongod" ''
             exec ${pkgs.coreutils}/bin/true
           '';
