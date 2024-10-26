@@ -3,7 +3,7 @@
 , fetchurl
 , autoPatchelfHook
 , curl
-, lzma
+, xz
 , openssl_1_1
 , src
 , version
@@ -28,7 +28,7 @@ stdenv.mkDerivation {
   buildInputs = [
     stdenv.cc.cc.libgcc or null
     curl
-    lzma
+    xz
     xssl
   ];
 
