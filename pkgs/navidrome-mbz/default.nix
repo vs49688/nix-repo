@@ -17,23 +17,23 @@
 
 buildGoModule rec {
   pname = "navidrome";
-  version = "0.53.1-mbz";
+  version = "0.54.5-mbz";
 
   src = fetchFromGitHub {
     owner = "vs49688";
     repo = "navidrome";
     rev = "v${version}";
-    hash = "sha256-h5vndcz1MH9Ejye02PxQJXWQ4nVjyNkeOlcDbzQ58x8=";
+    hash = "sha256-RnowuSpjaf1S+JqjJqvjifYm517maH5TaxHoUvVBIH8=";
   };
 
-  vendorHash = "sha256-+acLAn9cicXYRVn3tL+GzFeCxHtXHDMgKisu4BzvGQs=";
+  vendorHash = "sha256-bI0iDhATvNylKnI81eeUpgsm8YqySPyinPgBbcO0y4I=";
 
   npmRoot = "ui";
 
   npmDeps = fetchNpmDeps {
     inherit src;
     sourceRoot = "${src.name}/ui";
-    hash = "sha256-SebqSsng/t6g2874Hejc9wubiyYLE0jb3oLFnGwTRMA=";
+    hash = "sha256-PaE1xcZX9wZRcKeqQCXbdhi4cIBWBL8ZQdww6AOB7sQ=";
   };
 
   nativeBuildInputs = [
@@ -58,7 +58,15 @@ buildGoModule rec {
     "-X github.com/navidrome/navidrome/consts.gitTag=v${version}"
   ];
 
+  tags = [
+    "netgo"
+  ];
+
   CGO_CFLAGS = lib.optionals stdenv.cc.isGNU [ "-Wno-return-local-addr" ];
+
+  postPatch = ''
+    patchShebangs ui/bin/update-workbox.sh
+  '';
 
   preBuild = ''
     make buildjs
