@@ -1,4 +1,5 @@
-self: super: rec {
+{ asFlake ? false }:
+(self: super: (({
   makeStaticServeContainer = a@{ pkg ? null, imagePrefix ? "", ... }: let
     args = {
       darkhttpd  = super.pkgsStatic.darkhttpd;
@@ -52,8 +53,6 @@ self: super: rec {
 
   unifi-backup-decrypt = super.callPackage ./pkgs/unifi-backup-decrypt { };
 
-  navidrome-mbz = throw "navidrome-mbz has been removed, use navidrome instead";
-
   hg659-voip-password = super.callPackage ./pkgs/hg659-voip-password {};
 
   solar2 = super.callPackage ./pkgs/solar2 { };
@@ -91,10 +90,6 @@ self: super: rec {
     # LANG=en_US.UTF-8 ''${unzip}/bin/unzip -qq -d $out data.zip
   '') {};
 
-  x3-terran-war-pack = super.pkgsi686Linux.callPackage ./pkgs/x3-terran-war-pack {
-    inherit (self) gogLinuxInstaller;
-  };
-
   ##
   # NX
   ##
@@ -112,4 +107,10 @@ self: super: rec {
   scroll-reverser-bin = super.callPackage ./pkgs/scroll-reverser { };
 
   hammerspoon-bin = super.callPackage ./pkgs/hammerspoon { };
-}
+}) // (super.lib.optionalAttrs (!asFlake) {
+  navidrome-mbz = throw "navidrome-mbz has been removed, use navidrome instead";
+}) // (super.lib.optionalAttrs (super.stdenv.targetPlatform.isx86 && super.stdenv.targetPlatform.isLinux) {
+  x3-terran-war-pack = super.pkgsi686Linux.callPackage ./pkgs/x3-terran-war-pack {
+    inherit (self) gogLinuxInstaller;
+  };
+})))

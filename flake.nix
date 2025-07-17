@@ -3,7 +3,8 @@
 
   outputs = { self, nixpkgs }: let
     overlayPackages = overlay: pkgs: let
-      packageNames = builtins.attrNames (overlay null null);
+      tmpPkgs = (overlay tmpPkgs pkgs);
+      packageNames = builtins.attrNames tmpPkgs;
       packageSet = builtins.listToAttrs (builtins.map (u: { name = u; value = pkgs.${u}; }) packageNames);
     in packageSet;
 
@@ -18,7 +19,7 @@
     };
   in {
     overlays = {
-      default = final: prev: (import ./overlay.nix final prev);
+      default = final: prev: ((import ./overlay.nix { }) final prev);
       rcc = import ./rcc/overlay.nix;
       mongodb = import ./mongodb/overlay.nix;
     };
@@ -39,7 +40,7 @@
       mkFlakePackages = { system }: let
         pkgs = mkNixpkgs { inherit system; };
       in
-        (overlayPackages self.overlays.default pkgs) //
+        (overlayPackages (import ./overlay.nix { asFlake = true; }) pkgs) //
         (overlayPackages self.overlays.rcc pkgs) //
         (overlayPackages self.overlays.mongodb pkgs)
       ;
