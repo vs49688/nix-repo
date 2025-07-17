@@ -4,6 +4,7 @@
 , enlighten
 , pycryptodome
 , zstandard
+, setuptools
 }:
 let
   finalAttrs = {
@@ -16,6 +17,12 @@ let
       rev = finalAttrs.version;
       hash = "sha256-ch4HzQFa95o3HMsi7R0LpPWmhN/Z9EYfrmCdUZLwPSE=";
     };
+
+    pyproject = true;
+
+    build-system = [
+      setuptools
+    ];
 
     propagatedBuildInputs = [
       enlighten
