@@ -1,7 +1,7 @@
 { lib
 , stdenv
 , fetchFromGitHub
-, python3
+, python
 }:
 stdenv.mkDerivation(finalAttrs: {
   pname = "gogextract";
@@ -17,7 +17,7 @@ stdenv.mkDerivation(finalAttrs: {
   dontBuild = true;
 
   buildInputs = [
-    python3
+    python
   ];
 
   installPhase = ''
