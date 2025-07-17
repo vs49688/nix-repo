@@ -1,6 +1,6 @@
 { lib
 , stdenv
-, buildFHSUserEnv
+, buildFHSEnv
 , makeWrapper
 , autoPatchelfHook
 , fetchurl
@@ -19,7 +19,7 @@
 let
   description = "Professional Text Editor + World's Best Hex Editor";
 
-  unpacker = buildFHSUserEnv { name = "010editor-unpacker"; };
+  unpacker = buildFHSEnv { name = "010editor-unpacker"; };
 
   responseFile = writeText "responses.txt" ''
     CreateDesktopShortcut: No
