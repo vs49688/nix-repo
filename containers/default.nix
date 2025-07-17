@@ -27,16 +27,6 @@ in {
 
   navidrome = callPackage ./navidrome { };
 
-  navidrome-mbz = callPackage ./navidrome {
-    navidrome = pkgs.navidrome-mbz;
-  };
-
-  navidrome-mbz-debug = callPackage ./navidrome {
-    navidrome = pkgs.navidrome-mbz;
-    withShell = true;
-    withSqlite = true;
-  };
-
   nimrod-portal-backend = callPackage ./spring-base {
     pkg  = pkgs.nimrod-portal-backend;
     args = ["run"];

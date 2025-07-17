@@ -10,7 +10,6 @@
 | hammerspoon     |🍎  | Staggeringly powerful macOS desktop automation with Lua     | [Link](https://www.hammerspoon.org/) |
 | jdownloader     |🐧  | JDownloader is a free, open-source download management tool | [Link](https://jdownloader.org/) |
 | linearmouse     |🍎  | The mouse and trackpad utility for Mac                      | [Link](https://linearmouse.app/) |
-| navidrome-mbz   |🐧🍎| Navidrome, with MusicBrainz patches.                        | [Link](https://github.com/vs49688/navidrome) |
 | raftools        |🐧🍎| League of Legends Legacy extraction utility                 | [Link](https://github.com/vs49688/RAFTools) |
 | scroll-reverser |🍎  | Per-device scrolling prefs on macOS                         | [Link](https://pilotmoon.com/scrollreverser/) |
 | vgmtrans        |🐧  | A tool to convert proprietary, sequenced videogame music to industry-standard formats | [Link](https://github.com/vgmtrans/vgmtrans) |
