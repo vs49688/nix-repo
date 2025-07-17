@@ -1,4 +1,5 @@
 { stdenv
+, lib
 , requireFile
 , gogLinuxInstaller
 , unzip
@@ -111,4 +112,12 @@ stdenv.mkDerivation(finalAttrs: {
       categories = [ "Game" ];
     })
   ];
+
+  meta = with lib; {
+    description = "X3: Terran War Pack";
+    homepage = "https://www.gog.com/en/game/x3_terran_war_pack";
+    platforms = [ "x86_64-linux" "i686-linux" ];
+    license = licenses.unfree;
+    maintainers = with maintainers; [ zane ];
+  };
 })
