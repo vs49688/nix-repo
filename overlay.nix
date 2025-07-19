@@ -1,15 +1,5 @@
 { asFlake ? false }:
 (self: super: (({
-  makeStaticServeContainer = a@{ pkg ? null, imagePrefix ? "", ... }: let
-    args = {
-      darkhttpd  = super.pkgsStatic.darkhttpd;
-    } // super.lib.optionalAttrs (pkg != null) {
-      name       = if (imagePrefix == "") then pkg.pname else "${imagePrefix}/${pkg.pname}";
-      tag        = pkg.version;
-      staticPath = "${pkg}";
-    } // a;
-  in super.callPackage ./containers/static-serve-base args;
-
   aaxm4bfix = super.callPackage ./pkgs/aaxm4bfix { };
 
   awesfx = super.callPackage ./pkgs/awesfx { };

@@ -12,7 +12,6 @@
       inherit system;
       overlays = [
         self.overlays.default
-        self.overlays.rcc
         self.overlays.mongodb
       ];
       config.allowUnfree = true;
@@ -20,7 +19,6 @@
   in {
     overlays = {
       default = final: prev: ((import ./overlay.nix { }) final prev);
-      rcc = import ./rcc/overlay.nix;
       mongodb = import ./mongodb/overlay.nix;
     };
 
@@ -41,7 +39,6 @@
         pkgs = mkNixpkgs { inherit system; };
       in
         (overlayPackages (import ./overlay.nix { asFlake = true; }) pkgs) //
-        (overlayPackages self.overlays.rcc pkgs) //
         (overlayPackages self.overlays.mongodb pkgs)
       ;
 
