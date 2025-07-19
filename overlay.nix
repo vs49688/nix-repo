@@ -102,17 +102,14 @@
   nstool = super.callPackage ./pkgs/nstool { };
 
   dedbae = super.callPackage ./pkgs/dedbae { };
-
-  ##
-  # For macOS
-  ##
-  linearmouse-bin = super.callPackage ./pkgs/linearmouse { };
-
-  scroll-reverser-bin = super.callPackage ./pkgs/scroll-reverser { };
-
-  hammerspoon-bin = super.callPackage ./pkgs/hammerspoon { };
 }) // (super.lib.optionalAttrs (!asFlake) {
   navidrome-mbz = throw "navidrome-mbz has been removed, use navidrome instead";
+
+  linearmouse-bin = throw "linearmouse-bin has been removed, use nix-darwin with Brew";
+
+  scroll-reverser-bin = throw "scroll-reverser-bin has been removed, use nix-darwin with Brew";
+
+  hammerspoon-bin = throw "hammerspoon-bin has been removed, use nix-darwin with Brew";
 }) // (super.lib.optionalAttrs (super.stdenv.targetPlatform.isx86 && super.stdenv.targetPlatform.isLinux) {
   x3-terran-war-pack = super.pkgsi686Linux.callPackage ./pkgs/x3-terran-war-pack {
     inherit (self) gogLinuxInstaller;

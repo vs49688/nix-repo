@@ -7,11 +7,8 @@
 | Package         |    | Description                                                 | Link |
 |-----------------|----|-------------------------------------------------------------|------|
 | _010editor      |🐧  | 010 Editor v12.0.1[^1]                                      | [Link](https://www.sweetscape.com/010editor/) |
-| hammerspoon     |🍎  | Staggeringly powerful macOS desktop automation with Lua     | [Link](https://www.hammerspoon.org/) |
 | jdownloader     |🐧  | JDownloader is a free, open-source download management tool | [Link](https://jdownloader.org/) |
-| linearmouse     |🍎  | The mouse and trackpad utility for Mac                      | [Link](https://linearmouse.app/) |
 | raftools        |🐧🍎| League of Legends Legacy extraction utility                 | [Link](https://github.com/vs49688/RAFTools) |
-| scroll-reverser |🍎  | Per-device scrolling prefs on macOS                         | [Link](https://pilotmoon.com/scrollreverser/) |
 | vgmtrans        |🐧  | A tool to convert proprietary, sequenced videogame music to industry-standard formats | [Link](https://github.com/vgmtrans/vgmtrans) |
 | mongodb_3_6-bin |🐧  | MongoDB 3.6, binary version                                 | [Link](https://www.mongodb.com/) |
 
