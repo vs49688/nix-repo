@@ -47,6 +47,8 @@
 | mangostwo-server    |🐧  | MangosTwo Server Binaries.  Use `containers.mangostwo-*` | [Link](https://www.getmangos.eu/bug-tracker/mangos-two/) |
 | xboomer             |🐧  | Windows XP window decorations for KDE Plasma             | [Link](https://github.com/efskap/XBoomer)                |
 | zane-scripts.*      |🐧🍎| Personal scripts. Useless to you.                        | [Link](https://github.com/vs49688/scripts)               |
+| mingw-w64-cc        |🐧  | MinGW32-w64 Cross Compiler                               |                                                          |
+| mingw32-cc          |🐧  | MinGW32 Cross Compiler                                   |                                                          |
 
 ### MongoDB Versions
 

@@ -90,6 +90,10 @@
     # LANG=en_US.UTF-8 ''${unzip}/bin/unzip -qq -d $out data.zip
   '') {};
 
+  mingw-w64-cc = super.callPackage ./pkgs/mingwcc { mingwPkgs = super.pkgsCross.mingwW64; };
+
+  mingw32-cc = super.callPackage ./pkgs/mingwcc { mingwPkgs = super.pkgsCross.mingw32; };
+
   ##
   # NX
   ##
