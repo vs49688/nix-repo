@@ -24,12 +24,12 @@
 
     nixosModules = {
       default = { pkgs, ... }: {
-        imports = import ./modules;
+        imports = import ./modules/public.nix;
         nixpkgs.overlays = [ self.overlays.default ];
       };
 
       cadance = { pkgs, ... }: {
-        imports = (import ./modules) ++ (import ./modules/cadance);
+        imports = (import ./modules/public.nix) ++ (import ./modules/cadance);
         nixpkgs.overlays = [ self.overlays.default ];
       };
 
