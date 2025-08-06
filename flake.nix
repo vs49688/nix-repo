@@ -56,8 +56,6 @@
       x86_64-darwin  = mkPackages { system = "x86_64-darwin";  };
     };
 
-    nixosModule = self.nixosModules.default;
-
     containers = let
       pkgs = mkNixpkgs { system = "x86_64-linux"; };
     in pkgs.callPackage ./containers {
