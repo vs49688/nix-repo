@@ -32,6 +32,8 @@
         imports = (import ./modules) ++ (import ./modules/cadance);
         nixpkgs.overlays = [ self.overlays.default ];
       };
+
+      settings = import ./modules/settings;
     };
 
     packages = let
