@@ -44,6 +44,8 @@
       devmachine = import ./modules/devmachine;
 
       ssh-totp = import ./modules/ssh-totp.nix;
+
+      postgres-ensure-roles = import ./modules/postgres-ensure-roles.nix;
     };
 
     packages = let
