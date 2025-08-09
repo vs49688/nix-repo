@@ -29,8 +29,6 @@
 
   mangostwo-database = super.callPackage ./pkgs/mangostwo-database { };
 
-  azerothcore = super.callPackage ./pkgs/azerothcore { };
-
   zane-scripts = super.callPackages ./pkgs/zane-scripts { };
 
   offzip = super.callPackage ./pkgs/offzip { };
