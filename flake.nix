@@ -36,6 +36,8 @@
       settings = import ./modules/settings;
 
       gui6 = import ./modules/gui6.nix;
+
+      devmachine = import ./modules/devmachine;
     };
 
     packages = let

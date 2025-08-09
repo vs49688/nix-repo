@@ -1,0 +1,107 @@
+^1\.1\.1\.1$
+
+^192\.168\.122\.([0-9]+)$
+^192\.168\.123\.([0-9]+)$
+
+##
+# PKI stuff
+##
+^ocsp\.globalsign\.com$
+^crl\.globalsign\.com$
+^crl[0-9]\.globalsign\.com$
+^x1\.c\.lencr\.org$
+^c\.pki\.goog$
+^ocsp\.digicert\.com$
+
+##
+# GitHub
+##
+^(.+\.)?github\.com$
+^(.+\.)?githubassets\.com$
+^(.+\.)?githubusercontent\.com$
+
+##
+# Mozilla
+##
+^(.+\.)?mozilla\.com$
+^(.+\.)?mozilla\.net$
+^(.+\.)?firefox\.com$
+
+##
+# DuckDuckGo
+##
+^(.+\.)?duckduckgo\.com$
+
+##
+# Reddit
+##
+^(.+\.)?reddit\.com$
+^(.+\.)?redditstatic\.com$
+^(.+\.)?redditmedia\.com$
+^preview\.redd\.it$
+^i\.redd\.it$
+
+##
+# M$ Connectivity tests
+##
+^www\.msftconnecttest\.com$
+^ipv6\.msftconnecttest\.com$
+
+##
+# Stack Overflow & Friends
+##
+^(.+\.)?stackoverflow\.com$
+^(.+\.)?stackexchange\.com$
+^cdn\.sstatic\.net$
+
+##
+# OSS Stuff
+##
+^(.+\.)?fedorapeople\.org$
+^(.+\.)?fedoraproject\.org$
+
+^(.+\.)?wireshark\.org$
+
+##
+# Audible
+##
+^api\.audible\.com\.au$
+^dze5l2jxnquy5\.cloudfront\.net$
+
+##
+# Amazon
+##
+^(.+\.)?amazon\.com$
+^(.+\.)?amazon\.com\.au$
+^m\.media-amazon\.com$
+^images-fe\.ssl-images-amazon\.com$
+
+##
+# LINE
+##
+^(.+\.)?line\.me$
+^(.+\.)?line-scdn\.net$
+^(.+\.)?line-apps\.com$
+^(.+\.)?line-apps\.com\.akadns\.net$
+^ln-cdn\.akamaized\.net$
+
+##
+# GoG, but the fuckers ignore proxy settings
+##
+# ^cfg\.gog\.com$
+# ^auth\.gog\.com$
+# ^users\.gog\.com$
+
+##
+# Misc
+##
+^ipv4\.icanhazip\.com$
+^ipv6\.icanhazip\.com$
+
+^(.+\.)?neverssl\.com$
+
+^ublockorigin\.pages\.dev$
+
+^cdn\.jsdelivr\.net$
+
+^(.+\.)?vs49688\.net$
