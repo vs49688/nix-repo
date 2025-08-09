@@ -37,6 +37,8 @@
 
       base = import ./modules/base;
 
+      nixos-base = import ./modules/nixos-base.nix;
+
       gui6 = import ./modules/gui6.nix;
 
       devmachine = import ./modules/devmachine;
