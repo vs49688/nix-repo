@@ -35,6 +35,8 @@
 
       settings = import ./modules/settings;
 
+      base = import ./modules/base;
+
       gui6 = import ./modules/gui6.nix;
 
       devmachine = import ./modules/devmachine;
