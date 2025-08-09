@@ -58,6 +58,6 @@ in
   ];
 
   systemd.tmpfiles.rules = [
-    "f /dev/shm/looking-glass 0660 ${config.settings.username} qemu-libvirtd -"
+    "f /dev/shm/looking-glass 0660 ${config.settings.primaryUser.username} qemu-libvirtd -"
   ];
 }
