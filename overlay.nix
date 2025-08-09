@@ -82,6 +82,8 @@
 
   mingw32-cc = super.callPackage ./pkgs/mingwcc { mingwPkgs = super.pkgsCross.mingw32; };
 
+  ffmpeg-for-navidrome = super.callPackage ./pkgs/ffmpeg-for-navidrome { };
+
   ##
   # NX
   ##
