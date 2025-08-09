@@ -42,6 +42,8 @@
       gui6 = import ./modules/gui6.nix;
 
       devmachine = import ./modules/devmachine;
+
+      ssh-totp = import ./modules/ssh-totp.nix;
     };
 
     packages = let
