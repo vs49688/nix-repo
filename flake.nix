@@ -106,6 +106,13 @@
         ];
       };
 
+      TWILYSPARKLE = baseSystem.extendModules {
+        modules = [
+          self.inputs.nixos-hardware.nixosModules.dell-xps-15-9550-nvidia
+          ./hosts/twilysparkle
+        ];
+      };
+
       ZAIR = baseSystem.extendModules {
         modules = [
           self.inputs.nixos-apple-silicon.nixosModules.default
