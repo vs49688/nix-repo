@@ -9,6 +9,8 @@
 
     impermanence.url = github:nix-community/impermanence;
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     nixos-apple-silicon.url = "github:nix-community/nixos-apple-silicon";
     nixos-apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
   };
