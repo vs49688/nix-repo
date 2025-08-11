@@ -89,5 +89,21 @@
     };
 
     lib = import ./lib { inherit self; };
+
+    ##
+    # Base NixOS Configurations
+    # 1. These are extended by my personal configuration.
+    # 2. Don't expect them to work without it.
+    ##
+    nixosConfigurations = let
+      baseSystem = self.outputs.lib.mkSystem { };
+    in {
+      ZAIR = baseSystem.extendModules {
+        modules = [
+          self.inputs.nixos-apple-silicon.nixosModules.default
+          ./hosts/zair
+        ];
+      };
+    };
   };
 }
