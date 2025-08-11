@@ -153,6 +153,8 @@ in
 
   hardware.graphics.enable32Bit = lib.mkDefault config.hardware.graphics.enable;
 
+  services.geoclue2.enable = lib.mkDefault true;
+
   fonts.fontconfig.useEmbeddedBitmaps = true;
   fonts.enableDefaultPackages = true;
   fonts.packages = with pkgs; [
