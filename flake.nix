@@ -98,6 +98,12 @@
     nixosConfigurations = let
       baseSystem = self.outputs.lib.mkSystem { };
     in {
+      MORNINGSTAR = baseSystem.extendModules {
+        modules = [
+          ./hosts/morningstar
+        ];
+      };
+
       ZAIR = baseSystem.extendModules {
         modules = [
           self.inputs.nixos-apple-silicon.nixosModules.default
