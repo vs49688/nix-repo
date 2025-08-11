@@ -1,7 +1,16 @@
 {
-  inputs.nixpkgs.url = github:NixOS/nixpkgs;
+  inputs = {
+    nixpkgs.url = github:NixOS/nixpkgs;
 
-  outputs = { self, nixpkgs }: let
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    impermanence.url = github:nix-community/impermanence;
+  };
+
+  outputs = { self, nixpkgs, ... }: let
     overlayPackages = overlay: pkgs: let
       tmpPkgs = (overlay tmpPkgs pkgs);
       packageNames = builtins.attrNames tmpPkgs;
@@ -75,5 +84,7 @@
     in pkgs.callPackage ./containers {
       imagePrefix = "ghcr.io/vs49688";
     };
+
+    lib = import ./lib { inherit self; };
   };
 }
