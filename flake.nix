@@ -100,6 +100,12 @@
     nixosConfigurations = let
       baseSystem = self.outputs.lib.mkSystem { };
     in {
+      AVALON = baseSystem.extendModules {
+        modules = [
+          ./hosts/avalon
+        ];
+      };
+
       MORNINGSTAR = baseSystem.extendModules {
         modules = [
           ./hosts/morningstar
