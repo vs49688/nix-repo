@@ -109,6 +109,7 @@
       MORNINGSTAR = baseSystem.extendModules {
         modules = [
           ./hosts/morningstar
+          ./modules/personal.nix
         ];
       };
 
@@ -116,6 +117,7 @@
         modules = [
           self.inputs.nixos-hardware.nixosModules.dell-xps-15-9550-nvidia
           ./hosts/twilysparkle
+          ./modules/personal.nix
         ];
       };
 
@@ -123,6 +125,7 @@
         modules = [
           self.inputs.nixos-apple-silicon.nixosModules.default
           ./hosts/zair
+          ./modules/personal.nix
         ];
       };
     };
