@@ -32,6 +32,14 @@ in {
             type = with types; listOf str;
             default = [];
           };
+
+          gpgKeyId = mkOption {
+            type = with types; str;
+          };
+
+          sshKeyPath = mkOption {
+            type = with types; str;
+          };
         };
       });
     };
