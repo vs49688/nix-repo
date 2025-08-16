@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="audio/x-tun">
+        <comment>LEGO Racers TUN Audio</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="*.tun"/>
+    </mime-type>
+</mime-info>
