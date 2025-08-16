@@ -32,6 +32,8 @@ rec {
           username = "nixos";
           email = "nixos@example.com";
           home = "/home/nixos";
+          sshKeyPath = "~/.ssh/id_ed25519";
+          gpgKeyId = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
         };
 
         home-manager.users.${config.settings.primaryUser.username}.home.stateVersion = lowPrio "21.11";
