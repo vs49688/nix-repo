@@ -132,5 +132,17 @@
         ];
       };
     };
+
+    ##
+    # I actively despise this shit OS.
+    # How do they manage to make it so f***ing user-unfriendly?
+    ##
+    darwinConfigurations."Zanes-MacBook-Air" = self.inputs.nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      modules = [
+        self.inputs.home-manager.darwinModules.home-manager
+        ./hosts/zanes-macbook-air
+      ];
+    };
   };
 }
