@@ -24,7 +24,7 @@
     getent
     gnupg
     pinentry_mac
-    gitAndTools.gitFull
+    git
     texlive.combined.scheme-full
     man-pages-posix
     rustup
