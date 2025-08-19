@@ -207,7 +207,7 @@
 
     programs.git = {
       enable    = true;
-      package   = pkgs.gitAndTools.gitFull;
+      package   = pkgs.git;
       userName  = config.common.gitName;
       userEmail = config.common.gitEmail;
       signing.key = config.common.gitSigningKey;
