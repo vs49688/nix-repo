@@ -66,6 +66,8 @@
       # Compilers/Assemblers
       mingw-w64-cc
       mingw32-cc
+      djgpp_i586
+      djgpp_i686
       uasm
 
       # Kubernetes/Container Stuff
