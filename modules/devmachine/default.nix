@@ -69,6 +69,7 @@
       djgpp_i586
       djgpp_i686
       uasm
+      dosbox-x
 
       # Kubernetes/Container Stuff
       minikube
