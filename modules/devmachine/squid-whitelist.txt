@@ -62,6 +62,8 @@
 
 ^(.+\.)?wireshark\.org$
 
+^(.+\.)?kernel\.org$
+
 ##
 # Audible
 ##
@@ -93,6 +95,13 @@
 # ^users\.gog\.com$
 
 ##
+# 3D things
+##
+^(.+\.)?khronos\.org$
+^(.+\.)?lunarg\.com$
+^(.+\.)?freedesktop\.org$
+
+##
 # Misc
 ##
 ^ipv4\.icanhazip\.com$
@@ -105,3 +114,7 @@
 ^cdn\.jsdelivr\.net$
 
 ^(.+\.)?vs49688\.net$
+
+^(.+\.)?phoronix\.com$
+^(.+\.)?phoronix\.net$
+
