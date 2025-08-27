@@ -25,7 +25,7 @@
   # https://github.com/NixOS/nixpkgs/issues/160599
   environment.sessionVariables.NIX_PROFILES = "${lib.concatStringsSep " " (lib.reverseList config.environment.profiles)}";
 
-  services.logind.killUserProcesses = true;
+  services.logind.settings.Login.KillUserProcesses = true;
 
   services.fstrim.enable = lib.mkDefault true;
   services.fwupd.enable = lib.mkDefault true;
