@@ -41,5 +41,5 @@ in {
     openssh.authorizedKeys.keys = primaryUser.authorizedKeys;
   };
 
-  system.stateVersion = 4;
+  system.stateVersion = 5;
 }
