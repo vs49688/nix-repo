@@ -243,14 +243,14 @@
     };
 
     programs.ssh.enable = true;
-    programs.ssh.serverAliveInterval = 5;
-    programs.ssh.serverAliveCountMax = 15;
-    programs.ssh.extraConfig = ''
-      IdentitiesOnly yes
-    '';
     programs.ssh.matchBlocks = {
       "github.com" = { user = "git"; identityFile = config.common.sshDefaultKey; };
       "codeberg.org" = { user = "git"; identityFile = config.common.sshDefaultKey; };
+      "*" = {
+        serverAliveInterval = 5;
+        serverAliveCountMax = 15;
+        identitiesOnly = true;
+      };
     };
 
     xdg.configFile."mpv/mpv.conf".text = ''
