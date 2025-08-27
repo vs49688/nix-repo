@@ -92,6 +92,7 @@
     "rectangle"
     "linearmouse"
     "iterm2"
+    "alacritty"
     "firefox"
     "google-chrome"
     "inkscape"
