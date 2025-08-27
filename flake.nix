@@ -144,5 +144,13 @@
         ./hosts/zanes-macbook-air
       ];
     };
+
+    darwinConfigurations."ANGELUS" = self.inputs.nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      modules = [
+        self.inputs.home-manager.darwinModules.home-manager
+        ./hosts/angelus
+      ];
+    };
   };
 }
