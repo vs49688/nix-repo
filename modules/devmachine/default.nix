@@ -61,7 +61,6 @@
 
       # IDEs
       vscodium
-      notepadqq
 
       # Compilers/Assemblers
       mingw-w64-cc
