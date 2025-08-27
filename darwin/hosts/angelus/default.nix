@@ -5,7 +5,7 @@
 in {
   imports = [
     ./darwin-base.nix
-    ../../modules/settings
+    ../../../modules/settings
   ];
 
   settings.primaryUser = lowPrio "nixos";
@@ -23,11 +23,11 @@ in {
   # Until the modules are updated to use darwinConfig.
   home-manager.extraSpecialArgs = { hostName = config.networking.hostName; };
 
-  networking.hostName =  "Zanes-MacBook-Air";
+  networking.hostName =  "ANGELUS";
 
   system.primaryUser = primaryUser.username;
 
-  home-manager.users.${primaryUser.username} = import ./../../modules/home;
+  home-manager.users.${primaryUser.username} = import ./../../../modules/home;
 
   users.users.${primaryUser.username} = {
     createHome  = true;

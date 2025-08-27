@@ -141,7 +141,7 @@
       system = "aarch64-darwin";
       modules = [
         self.inputs.home-manager.darwinModules.home-manager
-        ./hosts/zanes-macbook-air
+        ./darwin/hosts/zanes-macbook-air
       ];
     };
 
@@ -149,7 +149,7 @@
       system = "aarch64-darwin";
       modules = [
         self.inputs.home-manager.darwinModules.home-manager
-        ./hosts/angelus
+        ./darwin/hosts/angelus
       ];
     };
   };
