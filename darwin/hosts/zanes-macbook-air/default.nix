@@ -4,7 +4,7 @@
   primaryUser = config.settings.primaryUser;
 in {
   imports = [
-    ./darwin-base.nix
+    ../../modules/darwin-base.nix
     ../../../modules/settings
   ];
 
