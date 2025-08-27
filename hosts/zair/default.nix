@@ -13,10 +13,6 @@
   # NB: set privately, can't redistribute.
   hardware.asahi.extractPeripheralFirmware = lib.mkDefault false;
 
-  hardware.asahi.useExperimentalGPUDriver = true;
-
-  system.autoUpgrade.flags = [ "--impure" ];
-
   environment.systemPackages = with pkgs; [
     asahi-bless
   ];
@@ -38,9 +34,6 @@
       minetest
     ];
   };
-
-  # Needs to be built with --impure for this.
-  hardware.asahi.experimentalGPUInstallMode = "replace";
 
   hardware.graphics.enable32Bit = false;
   services.xserver.dpi = 192;
