@@ -243,10 +243,13 @@
     };
 
     programs.ssh.enable = true;
+    programs.ssh.enableDefaultConfig = false;
     programs.ssh.matchBlocks = {
       "github.com" = { user = "git"; identityFile = config.common.sshDefaultKey; };
       "codeberg.org" = { user = "git"; identityFile = config.common.sshDefaultKey; };
       "*" = {
+        forwardAgent = false;
+        addKeysToAgent = "no";
         serverAliveInterval = 5;
         serverAliveCountMax = 15;
         identitiesOnly = true;
