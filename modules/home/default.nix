@@ -6,9 +6,10 @@ let
   userSettings = assert !isWorkMachine; {
     gitName       = osConfig.settings.primaryUser.fullName;
     gitEmail      = osConfig.settings.primaryUser.email;
-    gitSigningKey = osConfig.settings.primaryUser.gpgKeyId;
+    gitSigningKey = osConfig.settings.primaryUser.sshKeyPath;
     gitSSHUser    = osConfig.settings.primaryUser.username;
     sshKeyPath    = osConfig.settings.primaryUser.sshKeyPath;
+    authorizedKeys = osConfig.settings.primaryUser.authorizedKeys;
   };
 in
 {
@@ -23,6 +24,7 @@ in
   common.gitEmail      = userSettings.gitEmail;
   common.gitSigningKey = userSettings.gitSigningKey;
   common.sshDefaultKey = userSettings.sshKeyPath;
+  common.authorizedKeys = userSettings.authorizedKeys;
 
   common.goPrivate = [ "git.vs49688.net" ];
 

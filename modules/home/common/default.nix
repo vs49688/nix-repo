@@ -17,6 +17,10 @@
       type = types.str;
     };
 
+    authorizedKeys = mkOption {
+      type = types.listOf types.str;
+    };
+
     goPrivate = mkOption {
       type = types.listOf types.str;
     };
@@ -205,6 +209,10 @@
       vimAlias    = true;
     };
 
+    home.file.".ssh/allowed_signers".text = builtins.concatStringsSep "\n" (
+      builtins.map (key: ''${config.common.gitEmail} namespaces="git" ${key}'') config.common.authorizedKeys
+    );
+
     programs.git = {
       enable    = true;
       package   = pkgs.git;
@@ -212,6 +220,8 @@
       userEmail = config.common.gitEmail;
       signing.key = config.common.gitSigningKey;
       signing.signByDefault = true;
+      signing.format = "ssh";
+
       lfs.enable = true;
 
       aliases = {
@@ -223,6 +233,8 @@
       };
 
       extraConfig = {
+        gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
+
         pull = { rebase = true; };
 
         rebase.autosquash = true;
