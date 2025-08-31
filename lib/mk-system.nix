@@ -34,6 +34,9 @@ rec {
           home = "/home/nixos";
           sshKeyPath = "~/.ssh/id_ed25519";
           gpgKeyId = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+          authorizedKeys = [
+            "ssh-ed25519 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA nixos@SYSTEM"
+          ];
         };
 
         home-manager.users.${config.settings.primaryUser.username}.home.stateVersion = lowPrio "21.11";
