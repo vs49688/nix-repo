@@ -33,7 +33,7 @@
   '';
 
   boot.zfs.package = pkgs.zfs;
-  boot.kernelPackages = pkgs.linuxPackages_6_15;
+  boot.kernelPackages = pkgs.linuxPackages_6_16;
 
   security.tpm2.enable = true;
   security.tpm2.pkcs11.enable = true;
