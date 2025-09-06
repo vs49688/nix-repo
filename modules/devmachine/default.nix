@@ -119,8 +119,8 @@
 
     renderdoc
   ])) ++ (with pkgs; let
-    goPackage = go_1_24;
-    buildGoModule = buildGo124Module;
+    goPackage = go_1_25;
+    buildGoModule = buildGo125Module;
   in [
     goPackage
     (mockgen.override  { inherit buildGoModule; })
@@ -132,7 +132,7 @@
     (revive.override   { inherit buildGoModule; })
     (govulncheck.override { /* inherit buildGoModule; */ })
     (gops.override { inherit buildGoModule; })
-    (delve.override { inherit buildGoModule; })
+    (delve.override { /* inherit buildGoModule; */ })
   ]);
 
   programs.git.enable = true;
