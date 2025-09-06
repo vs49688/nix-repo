@@ -124,12 +124,8 @@
   in [
     goPackage
     (mockgen.override  { inherit buildGoModule; })
-    (errcheck.override { inherit buildGoModule; })
-    (go-tools.override { inherit buildGoModule; })
     (gotools.override  { inherit buildGoModule; })
     (gosec.override    { inherit buildGoModule; })
-    (gocyclo.override  { inherit buildGoModule; })
-    (revive.override   { inherit buildGoModule; })
     (govulncheck.override { /* inherit buildGoModule; */ })
     (gops.override { inherit buildGoModule; })
     (delve.override { /* inherit buildGoModule; */ })
