@@ -43,7 +43,10 @@
       virtualenv
 
       dnspython
+      grpcio
       grpcio-tools
+      grpcio-reflection
+      grpcio-health-checking
       jinja2
       beautifulsoup4
       html5lib
@@ -96,6 +99,12 @@
 
       unshield
       libgig
+
+      protobuf
+      protoc-gen-go
+      protoc-gen-go-grpc
+      grpc
+      grpcurl
 
       # Misc
       kdiff3
