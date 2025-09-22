@@ -84,18 +84,18 @@
   ];
 
   homebrew.casks = [
-    "gimp"
+    # "gimp"
     "vlc"
     "telegram"
     "thunderbird"
     "hammerspoon"
     "rectangle"
     "linearmouse"
-    "iterm2"
+    # "iterm2"
     "alacritty"
     "firefox"
-    "google-chrome"
-    "inkscape"
+    # "google-chrome"
+    # "inkscape"
     "libreoffice"
     "lulu"
     "openmtp"
