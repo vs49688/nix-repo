@@ -82,19 +82,7 @@
     "en_US.UTF-8/UTF-8"
     "${config.i18n.defaultLocale}/UTF-8"
     "ru_RU.UTF-8/UTF-8"
-    "ja_JP.UTF-8/UTF-8"
   ];
-
-  i18n.inputMethod = {
-    enable = true;
-    type = "fcitx5";
-
-    fcitx5.waylandFrontend = true;
-
-    fcitx5.addons = with pkgs; [
-      fcitx5-mozc
-    ];
-  };
 
   systemd.tmpfiles.rules = [
     "L /usr/lib/locale/locale-archive - - - - /run/current-system/sw/lib/locale/locale-archive"
