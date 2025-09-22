@@ -131,6 +131,14 @@
           ./modules/personal.nix
         ];
       };
+
+      ANGELUS = baseSystem.extendModules {
+        modules = [
+          self.inputs.nixos-apple-silicon.nixosModules.default
+          ./hosts/angelus
+          ./modules/personal.nix
+        ];
+      };
     };
 
     ##
