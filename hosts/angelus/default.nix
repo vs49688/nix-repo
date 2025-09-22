@@ -74,7 +74,7 @@
     confinement.mode = "full-apivfs";
     confinement.binSh = null;
 
-    after = [ "multi-user.target" ];
+    wantedBy = [ "multi-user.target" ];
 
     unitConfig.ConditionPathExists = "/sys/class/power_supply/macsmc-battery/charge_control_end_threshold";
 
