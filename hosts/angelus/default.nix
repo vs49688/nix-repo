@@ -17,6 +17,10 @@
     asahi-bless
   ];
 
+  boot.kernelParams = [
+    "apple_dcp.show_notch=1"
+  ];
+
   hardware.graphics.enable32Bit = false;
   services.xserver.dpi = 192;
   hardware.cpu.intel.updateMicrocode = false;
