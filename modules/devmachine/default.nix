@@ -115,10 +115,10 @@
       texlive.combined.scheme-full
 
       jetbrains.clion
-      jetbrains.idea-ultimate
+      # jetbrains.idea-ultimate
       jetbrains.pycharm-professional
       jetbrains.goland
-      jetbrains.ruby-mine
+      # jetbrains.ruby-mine
       jetbrains.webstorm
   ]) ++ (lib.optionals pkgs.hostPlatform.isx86_64 (with pkgs; [
     # jetbrains.rider
