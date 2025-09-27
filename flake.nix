@@ -109,6 +109,13 @@
         ];
       };
 
+      CAPRICA = baseSystem.extendModules {
+        modules = [
+          ./hosts/caprica
+          ./modules/personal.nix
+        ];
+      };
+
       MORNINGSTAR = baseSystem.extendModules {
         modules = [
           ./hosts/morningstar
