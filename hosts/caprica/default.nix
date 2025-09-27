@@ -8,7 +8,7 @@ in
     ./hardware-configuration.nix
     ../../modules/gui6.nix
     ../../modules/devmachine
-    ../../modules/old/caprica-vfio
+    #../../modules/old/caprica-vfio
   ];
 
   nixpkgs.overlays = [
