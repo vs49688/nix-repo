@@ -148,6 +148,8 @@
       };
     };
 
+    systems = builtins.mapAttrs (k: v: v.config.system.build.toplevel) self.outputs.nixosConfigurations;
+
     ##
     # I actively despise this shit OS.
     # How do they manage to make it so f***ing user-unfriendly?
