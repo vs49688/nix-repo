@@ -12,6 +12,10 @@
     "hid_apple.fnmode=2"
   ];
 
+  environment.systemPackages = with pkgs; [
+    asahi-bless
+  ];
+
   systemd.services.set-battery-threshold = {
     description = "set battery charge threshold";
 
