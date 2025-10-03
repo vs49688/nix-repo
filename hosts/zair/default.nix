@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/asahi.nix
     ../../modules/gui6.nix
     ../../modules/devmachine
   ];
@@ -12,10 +13,6 @@
 
   # NB: set privately, can't redistribute.
   hardware.asahi.extractPeripheralFirmware = lib.mkDefault false;
-
-  environment.systemPackages = with pkgs; [
-    asahi-bless
-  ];
 
   # Remove one https://github.com/tpwrules/nixos-apple-silicon/pull/158 is merged.
   # using an IO scheduler is pretty pointless on NVME devices as fast as Apple's
@@ -87,33 +84,6 @@
   systemd.tmpfiles.rules = [
     "L /usr/lib/locale/locale-archive - - - - /run/current-system/sw/lib/locale/locale-archive"
   ];
-
-  systemd.services.set-battery-threshold = {
-    description = "set battery charge threshold";
-
-    confinement.enable = true;
-    confinement.mode = "full-apivfs";
-    confinement.binSh = null;
-
-    wantedBy = [ "multi-user.target" ];
-
-    unitConfig.ConditionPathExists = "/sys/class/power_supply/macsmc-battery/charge_control_end_threshold";
-
-    serviceConfig.ExecStart = let
-      args = [
-        "-c"
-        "echo 80 > /sys/class/power_supply/macsmc-battery/charge_control_end_threshold"
-      ];
-    in ''
-      ${pkgs.bash}/bin/sh ${utils.escapeSystemdExecArgs args}
-    '';
-
-    serviceConfig.Type = "oneshot";
-    serviceConfig.User = "root";
-    serviceConfig.Group = "root";
-    serviceConfig.RemainAfterExit = true;
-    serviceConfig.BindPaths = [ "/sys/class/power_supply/macsmc-battery" ];
-  };
 
   system.stateVersion = "23.05";
 }
