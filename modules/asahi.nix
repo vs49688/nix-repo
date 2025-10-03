@@ -1,4 +1,12 @@
 { pkgs, utils, ... }: {
+  nix.settings.extra-substituters = [
+    "https://nixos-apple-silicon.cachix.org"
+  ];
+
+  nix.settings.extra-trusted-public-keys = [
+    "nixos-apple-silicon.cachix.org-1:8psDu5SA5dAD7qA0zMy5UT292TxeEPzIz8VVEr2Js20="
+  ];
+
   boot.kernelParams = [
     # Make the function keys function.
     "hid_apple.fnmode=2"
