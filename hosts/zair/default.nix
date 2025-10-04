@@ -85,5 +85,7 @@
     "L /usr/lib/locale/locale-archive - - - - /run/current-system/sw/lib/locale/locale-archive"
   ];
 
+  services.syncthing.enable  = true;
+
   system.stateVersion = "23.05";
 }
