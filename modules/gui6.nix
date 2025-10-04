@@ -44,7 +44,7 @@ in
     supersonic
     supersonic-wayland
     mpv
-    pavucontrol
+    pwvucontrol
     qpwgraph
 
     # Misc
