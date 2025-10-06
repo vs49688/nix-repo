@@ -14,6 +14,7 @@
 
   environment.systemPackages = with pkgs; [
     asahi-bless
+    asahi-nvram
   ];
 
   systemd.services.set-battery-threshold = {
