@@ -12,6 +12,7 @@
     "hid_apple.fnmode=2"
   ];
 
+  # asahi-nvram write system:StartupMute=%01
   environment.systemPackages = with pkgs; [
     asahi-bless
     asahi-nvram
