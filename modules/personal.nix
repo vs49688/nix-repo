@@ -117,6 +117,7 @@
     qbittorrent
     transmission_4-qt
     weechat
+    signal-desktop
 
     # Office
     # gnucash
