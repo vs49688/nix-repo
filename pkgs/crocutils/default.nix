@@ -1,17 +1,22 @@
-{ stdenv, lib, cmake, fetchFromGitHub }:
+{ stdenv, lib, cmake, perl, fetchFromGitea, fetchpatch }:
 stdenv.mkDerivation rec {
-  pname   = "CrocUtils";
-  version = "1.4.1";
+  pname   = "crocutils";
+  version = "1.5.0";
 
-  src = fetchFromGitHub {
-    owner  = "vs49688";
-    repo   = pname;
-    rev    = version;
-    sha256 = "sha256-feMj9NJrE6LxhCvyUwhabAqpxmF/vUDgIajlep9iS+w=";
+  src = fetchFromGitea {
+    domain = "git.vs49688.net";
+    owner  = "zane";
+    repo   = "CrocUtils";
+    # I fucked up, needs to be just above 1.5.0 to get a submodule fix.
+    rev    = "77ccd11dc741375f1be1a2be8de7a104657b622c";
+    hash   = "sha256-zRScaokXu4EzIzwcLCvHpqIMnAbb4mLkHOa3DKTc6NU=";
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = [ cmake ];
+  nativeBuildInputs = [
+    cmake
+    perl
+  ];
 
   cmakeFlags = [
     "-DCROCTOOL_VERSION_STRING=${version}"
