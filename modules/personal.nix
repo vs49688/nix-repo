@@ -135,7 +135,7 @@
     unrar
 
     # Misc
-    gargoyle
+    # gargoyle
 
     bitwarden
 
