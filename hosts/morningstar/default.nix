@@ -115,7 +115,7 @@
     hashedPasswordFile = "/data/passwords/${config.settings.primaryUser.username}";
     packages = with pkgs; [
       minetest
-      # anki
+      anki
       solar2
       supermeatboy
       croc-lotg
