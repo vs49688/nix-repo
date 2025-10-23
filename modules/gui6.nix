@@ -108,7 +108,7 @@ in
     kgeography
     kpat
 
-    digikam
+    # digikam
     exiftool
 
     partitionmanager
