@@ -119,7 +119,7 @@
       solar2
       supermeatboy
       croc-lotg
-      xash3d-fwgs-full
+      # xash3d-fwgs-full
     ];
 
     extraGroups = [ "tss" ];
