@@ -30,7 +30,7 @@ in
     foliate
 
     # Comms
-    nheko
+    #nheko
     tdesktop
 
     # Graphics
