@@ -36,6 +36,7 @@ in
     # Graphics
     gimp
     inkscape
+    adwaita-icon-theme # Needed for Inkscape, should be a dep.
 
     # Audio/Video
     audacious
