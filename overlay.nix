@@ -92,6 +92,18 @@
   nstool = super.callPackage ./pkgs/nstool { };
 
   dedbae = super.callPackage ./pkgs/dedbae { };
+
+  ##
+  # Fonts
+  ##
+  apple-new-york-font = super.callPackage ./pkgs/apple-new-york-font { };
+
+  apple-sf-compact-font = super.callPackage ./pkgs/apple-sf-compact-font { };
+
+  apple-sf-mono-font = super.callPackage ./pkgs/apple-sf-mono-font { };
+
+  apple-sf-pro-font = super.callPackage ./pkgs/apple-sf-pro-font { };
+
 }) // (super.lib.optionalAttrs (!asFlake) {
   navidrome-mbz = throw "navidrome-mbz has been removed, use navidrome instead";
 
