@@ -216,23 +216,24 @@
     programs.git = {
       enable    = true;
       package   = pkgs.git;
-      userName  = config.common.gitName;
-      userEmail = config.common.gitEmail;
       signing.key = config.common.gitSigningKey;
       signing.signByDefault = true;
       signing.format = "ssh";
 
       lfs.enable = true;
 
-      aliases = {
-        adog   = "log --all --decorate --oneline --graph";
-        statsu = "status";
-        ffsend = "send-email --to=ffmpeg-devel@ffmpeg.org --confirm=always --suppress-cc=self";
-        cad    = "commit --amend --date=now";
-        wip    = "commit -m wip";
-      };
+      settings = {
+        user.name  = config.common.gitName;
+        user.email = config.common.gitEmail;
 
-      extraConfig = {
+        aliases = {
+          adog   = "log --all --decorate --oneline --graph";
+          statsu = "status";
+          ffsend = "send-email --to=ffmpeg-devel@ffmpeg.org --confirm=always --suppress-cc=self";
+          cad    = "commit --amend --date=now";
+          wip    = "commit -m wip";
+        };
+
         gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
 
         pull = { rebase = true; };
