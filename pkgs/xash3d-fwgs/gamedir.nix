@@ -1,4 +1,4 @@
-{ stdenv, lib, requireFile, xash3d-sdks }:
+{ stdenv, lib, requireFile, callPackage, sdks }:
 let
   makeGame = { src, sdk ? null, gamedir, gameName ? null, ... }@args: stdenv.mkDerivation ({
     src = src.overrideAttrs(old: { allowSubstitutes = true; });
@@ -28,7 +28,7 @@ in
       sha256 = "sha256-AG6ZYcOtKd1WEVS3fJ8ZYmlfpwQeg7v830z2JYkBdVA=";
     };
 
-    sdk = xash3d-sdks.valve;
+    sdk = sdks.valve;
 
     gamedir = "valve";
     gameName = "Half-Life";
@@ -57,7 +57,7 @@ in
       sha256 = "sha256-0lv1rrs1t6SBNLFgfzLzRLJ8jXWScILCghsLQ7he3ck=";
     };
 
-    sdk = xash3d-sdks.bshift;
+    sdk = sdks.bshift;
 
     gamedir = "bshift";
     gameName = "Half-Life: Blue Shift";
@@ -86,7 +86,7 @@ in
       sha256 = "sha256-DQ/CI4gdT4gjlJplexzmn6YEtmHheULhEDUa+ohme9c=";
     };
 
-    sdk = xash3d-sdks.dmc;
+    sdk = sdks.dmc;
 
     gamedir = "dmc";
     gameName = "Deathmatch Classic";
@@ -102,7 +102,7 @@ in
       sha256 = "sha256-IgjyeDbVabR06Ubgs01ma+BR0inoFQAv9sEAC1SLRNc=";
     };
 
-    sdk = xash3d-sdks.gearbox;
+    sdk = sdks.gearbox;
 
     gamedir = "gearbox";
     gameName = "Half-Life: Opposing Force";

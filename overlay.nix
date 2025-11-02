@@ -1,5 +1,11 @@
 { asFlake ? false }:
-(self: super: (({
+(self: super: let
+  gogLinuxInstaller = self.callPackage ({ runCommand, gogextract }: { src }: runCommand "${src.name}-data.zip" {} ''
+    ${gogextract}/bin/gogextract ${src} .
+    mv data.zip $out
+    # LANG=en_US.UTF-8 ''${unzip}/bin/unzip -qq -d $out data.zip
+  '') {};
+in (({
   aaxm4bfix = super.callPackage ./pkgs/aaxm4bfix { };
 
   awesfx = super.callPackage ./pkgs/awesfx { };
@@ -29,8 +35,6 @@
 
   mangostwo-database = super.callPackage ./pkgs/mangostwo-database { };
 
-  zane-scripts = super.callPackages ./pkgs/zane-scripts { };
-
   offzip = super.callPackage ./pkgs/offzip { };
 
   _010editor = super.callPackage ./pkgs/010editor { };
@@ -48,10 +52,6 @@
   supermeatboy = super.callPackage ./pkgs/supermeatboy { };
 
   xash3d-fwgs = super.callPackage ./pkgs/xash3d-fwgs { };
-
-  xash3d-sdks = super.callPackage ./pkgs/xash3d-fwgs/hlsdk.nix { };
-
-  xash3d-games = self.callPackage ./pkgs/xash3d-fwgs/gamedir.nix { };
 
   xash3d-fwgs-full = self.xash3d-fwgs.withGames (g: [
     g.valve g.valve_hd
@@ -71,12 +71,6 @@
   umskt = super.callPackage ./pkgs/umskt { };
 
   gogextract = super.python3Packages.callPackage ./pkgs/gogextract { };
-
-  gogLinuxInstaller = self.callPackage ({ runCommand, gogextract }: { src }: runCommand "${src.name}-data.zip" {} ''
-    ${gogextract}/bin/gogextract ${src} .
-    mv data.zip $out
-    # LANG=en_US.UTF-8 ''${unzip}/bin/unzip -qq -d $out data.zip
-  '') {};
 
   mingw-w64-cc = super.callPackage ./pkgs/mingwcc { mingwPkgs = super.pkgsCross.mingwW64; };
 
@@ -114,8 +108,13 @@
   scroll-reverser-bin = throw "scroll-reverser-bin has been removed, use nix-darwin with Brew";
 
   hammerspoon-bin = throw "hammerspoon-bin has been removed, use nix-darwin with Brew";
+
+  ##
+  # Package sets, can't be used in flake packages.*
+  ##
+  zane-scripts = super.callPackages ./pkgs/zane-scripts { };
 }) // (super.lib.optionalAttrs (super.stdenv.targetPlatform.isx86 && super.stdenv.targetPlatform.isLinux) {
   x3-terran-war-pack = super.pkgsi686Linux.callPackage ./pkgs/x3-terran-war-pack {
-    inherit (self) gogLinuxInstaller;
+    inherit gogLinuxInstaller;
   };
 })))

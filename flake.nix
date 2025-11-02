@@ -66,18 +66,18 @@
     };
 
     packages = let
-      mkFlakePackages = { system }: let
-        pkgs = mkNixpkgs { inherit system; };
-      in
+      mkFlakePackages = { pkgs }:
         (overlayPackages (import ./overlay.nix { asFlake = true; }) pkgs) //
         (overlayPackages self.overlays.mongodb pkgs)
       ;
 
-      mkPackages = { system }: nixpkgs.lib.filterAttrs
+      mkPackages = { system }: let
+        pkgs = mkNixpkgs { inherit system; };
+      in nixpkgs.lib.filterAttrs
         (name: pkg:
-          pkg?meta && pkg.meta?platforms && (builtins.elem system pkg.meta.platforms)
+          nixpkgs.lib.meta.availableOn pkgs.stdenv.hostPlatform pkg
         )
-        (mkFlakePackages { inherit system; })
+        (mkFlakePackages { inherit pkgs; })
       ;
 
     in {

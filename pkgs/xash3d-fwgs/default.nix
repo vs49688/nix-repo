@@ -1,11 +1,16 @@
-{ stdenv, lib, fetchFromGitHub, python3, wafHook, pkg-config, cmake
+{ stdenv, lib, callPackage, fetchFromGitHub, python3, wafHook, pkg-config, cmake
 , SDL2, libopus, freetype, fontconfig, makeWrapper
 , makeDesktopItem, copyDesktopItems
 , imagemagick
-, xash3d-games
 }:
 
 let
+  xash3d-sdks = callPackage ./hlsdk.nix { };
+
+  xash3d-games = callPackage ./gamedir.nix {
+    sdks = xash3d-sdks;
+  };
+
   buildXash = games: let
     gamesWithDesktopEntries = builtins.filter (g: g.gameName != null) games;
   in stdenv.mkDerivation rec {
