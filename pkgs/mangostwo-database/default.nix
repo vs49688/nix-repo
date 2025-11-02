@@ -1,5 +1,19 @@
-{ stdenv, lib, fetchFromGitHub, makeWrapper, mysql-client, which, busybox }:
-stdenv.mkDerivation {
+{ stdenvNoCC, lib, fetchFromGitHub, fetchFromGitea, makeWrapper, mariadb, which, busybox }: let
+  translations = fetchFromGitea {
+    domain = "git.vs49688.net";
+    owner = "public-mirrors";
+    repo = "MangosTwo_Localised";
+    rev = "e239b13be18bb90a786911e2c3561c949720a148";
+    hash = "sha256-M+NpqmeCeq/0B0LYEfpsVBhOrspArk3GSs1Xu5KOAaQ=";
+  };
+
+  realm = fetchFromGitHub {
+    owner = "mangos";
+    repo = "Realm_DB";
+    rev = "3e0f816bec27063661993a85584b364d8513046b";
+    hash = "sha256-siZChr/nzvi3ces3kwDS1Op1ceO4iLNUFX37j53mdSo=";
+  };
+in stdenvNoCC.mkDerivation {
   pname   = "mangostwo-database";
   version = "20211231";
 
@@ -7,12 +21,20 @@ stdenv.mkDerivation {
     owner           = "mangostwo";
     repo            = "database";
     rev             = "bbaf1232605614eb8aabe6e967cc4191ef62886b";
-    fetchSubmodules = true;
-    sha256          = "1432y1m0z05b3p631j900f8y0h85ix8irryzk9sqmy0wj6awgg0k";
+    fetchSubmodules = false;
+    hash            = "sha256-inbzrIZf922JgcaZ+S5j09oO6ajvUHuMcuJ0IOoelc8=";
   };
 
   dontConfigure = true;
   dontbuild     = true;
+
+  prePatch = ''
+    rmdir Realm
+    ln -s ${realm} Realm
+
+    rmdir Translations
+    ln -s ${translations} Translations
+  '';
 
   patches = [
     # ./0001-InstallDatabases.sh-use-mariadb-socket.patch
@@ -33,7 +55,7 @@ stdenv.mkDerivation {
   preFixup = ''
     makeWrapper "$out/share/mangos/database/InstallDatabases.sh" \
         "$out/bin/InstallDatabases.sh" \
-        --prefix PATH : ${lib.makeBinPath [ mysql-client which busybox ]} \
+        --prefix PATH : ${lib.makeBinPath [ mariadb.client which busybox ]} \
         --run "cd $out/share/mangos/database"
 
     # Remove "DEFINER=`root`@`localhost`". This needs to recurse into submodules,
