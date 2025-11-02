@@ -114,7 +114,7 @@
   users.users.${config.settings.primaryUser.username} = {
     hashedPasswordFile = "/data/passwords/${config.settings.primaryUser.username}";
     packages = with pkgs; [
-      minetest
+      luanti
       anki
       solar2
       supermeatboy

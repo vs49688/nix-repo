@@ -157,7 +157,7 @@ in
     hashedPasswordFile = "/data/passwords/${config.settings.primaryUser.username}";
     packages = with pkgs; [
       beets
-      minetest
+      luanti
       mgba
       mednafen
       mednaffe

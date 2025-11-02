@@ -28,7 +28,7 @@
 
   users.users.${config.settings.primaryUser.username} = {
     packages = with pkgs; [
-      minetest
+      luanti
     ];
   };
 
