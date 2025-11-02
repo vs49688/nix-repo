@@ -1,0 +1,29 @@
+From 23de906e739f8baf75df04b9c06c09b8f8c6f26d Mon Sep 17 00:00:00 2001
+From: Zane van Iperen <zane@zanevaniperen.com>
+Date: Mon, 14 Jul 2025 20:27:44 +1000
+Subject: [PATCH] Controller/UsbFinder: add Perfection V850 Pro/V800
+ Photo/GT-X980 device id
+
+---
+ src/Controller/Src/Finder/UsbFinder.cpp | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/Controller/Src/Finder/UsbFinder.cpp b/src/Controller/Src/Finder/UsbFinder.cpp
+index f606468..184a91e 100755
+--- a/src/Controller/Src/Finder/UsbFinder.cpp
++++ b/src/Controller/Src/Finder/UsbFinder.cpp
+@@ -124,6 +124,11 @@ void UsbFinder::Start(std::vector<SDIDeviceInfo>& devices, bool searchSecondDevi
+                                     sprintf(const_cast<char*>(devInfo.displayName), "%s", "Perfection V37/V370");
+                                     isValidDeviceInfo = true;
+                                 }
++                                else if (dd.idProduct == 0x151)
++                                {
++                                    sprintf(const_cast<char*>(devInfo.displayName), "%s", "Perfection V850 Pro/Perfection V800 Photo/GT-X980");
++                                    isValidDeviceInfo = true;
++                                }
+                                 else
+                                 {
+                                     if (dd.iSerialNumber == 0)
+-- 
+2.49.0
+

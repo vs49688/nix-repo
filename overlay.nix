@@ -84,6 +84,8 @@
 
   ffmpeg-for-navidrome = super.callPackage ./pkgs/ffmpeg-for-navidrome { };
 
+  epsonscan2-v850 = super.callPackage ./pkgs/epsonscan2-v850 { };
+
   ##
   # NX
   ##
