@@ -27,6 +27,7 @@ stdenv.mkDerivation rec {
     "-DSCRIPT_LIB_SD3=ON"
     # It complains about this. Will fix eventually...
     #"-DPLAYERBOTS=ON"
+    "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
   ];
 
   enableParallelBuilding = true;
