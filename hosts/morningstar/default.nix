@@ -66,11 +66,11 @@
   hardware.sane.enable = true;
   hardware.sane.extraBackends = [
     pkgs.utsushi
-    pkgs.epsonscan2
+    pkgs.epsonscan2-v850
   ];
   services.udev.packages = [
     pkgs.utsushi
-    pkgs.epsonscan2
+    pkgs.epsonscan2-v850
   ];
 
   services.printing.enable = true;
