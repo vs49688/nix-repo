@@ -192,9 +192,6 @@ in
     zfs rollback -r caprica/private/root@empty
   '';
 
-  boot.zfs.package = pkgs.zfs;
-  boot.kernelPackages = pkgs.linuxPackages_6_16;
-
   services.samba   = {
     enable          = true;
     nmbd.enable     = true;
