@@ -141,7 +141,7 @@
     # Misc
     # gargoyle
 
-    bitwarden
+    bitwarden-desktop
 
     metasploit
   ] ++ (lib.optionals hostPlatform.isx86_64 [
