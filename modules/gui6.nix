@@ -31,7 +31,7 @@ in
 
     # Comms
     #nheko
-    tdesktop
+    telegram-desktop
 
     # Graphics
     gimp
