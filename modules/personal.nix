@@ -144,7 +144,7 @@
     bitwarden-desktop
 
     metasploit
-  ] ++ (lib.optionals hostPlatform.isx86_64 [
+  ] ++ (lib.optionals stdenv.hostPlatform.isx86_64 [
     tor-browser
 
     ##
