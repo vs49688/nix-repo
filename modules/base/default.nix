@@ -40,8 +40,8 @@
 
   hardware.enableRedistributableFirmware = lib.mkDefault true;
 
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault pkgs.hostPlatform.isx86_64;
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault pkgs.hostPlatform.isx86_64;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault pkgs.stdenv.hostPlatform.isx86_64;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault pkgs.stdenv.hostPlatform.isx86_64;
 
   # Remove once this is fixed: https://github.com/NixOS/nixpkgs/pull/337289
   hardware.nvidia.open = lib.mkDefault false;
