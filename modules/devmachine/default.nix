@@ -120,7 +120,7 @@
       jetbrains.goland
       # jetbrains.ruby-mine
       jetbrains.webstorm
-  ]) ++ (lib.optionals pkgs.hostPlatform.isx86_64 (with pkgs; [
+  ]) ++ (lib.optionals pkgs.stdenv.hostPlatform.isx86_64 (with pkgs; [
     # jetbrains.rider
 
     wimlib
