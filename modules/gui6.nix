@@ -168,7 +168,7 @@ in
     terminus_font
     terminus_font_ttf
     corefonts
-    vistafonts
+    vista-fonts
     fira-code
     fira-code-symbols
     cm_unicode
