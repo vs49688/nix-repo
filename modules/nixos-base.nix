@@ -50,7 +50,7 @@ in
     # Technically dev tools, but I feel safer if I have these
     ##
     binutils gitFull gnumake cmake pkg-config nasm
-    (if pkgs.hostPlatform.isx86_64 then gcc_multi else gcc)
+    (if pkgs.stdenv.hostPlatform.isx86_64 then gcc_multi else gcc)
     gdb
 
     ##
