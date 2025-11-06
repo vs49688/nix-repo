@@ -62,7 +62,7 @@ in
     qdirstat
     gparted
     x11vnc
-    glxinfo
+    mesa-demos
   ] ++ (with kdePackages; [
     kate
     ark
