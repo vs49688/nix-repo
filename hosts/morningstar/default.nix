@@ -32,8 +32,11 @@
     zfs rollback -r morningstar/private/root@empty
   '';
 
-  boot.zfs.package = pkgs.zfs;
-  boot.kernelPackages = pkgs.linuxPackages_6_16;
+  ##
+  # Really feeling screwed by both NixOS and OpenZFS here.
+  ##
+  boot.zfs.package = pkgs.zfs_unstable;
+  boot.kernelPackages = pkgs.linuxPackages_6_17;
 
   security.tpm2.enable = true;
   security.tpm2.pkcs11.enable = true;
