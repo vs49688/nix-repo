@@ -100,12 +100,12 @@
 
   fileSystems."/nix" = {
     neededForBoot = true;
-    options       = [ "noatime" "nodiratime" "discard" "xattr" "posixacl" ];
+    options       = [ "noatime" "nodiratime" "xattr" "posixacl" ];
   };
 
   fileSystems."/data" = {
     neededForBoot = true;
-    options       = [ "noatime" "nodiratime" "discard" "xattr" "posixacl" ];
+    options       = [ "noatime" "nodiratime" "xattr" "posixacl" ];
   };
 
   boot.zfs.requestEncryptionCredentials = [ "morningstar/private" ];
