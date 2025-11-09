@@ -226,7 +226,7 @@
         user.name  = config.common.gitName;
         user.email = config.common.gitEmail;
 
-        aliases = {
+        alias = {
           adog   = "log --all --decorate --oneline --graph";
           statsu = "status";
           ffsend = "send-email --to=ffmpeg-devel@ffmpeg.org --confirm=always --suppress-cc=self";
