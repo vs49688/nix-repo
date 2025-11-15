@@ -33,7 +33,7 @@
   programs.adb.enable = true;
 
   programs.java.enable  = true;
-  programs.java.package = pkgs.openjdk17;
+  programs.java.package = pkgs.jdk;
 
   programs.cdemu.enable = lib.mkDefault true;
 
