@@ -140,7 +140,7 @@
     "L /usr/lib/locale/locale-archive - - - - /run/current-system/sw/lib/locale/locale-archive"
   ];
 
-  programs.quark-goldleaf.enable = true;
+  # programs.quark-goldleaf.enable = true;
 
   programs.steam.enable = true;
 
