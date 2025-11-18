@@ -51,6 +51,8 @@ in (({
 
   supermeatboy = super.callPackage ./pkgs/supermeatboy { };
 
+  helltaker = super.callPackage ./pkgs/helltaker { };
+
   xash3d-fwgs = super.callPackage ./pkgs/xash3d-fwgs { };
 
   xash3d-fwgs-full = self.xash3d-fwgs.withGames (g: [
