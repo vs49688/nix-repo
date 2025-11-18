@@ -1,6 +1,8 @@
 { stdenv, lib, requireFile, unzip, autoPatchelfHook
 , makeDesktopItem, copyDesktopItems
 , SDL2, openalSoft
+, makeBinaryWrapper
+, bubblewrap
 }:
 stdenv.mkDerivation rec {
   pname = "supermeatboy";
@@ -18,6 +20,7 @@ stdenv.mkDerivation rec {
     unzip
     autoPatchelfHook
     copyDesktopItems
+    makeBinaryWrapper
   ];
 
   buildInputs = [
@@ -43,8 +46,14 @@ stdenv.mkDerivation rec {
     rm -f data/amd64/{libopenal.so.1,libSDL2-2.0.so.0}
     cp -R data/* $out/share/supermeatboy
 
-    ln -s $out/share/supermeatboy/amd64/SuperMeatBoy $out/bin/SuperMeatBoy
     ln -s $out/share/supermeatboy/supermeatboy.png $out/share/pixmaps/${pname}.png
+
+    makeWrapper ${bubblewrap}/bin/bwrap "$out/bin/SuperMeatBoy" \
+      --add-flags "--bind / /" \
+      --add-flags "--dev-bind /dev /dev" \
+      --add-flag --unshare-net \
+      --add-flag -- \
+      --add-flag "$out/share/supermeatboy/amd64/SuperMeatBoy"
 
     runHook postInstall
   '';
