@@ -129,7 +129,8 @@ in
     extraGroups    = [ "wheel" ] ++
     lib.optionals config.virtualisation.libvirtd.enable   ["libvirtd"] ++
     lib.optionals config.networking.networkmanager.enable ["networkmanager"] ++
-    lib.optionals config.hardware.sane.enable             ["scanner" "lp"]
+    lib.optionals config.hardware.sane.enable             ["scanner" "lp"] ++
+    lib.optionals config.programs.k3b.enable              ["disk"]
   ;
 
     initialHashedPassword = defaultHashedPassword;
