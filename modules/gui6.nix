@@ -13,7 +13,7 @@ in
 
   programs.virt-manager.enable = lib.mkDefault config.virtualisation.libvirtd.enable;
 
-  # programs.k3b.enable = lib.mkDefault true;
+  programs.k3b.enable = lib.mkDefault true;
   # programs.kclock.enable = lib.mkDefault true;
 
   environment.systemPackages = with pkgs; [
