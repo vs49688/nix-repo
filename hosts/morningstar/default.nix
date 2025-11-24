@@ -122,6 +122,7 @@
       solar2
       supermeatboy
       croc-lotg
+      helltaker
       # xash3d-fwgs-full
     ];
 
