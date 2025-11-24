@@ -4,6 +4,8 @@
 , fetchzip
 , autoPatchelfHook
 , makeBinaryWrapper
+, makeDesktopItem
+, copyDesktopItems
 , gtk2-x11
 , atk
 , gdk-pixbuf
@@ -34,6 +36,7 @@ stdenv.mkDerivation(finalAttrs: {
   nativeBuildInputs = [
     autoPatchelfHook
     makeBinaryWrapper
+    copyDesktopItems
   ];
 
   buildInputs = [
@@ -73,13 +76,28 @@ stdenv.mkDerivation(finalAttrs: {
       --add-flag -- \
       --add-flag "$out/opt/helltaker/helltaker_lnx.x86_64"
 
+    install -Dm0644 ${./helltaker.png} $out/share/pixmaps/${finalAttrs.pname}.png
+
     runHook postInstall
   '';
+
+  desktopItems = [
+    (makeDesktopItem {
+      name = finalAttrs.meta.mainProgram;
+      exec = finalAttrs.meta.mainProgram;
+      icon = finalAttrs.pname;
+      desktopName = "Helltaker";
+      comment = finalAttrs.meta.description;
+      type = "Application";
+      categories = [ "Game" ];
+    })
+  ];
 
   meta = with lib; {
     description = "Helltaker";
     homepage = "https://vanripper.itch.io/helltaker";
     platforms = [ "x86_64-linux" ];
+    mainProgram = "helltaker.x86_64";
     license = licenses.unfree;
     maintainers = with maintainers; [ zane ];
   };
