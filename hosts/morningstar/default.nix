@@ -174,7 +174,6 @@
   ];
 
   services.postgresql.enable = true;
-  services.minio.enable = true;
 
   systemd.services.set-battery-threshold = {
     description = "set battery charge threshold";
@@ -221,7 +220,6 @@
       { directory = "/var/lib/libvirt";                       mode = "0755"; }
       { directory = "/var/lib/containers";                    mode = "0700"; }
       { directory = "/var/lib/postgresql";                    mode = "0750"; }
-      { directory = "/var/lib/minio";                         mode = "0750"; }
       { directory = "/var/lib/waydroid";                      mode = "0755"; }
       { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; }
       {
