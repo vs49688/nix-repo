@@ -18,16 +18,18 @@ stdenv.mkDerivation rec {
   buildInputs       = [ libmysqlclient bzip2 zlib openssl ];
 
   cmakeFlags = [
-    "-DBUILD_BANGOSD=ON"
-    "-DBUILD_REALMD=ON"
-    "-DBUILD_TOOLS=ON"
-    "-DUSE_STORMLIB=ON"
-    "-DSOAP=ON"
-    "-DSCRIPT_LIB_ELUNA=ON"
-    "-DSCRIPT_LIB_SD3=ON"
+    (lib.cmakeBool "BUILD_MANGOSD" true)
+    (lib.cmakeBool "BUILD_REALMD" true)
+    (lib.cmakeBool "BUILD_TOOLS" true)
+    (lib.cmakeBool "USE_STORMLIB" true)
+    (lib.cmakeBool "SOAP" true)
+    (lib.cmakeBool "SCRIPT_LIB_ELUNA" true)
+    (lib.cmakeBool "SCRIPT_LIB_SD3" true)
     # It complains about this. Will fix eventually...
-    #"-DPLAYERBOTS=ON"
+    #(lib.cmakeBool "PLAYERBOTS" true)
     "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+    (lib.cmakeFeature "CMAKE_POLICY_VERSION_MINIMUM" "3.5")
+    (lib.cmakeBool "CMAKE_SKIP_BUILD_RPATH" true)
   ];
 
   enableParallelBuilding = true;
