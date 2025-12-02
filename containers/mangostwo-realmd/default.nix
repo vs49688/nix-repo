@@ -3,7 +3,7 @@
 , lib
 , mangostwo-server
 , mangostwo-database
-, mariadb-client
+, mariadb
 , busybox
 , runCommandLocal
 }:
@@ -13,9 +13,7 @@ let
   user   = "mangos";
   group  = "mangos";
 
-  entrypoint = runCommandLocal "entrypoint" {
-    meta = lib.platforms.unix;
-  } ''
+  entrypoint = runCommandLocal "entrypoint" { } ''
     mkdir -p $out/bin
     cp ${./docker-entrypoint.sh} $out/bin/docker-entrypoint.sh
     chmod +x $out/bin/docker-entrypoint.sh
@@ -28,7 +26,7 @@ in dockerTools.buildLayeredImage {
   contents = [
     mangostwo-server
     mangostwo-database
-    mariadb-client
+    mariadb.client
     entrypoint
     busybox
   ];
