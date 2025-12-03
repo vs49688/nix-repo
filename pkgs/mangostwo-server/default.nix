@@ -34,6 +34,10 @@ stdenv.mkDerivation rec {
 
   enableParallelBuilding = true;
 
+  postInstall = ''
+    chmod +x $out/bin/tools/ExtractResources.sh $out/bin/tools/MoveMapGen.sh
+  '';
+
   meta = with lib; {
     description = "Mangos TWO is a server for World of Warcraft: Wrath of The Lich king";
     homepage    = "https://www.getmangos.eu/bug-tracker/mangos-two/";
