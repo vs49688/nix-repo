@@ -1,21 +1,36 @@
-{ stdenv, lib, fetchFromGitHub
-, cmake, pkg-config
-, libmysqlclient, bzip2, zlib, openssl
+{ stdenv
+, lib
+, fetchFromGitHub
+, cmake
+, pkg-config
+, libmysqlclient
+, bzip2
+, zlib
+, openssl
 }:
-stdenv.mkDerivation rec {
+stdenv.mkDerivation(finalAttrs: {
   pname   = "mangostwo";
   version = "22.01.94";
 
   src = fetchFromGitHub {
-    owner           = pname;
+    owner           = finalAttrs.pname;
     repo            = "server";
-    rev             = "v${version}";
+    rev             = "v${finalAttrs.version}";
     fetchSubmodules = true;
     hash            = "sha256-/ZzWXGFXMqQmTGm+3eQzrl7G8IyHFvO+hULT5oXihGw=";
   };
 
-  nativeBuildInputs = [ cmake pkg-config ];
-  buildInputs       = [ libmysqlclient bzip2 zlib openssl ];
+  nativeBuildInputs = [
+    cmake
+    pkg-config
+  ];
+
+  buildInputs = [
+    libmysqlclient
+    bzip2
+    zlib
+    openssl
+  ];
 
   cmakeFlags = [
     (lib.cmakeBool "BUILD_MANGOSD" true)
@@ -43,4 +58,4 @@ stdenv.mkDerivation rec {
     license     = licenses.gpl2Plus;
     maintainers = with maintainers; [ zane ];
   };
-}
+})
