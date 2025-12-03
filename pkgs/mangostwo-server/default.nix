@@ -32,8 +32,6 @@ stdenv.mkDerivation rec {
     (lib.cmakeBool "CMAKE_SKIP_BUILD_RPATH" true)
   ];
 
-  enableParallelBuilding = true;
-
   postInstall = ''
     chmod +x $out/bin/tools/ExtractResources.sh $out/bin/tools/MoveMapGen.sh
   '';
