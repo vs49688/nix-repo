@@ -10,14 +10,14 @@
 }:
 stdenv.mkDerivation(finalAttrs: {
   pname   = "mangostwo";
-  version = "22.01.94";
+  version = "22.02.138";
 
   src = fetchFromGitHub {
     owner           = finalAttrs.pname;
     repo            = "server";
     rev             = "v${finalAttrs.version}";
     fetchSubmodules = true;
-    hash            = "sha256-/ZzWXGFXMqQmTGm+3eQzrl7G8IyHFvO+hULT5oXihGw=";
+    hash            = "sha256-VjjHh4D7HG/fDPpsgVQp3cdN9lHzwqcXlJKnTtV4Olw=";
   };
 
   nativeBuildInputs = [
@@ -38,13 +38,12 @@ stdenv.mkDerivation(finalAttrs: {
     (lib.cmakeBool "BUILD_TOOLS" true)
     (lib.cmakeBool "USE_STORMLIB" true)
     (lib.cmakeBool "SOAP" true)
-    (lib.cmakeBool "SCRIPT_LIB_ELUNA" true)
+    (lib.cmakeBool "SCRIPT_LIB_ELUNA" false) # FIXME: attempts to download lua
     (lib.cmakeBool "SCRIPT_LIB_SD3" true)
     # It complains about this. Will fix eventually...
-    #(lib.cmakeBool "PLAYERBOTS" true)
-    "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
-    (lib.cmakeFeature "CMAKE_POLICY_VERSION_MINIMUM" "3.5")
+    (lib.cmakeBool "PLAYERBOTS" false)
     (lib.cmakeBool "CMAKE_SKIP_BUILD_RPATH" true)
+    (lib.cmakeBool "WITHOUT_GIT" true)
   ];
 
   postInstall = ''

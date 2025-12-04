@@ -59,7 +59,7 @@ if [ ! -f "$MANGOSD_CONFIG_PATH" ]; then
     cat <<EOF > "$MANGOSD_CONFIG_PATH"
 # See https://github.com/mangos/mangosd/blob/master/mangos2.conf.dist.in
 [MangosdConf]
-ConfVersion           = 2021010100
+ConfVersion           = 2016070701
 BindIP                = "${MANGOSD_CONFIG_BIND_IP}"
 WorldServerPort       = $MANGOSD_CONFIG_PORT
 LoginDatabaseInfo     = "$MANGOSD_LOGIN_DB_HOST;$MANGOSD_LOGIN_DB_PORT;$MANGOSD_LOGIN_DB_USER;$MANGOSD_LOGIN_DB_PASS;$MANGOSD_LOGIN_DB_NAME"
@@ -93,13 +93,14 @@ else
     echo "[*] Character: Found version table, skipping initialisation..."
 fi
 
-CHAR_VERSION=$($MARIADB -e "SELECT CONCAT(version,'.',structure,'.',content) FROM db_version ORDER BY "version" DESC LIMIT 0,1")
-
-echo "[*] Character: Version ${CHAR_VERSION}, running migrations..."
-for i in /share/mangos/database/Character/Updates/Rel??/*.sql; do
-    echo "[*] $i"
-    $MARIADB < "$i" > /dev/null
-done
+# This is broken.
+# CHAR_VERSION=$($MARIADB -e "SELECT CONCAT(version,'.',structure,'.',content) FROM db_version ORDER BY "version" DESC LIMIT 0,1")
+# 
+# echo "[*] Character: Version ${CHAR_VERSION}, running migrations..."
+# for i in /share/mangos/database/Character/Updates/Rel??/*.sql; do
+#     echo "[*] $i"
+#     $MARIADB < "$i" > /dev/null
+# done
 
 ##
 # Initialise the world database
@@ -118,13 +119,14 @@ else
     echo "[*] World: Found version table, skipping initialisation..."
 fi
 
-WORLD_VERSION=$($MARIADB -e "SELECT CONCAT(version,'.',structure,'.',content) FROM db_version ORDER BY "version" DESC LIMIT 0,1")
-
-echo "[*] World: Version ${WORLD_VERSION}, running migrations..."
-for i in /share/mangos/database/World/Updates/Rel??/*.sql; do
-    echo "[*] $i"
-    $MARIADB < "$i" > /dev/null
-done
+# This is also broken.
+# WORLD_VERSION=$($MARIADB -e "SELECT CONCAT(version,'.',structure,'.',content) FROM db_version ORDER BY "version" DESC LIMIT 0,1")
+#
+# echo "[*] World: Version ${WORLD_VERSION}, running migrations..."
+# for i in /share/mangos/database/World/Updates/Rel??/*.sql; do
+#     echo "[*] $i"
+#     $MARIADB < "$i" > /dev/null
+# done
 
 echo "[*] Exec'ing /bin/mangosd"
 exec /bin/mangosd -c "$MANGOSD_CONFIG_PATH"
