@@ -2,6 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/gui6.nix
   ];
 
   boot.supportedFilesystems = [ "zfs" ];
