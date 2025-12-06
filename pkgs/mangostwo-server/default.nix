@@ -48,6 +48,18 @@ stdenv.mkDerivation(finalAttrs: {
 
   postInstall = ''
     chmod +x $out/bin/tools/ExtractResources.sh $out/bin/tools/MoveMapGen.sh
+
+    substituteInPlace $out/bin/tools/ExtractResources.sh \
+      --replace-fail "./vmap-extractor"    "$out/bin/tools/vmap-extractor" \
+      --replace-fail "./movemap-generator" "$out/bin/tools/mmap-extractor" \
+      --replace-fail "./map-extractor"     "$out/bin/tools/map-extractor" \
+      --replace-fail "./MoveMapGen.sh"     "$out/bin/tools/MoveMapGen.sh" \
+      --replace-fail 'chmod +x "$bin"'     '# chmod +x "$bin"'
+
+    substituteInPlace $out/bin/tools/MoveMapGen.sh \
+      --replace-fail "./mmap-extractor"  "$out/bin/tools/mmap-extractor" \
+      --replace-fail "offmesh.txt"       "$out/bin/tools/offmesh.txt" \
+      --replace-fail "mmap_excluded.txt" "$out/bin/tools/mmap_excluded.txt"
   '';
 
   meta = with lib; {
