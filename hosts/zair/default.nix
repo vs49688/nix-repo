@@ -29,6 +29,7 @@
   users.users.${config.settings.primaryUser.username} = {
     packages = with pkgs; [
       luanti
+      croc-lotg
     ];
   };
 
