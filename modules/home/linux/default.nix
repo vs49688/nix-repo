@@ -176,7 +176,8 @@
     ##
     services.easyeffects.enable = lib.mkDefault true;
     services.easyeffects.preset = "Advanced Auto Gain";
-
-    xdg.configFile."easyeffects/output/Advanced Auto Gain.json".source = ./AdvancedAutoGain.json;
+    services.easyeffects.extraPresets = {
+      "Advanced Auto Gain" = builtins.fromJSON (builtins.readFile ./AdvancedAutoGain.json);
+    };
   };
 }
