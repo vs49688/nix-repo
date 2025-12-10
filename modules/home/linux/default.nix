@@ -178,6 +178,7 @@
     services.easyeffects.preset = "Advanced Auto Gain";
     services.easyeffects.extraPresets = {
       "Advanced Auto Gain" = builtins.fromJSON (builtins.readFile ./AdvancedAutoGain.json);
+      thinkpad-unsuck = builtins.fromJSON (builtins.readFile ./thinkpad-unsuck.json);
     };
   };
 }
