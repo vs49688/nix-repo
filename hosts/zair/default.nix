@@ -29,7 +29,7 @@
   users.users.${config.settings.primaryUser.username} = {
     packages = with pkgs; [
       luanti
-      croc-lotg
+      (croc-lotg.override { version = "1.5.7"; allowSubstitutes = true; })
     ];
   };
 
