@@ -22,11 +22,6 @@
     options       = [ "noatime" "nodiratime" "discard" ];
   };
 
-  fileSystems."/media/OldData" = {
-    neededForBoot = false;
-    options       = [ "nofail" "noatime" "nodiratime" "xattr" "posixacl" ];
-  };
-
   services.zfs.autoScrub = {
     enable   = true;
     interval = "*-*-01 02:00:00";
