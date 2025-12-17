@@ -6,5 +6,7 @@ in {
   mangostwo-realmd = callPackage ./mangostwo-realmd { };
   mangostwo-mangosd = callPackage ./mangostwo-mangosd { };
 
+  forgejo-ci-nix = callPackage ./forgejo-ci-nix { };
+
   navidrome = throw "navidrome container has been removed, use Navidrome >= 0.58 for multiple libraries.";
 }
