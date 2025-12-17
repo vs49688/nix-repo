@@ -19,6 +19,8 @@
   };
 
   outputs = { self, nixpkgs, ... }: let
+    flakeVersion = "${self.lastModifiedDate}-${if (self ? shortRev) then self.shortRev else self.dirtyShortRev}";
+
     overlayPackages = overlay: pkgs: let
       tmpPkgs = (overlay tmpPkgs pkgs);
       packageNames = builtins.attrNames tmpPkgs;
@@ -90,6 +92,8 @@
     containers = let
       pkgs = mkNixpkgs { system = "x86_64-linux"; };
     in pkgs.callPackage ./containers {
+      inherit flakeVersion;
+
       imagePrefix = "ghcr.io/vs49688";
     };
 

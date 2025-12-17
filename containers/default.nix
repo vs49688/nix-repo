@@ -1,5 +1,5 @@
-{ lib, imagePrefix, pkgs }: let
-  callPackage = lib.callPackageWith (pkgs // { inherit imagePrefix; });
+{ lib, imagePrefix, flakeVersion, pkgs }: let
+  callPackage = lib.callPackageWith (pkgs // { inherit imagePrefix flakeVersion; });
 in {
   inherit imagePrefix;
 
