@@ -273,7 +273,7 @@
       loop=yes
       x11-bypass-compositor=no
       # audio-pitch-correction=no
-      # af-add=scaletempo=speed=both
+      af-add=scaletempo=speed=both
       # no-audio-display
       hwdec=yes
       no-keepaspect-window
