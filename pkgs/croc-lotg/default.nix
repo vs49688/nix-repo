@@ -17,6 +17,18 @@
   requireFile2 = args: (requireFile args).overrideAttrs(old: { inherit allowSubstitutes; });
 
   versions = {
+    "1.2.0" = {
+      name = "croc64-1.2.0.tar.xz";
+      hash = "sha256-Oi+jtnruf/522x2TYs94Ze3VEcQfoySavYPTaWxOv/M=";
+
+      buildInputs = [
+        glfw3
+        openalSoft
+      ];
+
+      binaryPaths = {};
+    };
+
     "1.3.0" = {
       name = "croc64-1.3.0.tar.xz";
       hash = "sha256-USdhKi4iMXChfKd9qFT0YZicj0elOVilWgnp9vNskrI=";
