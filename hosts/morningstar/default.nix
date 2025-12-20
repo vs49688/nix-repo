@@ -35,8 +35,8 @@
   ##
   # Really feeling screwed by both NixOS and OpenZFS here.
   ##
-  boot.zfs.package = pkgs.zfs_unstable;
-  boot.kernelPackages = pkgs.linuxPackages_6_17;
+  boot.zfs.package = pkgs.zfs_2_4;
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
 
   security.tpm2.enable = true;
   security.tpm2.pkcs11.enable = true;
