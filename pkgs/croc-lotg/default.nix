@@ -3,6 +3,7 @@
 , requireFile
 , makeDesktopItem
 , copyDesktopItems
+, makeBinaryWrapper
 , icoutils
 , imagemagick_light
 , autoPatchelfHook
@@ -108,6 +109,7 @@ stdenv.mkDerivation(finalAttrs: {
   nativeBuildInputs = [
     autoPatchelfHook
     copyDesktopItems
+    makeBinaryWrapper
     icoutils
     imagemagick_light
   ];
@@ -146,8 +148,11 @@ stdenv.mkDerivation(finalAttrs: {
     install -m755 ${versionInfo.binaryPaths.${stdenv.hostPlatform.system}.main} $out/croc64-${finalAttrs.version}/Croc64
     install -m755 ${versionInfo.binaryPaths.${stdenv.hostPlatform.system}.demo} $out/croc64-${finalAttrs.version}/CrocDemo64
   '') + ''
-    ln -s $out/croc64-${finalAttrs.version}/Croc64 $out/bin/Croc64
-    ln -s $out/croc64-${finalAttrs.version}/CrocDemo64 $out/bin/CrocDemo64
+    makeWrapper $out/croc64-${finalAttrs.version}/Croc64 $out/bin/Croc64 \
+      --chdir "$out/croc64-${finalAttrs.version}"
+
+    makeWrapper $out/croc64-${finalAttrs.version}/CrocDemo64 $out/bin/CrocDemo64 \
+      --chdir "$out/croc64-${finalAttrs.version}"
 
     runHook postInstall
   '';
