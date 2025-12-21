@@ -52,4 +52,13 @@ final: prev: {
       sha256 = "sha256-X9EWIdsx3AIK3rORLzf+rvolVdBD2NomKA29EglDoOE=";
     };
   };
+
+  mongodb-ce_7_0-bin = prev.callPackage ./mongodb-bin.nix {
+    version = "7.0.28";
+
+    src = prev.fetchurl {
+      url = "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.28.tgz";
+      sha256 = "sha256-f8FvRvsQdTuYKrA72dfdWSDRjRgSWfglwkYsqQPFXU0=";
+    };
+  };
 }
