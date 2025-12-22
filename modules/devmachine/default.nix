@@ -86,7 +86,7 @@
       ninja
       nix-prefetch-git
       maven
-      rustup
+      # rustup
       pev
       # rappel
       bat
