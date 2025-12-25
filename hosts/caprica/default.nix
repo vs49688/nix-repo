@@ -99,7 +99,7 @@ in
 
   fileSystems."/nix" = {
     neededForBoot = true;
-    options       = [ "noatime" "nodiratime" "discard" ];
+    options       = [ "noatime" "nodiratime" ];
   };
 
   services.zfs.autoScrub = {
