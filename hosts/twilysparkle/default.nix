@@ -31,8 +31,8 @@
     zfs rollback -r tank/private/root@blank
   '';
 
-  boot.zfs.package = pkgs.zfs;
-  boot.kernelPackages = pkgs.linuxPackages_6_12;
+  boot.zfs.package = pkgs.zfs_2_4;
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
 
   security.tpm2.enable = true;
   security.tpm2.pkcs11.enable = true;
