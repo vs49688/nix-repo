@@ -60,6 +60,12 @@
     "ru_RU.UTF-8/UTF-8"
   ];
 
+  users.users.${config.settings.primaryUser.username} = {
+    packages = with pkgs; [
+      (croc-lotg.override { version = "1.5.7"; allowSubstitutes = true; })
+    ];
+  };
+
   systemd.tmpfiles.rules = [
     "L /usr/lib/locale/locale-archive - - - - /run/current-system/sw/lib/locale/locale-archive"
   ];
