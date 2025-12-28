@@ -53,6 +53,9 @@ in
 
   boot.blacklistedKernelModules = [ "alx" ];
 
+  boot.zfs.package = pkgs.zfs_2_4;
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
+
   networking.hostName = "CAPRICA";
   networking.hostId   = "100b9bbe";
 
