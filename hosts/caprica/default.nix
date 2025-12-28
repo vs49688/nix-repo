@@ -140,6 +140,9 @@ in
 
   services.avahi.enable = true;
 
+  services.prometheus.exporters.node.enable = true;
+  services.prometheus.exporters.node.openFirewall = true;
+
   services.nullmailer.enable = true;
   services.nullmailer.config = {
     me          = "CAPRICA";
