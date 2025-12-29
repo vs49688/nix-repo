@@ -138,6 +138,11 @@
     flac
     unrar
 
+    cdrdao
+    cdparanoia
+    cdrkit
+    lgogdownloader
+
     # Misc
     # gargoyle
 
