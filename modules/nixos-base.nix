@@ -6,7 +6,7 @@ in
 {
   imports = [
     ./base
-	./settings
+    ./settings
   ];
 
   ##
@@ -37,11 +37,19 @@ in
   environment.systemPackages = with pkgs; [
     # System Utils
     killall
-    fakeroot man-pages pax-utils
-    parallel valgrind
-    traceroute unzip p7zip openssl
+    fakeroot
+    man-pages
+    pax-utils
+    parallel
+    valgrind
+    traceroute
+    unzip
+    p7zip
+    openssl
     zip
-    mtr sshfs ncdu
+    mtr
+    sshfs
+    ncdu
 
     edid-decode
 
@@ -49,16 +57,25 @@ in
     # C/C++/Native
     # Technically dev tools, but I feel safer if I have these
     ##
-    binutils gitFull gnumake cmake pkg-config nasm
+    binutils
+    gitFull
+    gnumake
+    cmake
+    pkg-config
+    nasm
     (if pkgs.stdenv.hostPlatform.isx86_64 then gcc_multi else gcc)
     gdb
 
     ##
     # These are just handy to have in general
     ##
-    jq jless yq sqlite-interactive
+    jq
+    jless
+    yq
+    sqlite-interactive
 
-    lm_sensors powertop
+    lm_sensors
+    powertop
     bubblewrap
 
     ripgrep
