@@ -164,20 +164,14 @@ in
   users.users.${config.settings.primaryUser.username} = {
     hashedPasswordFile = "/data/passwords/${config.settings.primaryUser.username}";
     packages = with pkgs; [
-      beets
       luanti
       mgba
       mednafen
       mednaffe
-      #rpcs3
+      rpcs3
       pcsx2
-      #jpsxdec
-      raftools
-      lgogdownloader
+      jpsxdec
 
-      cdparanoia
-      cdrdao
-      cdrkit
       zane-scripts.startgame
 
       solar2
