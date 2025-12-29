@@ -116,7 +116,7 @@
 
       jetbrains.clion
       # jetbrains.idea-ultimate
-      jetbrains.pycharm-professional
+      jetbrains.pycharm
       jetbrains.goland
       # jetbrains.ruby-mine
       jetbrains.webstorm
