@@ -36,7 +36,7 @@ in
 
   environment.systemPackages = with pkgs; [
     # System Utils
-    firejail killall
+    killall
     fakeroot man-pages pax-utils
     parallel valgrind
     traceroute unzip p7zip openssl
@@ -74,8 +74,6 @@ in
     enable           = true;
     enableSSHSupport = false;
   };
-
-  programs.firejail.enable = true;
 
   services.openssh = {
     enable                          = true;
