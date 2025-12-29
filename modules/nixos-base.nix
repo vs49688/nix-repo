@@ -59,6 +59,7 @@ in
     jq jless yq sqlite-interactive
 
     lm_sensors powertop
+    bubblewrap
 
     ripgrep
 
