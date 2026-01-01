@@ -98,6 +98,8 @@
       unifi-backup-decrypt
 
       unshield
+      cabextract
+      innoextract
       libgig
 
       protobuf
