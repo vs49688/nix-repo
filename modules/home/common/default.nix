@@ -277,6 +277,7 @@
       # no-audio-display
       hwdec=yes
       no-keepaspect-window
+      screenshot-format=png
     '';
 
     home.stateVersion = lib.mkDefault "21.11";
