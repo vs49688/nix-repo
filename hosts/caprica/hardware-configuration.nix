@@ -28,6 +28,11 @@
       fsType = "zfs";
     };
 
+  fileSystems."/games" =
+    { device = "caprica/games";
+      fsType = "zfs";
+    };
+
   fileSystems."/data" =
     { device = "caprica/private/persist";
       fsType = "zfs";

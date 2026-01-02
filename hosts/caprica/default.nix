@@ -226,6 +226,10 @@ in
     options       = [ "noatime" "nodiratime" "xattr" "posixacl" ];
   };
 
+  fileSystems."/games" = {
+    options = [ "noatime" "nodiratime" "xattr" "posixacl" ];
+  };
+
   boot.zfs.requestEncryptionCredentials = [ "caprica/private" ];
   boot.zfs.forceImportAll = true; # Only adds the -f flag to "zpool import", doesn't import ALL pools.
 
