@@ -97,6 +97,10 @@
       graphviz
       unifi-backup-decrypt
 
+      sops
+      ssh-to-age
+      age
+
       unshield
       cabextract
       innoextract
