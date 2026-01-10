@@ -30,8 +30,6 @@
   programs.wireshark.enable  = lib.mkDefault true;
   programs.wireshark.package = pkgs.wireshark;
 
-  programs.adb.enable = true;
-
   programs.java.enable  = true;
   programs.java.package = pkgs.jdk;
 
@@ -118,6 +116,8 @@
       vgmstream
       drawio
 
+      android-tools
+
       texlive.combined.scheme-full
 
       jetbrains.clion
@@ -175,8 +175,7 @@
     extraGroups =
       lib.optionals config.programs.wireshark.enable [ "wireshark" ] ++
       lib.optionals config.programs.cdemu.enable [ config.programs.cdemu.group ] ++
-      lib.optionals config.virtualisation.podman.enable [ "podman" ] ++
-      lib.optionals config.programs.adb.enable [ "adbusers" ]
+      lib.optionals config.virtualisation.podman.enable [ "podman" ]
     ;
 
     packages = with pkgs; [
