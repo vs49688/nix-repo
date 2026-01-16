@@ -110,10 +110,10 @@
 
   fonts.packages = with pkgs; [
     ipafont
-    apple-new-york-font
-    apple-sf-compact-font
-    apple-sf-mono-font
-    apple-sf-pro-font
+    # apple-new-york-font
+    # apple-sf-compact-font
+    # apple-sf-mono-font
+    # apple-sf-pro-font
   ];
 
   environment.systemPackages = with pkgs; [
