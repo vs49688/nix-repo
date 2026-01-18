@@ -15,7 +15,7 @@
   hardware.asahi.extractPeripheralFirmware = lib.mkDefault false;
 
   boot.kernelParams = [
-    "apple_dcp.show_notch=1"
+    "appledrm.show_notch=1"
   ];
 
   hardware.graphics.enable32Bit = false;
