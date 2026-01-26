@@ -124,7 +124,7 @@
     signal-desktop
 
     # Office
-    # gnucash
+    gnucash
     # gramps
 
     # Audio/Video
