@@ -177,7 +177,7 @@ in
       solar2
       supermeatboy
       (croc-lotg.override { version = "1.5.7"; allowSubstitutes = true; })
-      xash3d-fwgs-full
+      # xash3d-fwgs-full
     ];
   };
 
