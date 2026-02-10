@@ -1,6 +1,9 @@
 { callPackage
 , nodejs
 , wrangler
+, gnused
+, tea
+, jq
 , flakeVersion
 }:
 callPackage ./docker.nix {
@@ -9,6 +12,9 @@ callPackage ./docker.nix {
   extraPkgs = [
     nodejs   # For Actions
     wrangler # For Cloudflare
+    gnused   # For forgejo-release
+    tea      # For forgejo-release
+    jq       # For forgejo-release
   ];
   Labels = {};
 
