@@ -155,7 +155,7 @@
     ##
     # Wine and friends
     ##
-    wineWowPackages.stagingFull
+    wineWow64Packages.stagingFull
     winetricks
 
     signal-desktop
