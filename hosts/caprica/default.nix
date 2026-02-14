@@ -214,8 +214,7 @@ in
     };
   };
 
-  services.syncthing.enable  = false;
-  services.syncthing.dataDir = "/media/Data2/SyncRoot";
+  services.syncthing.enable  = true;
 
   powerManagement.cpuFreqGovernor = "performance";
 
