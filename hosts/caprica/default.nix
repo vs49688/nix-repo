@@ -27,6 +27,8 @@ in
 
   boot.kernelParams = [
     "mitigations=off"
+    "zfs.zfs_arc_min=0"
+    "zfs.zfs_arc_max=1073741824"
   ];
 
   boot.blacklistedKernelModules = [ "alx" ];
