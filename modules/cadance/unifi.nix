@@ -1,6 +1,6 @@
 ##
 # CADANCE Module that locks Unifi Controller
-# in a container and configures nginx.
+# in a container and configures Caddy.
 ##
 { config, pkgs, lib, ... }:
 let
@@ -54,11 +54,6 @@ in {
 
     virtualHost = mkOption {
       type = types.str;
-    };
-
-    extraNginxConfig = mkOption {
-      type = types.str;
-      default = "";
     };
 
     managementInterface = mkOption {
@@ -154,21 +149,6 @@ in {
     systemd.services."container@${cfg.containerName}" = {
       bindsTo = [ netdevService ];
       after = [ netdevService ];
-    };
-
-    services.nginx.virtualHosts.${cfg.virtualHost} = lib.mkIf config.services.nginx.enable {
-      locations."/" = {
-        priority    = 1;
-        proxyPass   = "https://${cfg.localAddress}:8443";
-        extraConfig = cfg.extraNginxConfig;
-      };
-
-      locations."/ws" = {
-        priority        = 1;
-        proxyPass       = "https://${cfg.localAddress}:8443/ws";
-        proxyWebsockets = true;
-        extraConfig     = cfg.extraNginxConfig;
-      };
     };
 
     services.caddy.virtualHosts.${cfg.virtualHost}.extraConfig = lib.mkIf config.services.caddy.enable ''
