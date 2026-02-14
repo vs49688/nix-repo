@@ -11,28 +11,6 @@ in
     #../../modules/old/caprica-vfio
   ];
 
-  nixpkgs.overlays = [
-    (self: super: {
-      looking-glass-client = super.looking-glass-client.overrideAttrs(old: rec {
-        version = "B6";
-        src = super.fetchFromGitHub {
-          owner = "gnif";
-          repo = "LookingGlass";
-          rev = version;
-          hash = "sha256-6vYbNmNJBCoU23nVculac24tHqH7F4AZVftIjL93WJU=";
-          fetchSubmodules = true;
-        };
-
-        postUnpack = ''
-          echo $version > source/VERSION
-          export sourceRoot="source/client"
-        '';
-
-        patches = [];
-      });
-    })
-  ];
-
   nix.settings.system-features = [
     "nixos-test"
     "benchmark"
