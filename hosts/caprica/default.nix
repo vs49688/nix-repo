@@ -70,6 +70,13 @@ in
 
     interfaces."enp5s0.5".allowedTCPPorts = sambaTCPPorts;
     interfaces."enp5s0.5".allowedUDPPorts = sambaTCPPorts;
+
+    interfaces."enp5s0".allowedUDPPortRanges = [
+      {
+        from = 8086;
+        to   = 8093;
+      }
+    ];
   };
 
   networking.extraHosts = ''
