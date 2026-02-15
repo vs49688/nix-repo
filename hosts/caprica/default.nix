@@ -68,9 +68,6 @@ in
     interfaces.virbr0.allowedTCPPorts = sambaTCPPorts;
     interfaces.virbr0.allowedUDPPorts = sambaUDPPorts;
 
-    interfaces."enp5s0.5".allowedTCPPorts = sambaTCPPorts;
-    interfaces."enp5s0.5".allowedUDPPorts = sambaTCPPorts;
-
     interfaces."enp5s0".allowedUDPPortRanges = [
       {
         from = 8086;
