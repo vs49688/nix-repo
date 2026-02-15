@@ -67,13 +67,6 @@ in
 
     interfaces.virbr0.allowedTCPPorts = sambaTCPPorts;
     interfaces.virbr0.allowedUDPPorts = sambaUDPPorts;
-
-    interfaces."enp5s0".allowedUDPPortRanges = [
-      {
-        from = 8086;
-        to   = 8093;
-      }
-    ];
   };
 
   networking.extraHosts = ''
