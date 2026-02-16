@@ -3,4 +3,5 @@
   ./unifi.nix
   ./nextcloud.nix
   ./frigate.nix
+  ./torrent.nix
 ]
