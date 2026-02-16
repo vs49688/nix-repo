@@ -4,4 +4,5 @@
   ./nextcloud.nix
   ./frigate.nix
   ./torrent.nix
+  ./navidrome.nix
 ]
