@@ -5,4 +5,5 @@
   ./frigate.nix
   ./torrent.nix
   ./navidrome.nix
+  ./immich.nix
 ]
