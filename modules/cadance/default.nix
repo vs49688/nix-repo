@@ -6,4 +6,5 @@
   ./torrent.nix
   ./navidrome.nix
   ./immich.nix
+  ./vaultwarden.nix
 ]
