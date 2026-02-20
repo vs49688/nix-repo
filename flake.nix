@@ -20,6 +20,15 @@
 
     nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Just after v0.43.0, they forgot to update the version
+    docspell.url = "github:eikek/docspell?ref=92160c68726211052e85591ab5e6f783aa5d76b6";
+    docspell.inputs.nixpkgs.follows = "nixpkgs";
+    # Because they're not pinning it and I don't want _another_ nixpkgs version.
+    docspell.inputs.devshell-tools = {
+      url = "github:eikek/devshell-tools";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, ... }: let
