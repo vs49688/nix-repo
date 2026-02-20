@@ -7,4 +7,5 @@
   ./navidrome.nix
   ./immich.nix
   ./vaultwarden.nix
+  ./ai.nix
 ]
