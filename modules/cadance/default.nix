@@ -1,4 +1,4 @@
-[
+args@{ ... }: [
   ./postgresql.nix
   ./unifi.nix
   ./nextcloud.nix
@@ -8,4 +8,5 @@
   ./immich.nix
   ./vaultwarden.nix
   ./ai.nix
+  ((import ./docspell.nix) args)
 ]

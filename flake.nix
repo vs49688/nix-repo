@@ -61,7 +61,10 @@
       };
 
       cadance = { pkgs, ... }: {
-        imports = (import ./modules/public.nix) ++ (import ./modules/cadance);
+        imports = (import ./modules/public.nix) ++ ((import ./modules/cadance) {
+          docspell = self.inputs.docspell;
+        });
+
         nixpkgs.overlays = [ self.overlays.default ];
       };
 
