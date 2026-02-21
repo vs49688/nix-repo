@@ -8,5 +8,6 @@ args@{ ... }: [
   ./immich.nix
   ./vaultwarden.nix
   ./ai.nix
+  ./backup.nix
   ((import ./docspell.nix) args)
 ]
