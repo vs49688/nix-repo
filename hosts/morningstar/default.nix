@@ -221,6 +221,7 @@
       { directory = "/var/lib/containers";                    mode = "0700"; }
       { directory = "/var/lib/postgresql";                    mode = "0750"; }
       { directory = "/var/lib/waydroid";                      mode = "0755"; }
+      { directory = "/var/lib/NetworkManager";                mode = "0700"; }
       { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; }
       {
         directory = config.settings.primaryUser.home;
