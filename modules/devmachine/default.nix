@@ -48,8 +48,11 @@
       jinja2
       beautifulsoup4
       html5lib
-
+      scipy
       skyfield
+      cartopy
+      matplotlib
+
       setuptools
     ]));
   in (with pkgs; [
