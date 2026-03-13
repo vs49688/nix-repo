@@ -6,7 +6,7 @@
 , fetchurl
 , makeDesktopItem
 , copyDesktopItems
-, xorg
+, libxcb
 , zlib
 , freetype
 , fontconfig
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
     stdenv.cc.libc
     stdenv.cc.cc.lib
     zlib
-    xorg.libxcb
+    libxcb
     freetype
     fontconfig
     libxkbcommon
