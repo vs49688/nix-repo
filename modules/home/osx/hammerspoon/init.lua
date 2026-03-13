@@ -1,5 +1,7 @@
 GHOSTTY = "/Applications/Ghostty.app"
 
+hs.application.enableSpotlightForNameSearches(false)
+
 hs.hotkey.bind({"ctrl", "alt"}, "l", hs.caffeinate.lockScreen)
 hs.hotkey.bind({"ctrl", "cmd"}, "l", hs.caffeinate.lockScreen)
 
