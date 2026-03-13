@@ -104,6 +104,7 @@
   system.defaults.NSGlobalDomain.NSWindowShouldDragOnGesture = true;
   system.defaults.NSGlobalDomain.InitialKeyRepeat = 15;
   system.defaults.NSGlobalDomain.KeyRepeat = 3;
+  system.defaults.NSGlobalDomain.AppleICUForce24HourTime = true;
 
   environment.etc."shells".knownSha256Hashes = [
     # Default Monterey
