@@ -88,7 +88,7 @@
     "rectangle"
     "linearmouse"
     # "iterm2"
-    "alacritty"
+    "ghostty"
     "firefox"
     # "google-chrome"
     # "inkscape"
