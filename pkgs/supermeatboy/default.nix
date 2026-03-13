@@ -1,6 +1,6 @@
 { stdenv, lib, requireFile, unzip, autoPatchelfHook
 , makeDesktopItem, copyDesktopItems
-, SDL2, openalSoft
+, SDL2, openal-soft
 , makeBinaryWrapper
 , bubblewrap
 }:
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     stdenv.cc.cc.lib
     SDL2
-    openalSoft
+    openal-soft
   ];
 
   unpackPhase = ''
