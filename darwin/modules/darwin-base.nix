@@ -35,19 +35,15 @@
     flac
     mpv
   ] ++ (with pkgs; let
-    goPackage = go_1_24;
-    buildGoModule = buildGo124Module;
+    goPackage = go_1_26;
+    buildGoModule = buildGo126Module;
   in [
     goPackage
     (mockgen.override  { inherit buildGoModule; })
-    (errcheck.override { inherit buildGoModule; })
-    (go-tools.override { inherit buildGoModule; })
     (gotools.override  { inherit buildGoModule; })
     (gosec.override    { inherit buildGoModule; })
-    (gocyclo.override  { inherit buildGoModule; })
-    (revive.override   { inherit buildGoModule; })
     (govulncheck.override { /* inherit buildGoModule; */ })
-    (gops.override { inherit buildGoModule; })
+    (delve.override { inherit buildGoModule; })
   ]);
 
   programs.gnupg.agent.enable = true;
