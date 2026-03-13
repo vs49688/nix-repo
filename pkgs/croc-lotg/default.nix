@@ -10,7 +10,7 @@
 , SDL2
 , sdl3
 , glfw3
-, openalSoft
+, openal-soft
 , version ? "1.3.0"
 , allowSubstitutes ? false
 }: let
@@ -23,7 +23,7 @@
 
       buildInputs = [
         glfw3
-        openalSoft
+        openal-soft
       ];
 
       binaryPaths = {};
@@ -35,7 +35,7 @@
 
       buildInputs = [
         glfw3
-        openalSoft
+        openal-soft
       ];
 
       binaryPaths = {};
