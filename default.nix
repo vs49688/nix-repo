@@ -7,7 +7,7 @@ let
     callPackages = pkgs.lib.callPackagesWith (pkgs // self // { inherit lib; });
   };
 
-  overlay = import ./overlay.nix;
+  overlay = import ./overlay.nix { asFlake = false; };
 
   self = {
     inherit lib overlay;
@@ -20,17 +20,5 @@ let
     };
 
     pkgs = pkgs // self;
-
-    containers = import ./containers {
-      inherit lib;
-
-      pkgs = self.pkgs;
-      imagePrefix = "ghcr.io/vs49688";
-    };
-
-    hpc = import ./hpc {
-      inherit lib;
-      pkgs = self.pkgs;
-    };
   };
 in self
