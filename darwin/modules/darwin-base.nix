@@ -101,6 +101,10 @@
     "alt-tab"
   ];
 
+  system.defaults.NSGlobalDomain.NSWindowShouldDragOnGesture = true;
+  system.defaults.NSGlobalDomain.InitialKeyRepeat = 15;
+  system.defaults.NSGlobalDomain.KeyRepeat = 3;
+
   environment.etc."shells".knownSha256Hashes = [
     # Default Monterey
     "9d5aa72f807091b481820d12e693093293ba33c73854909ad7b0fb192c2db193"
