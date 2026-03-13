@@ -105,25 +105,6 @@
   ];
 
   environment.persistence."/data" = {
-    hideMounts = true;
-
-    directories = [
-      { directory = "/var/log";                               mode = "0755"; }
-      { directory = "/var/lib/nixos";                         mode = "0755"; }
-      { directory = "/var/lib/bluetooth";                     mode = "0700"; }
-      { directory = "/var/lib/libvirt";                       mode = "0755"; }
-      { directory = "/var/lib/containers";                    mode = "0700"; }
-      { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; }
-      {
-        directory = config.settings.primaryUser.home;
-        user = config.settings.primaryUser.username;
-        group = config.settings.primaryUser.username;
-        mode = "0700";
-      }
-    ];
-
-    files = [
-      "/etc/machine-id"
-    ];
+    enable = true;
   };
 }

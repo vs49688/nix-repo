@@ -166,5 +166,34 @@ in
       overrideFolders  = false;
       openDefaultPorts = true;
     };
+
+    environment.persistence."/data" = {
+      enable = lib.mkDefault false; # Enable on a per-system basis.
+      hideMounts = lib.mkDefault true;
+
+      directories = [
+        { directory = "/var/lib/nixos";                         mode = "0755"; }
+        { directory = "/var/log";                               mode = "0755"; }
+        {
+          directory = config.settings.primaryUser.home;
+          user = config.settings.primaryUser.username;
+          group = config.settings.primaryUser.username;
+          mode = "0700";
+        }
+      ] ++ (lib.optionals config.networking.networkmanager.enable [
+        { directory = "/var/lib/NetworkManager";                mode = "0700"; }
+        { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; }
+      ]) ++ (lib.optionals config.hardware.bluetooth.enable [
+        { directory = "/var/lib/bluetooth";                     mode = "0700"; }
+      ]) ++ (lib.optionals config.virtualisation.libvirtd.enable [
+        { directory = "/var/lib/libvirt";                       mode = "0755"; }
+      ]) ++ (lib.optionals config.virtualisation.containers.enable [
+        { directory = "/var/lib/containers";                    mode = "0700"; }
+      ]);
+
+      files = [
+        "/etc/machine-id"
+      ];
+    };
   };
 }

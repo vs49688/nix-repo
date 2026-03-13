@@ -222,22 +222,11 @@ in
   ];
 
   environment.persistence."/data" = {
-    hideMounts = true;
+    enable = true;
 
     directories = [
-      { directory = "/var/log";                               mode = "0755"; }
-      { directory = "/var/lib/nixos";                         mode = "0755"; }
-      { directory = "/var/lib/bluetooth";                     mode = "0700"; }
-      { directory = "/var/lib/libvirt";                       mode = "0755"; }
-      { directory = "/var/lib/containers";                    mode = "0700"; }
-      { directory = "/var/lib/samba";                         mode = "0755"; }
-      { directory = "/var/lib/postgresql";                    mode = "0750"; }
-      { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; }
-      { directory = "/home/zane"; user = "zane"; group = "zane"; mode = "0700"; }
-    ];
-
-    files = [
-      "/etc/machine-id"
+      { directory = "/var/lib/samba";      mode = "0755"; }
+      { directory = "/var/lib/postgresql"; mode = "0750"; }
     ];
   };
 }
