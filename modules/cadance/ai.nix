@@ -145,26 +145,9 @@ in
           };
         }
       ]) ++ (lib.optionals cfg.enableAnthropicModels [
-        {
-          model_name = "claude-sonnet-4-5-20250929-thinking";
-          litellm_params = {
-            model = "anthropic/claude-sonnet-4-5-20250929";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-            merge_reasoning_content_in_choices = true;
-            thinking = {
-              type = "enabled";
-              budget_tokens = 1024;
-            };
-          };
-        }
-        {
-          model_name = "claude-sonnet-4-5-20250929";
-          litellm_params = {
-            model = "anthropic/claude-sonnet-4-5-20250929";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-            merge_reasoning_content_in_choices = true;
-          };
-        }
+        ##
+        # Haiku 4.5
+        ##
         {
           model_name = "claude-haiku-4-5-20251001-thinking";
           litellm_params = {
@@ -185,6 +168,34 @@ in
             merge_reasoning_content_in_choices = true;
           };
         }
+
+        ##
+        # Sonnet 4.5
+        ##
+        {
+          model_name = "claude-sonnet-4-5-20250929-thinking";
+          litellm_params = {
+            model = "anthropic/claude-sonnet-4-5-20250929";
+            api_key = "os.environ/ANTHROPIC_API_KEY";
+            merge_reasoning_content_in_choices = true;
+            thinking = {
+              type = "enabled";
+              budget_tokens = 1024;
+            };
+          };
+        }
+        {
+          model_name = "claude-sonnet-4-5-20250929";
+          litellm_params = {
+            model = "anthropic/claude-sonnet-4-5-20250929";
+            api_key = "os.environ/ANTHROPIC_API_KEY";
+            merge_reasoning_content_in_choices = true;
+          };
+        }
+
+        ##
+        # Opus 4.5
+        ##
         {
           model_name = "claude-opus-4-5-20251101-thinking";
           litellm_params = {
@@ -201,6 +212,54 @@ in
           model_name = "claude-opus-4-5-20251101";
           litellm_params = {
             model = "anthropic/claude-opus-4-5-20251101";
+            api_key = "os.environ/ANTHROPIC_API_KEY";
+            merge_reasoning_content_in_choices = true;
+          };
+        }
+
+        ##
+        # Sonnet 4.6
+        ##
+        {
+          model_name = "claude-sonnet-4-6-thinking";
+          litellm_params = {
+            model = "anthropic/claude-sonnet-4-6";
+            api_key = "os.environ/ANTHROPIC_API_KEY";
+            merge_reasoning_content_in_choices = true;
+            thinking = {
+              type = "adaptive";
+              effort = "high";
+            };
+          };
+        }
+        {
+          model_name = "claude-sonnet-4-6";
+          litellm_params = {
+            model = "anthropic/claude-sonnet-4-6";
+            api_key = "os.environ/ANTHROPIC_API_KEY";
+            merge_reasoning_content_in_choices = true;
+          };
+        }
+
+        ##
+        # Opus 4.6
+        ##
+        {
+          model_name = "claude-opus-4-6-thinking";
+          litellm_params = {
+            model = "anthropic/claude-opus-4-6";
+            api_key = "os.environ/ANTHROPIC_API_KEY";
+            merge_reasoning_content_in_choices = true;
+            thinking = {
+              type = "adaptive";
+              effort = "high";
+            };
+          };
+        }
+        {
+          model_name = "claude-opus-4-6";
+          litellm_params = {
+            model = "anthropic/claude-opus-4-6";
             api_key = "os.environ/ANTHROPIC_API_KEY";
             merge_reasoning_content_in_choices = true;
           };
