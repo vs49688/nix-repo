@@ -14,7 +14,6 @@ local function openNewGhostty()
     end
 end
 
-hs.hotkey.bind({"cmd", "shift"}, "T", openNewGhostty)
 hs.hotkey.bind({"ctrl", "alt"}, "T", openNewGhostty)
 hs.hotkey.bind({"ctrl", "cmd"}, "T", openNewGhostty)
 
