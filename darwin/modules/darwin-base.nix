@@ -89,7 +89,7 @@
     "linearmouse"
     # "iterm2"
     "ghostty"
-    "firefox"
+    # "firefox"
     # "google-chrome"
     # "inkscape"
     "libreoffice"
