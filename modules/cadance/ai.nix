@@ -45,6 +45,19 @@ in
       type = types.str;
       example = "auth.example.com";
     };
+
+    kokoroTTS = mkOption {
+      default = {
+        port = 8880;
+      };
+      type = types.submodule {
+        options = {
+          port = mkOption {
+            type = with types; ints.between 1 65536;
+          };
+        };
+      };
+    };
   };
 
 
@@ -301,7 +314,16 @@ in
             ];
           };
         }
-      ]);
+      ]) ++ [
+        {
+          model_name = "kokoro-82m";
+          litellm_params = {
+            model = "openai/kokoro";
+            api_base = "http://localhost:${toString cfg.kokoroTTS.port}/v1";
+            api_key = "unnecessary";
+          };
+        }
+      ];
     };
 
     services.open-webui = {
@@ -349,6 +371,35 @@ in
         OAUTH_PROVIDER_NAME = cfg.oauthProviderName;
         OAUTH_SCOPES = "openid email profile groups";
         OPENID_REDIRECT_URI = "https://${cfg.hostName}/oauth/oidc/callback";
+      };
+    };
+
+    virtualisation.oci-containers.containers.kokoro = let
+      imageFile = pkgs.dockerTools.pullImage {
+        # imageName = "ghcr.io/remsky/kokoro-fastapi-cpu";
+        imageName = "git.vs49688.net/oci/kokoro-fastapi-cpu";
+        imageDigest = "sha256:b470d2431386611b5b3142eef7dd4c67aa9efecec4bd41b52aa51895e3e7274a";
+        hash = "sha256-0y5cos6TdzqtojiFtYmWT1adeT6OXpEuSR1nF/YelG4=";
+        finalImageName = "localhost/kokoro-fastapi-cpu";
+        finalImageTag = "v0.2.4-master";
+      };
+    in {
+      inherit imageFile;
+
+      image = "${imageFile.imageName}:${imageFile.imageTag}";
+
+      # Grrr, this breaks ports = []. FIXME: figure out an easy way to do this.
+      # extraOptions = [
+      #   # Network is unnecessary.
+      #   "--network=none"
+      # ];
+
+      ports = [
+        "127.0.0.1:${toString cfg.kokoroTTS.port}:8880"
+      ];
+
+      environment = {
+        DOWNLOAD_MODEL = "false";
       };
     };
 
