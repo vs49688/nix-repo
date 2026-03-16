@@ -29,6 +29,11 @@ in {
 
   home-manager.users.${primaryUser.username} = import ./../../../modules/home;
 
+  environment.systemPackages = with pkgs; [
+    jetbrains.clion
+    jetbrains.goland
+  ];
+
   users.users.${primaryUser.username} = {
     createHome  = true;
     description = primaryUser.fullName;
