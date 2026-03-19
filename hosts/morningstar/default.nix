@@ -95,7 +95,7 @@
   '';
 
   fileSystems."/" = {
-    options       = [ "noatime" "nodiratime" "xattr" "posixacl" ];
+    options       = [ "defaults" "size=25%" "mode=755" ];
   };
 
   fileSystems."/nix" = {

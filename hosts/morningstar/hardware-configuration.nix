@@ -14,8 +14,8 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "morningstar/private/root";
-      fsType = "zfs";
+    { device = "none";
+      fsType = "tmpfs";
     };
 
   fileSystems."/boot" =
