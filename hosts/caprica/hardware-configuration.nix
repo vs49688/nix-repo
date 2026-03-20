@@ -14,8 +14,8 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "caprica/private/root";
-      fsType = "zfs";
+    { device = "none";
+      fsType = "tmpfs";
     };
 
   fileSystems."/boot" =

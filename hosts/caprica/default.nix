@@ -74,7 +74,7 @@ in
   '';
 
   fileSystems."/" = {
-    options       = [ "noatime" "nodiratime" ];
+    options       = [ "defaults" "size=25%" "mode=755" ];
   };
 
   fileSystems."/nix" = {
