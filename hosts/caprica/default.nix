@@ -147,7 +147,7 @@ in
       mednaffe
       rpcs3
       pcsx2
-      jpsxdec
+      # jpsxdec
 
       zane-scripts.startgame
 
