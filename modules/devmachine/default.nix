@@ -137,8 +137,8 @@
 
     # renderdoc
   ])) ++ (with pkgs; let
-    goPackage = go_1_25;
-    buildGoModule = buildGo125Module;
+    goPackage = go_1_26;
+    buildGoModule = buildGo126Module;
   in [
     goPackage
     (mockgen.override  { inherit buildGoModule; })
