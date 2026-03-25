@@ -295,19 +295,9 @@ in
           };
         }
         {
-          model_name = "grok-2-image";
+          model_name = "grok-imagine-image";
           litellm_params = {
-            model = "xai/grok-2-image";
-            api_key = "os.environ/XAI_API_KEY";
-            additional_drop_params = [
-              "size"
-            ];
-          };
-        }
-        {
-          model_name = "grok-2-image-1212";
-          litellm_params = {
-            model = "xai/grok-2-image-1212";
+            model = "xai/grok-imagine-image";
             api_key = "os.environ/XAI_API_KEY";
             additional_drop_params = [
               "size"
