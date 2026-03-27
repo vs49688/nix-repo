@@ -54,8 +54,6 @@ in
       machine-learning.enable = false;
 
       database.enable = true;
-      database.enableVectors = false;
-      database.enableVectorChord = true;
 
       settings.server.externalDomain = "https://${cfg.hostName}";
       settings.newVersionCheck.enabled = false;
