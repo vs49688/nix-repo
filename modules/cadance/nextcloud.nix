@@ -20,7 +20,7 @@ in
 
   config = lib.mkIf cfg.enable {
     services.nextcloud = let
-      nextcloud = pkgs.nextcloud31;
+      nextcloud = pkgs.nextcloud32;
       apps = nextcloud.packages.apps;
     in {
       enable = true;
@@ -35,7 +35,6 @@ in
           calendar
           contacts
           impersonate
-          maps
           notes
           tasks
           deck
