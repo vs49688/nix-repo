@@ -52,7 +52,7 @@
       bat
       # git is handled below
 
-      openrussian-cli
+      # openrussian-cli
 
     ] ++ (if pkgs.stdenv.isDarwin then [
       ffmpeg
