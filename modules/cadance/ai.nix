@@ -316,6 +316,24 @@ in
       ];
     };
 
+    systemd.services.litellm = {
+      confinement.enable = true;
+      confinement.mode = "full-apivfs";
+      confinement.configureNetworking = true;
+      confinement.packages = [
+        config.services.litellm.package
+        config.services.litellm.environmentFile
+      ];
+
+      ##
+      # They've added "litellm/ui" and "litellm/tiktoken-cache" in nixpkgs
+      # which severly fucks with impermanence. Undo this.
+      ##
+      serviceConfig.StateDirectory = lib.mkForce [
+        "litellm"
+      ];
+    };
+
     services.open-webui = {
       enable = true;
       host = "127.0.0.1";
