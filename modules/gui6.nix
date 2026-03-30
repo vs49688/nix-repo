@@ -116,7 +116,7 @@ in
     # For KInfoCenter to work
     vulkan-tools
     wayland-utils
-    xorg.xdpyinfo
+    xdpyinfo
     aha
     clinfo
 
