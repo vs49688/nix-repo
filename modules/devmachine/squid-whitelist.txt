@@ -118,3 +118,5 @@
 ^(.+\.)?phoronix\.com$
 ^(.+\.)?phoronix\.net$
 
+^(.+\.)?mingw-w64\.org$
+^(.+\.)?msys2\.org$
