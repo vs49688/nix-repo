@@ -97,6 +97,7 @@
       qrencode
       graphviz
       unifi-backup-decrypt
+      opencode
 
       sops
       ssh-to-age
