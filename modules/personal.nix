@@ -20,6 +20,38 @@
     SearchBar = "unified";
 
     HttpsOnlyMode = "force_enabled";
+
+    DisableProfileImport = true;
+    DisableSetDesktopBackground = true;
+
+    SearchEngines = {
+      PreventInstalls = true;
+      Remove = [
+        "Google"
+        "Bing"
+        "Amazon.com"
+        "eBay"
+        "Twitter"
+        "Perplexity"
+
+        # How did this shit even get in my search engine list?
+        "Searx Belgium"
+        "LibRedirect"
+        "Mojeek"
+        "MetaGer"
+        "DuckDuckGo Lite"
+        "Wikipedia (en)"
+      ];
+
+      Default = "DuckDuckGo";
+
+      Add = [];
+    };
+
+    AIControls = {
+      Default = { Value = "blocked"; Locked = false; };
+      Translations = { Value = "available"; Locked = false; };
+    };
   };
 
   programs.firefox.preferences = {
