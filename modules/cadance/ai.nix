@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, utils, config, pkgs, ... }:
 let
   cfg = config.cadance.ai;
 in
@@ -50,6 +50,20 @@ in
       default = {
         port = 8880;
       };
+      type = types.submodule {
+        options = {
+          port = mkOption {
+            type = with types; ints.between 1 65536;
+          };
+        };
+      };
+    };
+
+    whispercpp = mkOption {
+      default = {
+        port = 8882;
+      };
+
       type = types.submodule {
         options = {
           port = mkOption {
@@ -313,6 +327,14 @@ in
             api_key = "unnecessary";
           };
         }
+        {
+          model_name = "whisper-1";
+          litellm_params = {
+            model = "openai/whisper-1";
+            api_base = "http://localhost:${toString cfg.whispercpp.port}";
+            api_key = "unnecessary";
+          };
+        }
       ];
     };
 
@@ -408,6 +430,89 @@ in
 
       environment = {
         DOWNLOAD_MODEL = "false";
+      };
+    };
+
+    systemd.services.whisper-cpp = let
+      # whisperModel = pkgs.fetchurl {
+      #   url = "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.bin";
+      #   hash = "sha256-YO1bw90U7qhWST0zQ0m0BXgt3K8AKNS130CINF+6Lv4=";
+      # };
+
+      whisperModel = pkgs.fetchurl {
+        url = "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.bin";
+        hash = "sha256-G+OpsgY4Z7k35k4ux0gzZKeZF+FX+pjF2UtcH//qmHs=";
+      };
+    in {
+      description = "whisper.cpp STT server";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
+
+      # confinement.enable = true; # Fucks with DeviceAllow=
+
+      path = with pkgs; [
+        ffmpeg-headless
+        whisper-cpp-vulkan
+      ];
+
+      serviceConfig = {
+        ExecStart = let
+          args = [
+            "--host" "127.0.0.1"
+            "--port" (toString cfg.whispercpp.port)
+            "--inference-path" "/audio/transcriptions"
+            "-m" whisperModel
+            "--convert"
+            "--tmp-dir" "/tmp" # PrivateTmp=yes
+            "--suppress-nst"
+          ];
+        in "${pkgs.whisper-cpp-vulkan}/bin/whisper-server ${utils.escapeSystemdExecArgs args}";
+
+        # Identity
+        DynamicUser = true;
+
+        # Privilege hardening
+        NoNewPrivileges = true;
+        PrivateTmp = true;
+        PrivateUsers = true;
+        ProtectSystem = "strict";
+        ProtectHome = true;
+        ProtectKernelTunables = true;
+        ProtectKernelModules = true;
+        ProtectKernelLogs = true;
+        ProtectControlGroups = true;
+        ProtectClock = true;
+        ProtectHostname = true;
+        ProtectProc = "invisible";
+        ProcSubset = "pid";
+        RestrictNamespaces = true;
+        RestrictRealtime = true;
+        RestrictSUIDSGID = true;
+        LockPersonality = true;
+        MemoryDenyWriteExecute = false; # Vulkan shader JIT
+        RemoveIPC = true;
+
+        # Filesystem
+        PrivateDevices = false;
+        DeviceAllow = [
+          "/dev/dri/card0 rw"
+          "/dev/dri/renderD128 rw"
+        ];
+
+        # Network
+        RestrictAddressFamilies = [ "AF_INET" "AF_UNIX" ];
+
+        # Syscalls
+        SystemCallArchitectures = "native";
+        SystemCallFilter = [
+          "@system-service"
+          "@pkey"
+          "~@privileged"
+          "~@obsolete"
+        ];
+
+        CapabilityBoundingSet = "";
+        AmbientCapabilities = "";
       };
     };
 
