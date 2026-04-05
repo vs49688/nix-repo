@@ -158,7 +158,8 @@ in
   config = lib.mkIf cfg.enable {
     virtualisation.oci-containers.containers.frigate = let
       imageFile = pkgs.dockerTools.pullImage {
-        imageName = "ghcr.io/blakeblackshear/frigate";
+        # imageName = "ghcr.io/blakeblackshear/frigate";
+        imageName = "git.vs49688.net/oci/frigate";
         imageDigest = "sha256:1f8dbaaa4c7c2855c2aef711842d13b0c20bfdc3f28ad88faf66aa1bc219b108";
         hash = "sha256-ms0AiKXkzUiTLOj/67kGI773vXRT4BbLg2I8nPKYFak=";
         finalImageName = "localhost/frigate";
