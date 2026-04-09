@@ -1,4 +1,4 @@
-GHOSTTY = "/Applications/Ghostty.app"
+GHOSTTY = "com.mitchellh.ghostty"
 
 hs.application.enableSpotlightForNameSearches(false)
 
@@ -6,8 +6,9 @@ hs.hotkey.bind({"ctrl", "alt"}, "l", hs.caffeinate.lockScreen)
 hs.hotkey.bind({"ctrl", "cmd"}, "l", hs.caffeinate.lockScreen)
 
 local function openNewGhostty()
-    local ghostty = hs.application.find("Ghostty")
+    local ghostty = hs.application.find(GHOSTTY)
     if ghostty then
+        -- NB: if this doesn't work, check accessibility options
         ghostty:selectMenuItem({"File", "New Window"})
     else
         hs.application.open(GHOSTTY)
