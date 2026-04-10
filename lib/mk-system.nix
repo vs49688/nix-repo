@@ -1,16 +1,16 @@
 { self }:
 rec {
   mkSystem = {
-    nixpkgs' ? self.inputs.nixpkgs,
-    home-manager' ? self.inputs.home-manager,
-  }: nixpkgs'.lib.nixosSystem {
+    nixpkgs ? self.inputs.nixpkgs,
+    home-manager ? self.inputs.home-manager,
+  }: nixpkgs.lib.nixosSystem {
     modules = [
-      home-manager'.nixosModules.home-manager
+      home-manager.nixosModules.home-manager
       self.outputs.nixosModules.nixos-base
       self.outputs.nixosModules.default
       self.inputs.impermanence.nixosModules.impermanence
       ({ config, ... }: let
-        lowPrio = nixpkgs'.lib.mkOverride 2000;
+        lowPrio = nixpkgs.lib.mkOverride 2000;
       in {
 
         # I hate this shit
