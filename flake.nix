@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+    nixpkgs.url = github:NixOS/nixpkgs;
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -18,6 +18,9 @@
     nixos-apple-silicon.url = "github:nix-community/nixos-apple-silicon";
     nixos-apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
 
+    nix-darwin.url = "github:nix-darwin/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     # Just after v0.43.0, they forgot to update the version
     docspell.url = "github:eikek/docspell?ref=92160c68726211052e85591ab5e6f783aa5d76b6";
     docspell.inputs.nixpkgs.follows = "nixpkgs";
@@ -26,14 +29,6 @@
       url = "github:eikek/devshell-tools";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    ##
-    # Darwin Crap
-    ##
-    nixpkgs-darwin.url = github:NixOS/nixpkgs/nixpkgs-unstable;
-
-    nix-darwin.url = github:nix-darwin/nix-darwin;
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
   };
 
   outputs = { self, nixpkgs, ... }: let
