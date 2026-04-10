@@ -175,7 +175,6 @@ in
     enable          = true;
     nmbd.enable     = true;
     winbindd.enable = true;
-    securityType    = "user";
 
     settings.global = {
       "workgroup" = "WORKGROUP";
