@@ -10,7 +10,7 @@ rec {
       self.outputs.nixosModules.default
       self.inputs.impermanence.nixosModules.impermanence
       ({ config, ... }: let
-        lowPrio = self.inputs.nixpkgs.lib.mkOverride 2000;
+        lowPrio = nixpkgs'.lib.mkOverride 2000;
       in {
 
         # I hate this shit
