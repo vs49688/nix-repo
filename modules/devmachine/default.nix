@@ -50,7 +50,7 @@
       html5lib
       scipy
       skyfield
-      cartopy
+      # cartopy
       matplotlib
 
       setuptools
