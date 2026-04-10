@@ -1,33 +1,34 @@
 {
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs;
+    nixpkgs-nixos.url = github:NixOS/nixpkgs/nixos-unstable;
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-nixos";
     };
 
     impermanence = {
       url = github:nix-community/impermanence;
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-nixos";
       inputs.home-manager.follows = "home-manager";
     };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     nixos-apple-silicon.url = "github:nix-community/nixos-apple-silicon";
-    nixos-apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-apple-silicon.inputs.nixpkgs.follows = "nixpkgs-nixos";
 
     nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     # Just after v0.43.0, they forgot to update the version
     docspell.url = "github:eikek/docspell?ref=92160c68726211052e85591ab5e6f783aa5d76b6";
-    docspell.inputs.nixpkgs.follows = "nixpkgs";
+    docspell.inputs.nixpkgs.follows = "nixpkgs-nixos";
     # Because they're not pinning it and I don't want _another_ nixpkgs version.
     docspell.inputs.devshell-tools = {
       url = "github:eikek/devshell-tools";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-nixos";
     };
   };
 

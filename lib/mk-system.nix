@@ -1,7 +1,7 @@
 { self }:
 rec {
   mkSystem = {
-    nixpkgs ? self.inputs.nixpkgs,
+    nixpkgs ? self.inputs.nixpkgs-nixos,
     home-manager ? self.inputs.home-manager,
   }: nixpkgs.lib.nixosSystem {
     modules = [
