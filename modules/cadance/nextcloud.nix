@@ -16,11 +16,15 @@ in
     adminpassFile = mkOption {
       type = types.str;
     };
+
+    package = mkOption {
+      type = types.package;
+    };
   };
 
   config = lib.mkIf cfg.enable {
     services.nextcloud = let
-      nextcloud = pkgs.nextcloud32;
+      nextcloud = cfg.package;
       apps = nextcloud.packages.apps;
     in {
       enable = true;
