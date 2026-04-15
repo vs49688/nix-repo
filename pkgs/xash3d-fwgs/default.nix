@@ -1,6 +1,22 @@
-{ stdenv, lib, callPackage, fetchFromGitHub, python3, wafHook, pkg-config, cmake
-, SDL2, libopus, freetype, fontconfig, makeWrapper
-, makeDesktopItem, copyDesktopItems
+{ stdenv
+, lib
+, callPackage
+, fetchFromGitHub
+, python3
+, wafHook
+, pkg-config
+, cmake
+, SDL2
+, libX11
+, libogg
+, libvorbis
+, libopus
+, opusfile
+, freetype
+, fontconfig
+, makeWrapper
+, makeDesktopItem
+, copyDesktopItems
 , imagemagick
 }:
 
@@ -15,13 +31,13 @@ let
     gamesWithDesktopEntries = builtins.filter (g: g.gameName != null) games;
   in stdenv.mkDerivation rec {
     pname = "xash3d-fwgs";
-    version = "unstable-2024-09-05";
+    version = "unstable-2026-04-13-0";
 
     src = fetchFromGitHub {
       owner = "FWGS";
       repo  = pname;
-      rev = "178602ea1fa85f700a2a5873d983162b42b3e9f4";
-      sha256 = "sha256-IVLuZFxJJ+hO/XrdBcEuBb6Nj5SeInFQynFOzwfSq3Q=";
+      rev = "84b7b5803bed19651d5fa8873225126ffd1ba9d1";
+      sha256 = "sha256-ojLLKJcS1og2kvrLAnpzg7S4RxX4eO/l9PZKn2R+WfQ=";
 
       fetchSubmodules = true;
     };
@@ -36,7 +52,11 @@ let
 
     buildInputs = [
       SDL2
+      libX11
+      libogg
+      libvorbis
       libopus
+      opusfile
       freetype
       fontconfig
     ];
@@ -50,11 +70,18 @@ let
     '';
 
     wafConfigureFlags = [
+      # "--use-sdl3" # SDL3 support is shoddy
       "--build-type=humanrights"
       "--64bits"
       "--enable-all-renderers"
       "--enable-packaging"
       # "--enable-lto" # causes filesystem linker errors
+      "--enable-poly-opt"
+      "--enable-openmp"
+      "--enable-packaging"
+
+      "--enable-utils"
+      "--enable-xar"
     ];
 
     dontUseWafInstall = false;
