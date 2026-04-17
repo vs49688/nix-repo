@@ -14,6 +14,7 @@
 , opusfile
 , freetype
 , fontconfig
+, dedicatedOnly ? false
 }:
 
 stdenv.mkDerivation(finalAttrs: {
@@ -35,7 +36,7 @@ stdenv.mkDerivation(finalAttrs: {
     pkg-config
   ];
 
-  buildInputs = [
+  buildInputs = lib.optionals (!dedicatedOnly) [
     SDL2
     libX11
     libogg
@@ -55,23 +56,28 @@ stdenv.mkDerivation(finalAttrs: {
   '';
 
   wafConfigureFlags = [
-    # "--use-sdl3" # SDL3 support is shoddy
     "--build-type=humanrights"
     "--64bits"
-    "--enable-all-renderers"
     "--enable-packaging"
-    # "--enable-lto" # causes filesystem linker errors
     "--enable-poly-opt"
     "--enable-openmp"
     "--enable-packaging"
+    # "--enable-lto" # causes filesystem linker errors
+  ] ++ (lib.optionals (dedicatedOnly) [
+    "--dedicated"
+  ]) ++ (lib.optionals (!dedicatedOnly) [
+    # "--use-sdl3" # SDL3 support is shoddy
+    "--enable-all-renderers"
     "--enable-dedicated"
     "--enable-utils"
     "--enable-xar"
-  ];
+  ]);
 
   dontUseWafInstall = false;
 
   wafInstallFlags = [
     "--destdir=/"
   ];
+
+  passthru.dedicatedOnly = dedicatedOnly;
 })

@@ -1,4 +1,5 @@
-{ callPackage
+{ lib
+, callPackage
 , symlinkJoin
 , makeBinaryWrapper
 }:
@@ -12,28 +13,20 @@ let
     inherit sdks;
   };
 
-  buildXash = games: symlinkJoin {
+  buildXash = { engine, games }: symlinkJoin {
     name = "xash3d-fwgs";
     paths = [
       engine
+    ] ++ games ++ lib.optionals (!engine.dedicatedOnly) [
       (callPackage ./desktop.nix { inherit engine games; })
-    ] ++ games;
+    ];
 
     nativeBuildInputs = [
       makeBinaryWrapper
     ];
 
     postBuild = ''
-      rm $out/bin/xash{,3d}
-
-      makeWrapper ${engine}/bin/xash3d $out/bin/.xash3d-wrapped \
-        --prefix LD_LIBRARY_PATH : $out/lib/xash3d \
-        --set XASH3D_RODIR $out/lib/xash3d \
-        --set XASH3D_EXTRAS_PAK1 $out/share/xash3d/valve/extras.pk3
-
-      substitute ${./launch.sh} $out/bin/xash3d \
-        --subst-var out \
-        --subst-var-by xash3d $out/bin/.xash3d-wrapped
+      rm $out/bin/xash
 
       makeWrapper ${engine}/bin/xash $out/bin/.xash-wrapped \
         --prefix LD_LIBRARY_PATH : $out/lib/xash3d \
@@ -44,17 +37,44 @@ let
         --subst-var out \
         --subst-var-by xash3d $out/bin/.xash-wrapped
 
-      chmod +x $out/bin/xash{,3d}
-    '';
+      chmod +x $out/bin/xash
+    '' + (lib.optionalString (!engine.dedicatedOnly) ''
+      rm $out/bin/xash3d
+
+      makeWrapper ${engine}/bin/xash3d $out/bin/.xash3d-wrapped \
+        --prefix LD_LIBRARY_PATH : $out/lib/xash3d \
+        --set XASH3D_RODIR $out/lib/xash3d \
+        --set XASH3D_EXTRAS_PAK1 $out/share/xash3d/valve/extras.pk3
+
+      substitute ${./launch.sh} $out/bin/xash3d \
+        --subst-var out \
+        --subst-var-by xash3d $out/bin/.xash3d-wrapped
+
+      chmod +x $out/bin/xash3d
+    '');
 
     passthru = {
       inherit games engine;
+
+      dedicated = buildXash {
+        inherit games;
+
+        engine = engine.override {
+          dedicatedOnly = true;
+        };
+      };
     };
   };
 in {
   inherit engine sdks buildXash;
 
+  dedicated = engine.override { dedicatedOnly = true; };
+
   games = all-games;
 
-  withGames = f: let packages = f all-games; in buildXash packages;
+  withGames = f: let packages = f all-games; in buildXash {
+    inherit engine;
+
+    games = packages;
+  };
 }
