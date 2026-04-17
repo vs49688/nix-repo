@@ -21,12 +21,17 @@ let
 in {
   inherit makeSDK;
 
-  valve = makeSDK {
+  valve = (makeSDK {
     name = "valve";
     version = "unstable-2026-03-26-0";
     rev = "ae84bfc0c3598fcff605a7b3bb963abe8ec3e295";
     sha256 = "sha256-UAEFUr2BqOXx3/MklJzELXdUm7EKUttiJE7IjHZ8rHE=";
-  };
+  }).overrideAttrs(old: {
+    patches = [
+      ./0001-dlls-player-add-item_longjump-to-impulse-101.patch
+      ./0002-cl_dll-in_camera-allow-thirdperson-in-multiplayer.patch
+    ];
+  });
 
   bshift = makeSDK {
     name = "bshift";

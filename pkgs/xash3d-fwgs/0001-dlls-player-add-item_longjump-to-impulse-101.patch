@@ -1,0 +1,24 @@
+From 8f23080d545fc374969a4a4fc70d4aed8d8096ae Mon Sep 17 00:00:00 2001
+From: Zane van Iperen <zane@zanevaniperen.com>
+Date: Fri, 17 Apr 2026 20:50:07 +1000
+Subject: [PATCH 1/2] dlls/player: add item_longjump to impulse 101
+
+---
+ dlls/player.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/dlls/player.cpp b/dlls/player.cpp
+index a31504f2..74fffefc 100644
+--- a/dlls/player.cpp
++++ b/dlls/player.cpp
+@@ -3590,6 +3590,7 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
+ 		gEvilImpulse101 = TRUE;
+ 		GiveNamedItem( "item_suit" );
+ 		GiveNamedItem( "item_battery" );
++		GiveNamedItem( "item_longjump" );
+ 		GiveNamedItem( "weapon_crowbar" );
+ 		GiveNamedItem( "weapon_9mmhandgun" );
+ 		GiveNamedItem( "ammo_9mmclip" );
+-- 
+2.53.0
+
