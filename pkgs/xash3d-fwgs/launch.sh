@@ -12,14 +12,6 @@ function die() {
     exit 1
 }
 
-export XASH3D_RODIR="@out@/lib/xash3d"
-echo "XASH3D_RODIR is $XASH3D_RODIR"
-
-export LD_LIBRARY_PATH="$XASH3D_RODIR:$LD_LIBRARY_PATH"
-
-export XASH3D_EXTRAS_PAK1="@out@/share/xash3d/valve/extras.pk3"
-echo "XASH3D_EXTRAS_PAK1 is $XASH3D_EXTRAS_PAK1"
-
 # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 # $XDG_DATA_HOME defines the base directory relative to which user-specific data files should be stored.
 # If $XDG_DATA_HOME is either not set or empty, a default equal to $HOME/.local/share should be used.

@@ -1,20 +1,27 @@
-{ stdenv, lib, requireFile, callPackage, sdks }:
+{ stdenvNoCC
+, lib
+, requireFile
+, callPackage
+, sdks
+}:
 let
-  makeGame = { src, sdk ? null, gamedir, gameName ? null, ... }@args: stdenv.mkDerivation ({
+  makeGame = { src, sdk ? null, gamedir, gameName ? null, ... }@args: stdenvNoCC.mkDerivation(finalAttrs: {
     src = src.overrideAttrs(old: { allowSubstitutes = true; });
 
     dontBuild = true;
 
     installPhase = ''
-      mkdir -p $out
-      cp -R * $out
+      mkdir -p $out/${finalAttrs.passthru.path}
+      cp -R * $out/${finalAttrs.passthru.path}
     '' + (lib.optionalString (sdk != null) ''
-      cp -R ${sdk}/*/* $out/
+      cp -R ${sdk}/*/* $out/${finalAttrs.passthru.path}
     '');
 
     passthru.gamedir = gamedir;
     passthru.gameName = gameName;
     passthru.sdk = sdk;
+    passthru.path = "lib/xash3d/${gamedir}";
+    passthru.iconPath = "${finalAttrs.passthru.path}/game.tga";
   } // (builtins.removeAttrs args ["src" "sdk" "gamedir" "gameName" ]));
 in
 {

@@ -5,6 +5,8 @@
     mv data.zip $out
     # LANG=en_US.UTF-8 ''${unzip}/bin/unzip -qq -d $out data.zip
   '') {};
+
+  xash3d-fwgs = super.callPackage ./pkgs/xash3d-fwgs { };
 in (({
   aaxm4bfix = super.callPackage ./pkgs/aaxm4bfix { };
 
@@ -53,9 +55,7 @@ in (({
 
   helltaker = super.callPackage ./pkgs/helltaker { };
 
-  xash3d-fwgs = super.callPackage ./pkgs/xash3d-fwgs { };
-
-  xash3d-fwgs-full = self.xash3d-fwgs.withGames (g: [
+  xash3d-fwgs-full = xash3d-fwgs.withGames (g: [
     g.valve g.valve_hd
     g.bshift g.bshift_hd
     g.dmc
@@ -103,6 +103,8 @@ in (({
   apple-sf-pro-font = super.callPackage ./pkgs/apple-sf-pro-font { };
 
 }) // (super.lib.optionalAttrs (!asFlake) {
+  inherit xash3d-fwgs;
+
   navidrome-mbz = throw "navidrome-mbz has been removed, use navidrome instead";
 
   linearmouse-bin = throw "linearmouse-bin has been removed, use nix-darwin with Brew";
