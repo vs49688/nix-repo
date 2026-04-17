@@ -24,15 +24,27 @@ let
     ];
 
     postBuild = ''
-      rm $out/bin/xash3d
+      rm $out/bin/xash{,3d}
 
       makeWrapper ${engine}/bin/xash3d $out/bin/.xash3d-wrapped \
         --prefix LD_LIBRARY_PATH : $out/lib/xash3d \
         --set XASH3D_RODIR $out/lib/xash3d \
         --set XASH3D_EXTRAS_PAK1 $out/share/xash3d/valve/extras.pk3
 
-      substitute ${./launch.sh} $out/bin/xash3d --subst-var out
-      chmod +x $out/bin/xash3d
+      substitute ${./launch.sh} $out/bin/xash3d \
+        --subst-var out \
+        --subst-var-by xash3d $out/bin/.xash3d-wrapped
+
+      makeWrapper ${engine}/bin/xash $out/bin/.xash-wrapped \
+        --prefix LD_LIBRARY_PATH : $out/lib/xash3d \
+        --set XASH3D_RODIR $out/lib/xash3d \
+        --set XASH3D_EXTRAS_PAK1 $out/share/xash3d/valve/extras.pk3
+
+      substitute ${./launch.sh} $out/bin/xash \
+        --subst-var out \
+        --subst-var-by xash3d $out/bin/.xash-wrapped
+
+      chmod +x $out/bin/xash{,3d}
     '';
 
     passthru = {

@@ -64,7 +64,7 @@ stdenv.mkDerivation(finalAttrs: {
     "--enable-poly-opt"
     "--enable-openmp"
     "--enable-packaging"
-
+    "--enable-dedicated"
     "--enable-utils"
     "--enable-xar"
   ];

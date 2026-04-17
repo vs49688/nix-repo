@@ -27,4 +27,4 @@ mkdir -p "$XASH3D_BASEDIR"
 cd "$XASH3D_BASEDIR" || die "Can't cd into $XASH3D_BASEDIR"
 echo "XASH3D_BASEDIR is $XASH3D_BASEDIR"
 
-exec "@out@/bin/.xash3d-wrapped" "$@"
+exec "@xash3d@" "$@"
