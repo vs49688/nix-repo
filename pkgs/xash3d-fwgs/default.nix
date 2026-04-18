@@ -38,6 +38,8 @@ let
         --subst-var-by xash3d $out/bin/.xash-wrapped
 
       chmod +x $out/bin/xash
+
+      patchShebangs $out/bin/xash
     '' + (lib.optionalString (!engine.dedicatedOnly) ''
       rm $out/bin/xash3d
 
@@ -51,6 +53,8 @@ let
         --subst-var-by xash3d $out/bin/.xash3d-wrapped
 
       chmod +x $out/bin/xash3d
+
+      patchShebangs $out/bin/xash3d
     '');
 
     passthru = {
