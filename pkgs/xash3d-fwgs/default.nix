@@ -78,6 +78,7 @@ in {
 
   mods = {
     metamod = callPackage ./mods/metamod.nix { };
+    jk_botti = callPackage ./mods/jk_botti { };
   };
 
   withGames = f: let packages = f all-games; in buildXash {
