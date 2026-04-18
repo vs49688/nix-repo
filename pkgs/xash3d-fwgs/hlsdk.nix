@@ -30,6 +30,7 @@ in {
     patches = [
       ./0001-dlls-player-add-item_longjump-to-impulse-101.patch
       ./0002-cl_dll-in_camera-allow-thirdperson-in-multiplayer.patch
+      ./0001-dlls-multiplay_gamerules-precache-player-model-on-co.patch
     ];
   });
 

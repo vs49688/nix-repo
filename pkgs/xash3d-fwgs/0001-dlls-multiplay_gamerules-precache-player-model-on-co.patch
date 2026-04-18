@@ -1,0 +1,51 @@
+From ae1dbace5aff049ac9f7dc5b325b3af9cc3ec829 Mon Sep 17 00:00:00 2001
+From: Zane van Iperen <zane@zanevaniperen.com>
+Date: Sun, 19 Apr 2026 00:20:57 +1000
+Subject: [PATCH] dlls/multiplay_gamerules: precache player model on connection
+
+---
+ dlls/gamerules.h             |  2 ++
+ dlls/multiplay_gamerules.cpp | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/dlls/gamerules.h b/dlls/gamerules.h
+index adbbaa31..1a9b7307 100644
+--- a/dlls/gamerules.h
++++ b/dlls/gamerules.h
+@@ -300,6 +300,8 @@ public:
+ 	virtual BOOL AllowAutoTargetCrosshair( void );
+ 	virtual BOOL ClientCommand( CBasePlayer *pPlayer, const char *pcmd );
+ 
++	virtual void ClientUserInfoChanged( CBasePlayer *pPlayer, char *infobuffer );
++
+ 	// Client kills/scoring
+ 	virtual int IPointsForKill( CBasePlayer *pAttacker, CBasePlayer *pKilled );
+ 	virtual void PlayerKilled( CBasePlayer *pVictim, entvars_t *pKiller, entvars_t *pInflictor );
+diff --git a/dlls/multiplay_gamerules.cpp b/dlls/multiplay_gamerules.cpp
+index b7c3ec9b..3b0380ef 100644
+--- a/dlls/multiplay_gamerules.cpp
++++ b/dlls/multiplay_gamerules.cpp
+@@ -131,6 +131,20 @@ BOOL CHalfLifeMultiplay::ClientCommand( CBasePlayer *pPlayer, const char *pcmd )
+ 	return CGameRules::ClientCommand( pPlayer, pcmd );
+ }
+ 
++void CHalfLifeMultiplay::ClientUserInfoChanged( CBasePlayer *pPlayer, char *infobuffer )
++{
++	const char *pszModel = g_engfuncs.pfnInfoKeyValue( infobuffer, "model" );
++	if ( pszModel != NULL && pszModel[0] != '\0' ) {
++		char text[1024];
++		safe_snprintf( text, sizeof(text), "models/player/%s/%s.mdl", pszModel, pszModel );
++		if( g_engfuncs.pfnGetFileSize(text) >= 0 ) {
++			PRECACHE_MODEL( text );
++		}
++	}
++
++	CGameRules::ClientUserInfoChanged(pPlayer, infobuffer);
++}
++
+ //=========================================================
+ //=========================================================
+ void CHalfLifeMultiplay::RefreshSkillData( void )
+-- 
+2.53.0
+
