@@ -7,10 +7,10 @@ stdenv.mkDerivation(finalAttrs: {
   version = "unstable-2026-04-16-0";
 
   src = fetchFromGitHub {
-    owner = "vs49688";
+    owner = "FWGS";
     repo = "metamod-fwgs";
-    rev = "ffe53b77a5fdef89dbfec1d8551592ffe52d639c";
-    hash = "sha256-Nv85dv4c+ZGqvlVxcE5nwRses7zvoVV+y8dvTtiNU6w=";
+    rev = "eedede40e806e7f3d1604de61ed43404928ea639";
+    hash = "sha256-gFUzYPeh33cMJRl0StVjb8kqD6oL2a6nbRVEIUloyjk=";
     fetchSubmodules = true;
     deepClone = true;
 
