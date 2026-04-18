@@ -347,6 +347,8 @@ in
         config.services.litellm.environmentFile
       ];
 
+      environment.HOME = config.services.litellm.stateDir;
+
       ##
       # They've added "litellm/ui" and "litellm/tiktoken-cache" in nixpkgs
       # which severly fucks with impermanence. Undo this.
