@@ -76,6 +76,10 @@ in {
 
   games = all-games;
 
+  mods = {
+    metamod = callPackage ./mods/metamod.nix { };
+  };
+
   withGames = f: let packages = f all-games; in buildXash {
     inherit engine;
 
