@@ -24,6 +24,10 @@ stdenv.mkDerivation(finalAttrs: {
     '';
   };
 
+  patches = [
+    ./0001-metamod-allow-configuring-mm_-from-environment.patch
+  ];
+
   preConfigure = ''
     cmakeFlagsArray+=(-DAPP_COMMIT_COUNT="$(cat ${finalAttrs.src}/GIT_COMMIT_COUNT)")
     cmakeFlagsArray+=(-DAPP_COMMIT_SHA="$(cat ${finalAttrs.src}/GIT_COMMIT_SHA)")

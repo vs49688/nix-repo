@@ -77,7 +77,7 @@ in {
   games = all-games;
 
   mods = {
-    metamod = callPackage ./mods/metamod.nix { };
+    metamod = callPackage ./mods/metamod { };
     jk_botti = callPackage ./mods/jk_botti { };
   };
 
