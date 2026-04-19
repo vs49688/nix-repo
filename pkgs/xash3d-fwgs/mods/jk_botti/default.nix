@@ -1,5 +1,5 @@
 { stdenv
-, fetchFromGitHub
+, fetchFromForgejo
 , cmake
 , zlib
 }:
@@ -7,21 +7,17 @@ stdenv.mkDerivation(finalAttrs: {
   pname = "jk_botti-fwgs";
   version = "unstable-2026-03-22-0";
 
-  src = fetchFromGitHub {
-    owner = "Bots-United";
+  src = fetchFromForgejo {
+    domain = "git.vs49688.net";
+    owner = "zane";
     repo = "jk_botti";
-    rev = "6d23316cc33fc4e62a972d50327d7c09dd0245b9";
-    hash = "sha256-OCSxGZJfDTD8nWMvVP9gaAxvde0TEbSaX8mArPRO50k=";
+    rev = "1763d84f7d80ff6527e1df385c1d282c8dc70b6b";
+    hash = "sha256-l+DGU7fhMOOn07FU+VP43UQJBMeAYjuwdz7Pguc3bww=";
   };
 
   prePatch = ''
     rm -rf zlib
   '';
-
-  patches = [
-    ./0001-cmake-add.patch
-    ./0002-util-use-actual-gamedir-for-file-lookups.patch
-  ];
 
   nativeBuildInputs = [
     cmake
