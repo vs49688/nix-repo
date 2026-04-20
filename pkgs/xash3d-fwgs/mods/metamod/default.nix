@@ -21,6 +21,7 @@ stdenv.mkDerivation(finalAttrs: {
       git log HEAD -1 --format=%ad --date='format:%b %d %Y' > GIT_COMMIT_DATE
       git log HEAD -1 --format=%ad --date='format:%H:%M:%S' > GIT_COMMIT_TIME
       rm -rf .git
+      popd
     '';
   };
 
