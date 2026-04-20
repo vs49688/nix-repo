@@ -19,13 +19,13 @@
 
 stdenv.mkDerivation(finalAttrs: {
   pname = "xash3d-fwgs";
-  version = "unstable-2026-04-13-0";
+  version = "unstable-2026-04-19-0";
 
   src = fetchFromGitHub {
     owner = "FWGS";
     repo  = finalAttrs.pname;
-    rev = "84b7b5803bed19651d5fa8873225126ffd1ba9d1";
-    sha256 = "sha256-ojLLKJcS1og2kvrLAnpzg7S4RxX4eO/l9PZKn2R+WfQ=";
+    rev = "306a5812a9894d328b91697f0f77232416a2216d";
+    sha256 = "sha256-GHm/rp7KpXnrblLiD/VdKmOx2PR+DSnK4A4JkqZdFQE=";
 
     fetchSubmodules = true;
   };
