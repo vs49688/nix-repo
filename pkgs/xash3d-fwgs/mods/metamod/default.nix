@@ -4,13 +4,13 @@
 }:
 stdenv.mkDerivation(finalAttrs: {
   pname = "metamod-fwgs";
-  version = "unstable-2026-04-16-0";
+  version = "unstable-2026-04-21-0";
 
   src = fetchFromGitHub {
     owner = "FWGS";
     repo = "metamod-fwgs";
-    rev = "eedede40e806e7f3d1604de61ed43404928ea639";
-    hash = "sha256-gFUzYPeh33cMJRl0StVjb8kqD6oL2a6nbRVEIUloyjk=";
+    rev = "1488121d5137d11c53ec2c4b6a631bc765ad7cf1";
+    hash = "sha256-+J2RlMqUoOyHk5hfIECRBdhEPT4jXLlJeu3suhWFml4=";
     fetchSubmodules = true;
     deepClone = true;
 
