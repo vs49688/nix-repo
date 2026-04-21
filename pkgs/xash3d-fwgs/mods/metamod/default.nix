@@ -7,10 +7,10 @@ stdenv.mkDerivation(finalAttrs: {
   version = "unstable-2026-04-21-0";
 
   src = fetchFromGitHub {
-    owner = "FWGS";
+    owner = "vs49688";
     repo = "metamod-fwgs";
-    rev = "1488121d5137d11c53ec2c4b6a631bc765ad7cf1";
-    hash = "sha256-+J2RlMqUoOyHk5hfIECRBdhEPT4jXLlJeu3suhWFml4=";
+    rev = "9868c015e32d3f64c5835021547cdf61cc710c61";
+    hash = "sha256-VNgLjXq8cSTslt0i5YdDHj65xXhPPntZft935/zdlXw=";
     fetchSubmodules = true;
     deepClone = true;
 
@@ -24,10 +24,6 @@ stdenv.mkDerivation(finalAttrs: {
       popd
     '';
   };
-
-  patches = [
-    ./0001-metamod-allow-configuring-mm_-from-environment.patch
-  ];
 
   preConfigure = ''
     cmakeFlagsArray+=(-DAPP_COMMIT_COUNT="$(cat ${finalAttrs.src}/GIT_COMMIT_COUNT)")
