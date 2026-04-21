@@ -5,14 +5,14 @@
 }:
 stdenv.mkDerivation(finalAttrs: {
   pname = "jk_botti-fwgs";
-  version = "unstable-2026-04-20-0";
+  version = "unstable-2026-04-21-0";
 
   src = fetchFromForgejo {
     domain = "git.vs49688.net";
     owner = "zane";
     repo = "jk_botti";
-    rev = "24b830dec6dc7c15086180701efba21df6b06632";
-    hash = "sha256-trBctGwBxT6+xDxOb5jLEwuT1XpcB0sRVYqNtgN0Clc=";
+    rev = "1a364d3142a383fce278d6f8ead9fc2da6b2beda";
+    hash = "sha256-VRylyJKJzt/Y7DQ3JfEDBZfEdnBXrtuoAYUTJrNQJb8=";
   };
 
   prePatch = ''
