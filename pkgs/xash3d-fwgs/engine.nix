@@ -2,6 +2,7 @@
 , lib
 , callPackage
 , fetchFromGitHub
+, writeShellScriptBin
 , python3
 , wafHook
 , pkg-config
@@ -17,7 +18,16 @@
 , dedicatedOnly ? false
 }:
 
-stdenv.mkDerivation(finalAttrs: {
+stdenv.mkDerivation(finalAttrs: let
+  minigit = writeShellScriptBin "git" ''
+    case "$*" in
+        "describe --dirty --always")   cat ${finalAttrs.src}/GIT_VERSION     ;;
+        "log -1 --format=%ci")         cat ${finalAttrs.src}/GIT_COMMIT_DATE ;;
+        "rev-parse --abbrev-ref HEAD") cat ${finalAttrs.src}/GIT_BRANCH      ;;
+        *) echo "git: '$*' is not a supported command" >&2; exit 1 ;;
+    esac
+  '';
+in {
   pname = "xash3d-fwgs";
   version = "unstable-2026-04-19-0";
 
@@ -25,15 +35,28 @@ stdenv.mkDerivation(finalAttrs: {
     owner = "FWGS";
     repo  = finalAttrs.pname;
     rev = "306a5812a9894d328b91697f0f77232416a2216d";
-    sha256 = "sha256-GHm/rp7KpXnrblLiD/VdKmOx2PR+DSnK4A4JkqZdFQE=";
-
+    sha256 = "sha256-rDHqptZrjlbbF/rxt2Jpm4iKOk04p5O+c1diI/nuzLU=";
     fetchSubmodules = true;
+    deepClone = true;
+
+    postFetch = ''
+      pushd $out
+
+      git describe --always > GIT_VERSION
+      git log HEAD -1 --format=%ci > GIT_COMMIT_DATE
+      # git rev-parse --abbrev-ref HEAD > GIT_BRANCH # This gives "fetchgit"
+      echo master > GIT_BRANCH
+
+      rm -rf .git
+      popd
+    '';
   };
 
   nativeBuildInputs = [
     python3
     wafHook
     pkg-config
+    minigit
   ];
 
   buildInputs = lib.optionals (!dedicatedOnly) [
@@ -53,6 +76,8 @@ stdenv.mkDerivation(finalAttrs: {
     find . -type f | while read file; do
       touch -d @315532800 $file;
     done
+
+    mkdir -p .git # Force the WAF Git check to pass
   '';
 
   wafConfigureFlags = [
