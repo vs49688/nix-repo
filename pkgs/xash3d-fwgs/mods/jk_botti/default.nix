@@ -11,8 +11,8 @@ stdenv.mkDerivation(finalAttrs: {
     domain = "git.vs49688.net";
     owner = "zane";
     repo = "jk_botti";
-    rev = "4c7b6392c436abaa2d46d157d91c9ef5d95b8fd7";
-    hash = "sha256-r/oL2EMTNdF95RXPlIWO7ODqfpeJmXhwRZNigCpahGk=";
+    rev = "97cd2f6f408f73c1f316e445c61fcd4ff03b37e0";
+    hash = "sha256-axnTm5aFtGAyybaeBdojGzvMyRV2pfD7cGXhYS6evVA=";
   };
 
   prePatch = ''
