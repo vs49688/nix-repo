@@ -10,7 +10,7 @@
 , nas
 , glib
 , icu
-, libxml2
+, libxml2_13
 , libpng12
 , libX11
 , libXext
@@ -73,7 +73,7 @@ stdenv.mkDerivation(finalAttrs: {
     nas
     glib
     icu48
-    libxml2
+    libxml2_13
     libpng12
     libX11
     libXext
