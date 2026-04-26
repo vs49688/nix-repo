@@ -13,6 +13,7 @@
 , libvorbis
 , libopus
 , opusfile
+, bzip2
 , freetype
 , fontconfig
 , dedicatedOnly ? false
@@ -29,13 +30,13 @@ stdenv.mkDerivation(finalAttrs: let
   '';
 in {
   pname = "xash3d-fwgs";
-  version = "unstable-2026-04-19-0";
+  version = "unstable-2026-04-26-0";
 
   src = fetchFromGitHub {
     owner = "FWGS";
     repo  = finalAttrs.pname;
-    rev = "306a5812a9894d328b91697f0f77232416a2216d";
-    sha256 = "sha256-rDHqptZrjlbbF/rxt2Jpm4iKOk04p5O+c1diI/nuzLU=";
+    rev = "85eb82a370badd0006c9a463ed0d749a8cb880cd";
+    sha256 = "sha256-v0pZv0cq2vOOoOQPnqKeV4hvIetG8NI8JkcFg3kOxIM=";
     fetchSubmodules = true;
     deepClone = true;
 
@@ -47,6 +48,7 @@ in {
       # git rev-parse --abbrev-ref HEAD > GIT_BRANCH # This gives "fetchgit"
       echo master > GIT_BRANCH
 
+      rm -rf 3rdparty/{bzip2,opus,libogg,vorbis,opusfile}
       rm -rf .git
       popd
     '';
@@ -66,6 +68,7 @@ in {
     libvorbis
     libopus
     opusfile
+    bzip2
     freetype
     fontconfig
   ];
