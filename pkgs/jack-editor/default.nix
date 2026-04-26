@@ -2,7 +2,7 @@
 , lib
 , requireFile
 , fetchFromGitHub
-, makeWrapper
+, makeBinaryWrapper
 , autoPatchelfHook
 , makeDesktopItem
 , copyDesktopItems
@@ -62,7 +62,7 @@ stdenv.mkDerivation(finalAttrs: {
   dontBuild = true;
 
   nativeBuildInputs = [
-    makeWrapper
+    makeBinaryWrapper
     autoPatchelfHook
     copyDesktopItems
   ];
@@ -95,7 +95,9 @@ stdenv.mkDerivation(finalAttrs: {
     rm -f $out/opt/jack/Jack.sh $out/opt/jack/install.sh $out/opt/jack/libpng12.so.0
 
     mkdir -p $out/bin $out/share/pixmaps
-    ln $out/opt/jack/Jack $out/bin/Jack
+    makeWrapper $out/opt/jack/Jack $out/bin/Jack \
+      --chdir $out/opt/jack/
+
     mv $out/opt/jack/Jack.xpm $out/share/pixmaps/jack-editor.xpm
 
     runHook postInstall $out/opt/jack/Jack
