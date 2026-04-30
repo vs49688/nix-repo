@@ -105,6 +105,12 @@
       aarch64-darwin = mkPackages { system = "aarch64-darwin"; };
     };
 
+    legacyPackages.x86_64-linux = let
+      pkgs = self.inputs.nixpkgs.legacyPackages.x86_64-linux;
+    in {
+      xash3d-fwgs = pkgs.callPackage ./pkgs/xash3d-fwgs { };
+    };
+
     containers = let
       pkgs = mkNixpkgs { system = "x86_64-linux"; };
     in pkgs.callPackage ./containers {
