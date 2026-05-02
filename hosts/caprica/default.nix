@@ -167,10 +167,6 @@ in
     #rocm-opencl-runtime
   ];
 
-  boot.initrd.postResumeCommands = lib.mkAfter ''
-    zfs rollback -r caprica/private/root@empty
-  '';
-
   services.samba   = {
     enable          = true;
     nmbd.enable     = true;
