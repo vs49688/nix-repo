@@ -28,10 +28,6 @@
 
   boot.initrd.kernelModules = [ "amdgpu" ];
 
-  boot.initrd.postResumeCommands = lib.mkAfter ''
-    zfs rollback -r morningstar/private/root@empty
-  '';
-
   ##
   # Really feeling screwed by both NixOS and OpenZFS here.
   ##
