@@ -55,6 +55,8 @@ in (({
 
   helltaker = super.callPackage ./pkgs/helltaker { };
 
+  xash-admin = super.callPackage ./pkgs/xash-admin { };
+
   xash3d-fwgs-full = xash3d-fwgs.withGames (g: [
     g.valve g.valve_hd
     g.bshift g.bshift_hd
