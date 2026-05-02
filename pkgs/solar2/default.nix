@@ -1,7 +1,7 @@
 { stdenv, lib, requireFile, autoPatchelfHook, makeWrapper
 , makeDesktopItem, copyDesktopItems
 , curl, zlib, lttng-ust
-, icu69, SDL2, openssl_1_1
+, icu78, SDL2, openssl_1_1
 , alsa-lib, libpulseaudio
 }:
 let
@@ -12,14 +12,14 @@ let
 in
 stdenv.mkDerivation rec {
   pname   = "solar2";
-  version = "1.25";
+  version = "1.26";
 
   src = (requireFile {
     message = ''
-      Please prefetch "Solar2_v1.25_amd64.tar" from Humble Bundle.
+      Please prefetch "Solar2_v1.26_amd64.tar.gz" from Humble Bundle.
     '';
-    name   = "Solar2_v1.25_amd64.tar";
-    sha256 = "sha256-cHQVjUQG4C3YUab7i7MzWwE/+pZBrts8HyU/6JMpnAY=";
+    name   = "Solar2_v1.26_amd64.tar.gz";
+    sha256 = "sha256-kDyD36MQJAtGM5Iz4cdZcx2Jh4Xe3MppTeljszNFr7o=";
   }).overrideAttrs(old: { allowSubstitutes = true; });
 
   nativeBuildInputs = [
@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
     rm -f $out/share/solar2/libSDL2-2.0.so.0
 
     makeWrapper $out/share/solar2/Solar2 $out/bin/Solar2 \
-      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ icu69 SDL2 xssl alsa-lib libpulseaudio ]}:/run/opengl-driver/lib
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ icu78 SDL2 xssl alsa-lib libpulseaudio ]}:/run/opengl-driver/lib
 
     ln -s $out/share/solar2/solar2icon_512x512_transparent.png $out/share/pixmaps/${pname}.png
 
