@@ -27,10 +27,6 @@
     "i915.enable_guc=3"
   ];
 
-  boot.initrd.postResumeCommands = lib.mkAfter ''
-    zfs rollback -r tank/private/root@blank
-  '';
-
   boot.zfs.package = pkgs.zfs_2_4;
   boot.kernelPackages = pkgs.linuxPackages_6_18;
 
@@ -56,7 +52,7 @@
   '';
 
   fileSystems."/" = {
-    options       = [ "noatime" "nodiratime" "xattr" "posixacl" ];
+    options       = [ "defaults" "size=25%" "mode=755" ];
   };
 
   fileSystems."/nix" = {
