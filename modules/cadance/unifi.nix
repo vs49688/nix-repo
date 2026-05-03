@@ -157,6 +157,8 @@ in {
           transport http {
               tls_insecure_skip_verify
           }
+
+          header_up Cookie "authelia_session=[^;]+" "authelia_session=_"
       }
     '';
   };
