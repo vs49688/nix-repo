@@ -145,7 +145,7 @@ in
       mgba
       mednafen
       mednaffe
-      rpcs3
+      #rpcs3
       pcsx2
       # jpsxdec
 
