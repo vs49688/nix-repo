@@ -401,6 +401,58 @@ in
       unitConfig.RequiresMountsFor = [ "/storage" "/var/www" ];
     };
 
+    ##
+    # /var/lib/bitwarden_rs backup
+    ##
+    systemd.services."vaultwarden-backup" = {
+      startAt = cfg.startAt;
+      onFailure = [ "notify-email@%n.service" ];
+
+      confinement.enable   = true;
+      confinement.mode     = "full-apivfs";
+      confinement.binSh    = "${pkgs.bash}/bin/sh";
+      confinement.configureNetworking = true;
+
+      environment.AWS_PROFILE = cfg.awsProfile;
+      environment.AWS_SHARED_CREDENTIALS_FILE = "%d/aws_shared_credentials_file";
+
+      serviceConfig = lib.recursiveUpdate defaultServiceConfig {
+        LoadCredential = [
+          "password:${cfg.resticTokenFile}"
+          "aws_shared_credentials_file:${cfg.awsSharedCredentialsFile}"
+        ];
+
+        Type = "oneshot";
+
+        User  = cfg.backupUser;
+        Group = cfg.backupUser;
+
+        BindReadOnlyPaths = [
+          "/var/lib/bitwarden_rs"
+        ];
+
+        BindPaths = [
+          config.users.users.${cfg.backupUser}.home
+          "/storage/SyncRoot/Backups/vaultwarden"
+        ];
+
+        SupplementaryGroups = [
+          "vaultwarden"
+        ];
+
+        ExecStart = let
+          restic = "${pkgs.restic}/bin/restic --repo /storage/SyncRoot/Backups/vaultwarden --password-file \${CREDENTIALS_DIRECTORY}/password";
+        in [
+          "${restic} backup /var/lib/bitwarden_rs"
+          "${restic} forget --keep-within 14d --prune"
+          (rcloneSync "/storage/SyncRoot/Backups/vaultwarden" "${cfg.s3Bucket}/vaultwarden")
+        ];
+      };
+
+      unitConfig.RequiresMountsFor = [ "/storage" "/var/lib/bitwarden_rs" ];
+    };
+
+
     systemd.services."mail-backup" = let
       format = pkgs.formats.ini {};
 
