@@ -169,4 +169,18 @@ in
     gamedir = "ricochet";
     gameName = "Ricochet";
   };
+
+  tfc = makeGame {
+    pname = "tfc-gamedir";
+    version = "15961539";
+
+    src = requireFile {
+      name = "gamedir-tfc-15961539.tar.xz";
+      message = "Please prefetch gamedir-tfc-15961539.tar.xz into the Nix store";
+      sha256 = "sha256-3WT2/Y5KRCQDaLArC3aN1szU+/omekc29QCRAIgSRxE=";
+    };
+
+    gamedir = "tfc";
+    gameName = "Team Fortress";
+  };
 }
