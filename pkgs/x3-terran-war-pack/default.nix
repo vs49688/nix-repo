@@ -12,6 +12,7 @@
 , libjpeg8
 , libxml2
 , libvorbis
+, libogg
 , openal
 , SDL2
 , gtk2-x11
@@ -50,6 +51,7 @@ stdenv.mkDerivation(finalAttrs: {
     # libxml2
     libjpeg8
     libvorbis
+    libogg
     SDL2
     openal
     gtk2-x11
@@ -73,6 +75,7 @@ stdenv.mkDerivation(finalAttrs: {
       "$out/opt/x3-terran-war-pack/lib/libpng12.so.0"      \
       "$out/opt/x3-terran-war-pack/lib/libvorbisfile.so.3" \
       "$out/opt/x3-terran-war-pack/lib/libvorbis.so.0"     \
+      "$out/opt/x3-terran-war-pack/lib/libogg.so.0"        \
       "$out/opt/x3-terran-war-pack/lib/libopenal.so.1"     \
       "$out/opt/x3-terran-war-pack/lib/libSDL2-2.0.so.0"
 
