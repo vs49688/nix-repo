@@ -27,12 +27,12 @@ in
 {
   valve = makeGame {
     pname = "valve-gamedir";
-    version = "unstable-2023-03-05";
+    version = "15961492";
 
     src = requireFile {
-      name = "valve.tar";
-      message = "Please prefetch valve.tar into the Nix store";
-      sha256 = "sha256-AG6ZYcOtKd1WEVS3fJ8ZYmlfpwQeg7v830z2JYkBdVA=";
+      name = "gamedir-valve-15961492.tar.xz";
+      message = "Please prefetch gamedir-valve-15961492.tar.xz into the Nix store";
+      sha256 = "sha256-0Owagpp6nbthqHYUCjwFwjMprwbVdpdFoSh8z1C4SrE=";
     };
 
     sdk = sdks.valve;
@@ -43,12 +43,12 @@ in
 
   valve_hd = makeGame {
     pname = "valve-hd-gamedir";
-    version = "unstable-2023-03-05";
+    version = "15961492";
 
     src = requireFile {
-      name = "valve_hd.tar";
-      message = "Please prefetch valve_hd.tar into the Nix store";
-      sha256 = "sha256-DCHy42EUuX/UGz93AqLNzlS8GHyRsLepCE4jNwv9vgE=";
+      name = "gamedir-valve-hd-15961492.tar.xz";
+      message = "Please prefetch gamedir-valve-hd-15961492.tar.xz into the Nix store";
+      sha256 = "sha256-xAq/CiBxTfv4KQvb0V6g2aH4GWPeAOeY1rrJQY04zp0=";
     };
 
     gamedir = "valve_hd";
@@ -56,12 +56,12 @@ in
 
   bshift = makeGame {
     pname = "bshift-gamedir";
-    version = "unstable-2023-03-05";
+    version = "5424832";
 
     src = requireFile {
-      name = "bshift.tar";
-      message = "Please prefetch bshift.tar into the Nix store";
-      sha256 = "sha256-0lv1rrs1t6SBNLFgfzLzRLJ8jXWScILCghsLQ7he3ck=";
+      name = "gamedir-bshift-5424832.tar.xz";
+      message = "Please prefetch gamedir-bshift-5424832.tar.xz into the Nix store";
+      sha256 = "sha256-IHr+2ol2OxY0E6UIkPtYNRE3e0hN9j5TmPn9wKXp43w=";
     };
 
     sdk = sdks.bshift;
@@ -72,12 +72,12 @@ in
 
   bshift_hd = makeGame {
     pname = "bshift-hd-gamedir";
-    version = "unstable-2023-03-05";
+    version = "5424832";
 
     src = requireFile {
-      name = "bshift_hd.tar";
-      message = "Please prefetch bshift_hd.tar into the Nix store";
-      sha256 = "sha256-GAi6hNUSzcccadnaDpVBFQulAy2TpHEJeuvLINfceqM=";
+      name = "gamedir-bshift-hd-5424832.tar.xz";
+      message = "Please prefetch gamedir-bshift-hd-5424832.tar.xz into the Nix store";
+      sha256 = "sha256-v76RigVEGu/rp+LFNKJptNP3pdqEmPD8IcEpKNRlO0s=";
     };
 
     gamedir = "bshift_hd";
@@ -85,12 +85,12 @@ in
 
   dmc = makeGame {
     pname = "dmc-gamedir";
-    version = "unstable-2023-03-05";
+    version = "5424794";
 
     src = requireFile {
-      name = "dmc.tar";
-      message = "Please prefetch dmc.tar into the Nix store";
-      sha256 = "sha256-DQ/CI4gdT4gjlJplexzmn6YEtmHheULhEDUa+ohme9c=";
+      name = "gamedir-dmc-5424794.tar.xz";
+      message = "Please prefetch gamedir-dmc-5424794.tar.xz into the Nix store";
+      sha256 = "sha256-zu5JaA0/PJUx4t43BGOZjgc4lq5KqvWyp0NTTiyJFoI=";
     };
 
     sdk = sdks.dmc;
@@ -101,12 +101,12 @@ in
 
   gearbox = makeGame {
     pname = "gearbox-gamedir";
-    version = "unstable-2023-03-05";
+    version = "5429885";
 
     src = requireFile {
-      name = "gearbox.tar";
-      message = "Please prefetch gearbox.tar into the Nix store";
-      sha256 = "sha256-IgjyeDbVabR06Ubgs01ma+BR0inoFQAv9sEAC1SLRNc=";
+      name = "gamedir-gearbox-5429885.tar.xz";
+      message = "Please prefetch gamedir-gearbox-5429885.tar.xz into the Nix store";
+      sha256 = "sha256-1oYVxbDCex0JUWG9Er1+j+H/PwWlyjttMH7YciZwIvs=";
     };
 
     sdk = sdks.gearbox;
@@ -117,12 +117,12 @@ in
 
   gearbox_hd = makeGame {
     pname = "gearbox-hd-gamedir";
-    version = "unstable-2023-03-05";
+    version = "5429885";
 
     src = requireFile {
-      name = "gearbox_hd.tar";
-      message = "Please prefetch gearbox_hd.tar into the Nix store";
-      sha256 = "sha256-Zm9/UJJw8j+F6QeWoOltuyLFt6kaTNEYf+kv7+/605g=";
+      name = "gamedir-gearbox-hd-5429885.tar.xz";
+      message = "Please prefetch gamedir-gearbox-hd-5429885.tar.xz into the Nix store";
+      sha256 = "sha256-YDtGF9Rdyc+nko8z8nG1rJJD4S0aCMwRf7oEATAR6mY=";
     };
 
     gamedir = "gearbox_hd";
