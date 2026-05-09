@@ -10,13 +10,13 @@
 
 stdenv.mkDerivation rec {
   pname = "umskt";
-  version = "0.2.0-beta";
+  version = "0.3.5-beta";
 
   src = fetchFromGitHub {
     owner = "UMSKT";
     repo = "UMSKT";
     rev = "v${version}";
-    hash = "sha256-MmEg6b7QprD6AaCqzruBQH10Sor23jDD28KWYfeeCmQ=";
+    hash = "sha256-Oajwno/osUseRR1w9oqowjzjq6JMTg1A8r+sSCT6cjo=";
   };
 
   patches = [
