@@ -16,6 +16,7 @@
 , SDL2
 , gtk2-x11
 , pango
+, bubblewrap
 }:
 stdenv.mkDerivation(finalAttrs: {
 	pname = "x3-terran-war-pack";
@@ -76,8 +77,14 @@ stdenv.mkDerivation(finalAttrs: {
       "$out/opt/x3-terran-war-pack/lib/libSDL2-2.0.so.0"
 
     for i in X3AP_config X3FL_config X3TC_config; do
-      makeWrapper "$out/opt/x3-terran-war-pack/$i" "$out/bin/$i" \
-        --chdir "$out/opt/x3-terran-war-pack"
+      makeWrapper ${bubblewrap}/bin/bwrap "$out/bin/$i" \
+        --add-flags "--bind / /" \
+        --add-flags "--dev-bind /dev /dev" \
+        --add-flag --unshare-net \
+        --add-flag --chdir \
+        --add-flag "$out/opt/x3-terran-war-pack" \
+        --add-flag -- \
+        --add-flag "$out/opt/x3-terran-war-pack/$i"
     done
 
     install -Dm644 ${./X3TC.png} $out/share/pixmaps/x3tc.png
