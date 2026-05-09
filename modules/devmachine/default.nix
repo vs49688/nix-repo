@@ -63,6 +63,8 @@
       ansible
       opentofu
 
+      sshfs
+
       # IDEs
       vscodium
 
