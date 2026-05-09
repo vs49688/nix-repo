@@ -127,4 +127,46 @@ in
 
     gamedir = "gearbox_hd";
   };
+
+  cstrike = makeGame {
+    pname = "cstrike-gamedir";
+    version = "12934623";
+
+    src = requireFile {
+      name = "gamedir-cstrike-12934623.tar.xz";
+      message = "Please prefetch gamedir-cstrike-12934623.tar.xz into the Nix store";
+      sha256 = "sha256-LSzi7Ur5qtJH5pCAvhGFG/J/L1W+rky0G0NHlqsSc/I=";
+    };
+
+    gamedir = "cstrike";
+    gameName = "Counter-Strike";
+  };
+
+  czero = makeGame {
+    pname = "czero-gamedir";
+    version = "12934630";
+
+    src = requireFile {
+      name = "gamedir-czero-12934630.tar.xz";
+      message = "Please prefetch gamedir-czero-12934630.tar.xz into the Nix store";
+      sha256 = "sha256-AJZSs/jxGngEuc2NXrBHvrBbVebibT0vGW1EU6Rj8X4=";
+    };
+
+    gamedir = "czero";
+    gameName = "Condition Zero";
+  };
+
+  ricochet = makeGame {
+    pname = "ricochet-gamedir";
+    version = "5424813";
+
+    src = requireFile {
+      name = "gamedir-ricochet-5424813.tar.xz";
+      message = "Please prefetch gamedir-ricochet-5424813.tar.xz into the Nix store";
+      sha256 = "sha256-2B1krY30ZqjLD+ifWoBmQVfud+/XLIYCIXS/wjjzdRo=";
+    };
+
+    gamedir = "ricochet";
+    gameName = "Ricochet";
+  };
 }
