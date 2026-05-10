@@ -34,6 +34,8 @@
   security.tpm2.pkcs11.enable = true;
   security.tpm2.tctiEnvironment.enable = true;
 
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+
   hardware.bluetooth.enable = true;
 
   hardware.sane.enable = true;
