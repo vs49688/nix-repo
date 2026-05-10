@@ -35,6 +35,7 @@
   security.tpm2.tctiEnvironment.enable = true;
 
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+  hardware.nvidia.primeBatterySaverSpecialisation = true;
 
   hardware.bluetooth.enable = true;
 
