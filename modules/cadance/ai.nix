@@ -144,27 +144,6 @@ in
           };
         }
         {
-          model_name = "gpt-4o-mini-tts";
-          litellm_params = {
-            model = "openai/gpt-4o-mini-tts";
-            api_key = "os.environ/OPENAI_API_KEY";
-          };
-        }
-        {
-          model_name = "openai-tts-1-hd";
-          litellm_params = {
-            model = "openai/tts-1-hd";
-            api_key = "os.environ/OPENAI_API_KEY";
-          };
-        }
-        {
-          model_name = "openai-tts-1";
-          litellm_params = {
-            model = "openai/tts-1";
-            api_key = "os.environ/OPENAI_API_KEY";
-          };
-        }
-        {
           model_name = "dall-e-3";
           litellm_params = {
             model = "openai/dall-e-3";
