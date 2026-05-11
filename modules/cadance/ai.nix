@@ -183,7 +183,7 @@ in
             merge_reasoning_content_in_choices = true;
             thinking = {
               type = "enabled";
-              budget_tokens = 1024;
+              budget_tokens = 8192;
             };
           };
         }
@@ -192,7 +192,6 @@ in
           litellm_params = {
             model = "anthropic/claude-haiku-4-5-20251001";
             api_key = "os.environ/ANTHROPIC_API_KEY";
-            merge_reasoning_content_in_choices = true;
           };
         }
 
@@ -207,7 +206,7 @@ in
             merge_reasoning_content_in_choices = true;
             thinking = {
               type = "enabled";
-              budget_tokens = 1024;
+              budget_tokens = 10240;
             };
           };
         }
@@ -216,7 +215,6 @@ in
           litellm_params = {
             model = "anthropic/claude-sonnet-4-5-20250929";
             api_key = "os.environ/ANTHROPIC_API_KEY";
-            merge_reasoning_content_in_choices = true;
           };
         }
 
@@ -231,7 +229,7 @@ in
             merge_reasoning_content_in_choices = true;
             thinking = {
               type = "enabled";
-              budget_tokens = 1024;
+              budget_tokens = 16384;
             };
           };
         }
@@ -240,7 +238,6 @@ in
           litellm_params = {
             model = "anthropic/claude-opus-4-5-20251101";
             api_key = "os.environ/ANTHROPIC_API_KEY";
-            merge_reasoning_content_in_choices = true;
           };
         }
 
@@ -255,6 +252,8 @@ in
             merge_reasoning_content_in_choices = true;
             thinking = {
               type = "adaptive";
+            };
+            output_config = {
               effort = "high";
             };
           };
@@ -264,7 +263,6 @@ in
           litellm_params = {
             model = "anthropic/claude-sonnet-4-6";
             api_key = "os.environ/ANTHROPIC_API_KEY";
-            merge_reasoning_content_in_choices = true;
           };
         }
 
@@ -279,6 +277,8 @@ in
             merge_reasoning_content_in_choices = true;
             thinking = {
               type = "adaptive";
+            };
+            output_config = {
               effort = "high";
             };
           };
@@ -288,7 +288,31 @@ in
           litellm_params = {
             model = "anthropic/claude-opus-4-6";
             api_key = "os.environ/ANTHROPIC_API_KEY";
+          };
+        }
+
+        ##
+        # Opus 4.7
+        ##
+        {
+          model_name = "claude-opus-4-7-thinking";
+          litellm_params = {
+            model = "anthropic/claude-opus-4-7";
+            api_key = "os.environ/ANTHROPIC_API_KEY";
             merge_reasoning_content_in_choices = true;
+            thinking = {
+              type = "adaptive";
+            };
+            output_config = {
+              effort = "high";
+            };
+          };
+        }
+        {
+          model_name = "claude-opus-4-7";
+          litellm_params = {
+            model = "anthropic/claude-opus-4-7";
+            api_key = "os.environ/ANTHROPIC_API_KEY";
           };
         }
       ]) ++ (lib.optionals cfg.enableXAIModels [
