@@ -89,14 +89,6 @@ in
 
       settings.model_list = (lib.optionals cfg.enableOpenAIModels [
         {
-          model_name = "chatgpt-4o-latest";
-          litellm_params = {
-            model = "openai/responses/chatgpt-4o-latest";
-            api_key = "os.environ/OPENAI_API_KEY";
-            merge_reasoning_content_in_choices = true;
-          };
-        }
-        {
           model_name = "gpt-4o";
           litellm_params = {
             model = "openai/responses/gpt-4o";
@@ -108,14 +100,6 @@ in
           model_name = "gpt-5";
           litellm_params = {
             model = "openai/responses/gpt-5";
-            api_key = "os.environ/OPENAI_API_KEY";
-            merge_reasoning_content_in_choices = true;
-          };
-        }
-        {
-          model_name = "gpt-5-chat-latest";
-          litellm_params = {
-            model = "openai/responses/gpt-5-chat-latest";
             api_key = "os.environ/OPENAI_API_KEY";
             merge_reasoning_content_in_choices = true;
           };
@@ -136,6 +120,55 @@ in
             merge_reasoning_content_in_choices = true;
           };
         }
+
+        ##
+        # GPT-5.4
+        ##
+        {
+          model_name = "gpt-5.4";
+          litellm_params = {
+            model = "openai/responses/gpt-5.4";
+            api_key = "os.environ/OPENAI_API_KEY";
+            merge_reasoning_content_in_choices = true;
+          };
+        }
+
+        ##
+        # GPT-5.4 mini
+        ##
+        {
+          model_name = "gpt-5.4-mini";
+          litellm_params = {
+            model = "openai/responses/gpt-5.4-mini";
+            api_key = "os.environ/OPENAI_API_KEY";
+            merge_reasoning_content_in_choices = true;
+          };
+        }
+
+        ##
+        # GPT-5.4 nano
+        ##
+        {
+          model_name = "gpt-5.4-nano";
+          litellm_params = {
+            model = "openai/responses/gpt-5.4-nano";
+            api_key = "os.environ/OPENAI_API_KEY";
+            merge_reasoning_content_in_choices = true;
+          };
+        }
+
+        ##
+        # GPT-5.5
+        ##
+        {
+          model_name = "gpt-5.5";
+          litellm_params = {
+            model = "openai/responses/gpt-5.5";
+            api_key = "os.environ/OPENAI_API_KEY";
+            merge_reasoning_content_in_choices = true;
+          };
+        }
+
         {
           model_name = "dall-e-2";
           litellm_params = {
