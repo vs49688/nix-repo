@@ -1,0 +1,40 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c7d3633d..aede7ecf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -42,17 +42,7 @@ set(CMAKE_AUTOUIC ON)
+ # Process resources files
+ set(CMAKE_AUTORCC ON)
+ 
+-find_package(Git REQUIRED)
+-
+-add_custom_target(ProjectInfo
+-	COMMAND ${CMAKE_COMMAND}
+-		-D HLAM_VERSION_MAJOR=${HLAM_VERSION_MAJOR}
+-		-D HLAM_VERSION_MINOR=${HLAM_VERSION_MINOR}
+-		-D HLAM_VERSION_PATCH=${HLAM_VERSION_PATCH}
+-		-D HLAM_BUILD_TYPE=${HLAM_BUILD_TYPE}
+-		-D GIT_EXECUTABLE=${GIT_EXECUTABLE}
+-		-P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/UpdateProjectInfo.cmake
+-	BYPRODUCTS ${CMAKE_BINARY_DIR}/ProjectInfo.hpp)
++configure_file(${CMAKE_CURRENT_LIST_DIR}/ProjectInfo.hpp.in ${CMAKE_BINARY_DIR}/ProjectInfo.hpp @ONLY)
+ 
+ # Find the QtWidgets library
+ find_package(Qt5 CONFIG COMPONENTS Widgets Network REQUIRED)
+@@ -92,8 +82,6 @@ if (LINUX)
+ 	set_target_properties(HLAM PROPERTIES OUTPUT_NAME "hlam")
+ endif()
+ 
+-add_dependencies(HLAM ProjectInfo)
+-
+ target_compile_features(HLAM
+ 	PRIVATE
+ 		cxx_std_20)
+@@ -105,6 +93,7 @@ target_include_directories(HLAM
+ 
+ target_compile_definitions(HLAM
+ 	PRIVATE
++		GLM_ENABLE_EXPERIMENTAL
+ 		QT_MESSAGELOGCONTEXT
+ 		$<$<CXX_COMPILER_ID:MSVC>:
+ 			UNICODE

@@ -55,6 +55,8 @@ in (({
 
   helltaker = super.callPackage ./pkgs/helltaker { };
 
+  halflife-asset-manager = super.libsForQt5.callPackage ./pkgs/halflife-asset-manager { };
+
   xash-admin = super.callPackage ./pkgs/xash-admin { };
 
   xash3d-fwgs-full = xash3d-fwgs.withGames (g: [
