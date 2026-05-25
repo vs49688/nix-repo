@@ -23,6 +23,10 @@ in
       type = types.bool;
     };
 
+    enableDeepSeekModels = mkOption {
+      type = types.bool;
+    };
+
     openWebUIEnvironmentFile = mkOption {
       type = types.str;
     };
@@ -352,6 +356,23 @@ in
             additional_drop_params = [
               "size"
             ];
+          };
+        }
+      ]) ++ (lib.optionals cfg.enableDeepSeekModels [
+        {
+          model_name = "deepseek-v4-flash";
+          litellm_params = {
+            model = "deepseek/deepseek-v4-flash";
+            api_key = "os.environ/DEEPSEEK_API_KEY";
+            merge_reasoning_content_in_choices = true;
+          };
+        }
+        {
+          model_name = "deepseek-v4-pro";
+          litellm_params = {
+            model = "deepseek/deepseek-v4-pro";
+            api_key = "os.environ/DEEPSEEK_API_KEY";
+            merge_reasoning_content_in_choices = true;
           };
         }
       ]) ++ [
