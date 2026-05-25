@@ -364,7 +364,6 @@ in
           litellm_params = {
             model = "deepseek/deepseek-v4-flash";
             api_key = "os.environ/DEEPSEEK_API_KEY";
-            merge_reasoning_content_in_choices = true;
           };
         }
         {
@@ -372,7 +371,6 @@ in
           litellm_params = {
             model = "deepseek/deepseek-v4-pro";
             api_key = "os.environ/DEEPSEEK_API_KEY";
-            merge_reasoning_content_in_choices = true;
           };
         }
       ]) ++ [
