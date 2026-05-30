@@ -30,13 +30,13 @@ stdenv.mkDerivation(finalAttrs: let
   '';
 in {
   pname = "xash3d-fwgs";
-  version = "unstable-2026-05-17-0";
+  version = "0-unstable-2026-05-29";
 
   src = fetchFromGitHub {
     owner = "FWGS";
     repo  = finalAttrs.pname;
-    rev = "463ed05340b6387a82fc51a8acd72d7759f516c4";
-    sha256 = "sha256-3OsYx4S8ugWZdRs7Y88735SdVf1mMHQD5bjxvb6lsrU=";
+    rev = "bf5d88d9a432e17ecc5ad03445eed59dba789754";
+    sha256 = "sha256-hFZI7HGSCno4qWvMQs4oIiHwUqTibFKHmtMriRTSBsQ=";
     fetchSubmodules = true;
     deepClone = true;
 
