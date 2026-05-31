@@ -1,6 +1,8 @@
 { lib, utils, config, pkgs, ... }:
 let
   cfg = config.cadance.ai;
+
+  yamlFormat = pkgs.formats.yaml { };
 in
 {
   options.cadance.ai = with lib; {
@@ -75,6 +77,12 @@ in
           };
         };
       };
+    };
+
+    litellmYaml = mkOption {
+      readOnly = true;
+      type = types.package;
+      default = yamlFormat.generate "config.yaml" config.services.litellm.settings;
     };
   };
 
