@@ -339,6 +339,30 @@ in
             api_key = "os.environ/ANTHROPIC_API_KEY";
           };
         }
+
+        ##
+        # Opus 4.8
+        ##
+        {
+          model_name = "claude-opus-4-8-thinking";
+          litellm_params = {
+            model = "anthropic/claude-opus-4-8";
+            api_key = "os.environ/ANTHROPIC_API_KEY";
+            thinking = {
+              type = "adaptive";
+            };
+            output_config = {
+              effort = "high";
+            };
+          };
+        }
+        {
+          model_name = "claude-opus-4-8";
+          litellm_params = {
+            model = "anthropic/claude-opus-4-8";
+            api_key = "os.environ/ANTHROPIC_API_KEY";
+          };
+        }
       ]) ++ (lib.optionals cfg.enableXAIModels [
         {
           model_name = "grok-4-1-fast-reasoning";
