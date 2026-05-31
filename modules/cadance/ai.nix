@@ -3,6 +3,19 @@ let
   cfg = config.cadance.ai;
 
   yamlFormat = pkgs.formats.yaml { };
+
+  makeAnthropicModel = { name, modelName ? name, withCaching ? true, extra ? {} }: {
+    model_name = modelName;
+    litellm_params = {
+      model = "anthropic/${name}";
+      api_key = "os.environ/ANTHROPIC_API_KEY";
+    } // (lib.optionalAttrs withCaching {
+      cache_control_injection_points = [
+        { location = "message"; role = "system"; }
+        { location = "message"; index = -1; }
+      ];
+    }) // extra;
+  };
 in
 {
   options.cadance.ai = with lib; {
@@ -199,170 +212,66 @@ in
         ##
         # Haiku 4.5
         ##
-        {
-          model_name = "claude-haiku-4-5-20251001-thinking";
-          litellm_params = {
-            model = "anthropic/claude-haiku-4-5-20251001";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-            merge_reasoning_content_in_choices = true;
-            thinking = {
-              type = "enabled";
-              budget_tokens = 8192;
-            };
+        (makeAnthropicModel { name = "claude-haiku-4-5-20251001"; })
+        (makeAnthropicModel {
+          name = "claude-haiku-4-5-20251001";
+          modelName = "claude-haiku-4-5-20251001-thinking";
+          extra = {
+            thinking = { type = "enabled"; budget_tokens = 8192; };
           };
-        }
-        {
-          model_name = "claude-haiku-4-5-20251001";
-          litellm_params = {
-            model = "anthropic/claude-haiku-4-5-20251001";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-          };
-        }
-
-        ##
-        # Sonnet 4.5
-        ##
-        {
-          model_name = "claude-sonnet-4-5-20250929-thinking";
-          litellm_params = {
-            model = "anthropic/claude-sonnet-4-5-20250929";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-            merge_reasoning_content_in_choices = true;
-            thinking = {
-              type = "enabled";
-              budget_tokens = 10240;
-            };
-          };
-        }
-        {
-          model_name = "claude-sonnet-4-5-20250929";
-          litellm_params = {
-            model = "anthropic/claude-sonnet-4-5-20250929";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-          };
-        }
-
-        ##
-        # Opus 4.5
-        ##
-        {
-          model_name = "claude-opus-4-5-20251101-thinking";
-          litellm_params = {
-            model = "anthropic/claude-opus-4-5-20251101";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-            merge_reasoning_content_in_choices = true;
-            thinking = {
-              type = "enabled";
-              budget_tokens = 16384;
-            };
-          };
-        }
-        {
-          model_name = "claude-opus-4-5-20251101";
-          litellm_params = {
-            model = "anthropic/claude-opus-4-5-20251101";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-          };
-        }
+        })
 
         ##
         # Sonnet 4.6
         ##
-        {
-          model_name = "claude-sonnet-4-6-thinking";
-          litellm_params = {
-            model = "anthropic/claude-sonnet-4-6";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-            merge_reasoning_content_in_choices = true;
-            thinking = {
-              type = "adaptive";
-            };
-            output_config = {
-              effort = "high";
-            };
+        (makeAnthropicModel { name = "claude-sonnet-4-6"; })
+        (makeAnthropicModel {
+          name = "claude-sonnet-4-6";
+          modelName = "claude-sonnet-4-6-thinking";
+          extra = {
+            thinking = { type = "adaptive"; };
+            output_config = { effort = "high"; };
           };
-        }
-        {
-          model_name = "claude-sonnet-4-6";
-          litellm_params = {
-            model = "anthropic/claude-sonnet-4-6";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-          };
-        }
+        })
 
         ##
         # Opus 4.6
         ##
-        {
-          model_name = "claude-opus-4-6-thinking";
-          litellm_params = {
-            model = "anthropic/claude-opus-4-6";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-            merge_reasoning_content_in_choices = true;
-            thinking = {
-              type = "adaptive";
-            };
-            output_config = {
-              effort = "high";
-            };
+        (makeAnthropicModel { name = "claude-opus-4-6"; })
+        (makeAnthropicModel {
+          name = "claude-opus-4-6";
+          modelName = "claude-opus-4-6-thinking";
+          extra = {
+            thinking = { type = "adaptive"; };
+            output_config = { effort = "high"; };
           };
-        }
-        {
-          model_name = "claude-opus-4-6";
-          litellm_params = {
-            model = "anthropic/claude-opus-4-6";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-          };
-        }
+        })
 
         ##
         # Opus 4.7
         ##
-        {
-          model_name = "claude-opus-4-7-thinking";
-          litellm_params = {
-            model = "anthropic/claude-opus-4-7";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-            merge_reasoning_content_in_choices = true;
-            thinking = {
-              type = "adaptive";
-            };
-            output_config = {
-              effort = "high";
-            };
+        (makeAnthropicModel { name = "claude-opus-4-7"; })
+        (makeAnthropicModel {
+          name = "claude-opus-4-7";
+          modelName = "claude-opus-4-7-thinking";
+          extra = {
+            thinking = { type = "adaptive"; };
+            output_config = { effort = "high"; };
           };
-        }
-        {
-          model_name = "claude-opus-4-7";
-          litellm_params = {
-            model = "anthropic/claude-opus-4-7";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-          };
-        }
+        })
 
         ##
         # Opus 4.8
         ##
-        {
-          model_name = "claude-opus-4-8-thinking";
-          litellm_params = {
-            model = "anthropic/claude-opus-4-8";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-            thinking = {
-              type = "adaptive";
-            };
-            output_config = {
-              effort = "high";
-            };
+        (makeAnthropicModel { name = "claude-opus-4-8"; })
+        (makeAnthropicModel {
+          name = "claude-opus-4-8";
+          modelName = "claude-opus-4-8-thinking";
+          extra = {
+            thinking = { type = "adaptive"; };
+            output_config = { effort = "high"; };
           };
-        }
-        {
-          model_name = "claude-opus-4-8";
-          litellm_params = {
-            model = "anthropic/claude-opus-4-8";
-            api_key = "os.environ/ANTHROPIC_API_KEY";
-          };
-        }
+        })
       ]) ++ (lib.optionals cfg.enableXAIModels [
         {
           model_name = "grok-4-1-fast-reasoning";
