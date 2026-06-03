@@ -178,7 +178,8 @@
     # Misc
     # gargoyle
 
-    bitwarden-desktop
+    # https://github.com/NixOS/nixpkgs/issues/526914
+    # bitwarden-desktop
 
     metasploit
   ] ++ (lib.optionals stdenv.hostPlatform.isx86_64 [
