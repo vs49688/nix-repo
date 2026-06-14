@@ -181,7 +181,9 @@
     },
     "nixos-hardware": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs-nixos"
+        ]
       },
       "locked": {
         "lastModified": 1781168557,
@@ -200,15 +202,17 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1767892417,
-        "narHash": "sha256-8bW3q88CEg2u4hSP66Vf4lpbLonHz7hqDNBMcCY7E9U=",
-        "rev": "3497aa5c9457a9d88d71fa93a4a8368816fbeeba",
-        "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.05pre924538.3497aa5c9457/nixexprs.tar.xz"
+        "lastModified": 1781451359,
+        "narHash": "sha256-a26uXJStAo9No9Fy8GhjR0nwIFwdF9BRepLWmlpIgaI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "6f11897ec8e4ccc7b46ba57b3fe4678e8d857b8d",
+        "type": "github"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz"
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs-nixos": {
@@ -227,21 +231,6 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1781451359,
-        "narHash": "sha256-a26uXJStAo9No9Fy8GhjR0nwIFwdF9BRepLWmlpIgaI=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "6f11897ec8e4ccc7b46ba57b3fe4678e8d857b8d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "docspell": "docspell",
@@ -250,7 +239,7 @@
         "nix-darwin": "nix-darwin",
         "nixos-apple-silicon": "nixos-apple-silicon",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "nixpkgs-nixos": "nixpkgs-nixos"
       }
     },
