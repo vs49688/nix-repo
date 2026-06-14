@@ -257,7 +257,7 @@
 
     programs.ssh.enable = true;
     programs.ssh.enableDefaultConfig = false;
-    programs.ssh.matchBlocks = {
+    programs.ssh.settings = {
       "github.com" = { user = "git"; identityFile = config.common.sshDefaultKey; };
       "codeberg.org" = { user = "git"; identityFile = config.common.sshDefaultKey; };
       "*" = {

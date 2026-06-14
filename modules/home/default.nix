@@ -41,7 +41,7 @@ in
     };
   };
 
-  programs.ssh.matchBlocks = let
+  programs.ssh.settings = let
     mainKey = userSettings.sshKeyPath;
 
     defaultConfig = {
