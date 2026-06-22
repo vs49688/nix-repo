@@ -238,8 +238,7 @@ in
         ExecStart = let
           restic = "${pkgs.restic}/bin/restic --repo /storage/SyncRoot/Backups/postgresql --password-file \${CREDENTIALS_DIRECTORY}/password";
         in [
-          "${pkgs.postgresql}/bin/pg_dumpall --no-password --file=/tmp/dump.sql"
-          "${restic} backup /tmp/dump.sql"
+          "${restic} backup --stdin-filename /tmp/dump.sql --stdin-from-command -- ${pkgs.postgresql}/bin/pg_dumpall --no-password"
           "${restic} forget --keep-within 14d --prune"
           (rcloneSync "/storage/SyncRoot/Backups/postgresql" "${cfg.s3Bucket}/postgresql")
         ];
