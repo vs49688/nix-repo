@@ -222,6 +222,24 @@
 
       lfs.enable = true;
 
+      ignores = [
+        "/cmake-build-*/"
+        "**/compile_commands.json"
+        "/.idea/"
+        "/.vs/"
+        "/.vscode/"
+        "/result"
+        "/result-*"
+        "/build*/"
+        "**/.DS_Store"
+        "**/.cache"
+        "**/.opencode"
+        "**/.*_token"
+        "**/.agentbridge/"
+        "**/.agent-work/"
+        "**/__pycache__/"
+      ];
+
       settings = {
         user.name  = config.common.gitName;
         user.email = config.common.gitEmail;
