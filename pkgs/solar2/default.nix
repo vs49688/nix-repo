@@ -7,6 +7,7 @@
 let
   # This is fine for a game.
   xssl = openssl_1_1.overrideAttrs(old: {
+    doCheck = false;
     meta = old.meta // { insecure = false; knownVulnerabilities = []; };
   });
 in
