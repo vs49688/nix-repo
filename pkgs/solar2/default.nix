@@ -1,8 +1,9 @@
-{ stdenv, lib, requireFile, autoPatchelfHook, makeWrapper
+{ stdenv, lib, requireFile, autoPatchelfHook, makeBinaryWrapper
 , makeDesktopItem, copyDesktopItems
 , curl, zlib, lttng-ust
 , icu78, SDL2, openssl_1_1
 , alsa-lib, libpulseaudio
+, bubblewrap
 }:
 let
   # This is fine for a game.
@@ -25,7 +26,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     autoPatchelfHook
-    makeWrapper
+    makeBinaryWrapper
     copyDesktopItems
   ];
 
@@ -48,8 +49,13 @@ stdenv.mkDerivation rec {
 
     rm -f $out/share/solar2/libSDL2-2.0.so.0
 
-    makeWrapper $out/share/solar2/Solar2 $out/bin/Solar2 \
-      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ icu78 SDL2 xssl alsa-lib libpulseaudio ]}:/run/opengl-driver/lib
+    makeWrapper ${bubblewrap}/bin/bwrap "$out/bin/Solar2" \
+      --add-flags "--bind / /" \
+      --add-flags "--dev-bind /dev /dev" \
+      --add-flag --unshare-net \
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ icu78 SDL2 xssl alsa-lib libpulseaudio ]}:/run/opengl-driver/lib \
+      --add-flag -- \
+      --add-flag "$out/share/solar2/Solar2"
 
     ln -s $out/share/solar2/solar2icon_512x512_transparent.png $out/share/pixmaps/${pname}.png
 
