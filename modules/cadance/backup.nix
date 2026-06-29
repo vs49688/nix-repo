@@ -273,6 +273,7 @@ in
         ProtectSystem = "strict";
 
         BindPaths = [
+          config.users.users.${cfg.backupUser}.home
           "/storage/SyncRoot/Backups/navidrome"
         ];
 
