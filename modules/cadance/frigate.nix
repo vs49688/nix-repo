@@ -159,8 +159,11 @@ in
     virtualisation.oci-containers.containers.frigate = let
       imageFile = pkgs.dockerTools.pullImage {
         # imageName = "ghcr.io/blakeblackshear/frigate";
+        # imageDigest = "sha256:1f8dbaaa4c7c2855c2aef711842d13b0c20bfdc3f28ad88faf66aa1bc219b108";
+
+        # Digest changes due to https://github.com/docker/cli/issues/6812
         imageName = "git.vs49688.net/oci/frigate";
-        imageDigest = "sha256:1f8dbaaa4c7c2855c2aef711842d13b0c20bfdc3f28ad88faf66aa1bc219b108";
+        imageDigest = "sha256:0133187256e5f275e42d73ba5f8967c1768c5978540242eb39ee9ce17832f0be";
         hash = "sha256-ms0AiKXkzUiTLOj/67kGI773vXRT4BbLg2I8nPKYFak=";
         finalImageName = "localhost/frigate";
         finalImageTag = "0.16.4";
