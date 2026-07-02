@@ -1,13 +1,13 @@
 { buildGoModule, lib, fetchFromGitHub }:
 buildGoModule rec {
   pname = "mailpump";
-  version = "unstable-2023-11-05";
+  version = "1.0.2";
 
   src = fetchFromGitHub {
     owner = "vs49688";
     repo = pname;
-    rev = "47e74d44bdc846776c726f368e9151083c99dd3b";
-    hash = "sha256-Bt8UR9gmL+CiN7HUAcm1VBAVBnOwGmx+1sN0JrMle48";
+    rev = "d1ca3590f2c8fdeff19815b4e47a06bd91f03535";
+    hash = "sha256-wK9xEDbF683DIFbOPmsXVO7xmnDGiIPEUy7UZ77zQh0=";
   };
 
   vendorHash = null;
