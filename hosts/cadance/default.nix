@@ -633,6 +633,72 @@ in
   services.caddy.email = "webmaster@vs49688.net";
   services.caddy.acmeCA = "https://acme-v02.api.letsencrypt.org/directory";
 
+  services.caddy.virtualHosts."http://192.168.64.5".extraConfig = ''
+    file_server {
+      root /var/www/cadance.vs49688.net/htdocs
+    }
+  '';
+
+  services.caddy.virtualHosts."cadance.vs49688.net".extraConfig = ''
+    ${caddyBlacklist}
+
+    root * /var/www/cadance.vs49688.net/htdocs
+
+    header {
+      # disable FLoC tracking
+      Permissions-Policy interest-cohort=()
+
+      # Disable indexing and archiving
+      X-Robots-Tag noindex,noarchive
+    }
+
+    handle_path /git {
+        redir https://git.vs49688.net{uri} permanent
+    }
+
+    handle_path /git/* {
+        redir https://git.vs49688.net{uri} permanent
+    }
+
+    handle_path /music {
+        redir https://music.vs49688.net{uri} permanent
+    }
+
+    handle_path /music/* {
+        redir https://music.vs49688.net{uri} permanent
+    }
+
+    @kodi {
+      header_regexp kodi User-Agent ^Kodi
+    }
+
+    redir /musstore /musstore/
+    handle_path /musstore/* {
+      respond @blacklist 403
+
+      encode zstd gzip
+
+      file_server @kodi {
+        root ${musicMountPath}/music
+        browse ${./kodi.gohtml}
+      }
+
+      file_server {
+        root ${musicMountPath}/music
+        browse
+      }
+    }
+
+    redir /sync /sync/
+    handle_path /sync/* {
+      forward_auth @blacklist unix//run/authelia/authelia.sock {
+        uri /api/authz/forward-auth
+      }
+
+      reverse_proxy ${config.services.syncthing.guiAddress}
+    }
+  '';
+
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_17;

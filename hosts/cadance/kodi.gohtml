@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html><body><table><tbody>
+{{range .Items}}
+  <tr>
+    <td><a href="{{html .URL | replace "./" ""}}">{{html .Name}}</a></td>
+    <td>{{.HumanModTime "2006-Jan-02 15:04:05"}}</td>
+    <td>{{if .IsDir}}-{{else}}{{.HumanSize | replace " " "" | replace "iB" ""}}{{end}}</td>
+    <td>{{if .IsDir}}Directory{{else}}application/octet-stream{{end}}</td>
+  </tr>
+{{end}}
+<tbody></table></body></html>
