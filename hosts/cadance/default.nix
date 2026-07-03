@@ -47,6 +47,7 @@ in
     ../../modules/cadance/vaultwarden.nix
     ../../modules/cadance/ai.nix
     ../../modules/cadance/backup.nix
+    ../../modules/cadance/crypto.nix
     # NB: docspell is handled at the flake level
   ];
 
@@ -806,6 +807,8 @@ in
   systemd.tmpfiles.rules = [
     "z /var/lib/private 0700 root root  - -"
   ];
+
+  cadance.crypto.enable = true;
 
   environment.persistence."/data".enable = true;
 
