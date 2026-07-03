@@ -98,7 +98,7 @@ in
       ports                           = [ 22 ];
       openFirewall                    = true;
 
-      settings.X11Forwarding = true;
+      settings.X11Forwarding = lib.mkDefault true;
       settings.PermitRootLogin = "no";
       settings.PasswordAuthentication = lib.mkDefault false;
       settings.KbdInteractiveAuthentication = lib.mkDefault false;
