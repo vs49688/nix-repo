@@ -47,6 +47,7 @@ in
     ../../modules/cadance/vaultwarden.nix
     ../../modules/cadance/ai.nix
     ../../modules/cadance/backup.nix
+    ../../modules/cadance/forgejo.nix
     ../../modules/cadance/crypto.nix
     # NB: docspell is handled at the flake level
   ];
@@ -573,6 +574,16 @@ in
     serviceConfig.Type      = "oneshot";
     serviceConfig.ExecStart = "${pkgs.cadance-mail}/bin/mail.sh %i";
   };
+
+  cadance.forgejo.enable = true;
+  cadance.forgejo.appName = "The Vault";
+  cadance.forgejo.hostName = "git.vs49688.net";
+  cadance.forgejo.noreplyEmail = noreplyEmail;
+  cadance.forgejo.smtpAddress = lib.mkDefault "smtp.example.com";
+  cadance.forgejo.smtpUsername = lib.mkDefault "noreply@example.com";
+  cadance.forgejo.smtpPasswordFile = config.sops.secrets."forgejo/mailpasswd".path;
+  cadance.forgejo.runnerTokenFile = config.sops.secrets."forgejo/runner_env".path;
+  cadance.forgejo.localNetworks = config.cadance.settings.localNetworks;
 
   services.syncthing = {
     enable    = true;
