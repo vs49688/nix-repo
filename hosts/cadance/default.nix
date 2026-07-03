@@ -781,6 +781,26 @@ in
     reverse_proxy http://${config.services.audiobookshelf.host}:${toString config.services.audiobookshelf.port}
   '';
 
+  cadance.ai.enable = true;
+  cadance.ai.hostName = "chat.vs49688.net";
+  cadance.ai.enableOpenAIModels = true;
+  cadance.ai.enableAnthropicModels = true;
+  cadance.ai.enableXAIModels = true;
+  cadance.ai.enableDeepSeekModels = true;
+  cadance.ai.openWebUIEnvironmentFile = config.sops.secrets."open-webui/env".path;
+  cadance.ai.litellmEnvironmentFile = config.sops.secrets."litellm/env".path;
+  cadance.ai.oauthClientId = lib.mkDefault "00000000-0000-0000-0000-000000000000";
+  cadance.ai.oauthProviderUrl = "https://auth.vs49688.net/.well-known/openid-configuration";
+  cadance.ai.oauthProviderName = "auth.vs49688.net";
+
+  services.caddy.virtualHosts."chat.vs49688.net".extraConfig = ''
+    ${caddyBlacklist}
+
+    forward_auth @blacklist unix//run/authelia/authelia.sock {
+      uri /api/authz/forward-auth
+    }
+  '';
+
   # Using impermanence to persist /var/lib/private/* causes /var/lib/private
   # to have 0755, which systemd _really_ doesn't like.
   systemd.tmpfiles.rules = [
