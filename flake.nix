@@ -3,6 +3,8 @@
     nixpkgs.url = github:NixOS/nixpkgs;
     nixpkgs-nixos.url = github:NixOS/nixpkgs/nixos-unstable;
 
+    nixpkgs-cadance.url = "github:NixOS/nixpkgs?ref=e73de5be04e0eff4190a1432b946d469c794e7b4";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-nixos";
@@ -136,6 +138,20 @@
       AVALON = baseSystem.extendModules {
         modules = [
           ./hosts/avalon
+        ];
+      };
+
+      CADANCE = let
+        baseSystem = self.outputs.lib.mkSystem {
+          nixpkgs = self.inputs.nixpkgs-cadance;
+        };
+      in baseSystem.extendModules {
+        modules = [
+          self.inputs.sops-nix.nixosModules.sops
+          ./hosts/cadance
+          (import ./modules/cadance/docspell.nix {
+            docspell = self.inputs.docspell;
+          })
         ];
       };
 

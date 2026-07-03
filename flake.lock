@@ -215,6 +215,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-cadance": {
+      "locked": {
+        "lastModified": 1782467914,
+        "narHash": "sha256-pGvFkM8N0xEkIIXDe5YYfbEAvHrk4IxBrjB/x8OomhE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e73de5be04e0eff4190a1432b946d469c794e7b4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "e73de5be04e0eff4190a1432b946d469c794e7b4",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-nixos": {
       "locked": {
         "lastModified": 1782467914,
@@ -240,6 +256,7 @@
         "nixos-apple-silicon": "nixos-apple-silicon",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-cadance": "nixpkgs-cadance",
         "nixpkgs-nixos": "nixpkgs-nixos",
         "sops-nix": "sops-nix"
       }
