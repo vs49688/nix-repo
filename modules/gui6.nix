@@ -108,6 +108,10 @@ in
     kgeography
     kpat
 
+    oxygen
+    oxygen-icons
+    oxygen-sounds
+
     # digikam
     exiftool
 
