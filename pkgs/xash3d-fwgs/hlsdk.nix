@@ -23,29 +23,29 @@ in {
 
   valve = makeSDK {
     name = "valve";
-    version = "unstable-2026-03-26-0";
-    rev = "ae84bfc0c3598fcff605a7b3bb963abe8ec3e295";
-    sha256 = "sha256-UAEFUr2BqOXx3/MklJzELXdUm7EKUttiJE7IjHZ8rHE=";
+    version = "0-unstable-2026-06-14";
+    rev = "8c5b2846c2448e2b063f358f041d565dc0f076b1";
+    sha256 = "sha256-PgHmKPqRpPEkrxYq2EaKUpIYmQe8naLyWyALZFixdtw=";
   };
 
   bshift = makeSDK {
     name = "bshift";
-    version = "unstable-2026-03-26-0";
-    rev = "df5c27283d4c7409f54aa63bf15143e5598ce02d";
-    sha256 = "sha256-PqlzwY7z8R8uRZdCtQ6XK+sN6bnbrsX/K8uXBHonPb8=";
+    version = "0-unstable-2026-06-14";
+    rev = "cd04b6190b234b27abc31dd992947af3842f6d24";
+    sha256 = "sha256-t0gm4y3jdY+421w2Xyw7XkWA4UdkEbTxCJIU6o8Zsqg=";
   };
 
   dmc = makeSDK {
     name = "dmc";
-    version = "unstable-2026-03-26-0";
-    rev = "a205490557c2ac1c317fd981d0c92bfc99b3b886";
-    sha256 = "sha256-s1HsvTbWPXjcjhXDkFCkDs3LNPVrBmV55uZt133PE/o=";
+    version = "0-unstable-2026-06-17";
+    rev = "7e635fff071ee7eba863adb4cf311c6565c9fdaa";
+    sha256 = "sha256-tMfB6v8PMbwKeuT8FEUKDBxFKtlSJ9f8QPUFd26Vxmk=";
   };
 
   gearbox = makeSDK {
     name = "gearbox";
-    version = "unstable-2026-03-26-0";
-    rev = "f7ce421fde685fa252a003189d131dd4e5d2d8c4";
-    sha256 = "sha256-g2Lqrx7y41tEJTCHAiziFGQJE3e6taI6stvHLZ0K0Ug=";
+    version = "0-unstable-2026-06-14";
+    rev = "613eb55d5bcd257219c881297d1d43c1da4a7445";
+    sha256 = "sha256-sMOlK3KeZzYNQstLeYOd2TND4ikd9M+3yAKVKOKE2tI=";
   };
 }
