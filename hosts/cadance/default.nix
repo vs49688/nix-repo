@@ -585,6 +585,21 @@ in
   cadance.forgejo.runnerTokenFile = config.sops.secrets."forgejo/runner_env".path;
   cadance.forgejo.localNetworks = config.cadance.settings.localNetworks;
 
+  cadance.backup = {
+    enable   = true;
+    startAt  = "*-*-* 02:00:00";
+    resticTokenFile = config.sops.secrets."backup/restic_token".path;
+    awsProfile = "default";
+    awsSharedCredentialsFile = config.sops.secrets."backup/aws_shared_credentials_file".path;
+    s3Bucket = lib.mkDefault "my-email-backups";
+
+    offlineimap = {
+      remoteHost = lib.mkDefault "imap.example.com";
+      remoteUser = lib.mkDefault "backupuser@example.com";
+      passwordFile = lib.mkDefault "/secrets/email-backup-password";
+    };
+  };
+
   services.syncthing = {
     enable    = true;
 
