@@ -7,6 +7,8 @@ in
     "preempt=full"
   ];
 
+  zramSwap.enable = lib.mkDefault true;
+
   environment.variables = {
     QT_LOGGING_RULES = "*.debug=false;qt.qpa.*=false";
   };
