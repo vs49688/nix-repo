@@ -1,7 +1,7 @@
 {
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs;
-    nixpkgs-nixos.url = github:NixOS/nixpkgs/nixos-unstable;
+    nixpkgs.url = "nixpkgs";
+    nixpkgs-nixos.url = "nixpkgs/nixos-unstable";
 
     nixpkgs-cadance.url = "github:NixOS/nixpkgs?ref=e73de5be04e0eff4190a1432b946d469c794e7b4";
 
