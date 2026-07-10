@@ -57,7 +57,6 @@
     ]));
   in (with pkgs; [
       myPy
-      (pipenv.override { python3 = myPy; })
 
       # Sysadmin
       ansible
