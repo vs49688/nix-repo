@@ -11,6 +11,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
 
+  hardware.asahi.enable = true;
+
   # NB: set privately, can't redistribute.
   hardware.asahi.extractPeripheralFirmware = lib.mkDefault false;
 
