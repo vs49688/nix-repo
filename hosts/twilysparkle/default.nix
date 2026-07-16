@@ -8,6 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/gui6.nix
+    ../../modules/devmachine
   ];
 
   nix.settings.system-features = [
