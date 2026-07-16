@@ -25,7 +25,9 @@
 
   boot.kernelParams = [
     "mitigations=off"
-    "i915.enable_guc=3"
+    "i915.enable_guc=0"
+    "i915.enable_psr=0"
+    "acpi_rev_override=1"
   ];
 
   boot.zfs.package = pkgs.zfs_2_4;
