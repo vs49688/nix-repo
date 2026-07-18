@@ -137,7 +137,7 @@
     wimlib
     ghidra
 
-    # renderdoc
+    renderdoc
   ])) ++ (with pkgs; let
     goPackage = go_1_26;
     buildGoModule = buildGo126Module;
