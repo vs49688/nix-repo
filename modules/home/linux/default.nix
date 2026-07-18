@@ -191,16 +191,6 @@
           TerminalApplication = "alacritty";
           TerminalService = "Alacritty.desktop";
         };
-
-        services = {
-          "Alacritty.desktop" = {
-            New = "Ctrl+Alt+T";
-          };
-
-          "org.kde.konsole.desktop" = {
-            _launch = "none";
-          };
-        };
       };
 
       powerdevilrc = {
@@ -250,7 +240,29 @@
 
       kglobalshortcutsrc = {
         "KDE Keyboard Layout Switcher" = {
-          "Switch to Next Keyboard Layout" = "Ctrl+Alt+Space";
+          "Switch to Next Keyboard Layout" = "Ctrl+Alt+Space,Meta+Alt+K,Switch to Next Keyboard Layout";
+        };
+
+        services = {
+          "Alacritty.desktop" = {
+            New = "Ctrl+Alt+T";
+          };
+
+          "org.kde.konsole.desktop" = {
+            _launch = "none";
+          };
+        };
+      };
+
+      krunnerrc = {
+        Plugins = {
+          baloosearchEnabled = false;
+        };
+      };
+
+      baloofilerc = {
+        "Basic Settings" = {
+          "Indexing-Enabled" = false;
         };
       };
 
