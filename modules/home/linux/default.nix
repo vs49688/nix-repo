@@ -182,6 +182,25 @@
     };
 
     qt.kde.settings = {
+      kdeglobals = {
+        KDE = {
+          LookAndFeelPackage = "org.kde.breezedark.desktop";
+        };
+      };
+
+      powerdevilrc = {
+        General = {
+          # I have never seen a case of this working correctly.
+          pausePlayersOnSuspend = false;
+        };
+
+        AC = {
+          SuspendAndShutdown = {
+            InhibitLidActionWhenExternalMonitorPresent = false;
+          };
+        };
+      };
+
       kwriterc = {
         General = {
           "Show welcome view for new window" = false;
@@ -205,6 +224,12 @@
         Effect-overview.BorderActivate = 9;
 
         MouseBindings.CommandAll1 = "Activate, raise and move";
+      };
+
+      # MORNINGSTAR
+      kcminputrc.Libinput."1267"."12693"."ELAN0676:00 04F3:3195 Touchpad" = {
+        DisableWhileTyping = false;
+        NaturalScroll = true;
       };
     };
   };
