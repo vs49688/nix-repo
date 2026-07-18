@@ -7,6 +7,11 @@ in {
       apply = x: cfg.users.${x};
     };
 
+    persistPrimaryUserHome = mkOption {
+      type = types.bool;
+      default = true;
+    };
+
     users = mkOption {
       default = {};
 
