@@ -191,6 +191,8 @@ in
 
   environment.plasma6.excludePackages = [
     pkgs.kdePackages.discover
+    pkgs.kdePackages.baloo
+    pkgs.kdePackages.baloo-widgets
   ];
 
   nixpkgs.config.firefox.wrapperConfig.enablePlasmaBrowserIntegration = lib.mkForce false;
