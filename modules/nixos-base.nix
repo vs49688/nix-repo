@@ -174,13 +174,14 @@ in
       directories = [
         { directory = "/var/lib/nixos";                         mode = "0755"; }
         { directory = "/var/log";                               mode = "0755"; }
+      ] ++ (lib.optionals config.settings.persistPrimaryUserHome [
         {
           directory = config.settings.primaryUser.home;
           user = config.settings.primaryUser.username;
           group = config.settings.primaryUser.username;
           mode = "0700";
         }
-      ] ++ (lib.optionals config.networking.networkmanager.enable [
+      ]) ++ (lib.optionals config.networking.networkmanager.enable [
         { directory = "/var/lib/NetworkManager";                mode = "0700"; }
         { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; }
       ]) ++ (lib.optionals config.hardware.bluetooth.enable [
