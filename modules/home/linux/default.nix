@@ -180,5 +180,32 @@
       "Advanced Auto Gain" = builtins.fromJSON (builtins.readFile ./AdvancedAutoGain.json);
       thinkpad-unsuck = builtins.fromJSON (builtins.readFile ./thinkpad-unsuck.json);
     };
+
+    qt.kde.settings = {
+      kwriterc = {
+        General = {
+          "Show welcome view for new window" = false;
+        };
+      };
+
+      knetwalkrc = {
+        General.PlaySounds = false;
+        KgDifficulty.Level = "Very Hard";
+      };
+
+      kwinrc = {
+        Wayland.EnablePrimarySelection = false;
+        Xwayland.Scale = 1;
+
+        NightColor = {
+          Active = true;
+          Mode = "Constant";
+        };
+
+        Effect-overview.BorderActivate = 9;
+
+        MouseBindings.CommandAll1 = "Activate, raise and move";
+      };
+    };
   };
 }
