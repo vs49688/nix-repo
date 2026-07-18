@@ -186,6 +186,21 @@
         KDE = {
           LookAndFeelPackage = "org.kde.breezedark.desktop";
         };
+
+        General = {
+          TerminalApplication = "alacritty";
+          TerminalService = "Alacritty.desktop";
+        };
+
+        services = {
+          "Alacritty.desktop" = {
+            New = "Ctrl+Alt+T";
+          };
+
+          "org.kde.konsole.desktop" = {
+            _launch = "none";
+          };
+        };
       };
 
       powerdevilrc = {
@@ -224,6 +239,19 @@
         Effect-overview.BorderActivate = 9;
 
         MouseBindings.CommandAll1 = "Activate, raise and move";
+      };
+
+      kxkbrc = {
+        Layout = {
+          Use = true;
+          LayoutList = "au,ru";
+        };
+      };
+
+      kglobalshortcutsrc = {
+        "KDE Keyboard Layout Switcher" = {
+          "Switch to Next Keyboard Layout" = "Ctrl+Alt+Space";
+        };
       };
 
       # MORNINGSTAR
