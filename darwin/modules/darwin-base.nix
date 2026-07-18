@@ -25,7 +25,7 @@
     gnupg
     pinentry_mac
     git
-    texlive.combined.scheme-full
+    texliveFull
     man-pages-posix
     rustup
     wireguard-tools
