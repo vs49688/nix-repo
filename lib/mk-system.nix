@@ -22,6 +22,9 @@ rec {
 
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
+        home-manager.sharedModules = [
+          self.inputs.sops-nix.homeManagerModules.sops
+        ];
 
         # Until the modules are updated to use osConfig.
         home-manager.extraSpecialArgs = { hostName = config.networking.hostName; };
