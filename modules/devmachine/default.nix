@@ -123,7 +123,7 @@
 
       android-tools
 
-      texlive.combined.scheme-full
+      texliveFull
 
       jetbrains.clion
       # jetbrains.idea-ultimate
