@@ -139,7 +139,6 @@
         };
       in baseSystem.extendModules {
         modules = [
-          self.inputs.sops-nix.nixosModules.sops
           ./hosts/cadance
           (import ./modules/cadance/docspell.nix {
             docspell = self.inputs.docspell;

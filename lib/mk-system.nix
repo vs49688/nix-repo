@@ -9,6 +9,7 @@ rec {
       self.outputs.nixosModules.nixos-base
       self.outputs.nixosModules.default
       self.inputs.impermanence.nixosModules.impermanence
+      self.inputs.sops-nix.nixosModules.sops
       ({ config, ... }: let
         lowPrio = nixpkgs.lib.mkOverride 2000;
       in {
