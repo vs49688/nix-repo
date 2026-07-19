@@ -200,6 +200,11 @@
         };
 
         AC = {
+          Display = {
+            TurnOffDisplayIdleTimeoutSec = -1;
+            TurnOffDisplayWhenIdle = false;
+          };
+
           SuspendAndShutdown = {
             InhibitLidActionWhenExternalMonitorPresent = false;
           };
