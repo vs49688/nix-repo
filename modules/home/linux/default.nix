@@ -303,6 +303,13 @@
         DisableWhileTyping = false;
         NaturalScroll = true;
       };
+
+      # ANGELUS
+      kcminputrc.Libinput."1452"."849"."Apple MTP multi-touch" = {
+        ClickMethod = 1;
+        DisableWhileTyping = false;
+        NaturalScroll = true;
+      };
     };
   };
 }
