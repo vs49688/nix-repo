@@ -11,6 +11,10 @@
       #wine-ge = "${pkgs.wine-ge}/bin/wine";
     });
 
+    home.packages = [
+      (pkgs.writeShellScriptBin "ccbwrap" (builtins.readFile ./ccbwrap))
+    ];
+
     home.sessionVariables = {
       WINEDLLOVERRIDES = "winemenubuilder.exe=d";
     };

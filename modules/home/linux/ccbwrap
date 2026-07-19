@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+function applyDirs() {
+    local flag=$1; shift
+    for i in "$@"; do
+        command+=("${flag}" "$i" "$i")
+    done
+}
+
+command=(
+    bwrap
+    --setenv    OPENCODE_DISABLE_LSP_DOWNLOAD   true
+    --setenv    OPENCODE_EXPERIMENTAL_LSP_TOOL  true
+    --proc      /proc
+    --die-with-parent
+    --unshare-pid
+
+    --dev /dev
+)
+
+applyDirs --dev-bind /dev/dri /dev/dri
+
+applyDirs --ro-bind         \
+    /nix                    \
+    /bin/sh                 \
+    /usr/bin/env            \
+    /run/current-system     \
+    /run/opengl-driver      \
+    /etc                    \
+    /sys/dev/char           \
+    /sys/devices/pci0000:00 \
+    /sys/devices/virtual
+
+command+=(
+    --tmpfs     /tmp
+    --tmpfs     /home
+)
+
+applyDirs --ro-bind     \
+    "$HOME/.config/git" \
+    "$HOME/.config/Croc"
+
+applyDirs --bind                    \
+    "$HOME/.config/opencode"        \
+    "$HOME/.local/share/opencode"   \
+    "$HOME/.local/state/opencode"   \
+    "$HOME/Games"                   \
+    "$HOME/Documents/Coding"        \
+    "$XDG_RUNTIME_DIR/wayland-0"    \
+    "$XDG_RUNTIME_DIR/pipewire-0"
+
+applyDirs --bind "$PWD"
+
+command+=(
+    --chdir     "$PWD"
+    --
+)
+
+command+=("$@")
+
+exec "${command[@]}"
