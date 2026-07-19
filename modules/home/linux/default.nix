@@ -275,6 +275,22 @@
         };
       };
 
+      gwenviewrc = {
+        General = {
+          LastUsedVersion = 210800;
+          HistoryEnabled = false;
+        };
+
+        ImageView = {
+          MouseWheelBehavior = "MouseWheelBehavior::Zoom";
+          NavigationEndNotification = "NavigationEndNotification::NeverWarn";
+        };
+
+        ThumbnailView = {
+          ListVideos = false;
+        };
+      };
+
       # MORNINGSTAR
       kcminputrc.Libinput."1267"."12693"."ELAN0676:00 04F3:3195 Touchpad" = {
         DisableWhileTyping = false;
