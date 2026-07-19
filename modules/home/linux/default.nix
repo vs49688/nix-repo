@@ -296,6 +296,13 @@
         DisableWhileTyping = false;
         NaturalScroll = true;
       };
+
+      # ZAIR
+      kcminputrc.Libinput."1452"."641"."Apple SPI Trackpad" = {
+        ClickMethod = 1;
+        DisableWhileTyping = false;
+        NaturalScroll = true;
+      };
     };
   };
 }
