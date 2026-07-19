@@ -47,7 +47,8 @@ applyDirs --bind                    \
     "$HOME/Games"                   \
     "$HOME/Documents/Coding"        \
     "$XDG_RUNTIME_DIR/wayland-0"    \
-    "$XDG_RUNTIME_DIR/pipewire-0"
+    "$XDG_RUNTIME_DIR/pipewire-0"   \
+    /run/postgresql
 
 applyDirs --bind "$PWD"
 
