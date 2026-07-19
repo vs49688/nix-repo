@@ -3,7 +3,7 @@
 function applyDirs() {
     local flag=$1; shift
     for i in "$@"; do
-        command+=("${flag}" "$i" "$i")
+        [[ -d "$i" ]] && command+=("${flag}" "$i" "$i")
     done
 }
 
