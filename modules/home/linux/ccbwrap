@@ -41,6 +41,7 @@ applyDirs --ro-bind     \
     "$HOME/.config/Croc"
 
 applyDirs --bind                    \
+    "$HOME/.pi"                     \
     "$HOME/.config/opencode"        \
     "$HOME/.local/share/opencode"   \
     "$HOME/.local/state/opencode"   \
