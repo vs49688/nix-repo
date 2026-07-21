@@ -310,6 +310,13 @@
         DisableWhileTyping = false;
         NaturalScroll = true;
       };
+
+      # TWILYSPARKLE
+      kcminputrc.Libinput."1739"."31251"."DLL06E4:01 06CB:7A13 Touchpad" = {
+        ClickMethod = 2;
+        DisableWhileTyping = false;
+        NaturalScroll = true;
+      };
     };
   };
 }
