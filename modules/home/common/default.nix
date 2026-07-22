@@ -213,6 +213,12 @@
       builtins.map (key: ''${config.common.gitEmail} namespaces="git" ${key}'') config.common.authorizedKeys
     );
 
+    # I'm not an academic, get this nag shit out of my face.
+    home.file.".parallel/will-cite" = {
+      text = "";
+      force = true;
+    };
+
     programs.git = {
       enable    = true;
       package   = pkgs.git;
