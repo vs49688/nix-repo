@@ -1,13 +1,14 @@
-{ buildGoModule, lib, fetchFromGitHub }:
+{ buildGoModule, lib, fetchFromForgejo }:
 buildGoModule rec {
   pname = "mailpump";
-  version = "1.0.2";
+  version = "0-unstable-2026-07-26";
 
-  src = fetchFromGitHub {
-    owner = "vs49688";
+  src = fetchFromForgejo {
+    domain = "git.vs49688.net";
+    owner = "zane";
     repo = pname;
-    rev = "d1ca3590f2c8fdeff19815b4e47a06bd91f03535";
-    hash = "sha256-wK9xEDbF683DIFbOPmsXVO7xmnDGiIPEUy7UZ77zQh0=";
+    rev = "eeb26a9d6efb0e8d90f435f46cb9fcd6c94b8588";
+    hash = "sha256-UidANkxcc+h9GSKCKKKdpyl4au3ouso18bBEudjZhu0=";
   };
 
   vendorHash = null;
