@@ -17,6 +17,7 @@ in
     ./common
     ./linux
     ./osx
+    ./pi
   ] ++ lib.optionals isWorkMachine [
   ];
 
