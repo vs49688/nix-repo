@@ -192,8 +192,5 @@
     winetricks
 
     signal-desktop
-
-    # Not licensed to use this for work
-    _010editor
   ]);
 }
