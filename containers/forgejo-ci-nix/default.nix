@@ -4,6 +4,7 @@
 , gnused
 , tea
 , jq
+, attic-client
 , flakeVersion
 }:
 callPackage ./docker.nix {
@@ -15,6 +16,7 @@ callPackage ./docker.nix {
     gnused   # For forgejo-release
     tea      # For forgejo-release
     jq       # For forgejo-release
+    attic-client
   ];
   Labels = {};
 
