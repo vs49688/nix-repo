@@ -15,7 +15,13 @@ Optional longer description if the change warrants it.
 - Make one commit per independent change. Commit immediately after the change builds and passes tests — do not let fixes pile up in the working tree.
 - Stage files individually with `git add <file>`. Never use `git add -A`, `git add .`, or any blanket staging command — they pick up unrelated untracked files.
 - Split work across multiple commits when touching independent subsystems (e.g., persistence changes separate from callers, frontend separate from backend).
-- **Before pushing, squash follow-up fixes into their original commits**, not into new standalone commits. Each commit should stand alone as a correct, complete unit — not as a first attempt followed by fixups. Use `git commit --fixup` + `git rebase -i --autosquash` to make this painless.
+- **Before pushing, squash follow-up fixes into their original commits**, not into new standalone commits. Each commit should stand alone as a correct, complete unit — not as a first attempt followed by fixups. Use `git commit --fixup` + `git rebase -i --autosquash` to make this painless:
+
+  ```
+  git commit --fixup <target-hash>
+  # ... later, before pushing ...
+  git rebase -i --autosquash <base>
+  ```
 - Keep the subject line under ~72 characters. Body wrapped at 72 columns.
 - The subject should complete the sentence "This commit will...".
 - See the [FFmpeg developer guide — Commit messages](https://ffmpeg.org/developer.html#toc-Patches_002fCommitting).
@@ -102,13 +108,28 @@ For obvious mechanical fallout, a bare subject with no body is fine — the down
 persistence: add includeArchived parameter to V4ListResources
 ```
 
-A brief body works too, in whatever natural language fits:
+A brief body is acceptable when it adds context that cannot be inferred from the subject alone:
 
 ```
 persistence: add includeArchived parameter to V4ListResources
 
 Add includeArchived parameter to V4ListResources and update
 relevant downstreams.
+```
+
+Do not add a body that merely restates what the subject already says:
+
+```
+backend/graph: decouple Revision types from persistence structs
+```
+
+not
+
+```
+backend/graph: decouple Revision types from persistence structs
+
+Remove model bindings, add converters, and update all callers
+to use the new types.
 ```
 
 This avoids a commit that doesn't compile on its own. More involved caller work — new behaviour, feature wiring, logic changes — still goes in a separate commit.
