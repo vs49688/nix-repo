@@ -30,7 +30,7 @@ in
       packages = [
         "npm:pi-subagents"
         "npm:pi-mcp-adapter"
-        "npm:pi-lsp-extension"
+        "git:github.com/samfoy/pi-lsp-extension@f2433d19c3bb1300dfdc5f4505b062f9c9c0a1a6"
       ];
 
       enableInstallTelemetry = false;
