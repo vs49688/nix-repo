@@ -214,7 +214,7 @@ in
     users.groups.git.members = [ config.services.caddy.group ];
 
     services.gitea-actions-runner = {
-      package = pkgs.forgejo-runner;
+      package = pkgs.gitea-actions-runner;
       instances.CADANCE = {
         enable = true;
         name = config.networking.hostName;
