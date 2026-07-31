@@ -17,6 +17,7 @@ in
       nodejs
       gopls
       clang-tools # For clangd
+      typescript-language-server
       lldb_22
       myPy
     ];
