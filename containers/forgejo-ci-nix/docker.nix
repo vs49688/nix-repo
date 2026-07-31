@@ -329,6 +329,7 @@ let
           ln -s ${lib.getExe' coreutils-full "env"} $out/usr/bin/env
           ln -s ${lib.getExe bashInteractive} $out/bin/sh
           ln -s ${lib.getExe bashInteractive} $out/bin/bash
+          ln -s ${lib.getExe' coreutils-full "sleep"} $out/bin/sleep
 
         ''
         + (lib.optionalString (flake-registry-path != null) ''
