@@ -730,6 +730,9 @@ in
   systemd.services.rustfs.unitConfig.RequiresMountsFor = [
     config.services.rustfs.settings.RUSTFS_VOLUMES
   ];
+  services.caddy.virtualHosts."s3.vs49688.net".extraConfig = ''
+    reverse_proxy localhost:9000
+  '';
 
   services.postgresql = {
     enable = true;
