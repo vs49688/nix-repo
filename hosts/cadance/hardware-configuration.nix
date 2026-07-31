@@ -74,6 +74,11 @@
       fsType = "zfs";
     };
 
+  fileSystems."/var/lib/rustfs" =
+    { device = "cadance/private/rustfs";
+      fsType = "zfs";
+    };
+
   swapDevices = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

@@ -714,6 +714,22 @@ in
     }
   '';
 
+  sops.secrets."rustfs/env" = {
+    restartUnits = [ "rustfs" ];
+  };
+
+  services.rustfs.enable = true;
+  services.rustfs.settings = {
+    RUSTFS_ADDRESS = "127.0.0.1:9000";
+    RUSTFS_CONSOLE_ENABLE = "true";
+    RUSTFS_CONSOLE_ADDRESS = "127.0.0.1:9001";
+    RUSTFS_VOLUMES = "/var/lib/rustfs";
+  };
+  services.rustfs.environmentFile = config.sops.secrets."rustfs/env".path;
+  systemd.services.rustfs.unitConfig.RequiresMountsFor = [
+    config.services.rustfs.settings.RUSTFS_VOLUMES
+  ];
+
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_17;
