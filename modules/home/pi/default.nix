@@ -1,15 +1,45 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, ... }: let
+  jsonFormat = pkgs.formats.json { };
+
+  myPy = pkgs.python3.withPackages(p: with p; [
+    virtualenv
+
+    ddgs
+    mcp     # Need for "ddgs mcp"
+    fastapi # Also needed for "ddgs mcp"
+  ]);
+in
 {
   programs.pi-coding-agent = {
     enable = lib.mkDefault true;
     extraPackages = with pkgs; [
       bun
+      nodejs
       gopls
       clang-tools # For clangd
       lldb_22
+      myPy
     ];
 
     context = builtins.readFile ./AGENTS.md;
+
+    settings = {
+      theme = "dark";
+      defaultProvider = "litellm";
+      defaultModel = "deepseek-v4-pro";
+      packages = [
+        "npm:pi-subagents"
+        "npm:pi-mcp-adapter"
+        "npm:pi-lsp-extension"
+      ];
+
+      enableInstallTelemetry = false;
+      defaultThinkingLevel = "max";
+      hideThinkingBlock = false;
+      npmCommand = [
+        "${lib.getExe pkgs.bun}"
+      ];
+    };
 
     models = {
       providers.litellm = {
@@ -31,6 +61,22 @@
             };
           }
         ];
+      };
+    };
+  };
+
+  home.file.".pi/agent/mcp.json".source = jsonFormat.generate "mcp.json" {
+    mcpServers = {
+      "lldb" = {
+        command = "nc";
+        args = [ "localhost" "59999" ]; # FIXME: until lldb-mcp isn't shit
+        lifecycle = "lazy";
+      };
+
+      "ddgs" = {
+        command = "${myPy}/bin/ddgs";
+        args = ["mcp"];
+        lifecycle = "lazy";
       };
     };
   };
