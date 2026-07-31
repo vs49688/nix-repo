@@ -723,6 +723,7 @@ in
     RUSTFS_ADDRESS = "127.0.0.1:9000";
     RUSTFS_CONSOLE_ENABLE = "true";
     RUSTFS_CONSOLE_ADDRESS = "127.0.0.1:9001";
+    # zfs create -o mountpoint=legacy -oatime=off -oxattr=sa -o com.sun:auto-snapshot=false -o compression=lz4 cadance/private/rustfs
     RUSTFS_VOLUMES = "/var/lib/rustfs";
   };
   services.rustfs.environmentFile = config.sops.secrets."rustfs/env".path;
