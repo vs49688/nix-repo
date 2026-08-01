@@ -82,4 +82,6 @@ in
       };
     };
   };
+
+  home.file.".pi/agent/skills/pdf-to-text".source = ./pdf-to-text;
 }
