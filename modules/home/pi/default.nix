@@ -20,6 +20,7 @@ in
       typescript-language-server
       lldb_22
       myPy
+      poppler-utils # For pdftotext
     ];
 
     context = builtins.readFile ./AGENTS.md;
