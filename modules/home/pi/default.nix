@@ -83,6 +83,8 @@ in
     };
   };
 
+  home.file.".pi/agent/extensions/web-request".source = ./web-request;
+
   home.file.".pi/agent/skills/pdf-to-text".source = ./pdf-to-text;
   home.file.".pi/agent/skills/forgejo-api".source = ./forgejo-api;
 }
