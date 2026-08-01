@@ -734,6 +734,36 @@ in
     reverse_proxy localhost:9000
   '';
 
+  sops.secrets."attic/env" = {
+    restartUnits = [ "atticd.service" ];
+  };
+
+  services.atticd = {
+    enable = true;
+    mode = "monolithic";
+    settings = {
+      listen = "127.0.0.1:8883";
+      allowed-hosts = [
+        "cache.vs49688.net"
+      ];
+      api-endpoint = "https://cache.vs49688.net/";
+
+      database.url = "postgresql://atticd@localhost/atticd?host=/run/postgresql";
+
+      storage.type = "s3";
+      storage.region = "us-east-1";
+      storage.endpoint = "https://s3.vs49688.net"; # FIXME: https://github.com/zhaofengli/attic/pull/356
+      storage.bucket = "attic";
+
+      garbage-collection.default-retention-period = "1 month";
+    };
+    environmentFile = config.sops.secrets."attic/env".path;
+  };
+
+  services.caddy.virtualHosts."cache.vs49688.net".extraConfig = ''
+    reverse_proxy http://${config.services.atticd.settings.listen}
+  '';
+
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_17;
@@ -741,11 +771,13 @@ in
     ensureDatabases = [
       "docspell"
       "unifi"
+      "atticd"
     ];
 
     ensureUsers = [
       { name = "docspell"; ensureDBOwnership = true; }
       { name = "unifi"; ensureDBOwnership = true; }
+      { name = "atticd"; ensureDBOwnership = true; }
     ];
 
     authentication = ''
