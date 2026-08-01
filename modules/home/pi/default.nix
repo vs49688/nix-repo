@@ -84,4 +84,5 @@ in
   };
 
   home.file.".pi/agent/skills/pdf-to-text".source = ./pdf-to-text;
+  home.file.".pi/agent/skills/forgejo-api".source = ./forgejo-api;
 }
