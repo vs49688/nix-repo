@@ -44,7 +44,6 @@ in
     audacity
     vlc
     supersonic
-    supersonic-wayland
     mpv
     pwvucontrol
     qpwgraph
