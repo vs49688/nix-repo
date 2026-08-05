@@ -56,81 +56,81 @@
       setuptools
     ]));
   in (with pkgs; [
-      myPy
+    myPy
 
-      # Sysadmin
-      ansible
-      opentofu
+    # Sysadmin
+    ansible
+    opentofu
 
-      sshfs
+    sshfs
 
-      # IDEs
-      vscodium
+    # IDEs
+    vscodium
 
-      # Compilers/Assemblers
-      mingw-w64-cc
-      mingw32-cc
-      # djgpp_i586
-      # djgpp_i686
-      uasm
-      dosbox-x
+    # Compilers/Assemblers
+    mingw-w64-cc
+    mingw32-cc
+    # djgpp_i586
+    # djgpp_i686
+    uasm
+    dosbox-x
 
-      # Kubernetes/Container Stuff
-      minikube
-      kubectl
-      kind
-      kubernetes-helm
-      k9s
-      docker-compose
-      docker # Just the client, we talk to podman
+    # Kubernetes/Container Stuff
+    minikube
+    kubectl
+    kind
+    kubernetes-helm
+    k9s
+    docker-compose
+    docker # Just the client, we talk to podman
 
-      # CLI Tools
-      ninja
-      nix-prefetch-git
-      maven
-      # rustup
-      pev
-      # rappel
-      bat
-      dos2unix
-      qpdf
-      # hugo
-      qrencode
-      graphviz
-      unifi-backup-decrypt
-      opencode
+    # CLI Tools
+    ninja
+    nix-prefetch-git
+    maven
+    # rustup
+    pev
+    # rappel
+    bat
+    dos2unix
+    qpdf
+    # hugo
+    qrencode
+    graphviz
+    unifi-backup-decrypt
+    opencode
 
-      sops
-      ssh-to-age
-      age
+    sops
+    ssh-to-age
+    age
 
-      unshield
-      cabextract
-      innoextract
-      libgig
+    unshield
+    cabextract
+    innoextract
+    libgig
 
-      protobuf
-      protoc-gen-go
-      protoc-gen-go-grpc
-      grpc
-      grpcurl
+    protobuf
+    protoc-gen-go
+    protoc-gen-go-grpc
+    grpc
+    grpcurl
 
-      # Misc
-      kdiff3
-      sqlitebrowser
-      vgmstream
-      drawio
+    # Misc
+    kdiff3
+    sqlitebrowser
+    vgmstream
+    drawio
 
-      android-tools
+    android-tools
 
-      texliveFull
+    texliveFull
 
-      jetbrains.clion
-      # jetbrains.idea-ultimate
-      jetbrains.pycharm
-      jetbrains.goland
-      # jetbrains.ruby-mine
-      jetbrains.webstorm
+    jetbrains.clion
+    # jetbrains.idea-ultimate
+    jetbrains.pycharm
+    jetbrains.goland
+    # jetbrains.ruby-mine
+    jetbrains.webstorm
   ]) ++ (lib.optionals pkgs.stdenv.hostPlatform.isx86_64 (with pkgs; [
     # jetbrains.rider
 
