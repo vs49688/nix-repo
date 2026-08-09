@@ -62,6 +62,19 @@ in
               max = "max";
             };
           }
+          {
+            id = "deepseek-v4-flash";
+            contextWindow = 1000000;
+            reasoning = true;
+            thinkingLevelMap = {
+              minimal = null;
+              low = "low";
+              medium = null;
+              high =  "high";
+              xhigh = "high";
+              max = "max";
+            };
+          }
         ];
       };
     };
