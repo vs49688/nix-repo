@@ -224,6 +224,7 @@
       knetwalkrc = {
         General.PlaySounds = false;
         KgDifficulty.Level = "Very Hard";
+        "Notification Messages".dontShowGameNotWonYet = true;
       };
 
       kwinrc = {
