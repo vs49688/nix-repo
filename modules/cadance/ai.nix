@@ -114,98 +114,27 @@ in
 
       settings.model_list = (lib.optionals cfg.enableOpenAIModels [
         {
-          model_name = "gpt-4o";
+          model_name = "gpt-5.6-sol";
           litellm_params = {
-            model = "openai/responses/gpt-4o";
+            model = "openai/responses/gpt-5.6-sol";
             api_key = "os.environ/OPENAI_API_KEY";
             merge_reasoning_content_in_choices = true;
           };
         }
         {
-          model_name = "gpt-5";
+          model_name = "gpt-5.6-terra";
           litellm_params = {
-            model = "openai/responses/gpt-5";
+            model = "openai/responses/gpt-5.6-terra";
             api_key = "os.environ/OPENAI_API_KEY";
             merge_reasoning_content_in_choices = true;
           };
         }
         {
-          model_name = "gpt-5-mini";
+          model_name = "gpt-5.6-luna";
           litellm_params = {
-            model = "openai/responses/gpt-5-mini";
+            model = "openai/responses/gpt-5.6-luna";
             api_key = "os.environ/OPENAI_API_KEY";
             merge_reasoning_content_in_choices = true;
-          };
-        }
-        {
-          model_name = "gpt-5-nano";
-          litellm_params = {
-            model = "openai/responses/gpt-5-nano";
-            api_key = "os.environ/OPENAI_API_KEY";
-            merge_reasoning_content_in_choices = true;
-          };
-        }
-
-        ##
-        # GPT-5.4
-        ##
-        {
-          model_name = "gpt-5.4";
-          litellm_params = {
-            model = "openai/responses/gpt-5.4";
-            api_key = "os.environ/OPENAI_API_KEY";
-            merge_reasoning_content_in_choices = true;
-          };
-        }
-
-        ##
-        # GPT-5.4 mini
-        ##
-        {
-          model_name = "gpt-5.4-mini";
-          litellm_params = {
-            model = "openai/responses/gpt-5.4-mini";
-            api_key = "os.environ/OPENAI_API_KEY";
-            merge_reasoning_content_in_choices = true;
-          };
-        }
-
-        ##
-        # GPT-5.4 nano
-        ##
-        {
-          model_name = "gpt-5.4-nano";
-          litellm_params = {
-            model = "openai/responses/gpt-5.4-nano";
-            api_key = "os.environ/OPENAI_API_KEY";
-            merge_reasoning_content_in_choices = true;
-          };
-        }
-
-        ##
-        # GPT-5.5
-        ##
-        {
-          model_name = "gpt-5.5";
-          litellm_params = {
-            model = "openai/responses/gpt-5.5";
-            api_key = "os.environ/OPENAI_API_KEY";
-            merge_reasoning_content_in_choices = true;
-          };
-        }
-
-        {
-          model_name = "dall-e-2";
-          litellm_params = {
-            model = "openai/dall-e-2";
-            api_key = "os.environ/OPENAI_API_KEY";
-          };
-        }
-        {
-          model_name = "dall-e-3";
-          litellm_params = {
-            model = "openai/dall-e-3";
-            api_key = "os.environ/OPENAI_API_KEY";
           };
         }
       ]) ++ (lib.optionals cfg.enableAnthropicModels [
