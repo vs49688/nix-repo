@@ -45,6 +45,7 @@ applyDirs --bind                    \
     "$HOME/.config/opencode"        \
     "$HOME/.local/share/opencode"   \
     "$HOME/.local/state/opencode"   \
+    "$HOME/.local/share/cartopy"    \
     "$HOME/Games"                   \
     "$HOME/Documents/Coding"        \
     "$XDG_RUNTIME_DIR/wayland-0"    \
