@@ -8,12 +8,6 @@
 , src
 , version
 }:
-let
-  # This is fine for a game.
-  xssl = openssl_1_1.overrideAttrs (old: {
-    meta = old.meta // { insecure = false; knownVulnerabilities = [ ]; };
-  });
-in
 stdenv.mkDerivation {
   inherit version src;
 
@@ -29,7 +23,7 @@ stdenv.mkDerivation {
     stdenv.cc.cc.libgcc or null
     curl
     xz
-    xssl
+    openssl_1_1
   ];
 
   installPhase = ''

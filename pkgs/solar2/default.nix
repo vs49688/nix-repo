@@ -5,13 +5,6 @@
 , alsa-lib, libpulseaudio
 , bubblewrap
 }:
-let
-  # This is fine for a game.
-  xssl = openssl_1_1.overrideAttrs(old: {
-    doCheck = false;
-    meta = old.meta // { insecure = false; knownVulnerabilities = []; };
-  });
-in
 stdenv.mkDerivation rec {
   pname   = "solar2";
   version = "1.26";
@@ -53,7 +46,7 @@ stdenv.mkDerivation rec {
       --add-flags "--bind / /" \
       --add-flags "--dev-bind /dev /dev" \
       --add-flag --unshare-net \
-      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ icu78 SDL2 xssl alsa-lib libpulseaudio ]}:/run/opengl-driver/lib \
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ icu78 SDL2 openssl_1_1 alsa-lib libpulseaudio ]}:/run/opengl-driver/lib \
       --add-flag -- \
       --add-flag "$out/share/solar2/Solar2"
 

@@ -1,5 +1,5 @@
 final: prev: {
-  mongodb_3_6-bin = prev.callPackage ./mongodb-bin.nix {
+  mongodb_3_6-bin = final.callPackage ./mongodb-bin.nix {
     version = "3.6.23";
 
     src = prev.fetchurl {
@@ -8,7 +8,7 @@ final: prev: {
     };
   };
 
-  mongodb_4_0-bin = prev.callPackage ./mongodb-bin.nix {
+  mongodb_4_0-bin = final.callPackage ./mongodb-bin.nix {
     version = "4.0.28";
 
     src = prev.fetchurl {
@@ -17,7 +17,7 @@ final: prev: {
     };
   };
 
-  mongodb_4_2-bin = prev.callPackage ./mongodb-bin.nix {
+  mongodb_4_2-bin = final.callPackage ./mongodb-bin.nix {
     version = "4.2.25";
 
     src = prev.fetchurl {
@@ -26,7 +26,7 @@ final: prev: {
     };
   };
 
-  mongodb_4_4-bin = prev.callPackage ./mongodb-bin.nix {
+  mongodb_4_4-bin = final.callPackage ./mongodb-bin.nix {
     version = "4.4.27";
 
     src = prev.fetchurl {
@@ -35,7 +35,7 @@ final: prev: {
     };
   };
 
-  mongodb_5_0-bin = prev.callPackage ./mongodb-bin.nix {
+  mongodb_5_0-bin = final.callPackage ./mongodb-bin.nix {
     version = "5.0.23";
 
     src = prev.fetchurl {
@@ -44,7 +44,7 @@ final: prev: {
     };
   };
 
-  mongodb_6_0-bin = prev.callPackage ./mongodb-bin.nix {
+  mongodb_6_0-bin = final.callPackage ./mongodb-bin.nix {
     version = "6.0.12";
 
     src = prev.fetchurl {
@@ -53,7 +53,7 @@ final: prev: {
     };
   };
 
-  mongodb-ce_7_0-bin = prev.callPackage ./mongodb-bin.nix {
+  mongodb-ce_7_0-bin = final.callPackage ./mongodb-bin.nix {
     version = "7.0.28";
 
     src = prev.fetchurl {

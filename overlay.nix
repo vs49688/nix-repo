@@ -10,6 +10,12 @@
 in (({
   aaxm4bfix = super.callPackage ./pkgs/aaxm4bfix { };
 
+  ##
+  # Removed from upstream nixpkgs; kept barebones for legacy binaries
+  # (old games, MongoDB 3.6, etc.) that need the OpenSSL 1.1 ABI.
+  ##
+  openssl_1_1 = super.callPackage ./pkgs/openssl_1_1 { };
+
   awesfx = super.callPackage ./pkgs/awesfx { };
 
   crocutils = super.callPackage ./pkgs/crocutils { };
@@ -49,7 +55,7 @@ in (({
 
   hg659-voip-password = super.callPackage ./pkgs/hg659-voip-password {};
 
-  solar2 = super.callPackage ./pkgs/solar2 { };
+  solar2 = self.callPackage ./pkgs/solar2 { };
 
   supermeatboy = super.callPackage ./pkgs/supermeatboy { };
 
