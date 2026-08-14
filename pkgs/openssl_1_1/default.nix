@@ -50,6 +50,12 @@ stdenv.mkDerivation (finalAttrs: {
   + ''
     substituteInPlace config --replace '/usr/bin/env' '${buildPackages.coreutils}/bin/env'
   ''
+  # man pages are not needed; don't build or install them
+  + ''
+    substituteInPlace Configurations/unix-Makefile.tmpl \
+      --replace 'install: install_sw install_ssldirs install_docs' \
+                'install: install_sw install_ssldirs'
+  ''
   + lib.optionalString stdenv.hostPlatform.isMusl ''
     substituteInPlace crypto/async/arch/async_posix.h \
       --replace '!defined(__ANDROID__) && !defined(__OpenBSD__)' \
@@ -77,7 +83,6 @@ stdenv.mkDerivation (finalAttrs: {
     "bin"
     "dev"
     "out"
-    "man"
   ];
   setOutputFlags = false;
   separateDebugInfo =
@@ -178,15 +183,6 @@ stdenv.mkDerivation (finalAttrs: {
   # tests are not being installed, it makes no sense
   # to build them if check is disabled, e.g. on cross.
   ++ lib.optional (!finalAttrs.finalPackage.doCheck) "disable-tests";
-
-  makeFlags = [
-    "MANDIR=$(man)/share/man"
-    # This avoids conflicts between man pages of openssl subcommands (for
-    # example 'ts' and 'err') man pages and their equivalent top-level
-    # command in other packages (respectively man-pages and moreutils).
-    # This is done in ubuntu and archlinux, and possibly many other distros.
-    "MANSUFFIX=ssl"
-  ];
 
   enableParallelBuilding = true;
 
