@@ -45,7 +45,7 @@ in
     ../../modules/cadance/navidrome.nix
     ../../modules/cadance/immich.nix
     ../../modules/cadance/vaultwarden.nix
-    ../../modules/cadance/ai.nix
+    ../../modules/cadance/ai
     ../../modules/cadance/backup.nix
     ../../modules/cadance/forgejo.nix
     ../../modules/cadance/crypto.nix
