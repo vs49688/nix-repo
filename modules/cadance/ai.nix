@@ -107,8 +107,48 @@ in
       { name = "open-webui"; ensureDBOwnership = true; }
     ];
 
-    services.litellm = {
+    services.litellm = let
+      xpkgs = pkgs.python3Packages.overrideScope (final: prev: {
+        litellm = prev.litellm.overridePythonAttrs(old: rec {
+          version = "1.96.2";
+
+          src = pkgs.fetchFromGitHub {
+            owner = "BerriAI";
+            repo = "litellm";
+            tag = "v${version}";
+            hash = "sha256-4KBHPaBBJ79c8XotrW0ap7YPgZqob+VnL5IM7fsz/Rw=";
+          };
+
+          cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
+            inherit (old) pname;
+            inherit version src;
+
+            cargoRoot = "litellm-rust";
+
+            hash = "sha256-iwgIclG8BGeHDNtm686w2Rxe+9ddvBrz1sMfOBeuKK0=";
+          };
+
+          cargoRoot = "litellm-rust";
+
+          nativeBuildInputs = (old.nativeBuildInputs or []) ++ (with pkgs; [
+            rustPlatform.cargoSetupHook
+            rustPlatform.maturinBuildHook
+          ]);
+
+          postPatch = "";
+          dependencies =
+            (old.dependencies or [ ])
+            ++ prev.litellm.optional-dependencies.proxy
+            ++ prev.litellm.optional-dependencies.extra_proxy
+            ++ prev.litellm.optional-dependencies.proxy-runtime;
+        });
+      });
+
+      xlitellm = xpkgs.toPythonApplication (xpkgs.litellm);
+    in {
       enable = true;
+
+      package = xlitellm;
 
       environmentFile = cfg.litellmEnvironmentFile;
 
