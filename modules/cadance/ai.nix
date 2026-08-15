@@ -118,7 +118,7 @@ in
           litellm_params = {
             model = "openai/responses/gpt-5.6-sol";
             api_key = "os.environ/OPENAI_API_KEY";
-            merge_reasoning_content_in_choices = true;
+            store = false;
           };
         }
         {
@@ -126,7 +126,7 @@ in
           litellm_params = {
             model = "openai/responses/gpt-5.6-terra";
             api_key = "os.environ/OPENAI_API_KEY";
-            merge_reasoning_content_in_choices = true;
+            store = false;
           };
         }
         {
@@ -134,7 +134,7 @@ in
           litellm_params = {
             model = "openai/responses/gpt-5.6-luna";
             api_key = "os.environ/OPENAI_API_KEY";
-            merge_reasoning_content_in_choices = true;
+            store = false;
           };
         }
       ]) ++ (lib.optionals cfg.enableAnthropicModels [
