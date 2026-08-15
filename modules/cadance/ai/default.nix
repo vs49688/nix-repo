@@ -109,6 +109,8 @@ in
 
     services.litellm = let
       xpkgs = pkgs.python3Packages.overrideScope (final: prev: {
+        expression = pkgs.python3Packages.callPackage ./expression.nix { };
+
         litellm = prev.litellm.overridePythonAttrs(old: rec {
           version = "1.96.2";
 
@@ -138,6 +140,7 @@ in
           postPatch = "";
           dependencies =
             (old.dependencies or [ ])
+            ++ [ final.expression ]
             ++ prev.litellm.optional-dependencies.proxy
             ++ prev.litellm.optional-dependencies.extra_proxy
             ++ prev.litellm.optional-dependencies.proxy-runtime;
