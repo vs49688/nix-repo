@@ -146,3 +146,7 @@ This avoids a commit that doesn't compile on its own. More involved caller work 
 - Generated code should be clearly separated and never hand-edited.
 - When a project lacks a formal test suite, do not attempt to add or run tests unless explicitly instructed.
 - Run project-level formatters before committing — check the project's own `AGENTS.md` for specifics.
+- If `git commit` fails due to a missing signing key, retry with `--no-gpg-sign`.
+- Do NOT run a blanket `find` on `/`, `~`, or `/nix`.
+- On a system with Nix, you may temporarily pull a missing tool with `nix run nixpkgs#<tool> -- <args>`.
+- If you are unable to find a required tool, end the turn and ask the user.
