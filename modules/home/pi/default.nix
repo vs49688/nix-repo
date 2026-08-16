@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: let
+{ lib, pkgs, config, ... }: let
   jsonFormat = pkgs.formats.json { };
 
   myPy = pkgs.python3.withPackages(p: with p; [
@@ -43,38 +43,45 @@ in
       ];
     };
 
-    models = {
+    models = let
+      mkDeepseekModel = id: {
+        inherit id;
+
+        contextWindow = 1000000;
+        maxTokens = 384000;
+        reasoning = true;
+        input = ["text"];
+        api = "openai-completions";
+        reasoningEffortMap = {
+          minimal = "high";
+          low = "high";
+          medium = "high";
+          high = "high";
+          xhigh = "max";
+        };
+        compat = {
+          requiresReasoningContentOnAssistantMessages = true;
+          thinkingFormat = "deepseek";
+        };
+      };
+    in {
       providers.litellm = {
         baseUrl = "http://localhost:8080/v1"; # ssh -L8080:localhost:8080
         api = "openai-responses";
         apiKey = "unnecessary";
         models = [
-          {
-            id = "deepseek-v4-pro";
-            contextWindow = 1000000;
-            reasoning = true;
-            thinkingLevelMap = {
-              minimal = null;
-              low = null;
-              medium = null;
-              high =  "high";
-              xhigh = "high";
-              max = "max";
-            };
-          }
-          {
-            id = "deepseek-v4-flash";
-            contextWindow = 1000000;
-            reasoning = true;
-            thinkingLevelMap = {
-              minimal = null;
-              low = "low";
-              medium = null;
-              high =  "high";
-              xhigh = "high";
-              max = "max";
-            };
-          }
+          (mkDeepseekModel "deepseek-v4-pro")
+          (mkDeepseekModel "deepseek-v4-flash")
+        ];
+      };
+
+      providers.deepseek = {
+        baseUrl = "https://api.deepseek.com";
+        api = "openai-completions";
+        # apiKey = ""; # Filled in private config.
+        models = [
+          (mkDeepseekModel "deepseek-v4-pro")
+          (mkDeepseekModel "deepseek-v4-flash")
         ];
       };
     };
