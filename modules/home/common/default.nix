@@ -54,7 +54,7 @@
 
       # openrussian-cli
 
-    ] ++ (if pkgs.stdenv.isDarwin then [
+    ] ++ (if pkgs.stdenv.hostPlatform.isDarwin then [
       ffmpeg
     ] else [
       ffmpeg-full
@@ -181,7 +181,7 @@
         hints.enabled = [
           {
             regex = ''(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001f\u007f-\u009F<>"\\s{-}\\^⟨⟩`]+'';
-            command = (if pkgs.stdenv.isDarwin then "open" else "xdg-open");
+            command = (if pkgs.stdenv.hostPlatform.isDarwin then "open" else "xdg-open");
             post_processing = true;
             mouse.enabled = true;
             mouse.mods = "Control";

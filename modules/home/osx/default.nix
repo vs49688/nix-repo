@@ -2,7 +2,7 @@
 let
   homebrewPath = "/opt/homebrew";
 in {
-  config = lib.mkIf pkgs.stdenv.isDarwin {
+  config = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
     targets.darwin.defaults = {
       "Apple Global Domain" = {
         KeyRepeat        = 3;

@@ -1,13 +1,13 @@
 { config, lib, pkgs, ... }:
 {
-  config = lib.mkIf pkgs.stdenv.isLinux {
+  config = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     programs.bash.enableVteIntegration = true;
     programs.bash.shellAliases = {
       # NB: cpupower is a kernel package, use whatever's in path.
       cfmon = "${pkgs.procps}/bin/watch -n1 -- cpupower -c all frequency-info -fm";
       cfperf = "sudo cpupower frequency-set -g performance";
       cfsave = "sudo cpupower frequency-set -g powersave";
-    } // (lib.optionalAttrs (pkgs.stdenv.isLinux && pkgs.stdenv.isx86_64) {
+    } // (lib.optionalAttrs (pkgs.stdenv.hostPlatform.isLinux && pkgs.stdenv.hostPlatform.isx86_64) {
       #wine-ge = "${pkgs.wine-ge}/bin/wine";
     });
 
