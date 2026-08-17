@@ -7,6 +7,13 @@ function applyDirs() {
     done
 }
 
+function applyFiles() {
+    local flag=$1; shift
+    for i in "$@"; do
+        [[ -f "$i" ]] && command+=("${flag}" "$i" "$i")
+    done
+}
+
 command=(
     bwrap
     --setenv    OPENCODE_DISABLE_LSP_DOWNLOAD   true
@@ -35,6 +42,9 @@ command+=(
     --tmpfs     /tmp
     --tmpfs     /home
 )
+
+applyFiles --ro-bind \
+    "$HOME/.config/sops-nix/secrets/deepseek_api_key"
 
 applyDirs --ro-bind     \
     "$HOME/.config/git" \
