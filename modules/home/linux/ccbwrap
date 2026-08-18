@@ -60,7 +60,9 @@ applyDirs --bind                    \
     "$HOME/Documents/Coding"        \
     "$XDG_RUNTIME_DIR/wayland-0"    \
     "$XDG_RUNTIME_DIR/pipewire-0"   \
-    /run/postgresql
+    /run/postgresql                 \
+    /var/run/nscd                   \
+    /run/nscd
 
 applyDirs --bind "$PWD"
 
