@@ -22,6 +22,10 @@ Optional longer description if the change warrants it.
   # ... later, before pushing ...
   git rebase -i --autosquash <base>
   ```
+- **Greenfield exception:** for greenfield/early-stage projects still
+  finding their shape, blanket checkpoint commits are fine — commit freely and
+  don't over-polish history; apply the squash discipline once the project
+  stabilizes.
 - Keep the subject line under ~72 characters. Body wrapped at 72 columns.
 - The subject should complete the sentence "This commit will...".
 - See the [FFmpeg developer guide — Commit messages](https://ffmpeg.org/developer.html#toc-Patches_002fCommitting).
@@ -150,3 +154,9 @@ This avoids a commit that doesn't compile on its own. More involved caller work 
 - Do NOT run a blanket `find` on `/`, `~`, or `/nix`.
 - On a system with Nix, you may temporarily pull a missing tool with `nix run nixpkgs#<tool> -- <args>`.
 - If you are unable to find a required tool, end the turn and ask the user.
+
+## Go
+
+- NEVER use `gofmt`, use `go fmt ./...`.
+- Greenfield repos: checkpoint commits may freely include vendor churn.
+- Mature repos: split dependency updates out — `go get -u ./... && go mod tidy && go mod vendor`, commit as `vendor: update`, then add the new package and re-vendor in its own commit.
