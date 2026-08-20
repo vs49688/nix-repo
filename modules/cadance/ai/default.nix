@@ -288,6 +288,41 @@ in
         }
       ]) ++ [
         {
+          model_name = "fireworks-deepseek-v4-pro-0813";
+          litellm_params = {
+            model = "fireworks_ai/deepseek-v4-pro-0813";
+            api_key = "os.environ/FIREWORKS_AI_API_KEY";
+          };
+        }
+        {
+          model_name = "fireworks-deepseek-v4-flash-0731";
+          litellm_params = {
+            model = "fireworks_ai/deepseek-v4-flash-0731";
+            api_key = "os.environ/FIREWORKS_AI_API_KEY";
+          };
+        }
+        {
+          model_name = "fireworks-kimi-k3";
+          litellm_params = {
+            model = "fireworks_ai/kimi-k3";
+            api_key = "os.environ/FIREWORKS_AI_API_KEY";
+          };
+        }
+        {
+          model_name = "fireworks-gpt-oss-120b";
+          litellm_params = {
+            model = "fireworks_ai/gpt-oss-120b";
+            api_key = "os.environ/FIREWORKS_AI_API_KEY";
+          };
+        }
+        {
+          model_name = "fireworks-gpt-oss-20b";
+          litellm_params = {
+            model = "fireworks_ai/gpt-oss-20b";
+            api_key = "os.environ/FIREWORKS_AI_API_KEY";
+          };
+        }
+        {
           model_name = "kokoro-82m";
           litellm_params = {
             model = "openai/kokoro";
