@@ -10,10 +10,10 @@ Full API spec: `{instance}/swagger.v1.json` (OpenAPI 2.0)
 
 ### Auth
 
-Tokens live in `.gitea_token` at the repo root.
+The API token lives at `~/.config/sops-nix/secrets/agents/forgejo_token`.
 
 Two-step workflow:
-1. Read the token: `read .gitea_token`
+1. Read the token: `read ~/.config/sops-nix/secrets/agents/forgejo_token`
 2. Use `web_request` with `headers={"Authorization":"token {token}"}`
 
 ```
