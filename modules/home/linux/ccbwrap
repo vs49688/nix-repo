@@ -44,7 +44,8 @@ command+=(
 )
 
 applyFiles --ro-bind \
-    "$HOME/.config/sops-nix/secrets/deepseek_api_key"
+    "$HOME/.config/sops-nix/secrets/deepseek_api_key" \
+    "$HOME/.config/sops-nix/secrets/agents/forgejo_token"
 
 applyDirs --ro-bind     \
     "$HOME/.config/git" \
