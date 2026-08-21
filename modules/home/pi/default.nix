@@ -104,6 +104,7 @@ in
           command = "${myPy}/bin/ddgs";
           args = ["mcp"];
           lifecycle = "lazy";
+          directTools = true;
         };
       };
     };
