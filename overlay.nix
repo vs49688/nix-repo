@@ -92,6 +92,8 @@ in (({
 
   epsonscan2-v850 = super.callPackage ./pkgs/epsonscan2-v850 { };
 
+  gnupg-1_4 = super.callPackage ./pkgs/gnupg-1_4 { };
+
   ##
   # NX
   ##
