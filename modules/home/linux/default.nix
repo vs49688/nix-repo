@@ -210,6 +210,7 @@
           };
 
           SuspendAndShutdown = {
+            AutoSuspendAction = 0; # Don't sleep on AC.
             InhibitLidActionWhenExternalMonitorPresent = false;
           };
         };
