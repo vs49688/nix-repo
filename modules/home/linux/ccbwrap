@@ -1,16 +1,9 @@
 #!/usr/bin/env bash
 
-function applyDirs() {
+function applyFiles () {
     local flag=$1; shift
     for i in "$@"; do
-        [[ -d "$i" ]] && command+=("${flag}" "$i" "$i")
-    done
-}
-
-function applyFiles() {
-    local flag=$1; shift
-    for i in "$@"; do
-        [[ -f "$i" ]] && command+=("${flag}" "$i" "$i")
+        [[ ( -d "$i" ) || ( -f "$i" ) || ( -S "$i" ) ]] && command+=("${flag}" "$i" "$i")
     done
 }
 
@@ -27,9 +20,9 @@ command=(
     --dev /dev
 )
 
-applyDirs --dev-bind /dev/dri /dev/dri
+applyFiles --dev-bind /dev/dri /dev/dri
 
-applyDirs --ro-bind         \
+applyFiles --ro-bind        \
     /nix                    \
     /run/current-system     \
     /run/opengl-driver      \
@@ -47,25 +40,29 @@ applyFiles --ro-bind \
     "$HOME/.config/sops-nix/secrets/deepseek_api_key" \
     "$HOME/.config/sops-nix/secrets/agents/forgejo_token"
 
-applyDirs --ro-bind     \
+applyFiles --ro-bind    \
     "$HOME/.config/git" \
     "$HOME/.config/Croc"
 
-applyDirs --bind                    \
+applyFiles --bind                   \
     "$HOME/.pi"                     \
     "$HOME/.config/opencode"        \
     "$HOME/.local/share/opencode"   \
     "$HOME/.local/state/opencode"   \
     "$HOME/.local/share/cartopy"    \
+    "/games"                        \
     "$HOME/Games"                   \
     "$HOME/Documents/Coding"        \
+    /run/postgresql                 \
+    /run/nscd                       \
     "$XDG_RUNTIME_DIR/wayland-0"    \
     "$XDG_RUNTIME_DIR/pipewire-0"   \
-    /run/postgresql                 \
-    /var/run/nscd                   \
-    /run/nscd
 
-applyDirs --bind "$PWD"
+command+=(
+    --symlink /run /var/run
+)
+
+applyFiles --bind "$PWD"
 
 command+=(
     --chdir     "$PWD"
