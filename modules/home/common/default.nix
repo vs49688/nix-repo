@@ -219,6 +219,12 @@
       force = true;
     };
 
+    # To hell with you.
+    home.file.".config/go/telemetry/mode" = {
+      text = "off 1970-01-01";
+      force = true;
+    };
+
     programs.git = {
       enable    = true;
       package   = pkgs.git;
