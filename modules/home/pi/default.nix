@@ -35,8 +35,8 @@ in
 
       settings = {
         theme = "dark";
-        defaultProvider = "litellm";
-        defaultModel = "deepseek-v4-pro";
+        defaultProvider = "deepseek";
+        defaultModel = "deepseek-v4-flash";
         packages = [
           "npm:pi-subagents"
           "npm:pi-mcp-adapter"
