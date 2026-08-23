@@ -28,6 +28,7 @@ in
         lldb_22
         myPy
         poppler-utils # For pdftotext
+        tinyxxd # LLMs seem to really like xxd
       ];
 
       context = builtins.readFile ./AGENTS.md;
