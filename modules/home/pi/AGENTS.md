@@ -80,14 +80,20 @@ worker/syncfeed: handle 429 rate limit from upstream API
 When a change touches multiple packages, commit each package separately. Persistence changes go before callers; tests are squashed with their implementation.
 
 ```
-persistence: add ExcludeNSFW filter to V4SearchResourceOptions     ← interface
+persistence: add ExcludeNSFW filter to V4SearchResourceOptions
+```
 
-backend/graph: respect user NSFW preference in resource search     ← caller
+**interface change:**
+
+```
+backend/graph: respect user NSFW preference in resource search
 
 Apply ExcludeNSFW filter in searchResources() and getRelatedResources()
 based on the user's content.show_nsfw property. Anonymous users and
 users with show_nsfw=false (default) never see NSFW resources.
 ```
+
+**caller:**
 
 Multiple packages sharing the same logical change can go in one commit with a compound prefix:
 
@@ -97,7 +103,9 @@ backend/graph/{blog,comment,resource}: validate urls in markdown content
 
 ### Interface Changes That Break Compilation
 
-When an interface change would otherwise break the build, it's acceptable to fix or stub the immediate downstream callers in the same commit. If the downstream changes are obvious (e.g., a new parameter that must be passed everywhere), the subject can just name the interface change — no need to enumerate every file:
+When an interface change would otherwise break the build, it's acceptable to fix or stub the immediate downstream callers in the same commit. This avoids a commit that doesn't compile on its own.
+
+If the downstream changes are obvious (e.g., a new parameter that must be passed everywhere), the subject can just name the interface change — no need to enumerate every file:
 
 ```
 persistence: add includeArchived parameter to V4ListResources
@@ -115,10 +123,10 @@ persistence: add includeArchived parameter to V4ListResources
 A brief body is acceptable when it adds context that cannot be inferred from the subject alone:
 
 ```
-persistence: add includeArchived parameter to V4ListResources
+backend/graph: add pageSize parameter to getRelatedResources
 
-Add includeArchived parameter to V4ListResources and update
-relevant downstreams.
+Set by bulk importers to page through large result sets; existing
+callers are unaffected and keep the default size.
 ```
 
 Do not add a body that merely restates what the subject already says:
@@ -132,11 +140,11 @@ not
 ```
 backend/graph: decouple Revision types from persistence structs
 
-Remove model bindings, add converters, and update all callers
-to use the new types.
+Decouple Revision types from persistence structs by removing model
+bindings, adding converters, and updating all callers.
 ```
 
-This avoids a commit that doesn't compile on its own. More involved caller work — new behaviour, feature wiring, logic changes — still goes in a separate commit.
+More involved caller work — new behaviour, feature wiring, logic changes — still goes in a separate commit.
 
 ## Contributing
 
@@ -159,4 +167,5 @@ This avoids a commit that doesn't compile on its own. More involved caller work 
 
 - NEVER use `gofmt`, use `go fmt ./...`.
 - Greenfield repos: checkpoint commits may freely include vendor churn.
-- Mature repos: split dependency updates out — `go get -u ./... && go mod tidy && go mod vendor`, commit as `vendor: update`, then add the new package and re-vendor in its own commit.
+- Mature repos: keep dependency *updates* in their own commit — `go get -u ./... && go mod tidy && go mod vendor`, commit as `vendor: update`, separate from any code changes.
+- Mature repos: a *new* dependency goes in the same commit as the code that first imports it. `go mod vendor` only vendors packages that are actually imported, so a dependency added without its consumer either can't be vendored or gets dropped by the next vendor operation.
