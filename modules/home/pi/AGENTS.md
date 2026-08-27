@@ -152,6 +152,24 @@ More involved caller work — new behaviour, feature wiring, logic changes — s
 - Merge commits are not accepted except at maintainer discretion (e.g., octopus merges, or cases where preserving branch history has clear value).
 - When in doubt, rebase.
 
+## Cloning Repositories
+
+Agents may lack the user's SSH keys (e.g. in a sandbox), and HTTPS clones
+may be rewritten to SSH by `url.<host>.insteadOf` rules in the user's git
+config. Check the effective rewrites first:
+
+    git config --show-origin --get-regexp '^url\.'
+
+If a rule covers the URL being cloned, or a plain clone fails with an
+access-rights error, bypass the global config for that command:
+
+    GIT_CONFIG_GLOBAL=/dev/null git clone https://host/owner/repo
+
+Do the same for `git fetch`/`git pull` in https-origin repos.
+`GIT_CONFIG_GLOBAL=/dev/null` also drops identity/signing — do not commit
+with it set. `git -c url.<base>.insteadOf=...` overrides do **not** beat
+the file-level rule.
+
 ## General
 
 - Use proper parsers for structured formats (HTML, URLs, etc.), not regex.
