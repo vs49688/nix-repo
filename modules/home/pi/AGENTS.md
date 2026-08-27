@@ -170,6 +170,19 @@ Do the same for `git fetch`/`git pull` in https-origin repos.
 with it set. `git -c url.<base>.insteadOf=...` overrides do **not** beat
 the file-level rule.
 
+## Pushing
+
+Never push (`git push`) to any remote — not even as a test. Do not
+debug push failures or try to work around the SSH key problem (including
+with the Forgejo token, which is for the Forgejo API only, never for git
+pushes).
+
+Pushing is the user's job. Agent commits are unsigned (`--no-gpg-sign`),
+and the user re-signs every commit with a manual pass / forced rebase,
+so anything an agent pushed would be published unsigned — and it would
+fail anyway, since sandboxed agents have no SSH keys. Finish with local
+commits and a clear handoff; leave pushing to the user.
+
 ## General
 
 - Use proper parsers for structured formats (HTML, URLs, etc.), not regex.
