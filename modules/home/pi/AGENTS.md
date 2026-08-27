@@ -194,6 +194,25 @@ commits and a clear handoff; leave pushing to the user.
 - On a system with Nix, you may temporarily pull a missing tool with `nix run nixpkgs#<tool> -- <args>`.
 - If you are unable to find a required tool, end the turn and ask the user.
 
+## Delegation (subagents)
+
+Your context is sacred — don't blow it on menial tasks that a subagent
+can do with minimal context, e.g. provenance investigations, research.
+Subagents may be available; take advantage of them.
+
+- Delegate: self-contained tasks with checkable outcomes and a small
+  context footprint — provenance investigations, research, enumerating
+  registries or tables, generating testdata, running known command
+  matrices. Write a complete task spec (paths, constraints, expected
+  output, commit rules) so the subagent needs no back-and-forth.
+- Keep in the parent: design decisions, anything needing the user's
+  agreement or taste, cross-cutting refactors. The subagent knows only
+  what the task spec provides (fresh or inherited context) — never
+  assume it knows anything the spec doesn't say.
+- Verify before accepting: review the diff and run the build/tests the
+  task claims pass. One writer per working tree — the parent reviews and
+  applies fixes.
+
 ## Go
 
 - NEVER use `gofmt`, use `go fmt ./...`.
