@@ -139,16 +139,16 @@
 
     renderdoc
   ])) ++ (with pkgs; let
-    goPackage = go_1_26;
-    buildGoModule = buildGo126Module;
+    goPackage = go_latest;
+    buildGoModule = buildGoLatestModule;
   in [
     goPackage
     (mockgen.override  { inherit buildGoModule; })
     (gotools.override  { inherit buildGoModule; })
     (gosec.override    { inherit buildGoModule; })
-    (govulncheck.override { /* inherit buildGoModule; */ })
+    (govulncheck.override { }) # Uses buildGoLatestModule
     (gops.override { inherit buildGoModule; })
-    (delve.override { /* inherit buildGoModule; */ })
+    (delve.override { inherit buildGoModule; })
   ]);
 
   programs.git.enable = true;
