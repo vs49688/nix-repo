@@ -215,7 +215,10 @@ Subagents may be available; take advantage of them.
 
 ## Go
 
-- NEVER use `gofmt`, use `go fmt ./...`.
+- Never invoke `gofmt` directly — use `go fmt`, the module-aware wrapper
+  and canonical invocation (same bytes, but the command is the rule):
+  `go fmt ./...` for the whole tree, `go fmt ./<file>` to format a single
+  file after an edit.
 - Greenfield repos: checkpoint commits may freely include vendor churn.
 - Mature repos: keep dependency *updates* in their own commit — `go get -u ./... && go mod tidy && go mod vendor`, commit as `vendor: update`, separate from any code changes.
 - Mature repos: a *new* dependency goes in the same commit as the code that first imports it. `go mod vendor` only vendors packages that are actually imported, so a dependency added without its consumer either can't be vendored or gets dropped by the next vendor operation.
