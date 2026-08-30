@@ -107,8 +107,36 @@ in
       { name = "open-webui"; ensureDBOwnership = true; }
     ];
 
-    services.litellm = {
+    services.litellm = let
+      xpkgs = pkgs.python3Packages.overrideScope (final: prev: {
+        litellm = prev.litellm.overridePythonAttrs(old: rec {
+          version = "1.98.0";
+
+          src = pkgs.fetchFromGitHub {
+            owner = "BerriAI";
+            repo = "litellm";
+            tag = "v${version}";
+            hash = "sha256-eMquDSSlBo//huXXiys/F36O18VDjv7U1OUe7DrKhus=";
+          };
+
+          postPatch = old.postPatch + ''
+            substituteInPlace pyproject.toml \
+              --replace-fail "boto3>=1.43.1,<2.0" "boto3==${prev.boto3.version}"
+          '';
+
+          dependencies =
+            (old.dependencies or [ ])
+            ++ prev.litellm.optional-dependencies.proxy
+            ++ prev.litellm.optional-dependencies.extra_proxy
+            ++ prev.litellm.optional-dependencies.proxy-runtime;
+        });
+      });
+
+      xlitellm = xpkgs.toPythonApplication (xpkgs.litellm);
+    in {
       enable = true;
+
+      package = xlitellm;
 
       environmentFile = cfg.litellmEnvironmentFile;
 
