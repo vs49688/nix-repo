@@ -94,6 +94,8 @@ in (({
 
   gnupg-1_4 = super.callPackage ./pkgs/gnupg-1_4 { };
 
+  audio-cpp = super.callPackage ./pkgs/audio-cpp { };
+
   ##
   # NX
   ##
