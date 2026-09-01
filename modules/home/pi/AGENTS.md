@@ -11,6 +11,15 @@ component: short description
 Optional longer description if the change warrants it.
 ```
 
+- The `component` prefix is usually the path to the changed code,
+  relative to the repo root — `modules/home/pi/...`, `pkgs/...`,
+  `hosts/...` — but it's a judgment call, not a mechanical rule. Trim
+  segments that don't add meaning: `frontend/MyComponent:` rather than
+  `frontend/src/components/MyComponent:`. If the subject would exceed
+  72 characters, drop leading directories from the left. The prefix
+  should be recognizable at a glance; don't stack multiple prefixes
+  (`pi: web-request:` isn't a path).
+
 - Each commit should be a single logical unit.
 - Make one commit per independent change. Commit immediately after the change builds and passes tests — do not let fixes pile up in the working tree.
 - Stage files individually with `git add <file>`. Never use `git add -A`, `git add .`, or any blanket staging command — they pick up unrelated untracked files.
@@ -95,9 +104,13 @@ users with show_nsfw=false (default) never see NSFW resources.
 
 **caller:**
 
-Multiple packages sharing the same logical change can go in one commit with a compound prefix:
+A single commit that touches several files under one tree — e.g. a tool
+plus the skill that documents it — is one logical change and gets one
+commit with a compound prefix: brace the differing trailing segments
+under the shared prefix you'd use for a single path, in tree order:
 
 ```
+modules/home/pi/{forgejo-api,web-request}: read header values from files
 backend/graph/{blog,comment,resource}: validate urls in markdown content
 ```
 
