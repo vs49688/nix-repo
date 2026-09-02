@@ -51,6 +51,10 @@ in
       type = types.str;
     };
 
+    litellmExtraModels = mkOption {
+      type = types.listOf yamlFormat.type;
+    };
+
     oauthClientId = mkOption {
       type = types.str;
       example = "00000000-0000-0000-0000-000000000000";
@@ -358,7 +362,7 @@ in
             api_key = "unnecessary";
           };
         }
-      ];
+      ] ++ cfg.litellmExtraModels;
     };
 
     systemd.services.litellm = {
