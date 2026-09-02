@@ -2,6 +2,7 @@
 let
   cfg = config.cadance.ai;
 
+  jsonFormat = pkgs.formats.json { };
   yamlFormat = pkgs.formats.yaml { };
 
   makeAnthropicModel = { name, modelName ? name, withCaching ? true, extra ? {} }: {
@@ -87,6 +88,40 @@ in
         options = {
           port = mkOption {
             type = with types; ints.between 1 65536;
+          };
+        };
+      };
+    };
+
+    audioCpp = mkOption {
+      type = types.submodule {
+        options = {
+          port = mkOption {
+            default = 8881;
+            type = with types; ints.between 1 65536;
+          };
+
+          models = mkOption {
+            default = [];
+            type = types.listOf types.attrs;
+          };
+
+          config = mkOption {
+            readOnly = true;
+            default = {
+              lazy_load = true;
+              log_request_body = false;
+              max_request_body_bytes = 2147483648;
+
+              models = cfg.audioCpp.models;
+            };
+            type = types.attrs;
+          };
+
+          configJSON = mkOption {
+            readOnly = true;
+            type = types.package;
+            default = jsonFormat.generate "config.json" cfg.audioCpp.config;
           };
         };
       };
@@ -457,6 +492,83 @@ in
             "--suppress-nst"
           ];
         in "${pkgs.whisper-cpp-vulkan}/bin/whisper-server ${utils.escapeSystemdExecArgs args}";
+
+        # Identity
+        DynamicUser = true;
+
+        # Privilege hardening
+        NoNewPrivileges = true;
+        PrivateTmp = true;
+        PrivateUsers = true;
+        ProtectSystem = "strict";
+        ProtectHome = true;
+        ProtectKernelTunables = true;
+        ProtectKernelModules = true;
+        ProtectKernelLogs = true;
+        ProtectControlGroups = true;
+        ProtectClock = true;
+        ProtectHostname = true;
+        ProtectProc = "invisible";
+        ProcSubset = "pid";
+        RestrictNamespaces = true;
+        RestrictRealtime = true;
+        RestrictSUIDSGID = true;
+        LockPersonality = true;
+        MemoryDenyWriteExecute = false; # Vulkan shader JIT
+        RemoveIPC = true;
+
+        # Filesystem
+        PrivateDevices = false;
+        DeviceAllow = [
+          "/dev/dri/card0 rw"
+          "/dev/dri/renderD128 rw"
+        ];
+
+        # Network
+        RestrictAddressFamilies = [ "AF_INET" "AF_UNIX" ];
+
+        # Syscalls
+        SystemCallArchitectures = "native";
+        SystemCallFilter = [
+          "@system-service"
+          "@pkey"
+          "~@privileged"
+          "~@obsolete"
+        ];
+
+        CapabilityBoundingSet = "";
+        AmbientCapabilities = "";
+      };
+    };
+
+    systemd.services.audio-cpp = {
+      description = "audio.cpp TTS server";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
+
+      # confinement.enable = true; # Fucks with DeviceAllow=
+
+      path = with pkgs; [
+        audio-cpp
+      ];
+
+      serviceConfig = {
+        ExecStart = let
+          args = [
+            "--host"      "127.0.0.1"
+            "--port"      (toString cfg.audioCpp.port)
+            "--ui"
+            "--backend"   "vulkan"
+            "--config"    (toString cfg.audioCpp.configJSON)
+            "--voice-dir" "/var/lib/audiocpp/voices"
+          ];
+        in [
+          "${pkgs.audio-cpp}/bin/audiocpp_server ${utils.escapeSystemdExecArgs args}"
+        ];
+
+        StateDirectory = [
+          "audiocpp"
+        ];
 
         # Identity
         DynamicUser = true;
