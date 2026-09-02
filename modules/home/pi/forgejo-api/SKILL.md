@@ -12,14 +12,47 @@ Full API spec: `{instance}/swagger.v1.json` (OpenAPI 2.0)
 
 The API token lives at `~/.config/sops-nix/secrets/agents/forgejo_token`.
 
-Two-step workflow:
-1. Read the token: `read ~/.config/sops-nix/secrets/agents/forgejo_token`
-2. Use `web_request` with `headers={"Authorization":"token {token}"}`
+Pass it to `web_request` as a file reference:
 
 ```
-web_request: method="GET", url="https://git.vs49688.net/api/v1/repos/owner/repo/issues",
-             headers={"Authorization":"token AAAAAAAA..."}
+web_request: method="GET", url="https://git.vs49688.net/api/v1/repos/{owner}/{repo}/issues",
+             headers={"Authorization":{"file":"~/.config/sops-nix/secrets/agents/forgejo_token","prefix":"token "}}
 ```
+
+`web_request` reads the file itself: leading/trailing whitespace is trimmed
+(token files end with a newline) and `~` expands to the home directory.
+`prefix` and optional `suffix` wrap the contents, so `"prefix":"token "`
+yields `Authorization: token <token>`.
+
+`web_request` never runs shell expansions: `$(cat ...)` or `$VAR` inside a
+header value is sent literally, so always use the file-object form above,
+never shell substitution.
+
+The token belongs to the agent's own account, but repos may be owned by
+other users: always use the real owner in the URL path
+(`repos/{owner}/{repo}/...`), never assume it is the token's account.
+
+Sanity-check the token:
+
+```
+web_request: method="GET", url="https://git.vs49688.net/api/v1/user",
+             headers={"Authorization":{"file":"~/.config/sops-nix/secrets/agents/forgejo_token","prefix":"token "}}
+```
+
+`200` with `{"login":"<your account>",...}` means the token works; `401`
+means it does not.
+
+### Troubleshooting
+
+Forgejo's status codes are easy to misread:
+
+| Status | Meaning |
+|--------|---------|
+| 401 | Token problem: missing, malformed, expired, or a file-form mistake. |
+| 404 | Wrong `{owner}/{repo}` path, repo doesn't exist, or exists but is private to another account — Forgejo hides private repos, so this happens with valid tokens too. |
+
+If `/api/v1/user` returns 200, the token is fine and any 404 is a path or
+visibility problem, not an auth failure.
 
 ### Common Endpoints
 
@@ -51,7 +84,7 @@ Fetch the Swagger spec:
 
 ```
 web_request: method="GET", url="https://git.vs49688.net/swagger.v1.json",
-             headers={"Authorization":"token {token}"}
+             headers={"Authorization":{"file":"~/.config/sops-nix/secrets/agents/forgejo_token","prefix":"token "}}
 ```
 
 Then grep the response for the endpoint path.
