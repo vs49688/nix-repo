@@ -29,6 +29,7 @@ in
         myPy
         poppler-utils # For pdftotext
         tinyxxd # LLMs seem to really like xxd
+        firefox-devtools-mcp
       ];
 
       context = builtins.readFile ./AGENTS.md;
@@ -106,6 +107,14 @@ in
           args = ["mcp"];
           lifecycle = "lazy";
           directTools = true;
+        };
+
+        firefox = {
+          command = lib.getExe pkgs.firefox-devtools-mcp;
+          args = [
+            "--firefox-path" "${lib.getExe pkgs.firefox}"
+          ];
+          lifecycle = "lazy-keep-alive";
         };
       };
     };
