@@ -181,6 +181,14 @@ in
 
       settings.model_list = (lib.optionals cfg.enableOpenAIModels [
         {
+          model_name = "gpt-6-astra";
+          litellm_params = {
+            model = "openai/responses/gpt-6-astra";
+            api_key = "os.environ/OPENAI_API_KEY";
+            store = false;
+          };
+        }
+        {
           model_name = "gpt-5.6-sol";
           litellm_params = {
             model = "openai/responses/gpt-5.6-sol";
