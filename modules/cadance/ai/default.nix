@@ -318,6 +318,13 @@ in
             api_key = "os.environ/DEEPSEEK_API_KEY";
           };
         }
+        {
+          model_name = "deepseek-v4-flash-vision-exp";
+          litellm_params = {
+            model = "deepseek-v4-flash-vision-exp";
+            api_key = "os.environ/DEEPSEEK_API_KEY";
+          };
+        }
       ]) ++ [
         {
           model_name = "fireworks-deepseek-v4-pro-0813";
