@@ -285,6 +285,33 @@
       };
     };
 
+    ##
+    # Variant of the git config without the "url" key and with token helpers.
+    # Mostly intended for sandboxed agents that don't have access to my git config.
+    ##
+    home.file.".config/git/config.agent" = lib.mkIf config.programs.git.enable (let
+      # Answers git's credential "get" only, so nothing is ever persisted.
+      forgejoHelper = pkgs.writeShellScript "git-credential-forgejo-pico" ''
+        case "$1" in
+            get)
+                token="$HOME/.config/sops-nix/secrets/agents/forgejo_token"
+                if [ -r "$token" ]; then
+                    printf 'username=pico\npassword=%s\n' "$(cat "$token")"
+                fi
+                ;;
+        esac
+      '';
+
+      settings = lib.recursiveUpdate (lib.removeAttrs config.programs.git.settings [ "url" ]) {
+        credential."https://git.vs49688.net" = {
+          username = "pico";
+          helper = "${forgejoHelper}";
+        };
+      };
+    in {
+      text = lib.generators.toGitINI settings;
+    });
+
     programs.ssh.enable = true;
     programs.ssh.enableDefaultConfig = false;
     programs.ssh.settings = {

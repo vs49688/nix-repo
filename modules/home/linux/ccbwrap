@@ -20,6 +20,10 @@ command=(
     --dev /dev
 )
 
+[[ -f "$HOME/.config/git/config.agent" ]] && command+=(
+    --setenv GIT_CONFIG_GLOBAL "$HOME/.config/git/config.agent"
+)
+
 applyFiles --dev-bind /dev/dri /dev/dri
 
 applyFiles --ro-bind        \
