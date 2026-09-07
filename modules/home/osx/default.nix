@@ -9,7 +9,10 @@ in {
         InitialKeyRepeat = 15;
       };
 
-      "com.apple.dock".show-recents = false;
+      "com.apple.dock" = {
+        show-recents = false;
+        enterMissionControlByTopWindowDrag = false;
+      };
     };
 
     home.file.".hammerspoon".source = ./hammerspoon;
