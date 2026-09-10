@@ -59,7 +59,7 @@ in
           contextWindow = 1000000;
           maxTokens = 384000;
           reasoning = true;
-          input = ["text"];
+          input = ["text" "image"];
           api = "openai-completions";
           reasoningEffortMap = {
             minimal = "high";
