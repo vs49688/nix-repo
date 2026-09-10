@@ -37,7 +37,7 @@ in
       settings = {
         theme = "dark";
         defaultProvider = "deepseek";
-        defaultModel = "deepseek-v4-flash";
+        defaultModel = "deepseek-flash";
         packages = [
           "npm:pi-subagents"
           "npm:pi-mcp-adapter"
@@ -79,8 +79,7 @@ in
           api = "openai-responses";
           apiKey = "unnecessary";
           models = [
-            (mkDeepseekModel "deepseek-v4-pro")
-            (mkDeepseekModel "deepseek-v4-flash")
+            (mkDeepseekModel "deepseek-flash")
           ];
         };
 
@@ -89,8 +88,7 @@ in
           api = "openai-completions";
           # apiKey = ""; # Filled in private config.
           models = [
-            (mkDeepseekModel "deepseek-v4-pro")
-            (mkDeepseekModel "deepseek-v4-flash")
+            (mkDeepseekModel "deepseek-flash")
           ];
         };
       };
