@@ -39,8 +39,8 @@ in
         defaultProvider = "deepseek";
         defaultModel = "deepseek-flash";
         packages = [
-          "npm:pi-subagents"
-          "npm:pi-mcp-adapter"
+          "npm:pi-subagents@0.67.0"
+          "npm:pi-mcp-adapter@2.32.1"
           "git:github.com/samfoy/pi-lsp-extension@f2433d19c3bb1300dfdc5f4505b062f9c9c0a1a6"
         ];
 
