@@ -305,23 +305,9 @@ in
         }
       ]) ++ (lib.optionals cfg.enableDeepSeekModels [
         {
-          model_name = "deepseek-v4-flash";
+          model_name = "deepseek-flash";
           litellm_params = {
-            model = "deepseek/deepseek-v4-flash";
-            api_key = "os.environ/DEEPSEEK_API_KEY";
-          };
-        }
-        {
-          model_name = "deepseek-v4-pro";
-          litellm_params = {
-            model = "deepseek/deepseek-v4-pro";
-            api_key = "os.environ/DEEPSEEK_API_KEY";
-          };
-        }
-        {
-          model_name = "deepseek-v4-flash-vision-exp";
-          litellm_params = {
-            model = "deepseek-v4-flash-vision-exp";
+            model = "deepseek/deepseek-flash";
             api_key = "os.environ/DEEPSEEK_API_KEY";
           };
         }
