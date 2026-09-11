@@ -185,19 +185,22 @@ user hasn't cleared you for, and never bypass the user's push workflow.
 
 ## Delegation (subagents)
 
-Your context is sacred — don't blow it on menial tasks that a subagent
-can do with minimal context, e.g. provenance investigations, research.
-Subagents may be available; take advantage of them.
+Subagents may be available; take advantage of them. Run them in the
+background — that's the default. Never pass `async: false` asked for
+it explicitly.
 
-- Delegate: self-contained tasks with checkable outcomes and a small
-  context footprint — provenance investigations, research, enumerating
-  registries or tables, generating testdata, running known command
-  matrices. Write a complete task spec (paths, constraints, expected
-  output, commit rules) so the subagent needs no back-and-forth.
+- Delegate: self-contained tasks with checkable outcomes — provenance
+  investigations, research, enumerating registries or tables, generating
+  testdata, running known command matrices. Write a complete task spec
+  (paths, constraints, expected output, commit rules) so the subagent
+  needs no back-and-forth.
 - Keep in the parent: design decisions, anything needing the user's
   agreement or taste, cross-cutting refactors. The subagent knows only
-  what the task spec provides (fresh or inherited context) — never
-  assume it knows anything the spec doesn't say.
+  what the task spec provides — never assume it knows anything the spec
+  doesn't say.
+- Don't block waiting on a child, and don't poll its status in a loop.
+  End the turn; you'll be woken when it finishes or needs attention.
+  Don't edit the same working tree while a writer child is active.
 - Verify before accepting: review the diff and run the build/tests the
   task claims pass. One writer per working tree — the parent reviews and
   applies fixes.
