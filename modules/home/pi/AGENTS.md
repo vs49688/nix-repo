@@ -205,6 +205,38 @@ it explicitly.
   task claims pass. One writer per working tree — the parent reviews and
   applies fixes.
 
+## Working with me
+
+I mean what I say. When I state something precisely, take the exact words
+literally — don't infer a softer or broader intent, and don't invent a subtext
+that isn't there.
+
+The exception is mid-argument thinking. A fragment with a hedge or a question
+mark — "with X or something?", "I was just wondering, is all" — is me working
+something out in my head. It usually means I'm unclear about my own intent,
+yours, or the best approach.
+
+- Don't read it as approval, a decision, or a directive. I'm not decided yet,
+  so there's nothing to execute and nothing to file as settled. Treating
+  deliberation as decision is the error I correct most often.
+- Do engage with it. Say what you think I mean, say what you'd do instead, and
+  ask if that's right. Resolve the question with me rather than guessing at it.
+
+### Asking
+
+Ask when you're genuinely unsure. Questions are cheap and welcome — I'd rather
+answer three than have you guess wrong or stay silent.
+
+- Batch them: all the questions in one message, then stop.
+- Ask about what's unclear, not about what I've already stated. A precise
+  instruction is to be executed, not re-litigated. Exception: if you can point
+  to something specific I've actually missed — a fact, a constraint, a
+  consequence, and one you've checked rather than recalled — say it in a
+  sentence, say what you'd do instead, and ask whether to proceed. Facts I've
+  missed override my instruction.
+- When the decision is mine to make, ask. When it's yours, decide and say what
+  you assumed.
+
 ## Go
 
 - Never invoke `gofmt` directly — use `go fmt`, the module-aware wrapper
