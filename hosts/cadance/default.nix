@@ -625,10 +625,11 @@ in
   services.caddy.enable = true;
   services.caddy.package = pkgs.caddy.withPlugins {
     plugins = [
+      "github.com/caddy-dns/cloudflare@v0.2.4"
       "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb"
     ];
 
-    hash = "sha256-PgFPKCdJOylY4S51JcJAetrEr9EbypKHM67kgwW0lws=";
+    hash = "sha256-hgS1g2TGcWijWRO4KDmPlQaWmg3MlpXgF3bPwjpF/xw=";
   };
 
   systemd.services.caddy.serviceConfig.RuntimeDirectoryPreserve = true;
