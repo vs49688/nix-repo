@@ -277,6 +277,12 @@ in
     restartUnits = [ "container@docspell.service" ];
   };
 
+  sops.secrets."caddy/cloudflare" = {
+    reloadUnits = [ "caddy.service" ];
+    owner = config.services.caddy.user;
+    group = config.services.caddy.group;
+  };
+
   sops.secrets."mail-backup/com-zanevaniperen-backup-cadance" = {};
 
   fileSystems."/" = {
@@ -648,6 +654,15 @@ in
 
   services.caddy.email = "webmaster@vs49688.net";
   services.caddy.acmeCA = "https://acme-v02.api.letsencrypt.org/directory";
+
+  services.caddy.virtualHosts."*.vs49688.net".extraConfig = ''
+    tls {
+      dns cloudflare {file.${config.sops.secrets."caddy/cloudflare".path}}
+      resolvers 1.1.1.1
+    }
+
+    abort
+  '';
 
   services.caddy.virtualHosts."http://192.168.64.5".extraConfig = ''
     file_server {
