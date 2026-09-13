@@ -8,9 +8,11 @@ import vm from "node:vm";
 // Evaluate a JavaScript expression against the parsed JSON response body, with
 // the body bound as `data`. Used to project large API responses down to the
 // fields that matter before they reach the model. Runs in a fresh VM context
-// with a timeout: not a security boundary (the agent already has code
-// execution), but it keeps filters from touching process/fs by accident and
-// stops a runaway expression from hanging the tool.
+// with a timeout and with string code generation disabled, so an accidental
+// `Function`/`eval` constructor escape can't reach the host process. This is
+// not a security boundary (the agent already has code execution), but it
+// keeps filters from touching process/fs by accident and stops a runaway
+// expression from hanging the tool.
 function runFilter(expression: string, body: string): string {
   let data: unknown;
   try {
@@ -22,7 +24,8 @@ function runFilter(expression: string, body: string): string {
 
   let value: unknown;
   try {
-    value = vm.runInContext(`(${expression})`, vm.createContext({ data }), { timeout: 1000 });
+    const context = vm.createContext({ data }, { codeGeneration: { strings: false, wasm: false } });
+    value = vm.runInContext(`(${expression})`, context, { timeout: 1000 });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     throw new Error(`filter failed (${message})`);
