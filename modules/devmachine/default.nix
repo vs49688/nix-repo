@@ -20,7 +20,7 @@
   virtualisation.spiceUSBRedirection.enable = true;
 
   virtualisation.podman.enable = true;
-  virtualisation.podman.dockerSocket.enable = true;
+  virtualisation.podman.dockerCompat = true;
   virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
   networking.firewall.interfaces.podman0.allowedTCPPorts = [ 53 ];
   networking.firewall.interfaces.podman0.allowedUDPPorts = [ 53 ];
@@ -82,7 +82,6 @@
     kubernetes-helm
     k9s
     docker-compose
-    docker # Just the client, we talk to podman
 
     # CLI Tools
     ninja
@@ -179,8 +178,7 @@
   users.users.${config.settings.primaryUser.username} = {
     extraGroups =
       lib.optionals config.programs.wireshark.enable [ "wireshark" ] ++
-      lib.optionals config.programs.cdemu.enable [ config.programs.cdemu.group ] ++
-      lib.optionals config.virtualisation.podman.enable [ "podman" ]
+      lib.optionals config.programs.cdemu.enable [ config.programs.cdemu.group ]
     ;
 
     packages = with pkgs; [
