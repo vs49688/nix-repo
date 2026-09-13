@@ -76,9 +76,7 @@
     # dosbox-x
 
     # Kubernetes/Container Stuff
-    minikube
     kubectl
-    kind
     kubernetes-helm
     k9s
     docker-compose
