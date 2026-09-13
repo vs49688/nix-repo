@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+# Refuse to run from a directory that would re-expose the real home. The
+# `--bind "$PWD"` below runs after `--tmpfs /home`, so binding $HOME (or any
+# ancestor of it) would silently undo the sandbox.
+if [ "$PWD" = / ] || [ "$HOME" = "$PWD" ] || [[ "$HOME" == "$PWD"/* ]]; then
+    echo "ccbwrap: refusing to run from $PWD (would re-expose \$HOME)" >&2
+    exit 1
+fi
+
 function applyFiles () {
     local flag=$1; shift
     for i in "$@"; do
