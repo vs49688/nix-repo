@@ -74,6 +74,7 @@ export default function (pi: ExtensionAPI) {
       "Make an HTTP request to a URL. Use for calling REST APIs, fetching docs, or any HTTP interaction. " +
       "Returns status, headers, and body. The body is returned as text — use JSON.parse() in your code if you need structured data. " +
       "For large responses, pass filter to project a JSON body down to the fields you need before it reaches you. " +
+      "Request bodies are sent as application/json unless you set your own Content-Type header. " +
       "Header values may reference a file instead of a literal string, for secrets: " +
       'pass {"file":"<path>","prefix":"token "} as the value and the file contents (trimmed) are read and sent. ' +
       'The file path expands "~" to the home directory. Values are sent literally — no shell expansion — so ' +
@@ -114,7 +115,10 @@ export default function (pi: ExtensionAPI) {
         ),
       ),
       body: Type.Optional(
-        Type.String({ description: "Request body. Pass a JSON string for JSON APIs." }),
+        Type.String({
+          description:
+            "Request body. Pass a JSON string for JSON APIs — it is sent with Content-Type: application/json unless you set the header yourself.",
+        }),
       ),
       filter: Type.Optional(
         Type.String({
@@ -143,6 +147,15 @@ export default function (pi: ExtensionAPI) {
         const headers: Record<string, string> = {};
         for (const [key, value] of Object.entries(params.headers ?? {})) {
           headers[key] = await resolveHeaderValue(value);
+        }
+
+        // APIs (Forgejo included) reject JSON bodies without this, and agents
+        // keep forgetting it. Only a default: an explicit header wins.
+        if (
+          params.body !== undefined &&
+          !Object.keys(headers).some((key) => key.toLowerCase() === "content-type")
+        ) {
+          headers["Content-Type"] = "application/json";
         }
 
         const response = await fetch(params.url, {

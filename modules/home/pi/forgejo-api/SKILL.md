@@ -100,6 +100,7 @@ objects are already small (~200 B) — no need to project those.
 
 ### Key Gotchas
 
+- Write endpoints (`POST`/`PATCH`/`PUT` with a body) need `Content-Type: application/json`. `web_request` sets it whenever you pass a `body`, so only set the header yourself if you need something else — Forgejo otherwise returns 422 (`Empty Content-Type` or `Unsupported Content-Type`).
 - Label assignment in issue creation uses label IDs (integers), not names
 - 409 on issue creation means a duplicate
 - Milestone `due_on` uses ISO 8601 with timezone: `2026-06-30T00:00:00+10:00`
