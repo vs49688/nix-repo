@@ -36,7 +36,6 @@ in
     ../../modules/ssh-totp.nix
     ../../modules/postgres-ensure-roles.nix
     ../../modules/cadance/settings.nix
-    ../../modules/cadance/postgresql.nix
     ../../modules/cadance/auth.nix
     ../../modules/cadance/unifi.nix
     ../../modules/cadance/nextcloud.nix
