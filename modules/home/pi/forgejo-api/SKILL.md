@@ -54,21 +54,48 @@ Forgejo's status codes are easy to misread:
 If `/api/v1/user` returns 200, the token is fine and any 404 is a path or
 visibility problem, not an auth failure.
 
+### Keeping Responses Small
+
+`web_request` returns the whole body, and Forgejo's objects are fat: one
+issue is ~1 KB (25 fields, including a nested `repository` blob), a
+50-issue list is ~145 KB, and the full swagger spec is ~850 KB. Pass
+`filter` — a JavaScript expression with the parsed JSON body bound as
+`data` — to keep only what you need:
+
+    web_request: method="GET", url="...", headers={...},
+                 filter="data.map(i => ({number: i.number, title: i.title, state: i.state}))"
+
+Common shapes:
+
+| Want | filter |
+|------|--------|
+| One issue/PR | `({number: data.number, title: data.title, state: data.state, html_url: data.html_url})` |
+| A list of issues | `data.map(({number,title,state}) => ({number,title,state}))` |
+| Search results | `data.data.map(r => ({name: r.full_name, private: r.private}))` |
+| Keys of an object | `Object.keys(data.paths)` |
+
+`filter` requires a JSON body; if the expression throws, the tool reports
+the error plus a short preview rather than failing silently. `maxBytes`
+caps the returned body when you don't filter (useful for HTML). Milestone
+objects are already small (~200 B) — no need to project those.
+
 ### Common Endpoints
 
 **Milestones:**
 - List: `GET /repos/{owner}/{repo}/milestones`
-- Create: `POST /repos/{owner}/{repo}/milestones` — body: `{"title":"...", "description":"..."}`
+- Create: `POST /repos/{owner}/{repo}/milestones` — body: `{"title":"...", "description":"..."}` (responses are ~200 B)
 
 **Issues:**
-- List: `GET /repos/{owner}/{repo}/issues?milestone={id}&state=open`
+- List: `GET /repos/{owner}/{repo}/issues?milestone={id}&state=open` — always project (see above)
 - Create: `POST /repos/{owner}/{repo}/issues` — body: `{"title":"...", "body":"...", "milestone":{id}}`
+- Update: `PATCH /repos/{owner}/{repo}/issues/{index}` — returns the full issue, so project it, e.g. `filter="({number: data.number, html_url: data.html_url})"`
+- Comment: `POST /repos/{owner}/{repo}/issues/{index}/comments` — body: `{"body":"..."}`; project to `({id: data.id, html_url: data.html_url})`
 
 **Labels:**
 - List: `GET /repos/{owner}/{repo}/labels`
 
 **Repos:**
-- List: `GET /repos/search?q=...&topic=true`
+- List: `GET /repos/search?q=...&topic=true` — the response is an envelope (`{data:[...]}`); project to `data.data.map(r => ({name: r.full_name, private: r.private}))`
 - Get: `GET /repos/{owner}/{repo}`
 
 ### Key Gotchas
@@ -80,11 +107,11 @@ visibility problem, not an auth failure.
 
 ### Unknown Endpoints
 
-Fetch the Swagger spec:
+The swagger spec is ~850 KB — never pull it into context raw. It needs no
+auth, so fetch it to a file and grep locally:
 
-```
-web_request: method="GET", url="https://git.vs49688.net/swagger.v1.json",
-             headers={"Authorization":{"file":"~/.config/sops-nix/secrets/agents/forgejo_token","prefix":"token "}}
-```
+    curl -s https://git.vs49688.net/swagger.v1.json -o /tmp/swagger.json
+    jq -r '.paths | keys[]' /tmp/swagger.json | grep -i issues
 
-Then grep the response for the endpoint path.
+Or keep it in `web_request` with a projection:
+`filter="Object.keys(data.paths).filter(p => p.includes('issues'))"`.

@@ -3,6 +3,40 @@ import { Type } from "typebox";
 import { StringEnum } from "@earendil-works/pi-ai";
 import { readFile } from "node:fs/promises";
 import { homedir } from "node:os";
+import vm from "node:vm";
+
+// Evaluate a JavaScript expression against the parsed JSON response body, with
+// the body bound as `data`. Used to project large API responses down to the
+// fields that matter before they reach the model. Runs in a fresh VM context
+// with a timeout: not a security boundary (the agent already has code
+// execution), but it keeps filters from touching process/fs by accident and
+// stops a runaway expression from hanging the tool.
+function runFilter(expression: string, body: string): string {
+  let data: unknown;
+  try {
+    data = JSON.parse(body);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    throw new Error(`filter requires a JSON response body (${message})`);
+  }
+
+  let value: unknown;
+  try {
+    value = vm.runInContext(`(${expression})`, vm.createContext({ data }), { timeout: 1000 });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    throw new Error(`filter failed (${message})`);
+  }
+
+  if (typeof value === "string") return value;
+  if (value === undefined) return "(filter returned undefined)";
+  try {
+    return JSON.stringify(value) ?? String(value);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    throw new Error(`filter result is not serialisable (${message})`);
+  }
+}
 
 type HeaderFileValue = { file: string; prefix?: string; suffix?: string };
 
@@ -39,6 +73,7 @@ export default function (pi: ExtensionAPI) {
     description:
       "Make an HTTP request to a URL. Use for calling REST APIs, fetching docs, or any HTTP interaction. " +
       "Returns status, headers, and body. The body is returned as text — use JSON.parse() in your code if you need structured data. " +
+      "For large responses, pass filter to project a JSON body down to the fields you need before it reaches you. " +
       "Header values may reference a file instead of a literal string, for secrets: " +
       'pass {"file":"<path>","prefix":"token "} as the value and the file contents (trimmed) are read and sent. ' +
       'The file path expands "~" to the home directory. Values are sent literally — no shell expansion — so ' +
@@ -47,6 +82,7 @@ export default function (pi: ExtensionAPI) {
     promptGuidelines: [
       "Use web_request when you need to interact with REST APIs or fetch web content.",
       "Prefer web_request over curl in bash — it returns structured results and has no output truncation.",
+      'For APIs that return fat objects (issue trackers, etc.), pass filter — a JavaScript expression with the parsed body bound as `data` — to project only the fields you need, e.g. filter="data.map(i => ({number: i.number, title: i.title}))". One Forgejo issue is ~1 KB and a 50-item list is ~145 KB; the swagger spec is ~850 KB.',
       "web_request runs no shell expansions: putting $(cat ...) or $VAR in a header value sends that text literally and it will not authenticate. To send a token stored in a file, pass the header value as an object instead of a string, e.g. headers={\"Authorization\":{\"file\":\"~/.config/sops-nix/secrets/agents/forgejo_token\",\"prefix\":\"token \"}} — the file contents are trimmed of leading/trailing whitespace and ~ expands to the home directory, keeping the secret out of the request text.",
     ],
     parameters: Type.Object({
@@ -79,6 +115,17 @@ export default function (pi: ExtensionAPI) {
       ),
       body: Type.Optional(
         Type.String({ description: "Request body. Pass a JSON string for JSON APIs." }),
+      ),
+      filter: Type.Optional(
+        Type.String({
+          description:
+            'JavaScript expression evaluated against the parsed JSON response, with the body bound as `data`. Its result replaces the body, so a large response can be projected down to the fields you need, e.g. filter="data.map(i => ({number: i.number, title: i.title}))" or filter="Object.keys(data.paths)". Requires a JSON body.',
+        }),
+      ),
+      maxBytes: Type.Optional(
+        Type.Number({
+          description: "Truncate the returned body to this many bytes (appends a truncation marker).",
+        }),
       ),
       timeout: Type.Optional(
         Type.Number({ description: "Timeout in seconds (default: 30)" }),
@@ -118,8 +165,31 @@ export default function (pi: ExtensionAPI) {
           headers: resHeaders,
         };
 
+        let text = body;
+        if (params.filter !== undefined) {
+          try {
+            text = runFilter(params.filter, body);
+          } catch (err) {
+            const message = err instanceof Error ? err.message : String(err);
+            const preview = body.length > 2000 ? body.slice(0, 2000) + "\n... (truncated)" : body;
+            return {
+              content: [
+                {
+                  type: "text",
+                  text: `HTTP ${response.status} ${response.statusText}\n\n${message}\n\nRaw response:\n${preview}`,
+                },
+              ],
+              details,
+            };
+          }
+        }
+
+        if (params.maxBytes !== undefined && text.length > params.maxBytes) {
+          text = text.slice(0, params.maxBytes) + "\n... (truncated)";
+        }
+
         if (!response.ok) {
-          const truncated = body.length > 4000 ? body.slice(0, 4000) + "\n... (truncated)" : body;
+          const truncated = text.length > 4000 ? text.slice(0, 4000) + "\n... (truncated)" : text;
           return {
             content: [
               {
