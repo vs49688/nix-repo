@@ -26,9 +26,9 @@
 
   config = {
     systemd.services.postgresql-setup.postStart = lib.concatMapStrings (user: let
-        userRoles = lib.concatStringsSep "," user.ensureRoles;
+        userRoles = lib.concatMapStringsSep ", " (r: "\"${r}\"") user.ensureRoles;
       in ''
-        psql -tAc 'GRANT "${userRoles}" TO "${user.name}"'
+        psql -tAc 'GRANT ${userRoles} TO "${user.name}"'
       ''
     ) (lib.filter (user: lib.length user.ensureRoles != 0) config.services.postgresql.ensureUsers);
   };
