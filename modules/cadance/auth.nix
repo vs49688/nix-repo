@@ -310,7 +310,6 @@ in {
 
           ##
           # Allow SSO Users to access Open WebUI.
-          # This should only be used from the public internet.
           ##
           {
             domain = "chat.vs49688.net";
