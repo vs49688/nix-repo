@@ -939,9 +939,7 @@ in
   cadance.ai.oauthProviderName = "auth.vs49688.net";
 
   services.caddy.virtualHosts."chat.vs49688.net".extraConfig = ''
-    ${caddyBlacklist}
-
-    forward_auth @blacklist unix//run/authelia/authelia.sock {
+    forward_auth unix//run/authelia/authelia.sock {
       uri /api/authz/forward-auth
     }
   '';
