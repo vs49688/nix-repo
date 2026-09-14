@@ -276,6 +276,13 @@ in
     restartUnits = [ "container@docspell.service" ];
   };
 
+  sops.secrets."caddy/syncthing" = {
+    reloadUnits = [ "caddy.service" ];
+
+    owner = "caddy";
+    group = "caddy";
+  };
+
   sops.secrets."mail-backup/com-zanevaniperen-backup-cadance" = {};
 
   fileSystems."/" = {
@@ -705,12 +712,20 @@ in
     }
 
     redir /sync /sync/
-    handle_path /sync/* {
-      forward_auth @blacklist unix//run/authelia/authelia.sock {
-        uri /api/authz/forward-auth
-      }
+    # Use "handle" to keep the path for Authelia,
+    # then a nested "handle_path" to strip it for Syncthing.
+    handle /sync/* {
+      route {
+        forward_auth unix//run/authelia/authelia.sock {
+          uri /api/authz/forward-auth
+        }
 
-      reverse_proxy ${config.services.syncthing.guiAddress}
+        handle_path /sync/* {
+          reverse_proxy ${config.services.syncthing.guiAddress} {
+            header_up Authorization {file.${config.sops.secrets."caddy/syncthing".path}}
+          }
+        }
+      }
     }
   '';
 
