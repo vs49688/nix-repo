@@ -883,9 +883,7 @@ in
   networking.firewall.interfaces.ve-unifi.allowedTCPPorts = [ config.services.postgresql.settings.port ];
 
   services.caddy.virtualHosts."unifi.vs49688.net".extraConfig = ''
-    ${caddyBlacklist}
-
-    forward_auth @blacklist unix//run/authelia/authelia.sock {
+    forward_auth unix//run/authelia/authelia.sock {
       uri /api/authz/forward-auth
     }
   '';
