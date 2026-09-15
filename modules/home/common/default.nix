@@ -252,6 +252,12 @@
         "**/__pycache__/"
       ];
 
+      attributes = [
+        "*.gpg filter=gpg diff=gpg"
+        "*.asc filter=gpg diff=gpg"
+        "**/*?.sops.yaml diff=sops"
+      ];
+
       settings = {
         user.name  = config.common.gitName;
         user.email = config.common.gitEmail;
@@ -273,7 +279,10 @@
         # It'll be "main" over my dead body
         init = { defaultBranch = "master"; };
 
-        diff = { gpg = { textconv = "gpg --no-tty --decrypt"; }; };
+        diff = {
+          gpg.textconv = "gpg --no-tty --decrypt";
+          sops.textconv = "sops -d";
+        };
 
         url = {
           "ssh://git@github.com/" = { insteadOf = "https://github.com/"; };
