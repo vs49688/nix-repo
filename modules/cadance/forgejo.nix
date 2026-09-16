@@ -221,8 +221,8 @@ in
         url = config.services.forgejo.settings.server.ROOT_URL;
         tokenFile = cfg.runnerTokenFile;
         labels = [
-          "debian-latest:docker://node:25-bullseye"
-          "ubuntu-latest:docker://node:25-bullseye"
+          "debian-latest:docker://node:current"
+          "ubuntu-latest:docker://node:current"
           "nixos:docker://${cfg.hostName}/oci/forgejo-ci-nix:latest"
         ];
         settings = {
