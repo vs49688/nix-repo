@@ -217,8 +217,9 @@ export default function (pi: ExtensionAPI) {
           };
         }
 
+        // NB: emit `text`, not `body` — it carries the filter/maxBytes result.
         return {
-          content: [{ type: "text", text: body }],
+          content: [{ type: "text", text }],
           details,
         };
       } catch (err) {
