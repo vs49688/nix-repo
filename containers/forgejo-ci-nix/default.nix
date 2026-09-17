@@ -5,6 +5,7 @@
 , tea
 , jq
 , attic-client
+, niks3
 , flakeVersion
 }:
 callPackage ./docker.nix {
@@ -17,6 +18,7 @@ callPackage ./docker.nix {
     tea      # For forgejo-release
     jq       # For forgejo-release
     attic-client
+    niks3
   ];
   Labels = {};
 
