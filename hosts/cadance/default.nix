@@ -792,12 +792,17 @@ in
     oidc.providers.forgejo = {
       issuer = "https://git.vs49688.net/api/actions";
       audience = "https://cache.vs49688.net";
-      boundClaims = {
-        repository_owner = [
-          "zane/nix-repo"
-        ];
-      };
-      scopes = [ "write" ];
+
+      rules = [
+        {
+          boundClaims = {
+            repository_owner = [ "zane" ];
+          };
+
+          boundSubject = [ "repo:zane/nix-repo:*" ];
+          scopes = [ "write" ];
+        }
+      ];
     };
 
     # serverUrl = "https://cache.vs49688.net";
