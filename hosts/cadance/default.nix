@@ -815,6 +815,14 @@ in
 
   services.caddy.virtualHosts."cache.vs49688.net".extraConfig = ''
     route {
+      # Compat hack - TODO: remove
+      handle_path /git-vs49688-net-zane-config/* {
+        rewrite /niks3{uri}
+        reverse_proxy http://${config.services.rustfs.settings.RUSTFS_ADDRESS} {
+          header_up -Authorization
+        }
+      }
+
       handle /api/* {
         reverse_proxy http://${config.services.niks3.httpAddr}
       }
@@ -824,7 +832,9 @@ in
       }
 
       rewrite /niks3{uri}
-      reverse_proxy http://${config.services.rustfs.settings.RUSTFS_ADDRESS}
+      reverse_proxy http://${config.services.rustfs.settings.RUSTFS_ADDRESS} {
+        header_up -Authorization
+      }
     }
   '';
 
