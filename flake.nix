@@ -143,6 +143,7 @@
       in baseSystem.extendModules {
         modules = [
           ./hosts/cadance
+          self.inputs.niks3.nixosModules.niks3
           (import ./modules/cadance/docspell.nix {
             docspell = self.inputs.docspell;
           })

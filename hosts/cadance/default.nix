@@ -749,34 +749,76 @@ in
     reverse_proxy localhost:9000
   '';
 
-  sops.secrets."attic/env" = {
-    restartUnits = [ "atticd.service" ];
+  sops.secrets."niks3/access_key" = {
+    restartUnits = [ "niks3.service" ];
+    owner = "niks3";
   };
 
-  services.atticd = {
+  sops.secrets."niks3/secret_key" = {
+    restartUnits = [ "niks3.service" ];
+    owner = "niks3";
+  };
+
+  sops.secrets."niks3/api_token" = {
+    restartUnits = [ "niks3.service" ];
+    owner = "niks3";
+  };
+
+  sops.secrets."niks3/signing_key" = {
+    restartUnits = [ "niks3.service" ];
+    owner = "niks3";
+  };
+
+  services.niks3 = {
     enable = true;
-    mode = "monolithic";
-    settings = {
-      listen = "127.0.0.1:8883";
-      allowed-hosts = [
-        "cache.vs49688.net"
-      ];
-      api-endpoint = "https://cache.vs49688.net/";
+    httpAddr = "127.0.0.1:5751"; # Unix sockets not supported
 
-      database.url = "postgresql://atticd@localhost/atticd?host=/run/postgresql";
+    s3 = {
+      endpoint = config.services.rustfs.settings.RUSTFS_ADDRESS;
+      bucket = "niks3";
+      useSSL = false;
+      accessKeyFile = config.sops.secrets."niks3/access_key".path;
+      secretKeyFile = config.sops.secrets."niks3/secret_key".path;
 
-      storage.type = "s3";
-      storage.region = "us-east-1";
-      storage.endpoint = "https://s3.vs49688.net"; # FIXME: https://github.com/zhaofengli/attic/pull/356
-      storage.bucket = "attic";
-
-      garbage-collection.default-retention-period = "1 month";
+      publicUrl = "https://s3.vs49688.net";
     };
-    environmentFile = config.sops.secrets."attic/env".path;
+
+    apiTokenFile = config.sops.secrets."niks3/api_token".path;
+
+    signKeyFiles = [
+      config.sops.secrets."niks3/signing_key".path
+    ];
+
+    oidc.providers.forgejo = {
+      issuer = "https://git.vs49688.net/api/actions";
+      audience = "https://cache.vs49688.net";
+      boundClaims = {
+        repository_owner = [
+          "zane/nix-repo"
+        ];
+      };
+      scopes = [ "write" ];
+    };
+
+    # serverUrl = "https://cache.vs49688.net";
+    cacheUrl = "https://cache.vs49688.net";
+
+    nginx.enable = false; # FUCK NO
   };
 
   services.caddy.virtualHosts."cache.vs49688.net".extraConfig = ''
-    reverse_proxy http://${config.services.atticd.settings.listen}
+    route {
+      handle /api/* {
+        reverse_proxy http://${config.services.niks3.httpAddr}
+      }
+
+      handle / {
+        rewrite /index.html
+      }
+
+      rewrite /niks3{uri}
+      reverse_proxy http://${config.services.rustfs.settings.RUSTFS_ADDRESS}
+    }
   '';
 
   services.postgresql = {
@@ -786,13 +828,11 @@ in
     ensureDatabases = [
       "docspell"
       "unifi"
-      "atticd"
     ];
 
     ensureUsers = [
       { name = "docspell"; ensureDBOwnership = true; }
       { name = "unifi"; ensureDBOwnership = true; }
-      { name = "atticd"; ensureDBOwnership = true; }
     ];
 
     authentication = ''
