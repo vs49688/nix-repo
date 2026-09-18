@@ -28,7 +28,7 @@ jobs:
       - name: Build Systems
         run: |
           set -x
-          nix build --print-build-logs --no-link --keep-going \
+          nix build --print-build-logs --no-link --keep-going --max-jobs auto \
             .#systems.CADANCE \
             .#systems.MORNINGSTAR \
             .#systems.CAPRICA \
