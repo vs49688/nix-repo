@@ -316,6 +316,8 @@ in
     options       = [ "nofail" "noatime" "nodiratime" ];
   };
 
+  services.journald.storage = "volatile";
+
   services.zfs.autoScrub = {
     enable   = true;
     interval = "*-*-01 02:00:00";
