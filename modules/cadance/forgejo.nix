@@ -80,6 +80,7 @@ in
 
         log = {
           LEVEL = "Info";
+          LOGGER_ROUTER_MODE = "";
         };
 
         database = {
