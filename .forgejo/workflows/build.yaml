@@ -1,12 +1,42 @@
+enable-openid-connect: true
+
 on:
   push:
-  pull_request:
   workflow_dispatch:
 jobs:
-  check:
+  build:
+    name: Build & Check
     runs-on: nixos
     steps:
+      - name: Setup Cache
+        id: cache
+        uses: actions/niks3-action@v1
+        with:
+          server-url: https://cache.vs49688.net
+          # debug: true
+
+      - name: Dump Nix Configuration
+        run: nix config show
+
       - name: Clone Repository
         uses: actions/checkout@v4
-      - name: Build
-        run: nix flake check
+
+      - name: Check
+        run: nix flake check --all-systems
+
+      # We're letting Nix do the parallelism here to take advantage of our cache.
+      - name: Build Systems
+        run: |
+          set -x
+          nix build --print-build-logs --no-link --keep-going \
+            .#systems.CADANCE \
+            .#systems.MORNINGSTAR \
+            .#systems.CAPRICA \
+            .#systems.AVALON \
+            .#systems.TWILYSPARKLE
+
+      # - name: Dump niks3 log
+      #   if: always()
+      #   run: |
+      #     set -x
+      #     cat "${RUNNER_TEMP:-/tmp}/niks3/daemon.log"
