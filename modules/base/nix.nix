@@ -22,12 +22,14 @@ in {
     ##
     # Use CADANCE as a substituter
     ##
-    nix.settings.substituters = lib.mkIf config.nix.useCadance [
+    nix.settings.extra-substituters = lib.mkIf config.nix.useCadance  [
       "https://cadance.vs49688.net/cache"
+      "https://cache.vs49688.net"
     ];
 
     nix.settings.trusted-public-keys = lib.mkIf config.nix.useCadance [
       "cadance.vs49688,net-1:EQcyD9wxzTEdAuqCHbRZUx09b++wE7eA7VZ+7M55npU="
+      "cache-vs49688-net-1:Xjaahyq7Wg/9WbLvLpnyIpRYi0PMruu0OLmcz7xbLVg="
     ];
 
     ##
