@@ -145,7 +145,7 @@
     (gosec.override    { inherit buildGoModule; })
     (govulncheck.override { }) # Uses buildGoLatestModule
     (gops.override { inherit buildGoModule; })
-    (delve.override { inherit buildGoModule; })
+    (delve.override { /* inherit buildGoModule; */ })
   ]);
 
   programs.git.enable = true;
