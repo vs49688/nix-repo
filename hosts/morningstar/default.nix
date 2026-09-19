@@ -202,6 +202,15 @@
     modem-manager-gui
   ];
 
+  home-manager.users.${config.settings.primaryUser.username}.qt.kde.desktops = {
+    "642bab9c-2c9e-46ab-a7bb-a313d0b5bd8a" = { sortOrder = 1; };
+    "0718986c-d656-497c-b391-94fb01b582a3" = { sortOrder = 2; };
+    "48f7abfb-0cdc-4555-b9bf-bc315edcde4b" = { sortOrder = 3; };
+    "bf8eecb3-3423-4daa-840c-35a1e4f2f53a" = { sortOrder = 4; };
+    "a74fb132-e80a-43b2-b628-ac0ed86304cf" = { sortOrder = 5; };
+    "e8b7b8a7-8531-4aaa-b198-35418c07b960" = { sortOrder = 6; };
+  };
+
   # virtualisation.waydroid.enable = true;
 
   environment.persistence."/data" = {
