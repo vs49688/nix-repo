@@ -1,5 +1,24 @@
 { config, lib, pkgs, ... }:
 {
+  options = {
+    qt.kde.desktops = with lib; mkOption {
+      type = types.attrsOf(types.submodule {
+        options = {
+          name = mkOption {
+            type = types.nullOr types.str;
+          };
+
+          sortOrder = mkOption {
+            type = types.int;
+            default = -1;
+          };
+        };
+      });
+
+      default = {};
+    };
+  };
+
   config = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     programs.bash.enableVteIntegration = true;
     programs.bash.shellAliases = {
@@ -240,6 +259,22 @@
         Effect-overview.BorderActivate = 9;
 
         MouseBindings.CommandAll1 = "Activate, raise and move";
+
+        Desktops = let
+          numDesktops = builtins.length (builtins.attrNames config.qt.kde.desktops);
+
+          desktops = lib.lists.sort (a: b: a.value.sortOrder < b.value.sortOrder) (lib.attrsToList config.qt.kde.desktops);
+
+          desktopEntries = lib.lists.imap1 (i: v: {
+            "Id_${toString i}" = v.name;
+            "Name_${toString i}" = lib.trivial.defaultTo "Desktop ${toString i}" v.value.name;
+          }) desktops;
+
+          desktopConfig = lib.attrsets.mergeAttrsList (desktopEntries ++ [{
+            Number = numDesktops;
+            Rows = 1;
+          }]);
+        in lib.mkIf (numDesktops > 0) desktopConfig;
       };
 
       kxkbrc = {
