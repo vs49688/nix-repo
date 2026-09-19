@@ -275,6 +275,16 @@
             Rows = 1;
           }]);
         in lib.mkIf (numDesktops > 0) desktopConfig;
+
+        Plugins = {
+          fadedesktopEnabled = false;
+          slideEnabled = true;
+        };
+
+        Windows = {
+          PerOutputVirtualDesktops = true;
+          RollOverDesktops = true;
+        };
       };
 
       kxkbrc = {
