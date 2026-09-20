@@ -192,6 +192,20 @@
     systems = builtins.mapAttrs (k: v: v.config.system.build.toplevel) self.outputs.nixosConfigurations;
 
     ##
+    # The machine-checkable part of the agent configuration. Text only, so it is
+    # defined for one system: an aarch64-darwin check would need a darwin builder
+    # to run it, and nothing about it depends on the platform.
+    ##
+    checks.x86_64-linux.agent-docs = let
+      pkgs = self.inputs.nixpkgs.legacyPackages.x86_64-linux;
+    in pkgs.runCommandLocal "check-agent-docs" {
+      nativeBuildInputs = [ pkgs.python3 ];
+    } ''
+      python3 ${./lib/check-agent-docs.py} ${./modules/home/pi}
+      touch $out
+    '';
+
+    ##
     # I actively despise this shit OS.
     # How do they manage to make it so f***ing user-unfriendly?
     ##
