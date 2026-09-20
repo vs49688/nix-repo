@@ -172,6 +172,10 @@ unsigned (signing is disabled in the agent config), and pushes from the
 sandbox authenticate as the agent account — so never push to a repo the
 user hasn't cleared you for, and never bypass the user's push workflow.
 
+A grant is narrow, explicit and scoped to whatever prompted it — "only because
+we're explicitly testing CI" — so don't treat one as standing permission, and
+don't carry it to another repo or another day.
+
 ## General
 
 - Use proper parsers for structured formats (HTML, URLs, etc.), not regex.
