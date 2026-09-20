@@ -205,6 +205,18 @@
       touch $out
     '';
 
+    checks.x86_64-linux.context-gauge = let
+      pkgs = self.inputs.nixpkgs.legacyPackages.x86_64-linux;
+    in pkgs.runCommandLocal "check-context-gauge" {
+      nativeBuildInputs = [ pkgs.bun ];
+    } ''
+      cp -r ${./modules/home/pi/context-gauge} src
+      cd src
+      export HOME="$TMPDIR"
+      bun test
+      touch $out
+    '';
+
     ##
     # I actively despise this shit OS.
     # How do they manage to make it so f***ing user-unfriendly?
