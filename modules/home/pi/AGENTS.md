@@ -214,7 +214,9 @@ don't carry it to another repo or another day.
 - When a project lacks a formal test suite, do not attempt to add or run tests unless explicitly instructed.
 - Run project-level formatters before committing — check the project's own `AGENTS.md` for specifics.
 - If `git commit` fails due to a missing signing key, retry with `--no-gpg-sign`.
-- Do NOT run a blanket `find` on `/`, `~`, or `/nix`.
+- **Never run a blanket `find` on `/`, `~`, `/nix` or `/nix/store`.** It is slow,
+  it looks like a hang, and it is what agents reach for when a tool is missing.
+  Ask instead, or pull the tool in with `nix`.
 - On a system with Nix, you may temporarily pull a missing tool with `nix run nixpkgs#<tool> -- <args>`.
 - If you are unable to find a required tool, end the turn and ask the user.
 
