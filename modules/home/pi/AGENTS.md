@@ -101,11 +101,13 @@ worker/syncfeed: handle 429 rate limit from upstream API
 
 When a change touches multiple packages, commit each package separately. Persistence changes go before callers; tests are squashed with their implementation.
 
+**interface change:**
+
 ```
 persistence: add ExcludeNSFW filter to V4SearchResourceOptions
 ```
 
-**interface change:**
+**caller:**
 
 ```
 backend/graph: respect user NSFW preference in resource search
@@ -114,8 +116,6 @@ Apply ExcludeNSFW filter in searchResources() and getRelatedResources()
 based on the user's content.show_nsfw property. Anonymous users and
 users with show_nsfw=false (default) never see NSFW resources.
 ```
-
-**caller:**
 
 A single commit that touches several files under one tree — e.g. a tool
 plus the skill that documents it — is one logical change and gets one
