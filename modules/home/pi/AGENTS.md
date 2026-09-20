@@ -218,6 +218,9 @@ don't carry it to another repo or another day.
   it looks like a hang, and it is what agents reach for when a tool is missing.
   Ask instead, or pull the tool in with `nix`.
 - On a system with Nix, you may temporarily pull a missing tool with `nix run nixpkgs#<tool> -- <args>`.
+- A flake only sees Git-tracked paths, so a file the flake references has to be
+  visible before it is committed. `git add -N <file>` marks it without staging
+  it; plain `git add` puts it in the next commit whether you meant it or not.
 - If you are unable to find a required tool, end the turn and ask the user.
 
 ## Delegation (subagents)
