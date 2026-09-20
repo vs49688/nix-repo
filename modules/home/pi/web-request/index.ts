@@ -84,10 +84,8 @@ export default function (pi: ExtensionAPI) {
       '"$(cat ...)" or "$VAR" would be sent as-is and not authenticate.',
     promptSnippet: "Make HTTP requests: GET, POST, PUT, PATCH, DELETE",
     promptGuidelines: [
-      "Use web_request when you need to interact with REST APIs or fetch web content.",
-      "Prefer web_request over curl in bash — it returns structured results and has no output truncation.",
-      'For APIs that return fat objects (issue trackers, etc.), pass filter — a JavaScript expression with the parsed body bound as `data` — to project only the fields you need, e.g. filter="data.map(i => ({number: i.number, title: i.title}))". One Forgejo issue is ~1 KB and a 50-item list is ~145 KB; the swagger spec is ~850 KB.',
-      "web_request runs no shell expansions: putting $(cat ...) or $VAR in a header value sends that text literally and it will not authenticate. To send a token stored in a file, pass the header value as an object instead of a string, e.g. headers={\"Authorization\":{\"file\":\"~/.config/sops-nix/secrets/agents/forgejo_token\",\"prefix\":\"token \"}} — the file contents are trimmed of leading/trailing whitespace and ~ expands to the home directory, keeping the secret out of the request text.",
+      "Use web_request for REST APIs and web content in preference to curl in bash — it returns structured results and has no output truncation. The exception is a body you want on disk to grep, where curl -o is the right tool.",
+      "For APIs that return fat objects — issue trackers, spec documents — pass filter to project the response down to the fields you need rather than reading the whole thing into context.",
     ],
     parameters: Type.Object({
       url: Type.String({ description: "Full URL including protocol (https://...)" }),
@@ -126,7 +124,7 @@ export default function (pi: ExtensionAPI) {
       filter: Type.Optional(
         Type.String({
           description:
-            'JavaScript expression evaluated against the parsed JSON response, with the body bound as `data`. Its result replaces the body, so a large response can be projected down to the fields you need, e.g. filter="data.map(i => ({number: i.number, title: i.title}))" or filter="Object.keys(data.paths)". Requires a JSON body.',
+            'JavaScript expression evaluated against the parsed JSON response, with the body bound as `data`. Its result replaces the body, so a large response can be projected down to the fields you need, e.g. filter="data.map(i => ({number: i.number, title: i.title}))" or filter="Object.keys(data)". Requires a JSON body.',
         }),
       ),
       maxBytes: Type.Optional(
