@@ -377,24 +377,8 @@ obeying it into a worse outcome.
 - When the decision is mine to make, ask. When it's yours, decide and say what
   you assumed.
 
-## Go
+## Project conventions
 
-- Never invoke `gofmt` directly — use `go fmt`, the module-aware wrapper
-  and canonical invocation (same bytes, but the command is the rule):
-  `go fmt ./...` for the whole tree, `go fmt ./<file>` to format a single
-  file after an edit.
-- Greenfield repos: checkpoint commits may freely include vendor churn.
-- Mature repos: keep dependency *updates* in their own commit — `go get -u ./... && go mod tidy && go mod vendor`, commit as `vendor: update`, separate from any code changes.
-- Mature repos: a *new* dependency goes in the same commit as the code that first imports it. `go mod vendor` only vendors packages that are actually imported, so a dependency added without its consumer either can't be vendored or gets dropped by the next vendor operation.
-- **A dependency a caller may need to stand in for gets an interface**, with the
-  implementation left unexported and the constructor returning the interface,
-  because the concrete type is deliberately not exported to return instead.
-  This is not "prefer interfaces" as a reflex: one is worth it where something
-  actually substitutes for the dependency — a test, a dummy, a second
-  implementation — and it costs a layer of indirection everywhere else. A
-  concrete type only constructed and used within one package stays concrete.
-- The inverse is the **escape hatch**: a method that hands out a concrete
-  dependency, like a `Pool()`, `GetRiver()` or `GetClient()` accessor. Those
-  exist for the few callers that genuinely need the concrete thing, usually
-  tests. Adding one to avoid introducing an interface is the wrong trade; adding
-  one because a test needs it is fine, and the comment should say so.
+Go style and tooling, the libraries to reach for, the `framework` persistence
+layer, and how the work gets done across the repos all live in the
+`house-conventions` skill. Load it before starting work in one of my repos.
