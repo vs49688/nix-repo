@@ -125,5 +125,6 @@ in
 
     home.file.".pi/agent/skills/pdf-to-text".source = ./pdf-to-text;
     home.file.".pi/agent/skills/forgejo-api".source = ./forgejo-api;
+    home.file.".pi/agent/skills/house-conventions".source = ./house-conventions;
   };
 }
