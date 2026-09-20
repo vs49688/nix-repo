@@ -31,13 +31,19 @@ Optional longer description if the change warrants it.
 - Make one commit per independent change. Commit immediately after the change builds and passes tests — do not let fixes pile up in the working tree.
 - Stage files individually with `git add <file>`. Never use `git add -A`, `git add .`, or any blanket staging command — they pick up unrelated untracked files.
 - Split work across multiple commits when touching independent subsystems (e.g., persistence changes separate from callers, frontend separate from backend).
-- **Before pushing, squash follow-up fixes into their original commits**, not into new standalone commits. Each commit should stand alone as a correct, complete unit — not as a first attempt followed by fixups. Use `git commit --fixup` + `git rebase -i --autosquash` to make this painless:
+- **The end result has follow-ups squashed into their original commits**, so that
+  each commit stands alone as a correct, complete unit — not a first attempt
+  followed by repairs. While you are working, record a follow-up with
+  `git commit --fixup`:
 
   ```
   git commit --fixup <target-hash>
-  # ... later, before pushing ...
-  git rebase -i --autosquash <base>
   ```
+
+  Prefer that to running `git rebase -i --autosquash` yourself: agents handle
+  blocking on stdin badly, and the autosquash is generally mine to do before
+  pushing. You may run it when there is a good reason to, and if you are unsure
+  whether there is, ask.
 - **Greenfield exception:** for greenfield/early-stage projects still
   finding their shape, blanket checkpoint commits are fine — commit freely and
   don't over-polish history; apply the squash discipline once the project
