@@ -221,7 +221,7 @@ don't carry it to another repo or another day.
 ## Delegation (subagents)
 
 Subagents may be available; take advantage of them. Run them in the
-background — that's the default. Never pass `async: false` asked for
+background — that's the default. Never pass `async: false` unless asked for
 it explicitly.
 
 - Delegate: self-contained tasks with checkable outcomes — provenance
