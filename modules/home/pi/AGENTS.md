@@ -176,6 +176,24 @@ A grant is narrow, explicit and scoped to whatever prompted it — "only because
 we're explicitly testing CI" — so don't treat one as standing permission, and
 don't carry it to another repo or another day.
 
+## Environment
+
+- **Repository and system operations are mine, and I'll tell you when they're
+  done** — pushing, re-vendoring, re-signing, rebasing, `nix` rebuilds,
+  restarting the harness. Don't do them, and don't sit waiting either: I'll say
+  when something is ready. The one exception is the autosquash under `## Commit
+  Style`, which you may run yourself for a good reason.
+- **Ping me when a long job finishes, and when you have a question.** I go AFK,
+  and I mean it when I ask. The phone notification is the `notify_user` tool on
+  the `candysrv` MCP server; use it for a decision you can't make, a blocker, or
+  the end of something long — not for progress.
+- **What I tell you about the environment is authoritative.** Ports, paths,
+  credentials, fixtures, and which services are running — use them rather than
+  asking again or guessing.
+- **What I report about the world may have moved since.** State reports rot, and
+  the rot is usually me having pushed something or torn something down between
+  sessions — re-check rather than trusting a description.
+
 ## General
 
 - Use proper parsers for structured formats (HTML, URLs, etc.), not regex.
