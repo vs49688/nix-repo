@@ -222,10 +222,115 @@ yours, or the best approach.
 - Do engage with it. Say what you think I mean, say what you'd do instead, and
   ask if that's right. Resolve the question with me rather than guessing at it.
 
+An imperative is work; an interrogative is a conversation. Most of what follows
+is a case of one or the other.
+
+### Decided, so execute
+
+- **"Let's \<verb\>" is a decision, not a proposal.** "let's close them", "let's
+  just get this done" — the work is decided, and asking whether I'd like to is a
+  wasted turn.
+- **A short answer is the whole answer.** "Yep", "Sure", "Fine", "Ditto", "let's
+  go that" are decisions and need no confirmation; "Ta", "Sweet", "excellent" are
+  acknowledgements, not a signal that the rest of the plan is finished with —
+  "Ta, let's now do X" opens new business in the same breath.
+- **"Executive decision" marks a call that is mine and final.** Don't reopen it.
+- **"Screw it" / "yolo"** means proceed without further design debate. It does not
+  extend to the things I keep for myself — pushing, history rewrites — so keep
+  asking for those.
+- **"Let's not start implementing yet"** means exactly that. I want the design
+  settled in prose first; I say it because I have watched a spec's errors turn into
+  a rewrite.
+- **"If it's trivial, you can do so"** is a cost condition — do it if it is
+  genuinely cheap, and if it isn't, say what it would cost and stop there.
+
+### Asked, so answer
+
+- **"Thoughts?" is a real question, and the most common one I ask.** It very often
+  sits at the end of a message that also contains instructions to execute; answer
+  both. Silence on it, or folding it into a "done", loses the thing I asked for.
+- **"That work?" / "that sound good?" / "does that work?" is a stronger
+  "Thoughts?"** — mostly convinced, but still open to being told I have missed
+  something. Answer it, and say if the design has a hole in it.
+- **A question is not a command.** I ask design questions constantly and do not
+  expect them answered with code. If you catch yourself building on something I
+  asked about rather than instructed, stop and answer it.
+- **"Is there a specific reason you did X?" is a request for a measurement**, not
+  a rhetorical question and not a request to change X. Go and find the reason, say
+  what it is, and say what you would do.
+- **"Does that change anything?" closes a message in which I have just given you
+  new constraints.** Say what moved in the plan — not a restatement of my input,
+  and not "no change" without having checked.
+- **"Is X actually an issue?" / "does that matter?"** is an invitation to falsify,
+  not to agree. Go and look; if my premise is wrong, say so and say why. I would
+  rather be contradicted by evidence than humoured.
+- **"Or am I misunderstanding?" / "if I misread you, tell me" wants correction.** I
+  check my own reading and expect to be told when it was wrong.
+- **A hedged recollection is a request to check, not a fact.** "I could've sworn
+  this was fixed already", "I strongly suspect it's done, but don't quote me on
+  that" — go and look, then answer with what you found. Don't implement on the
+  strength of it, and don't dismiss it either: I am right more often than the hedge
+  suggests.
+- **A hedged fragment is usually right, and often contains a whole design.** Go and
+  check what it implies and say what you found, rather than treating it as a
+  musing. "maybe?" can carry a house rule I mean absolutely.
+- **A correction arrives as an observation with no theory attached** — "that's
+  ancient", "the importer only ever runs against a fresh database", "be liberal
+  with the dev database". I am generally right, and generally talking about how the
+  thing is actually operated rather than about your code. Check it, do what it
+  implies, and say what you found; don't argue, and don't apologise at length.
+- **"That X is ancient" means I had forgotten about it.** Don't build on it, don't
+  reason from it, and don't fix it — leave it where it is and I will clean it up.
+  If you are mid-task on it, drop it. An explicit "delete it, it's legacy" is an
+  instruction, and overrides this.
+
+### Deferred, filed, or mine
+
+- **"I'll handle X" / "ignore X, I'll do it at deployment time"** is a scope
+  boundary, not a deferral to track. Don't build around it, don't ask about it
+  again, and don't read its absence from the work as an omission.
+- **"For now" / "later" / "we'll revisit" is a deliberate deferral.** Don't
+  re-raise it unprompted; noting it on the issue is fine.
+- **Work I notice in passing gets filed as an issue**, usually in a milestone I
+  name — not done, and not dropped. I will interrupt myself mid-message with
+  something I have just remembered.
+- **Closing an issue is an explicit instruction**, one at a time and usually by
+  number. Finishing the work does not imply it.
+- **"You can X" is permission, not instruction** — "you can use subagents for
+  this", "you can make yourself a permanent test user". Decline it with reasons
+  when it is the wrong tool; I will not re-raise it. Same for "if it'll help".
+- **"The choice is yours" is a genuine offer**, including about stopping or about
+  scope. It is not a test and not rhetorical.
+
+### Register
+
+- **Underscores and asterisks mark the load-bearing word.** `_never_`, `_always_`,
+  `_so_`, `_can_` point at the one word carrying the constraint.
+- **Swearing and frustration noises are commentary, not dissatisfaction with you.**
+  "Goddamnit", "Blegh", "urgh" cluster around a realisation — usually a new work
+  item, or the environment misbehaving. None of them is a rebuke, and treating one
+  as a rebuke produces an apology I don't want.
+- **"I'm tired / out of it today" changes the conversation, not the work.** I may
+  ask to be re-explained to, or repeat a question I have already asked. Answer
+  plainly, without comment; the decisions in those messages still stand.
+- **If I reassure you that something is fine, it is closed.** "no no it's fine" is
+  the whole answer — don't apologise again, and don't re-open it. The same goes
+  the other way: I correct my own mistakes in the same register I correct yours,
+  and neither wants ceremony.
+- **A stated dislike is a design constraint with a reason attached** — "I _despise_
+  Redis", "I don't want another moving part". Don't argue with it or route around
+  it.
+
 ### Asking
 
 Ask when you're genuinely unsure. Questions are cheap and welcome — I'd rather
-answer three than have you guess wrong or stay silent.
+answer three than have you guess wrong or stay silent, and I would much rather be
+asked than watch you go off on an incorrect tangent.
+
+That last part applies to everything, including the rules in this file. They are
+guardrails optimising for a specific outcome, not laws; if following one looks
+like the wrong call, say so and ask, rather than working around it silently or
+obeying it into a worse outcome.
 
 - Batch them: all the questions in one message, then stop.
 - Ask about what's unclear, not about what I've already stated. A precise
@@ -246,3 +351,15 @@ answer three than have you guess wrong or stay silent.
 - Greenfield repos: checkpoint commits may freely include vendor churn.
 - Mature repos: keep dependency *updates* in their own commit — `go get -u ./... && go mod tidy && go mod vendor`, commit as `vendor: update`, separate from any code changes.
 - Mature repos: a *new* dependency goes in the same commit as the code that first imports it. `go mod vendor` only vendors packages that are actually imported, so a dependency added without its consumer either can't be vendored or gets dropped by the next vendor operation.
+- **A dependency a caller may need to stand in for gets an interface**, with the
+  implementation left unexported and the constructor returning the interface,
+  because the concrete type is deliberately not exported to return instead.
+  This is not "prefer interfaces" as a reflex: one is worth it where something
+  actually substitutes for the dependency — a test, a dummy, a second
+  implementation — and it costs a layer of indirection everywhere else. A
+  concrete type only constructed and used within one package stays concrete.
+- The inverse is the **escape hatch**: a method that hands out a concrete
+  dependency, like a `Pool()`, `GetRiver()` or `GetClient()` accessor. Those
+  exist for the few callers that genuinely need the concrete thing, usually
+  tests. Adding one to avoid introducing an interface is the wrong trade; adding
+  one because a test needs it is fine, and the comment should say so.
