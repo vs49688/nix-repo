@@ -4,6 +4,13 @@
 
 Use a style similar to the Linux Kernel and FFmpeg. **Do not use Conventional Commits** (`feat:`, `fix:`, `chore:`, `docs:`, `style:`, `refactor:`, `test:`, `ci:`).
 
+All of this — here, and in `## Contributing` and `## Pushing` — is a guardrail,
+not a law. What is being optimised is a history that is bisectable and rebasable:
+every rule below serves that. When one is the wrong call for the change in front
+of you, break it — and say so in your reply at the end of the turn, naming the
+rule and why, rather than in the commit message. When you are unsure whether it
+is the wrong call, ask.
+
 Format:
 ```
 component: short description
