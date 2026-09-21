@@ -119,13 +119,18 @@ users with show_nsfw=false (default) never see NSFW resources.
 
 A single commit that touches several files under one tree — e.g. a tool
 plus the skill that documents it — is one logical change and gets one
-commit with a compound prefix: brace the differing trailing segments
-under the shared prefix you'd use for a single path, in tree order:
+commit with a compound prefix. Brace the segments that differ, so the
+prefix still expands to one path per changed file; the brace can be at
+the front or the back:
 
 ```
 modules/home/pi/{forgejo-api,web-request}: read header values from files
 backend/graph/{blog,comment,resource}: validate urls in markdown content
+{hosts,modules}/cadance/docspell: reach postgres over a unix socket
 ```
+
+That last one is `hosts/cadance/docspell` — the docspell part of the host —
+and `modules/cadance/docspell` — the module itself.
 
 ### Interface Changes That Break Compilation
 
