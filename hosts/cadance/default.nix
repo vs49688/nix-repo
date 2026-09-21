@@ -936,7 +936,11 @@ in
   systemd.services."container@docspell".after = [ "postgresql.target" ];
 
   services.caddy.virtualHosts."docs.vs49688.net".extraConfig = ''
-    forward_auth unix//run/authelia/authelia.sock {
+    @notapi not {
+      path /api/v1/*
+    }
+
+    forward_auth @notapi unix//run/authelia/authelia.sock {
       uri /api/authz/forward-auth
     }
   '';
