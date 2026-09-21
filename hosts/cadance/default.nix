@@ -853,13 +853,13 @@ in
     ];
 
     authentication = ''
-      host docspell docspell ${containerAddresses.docspell.local}/32 trust
       host unifi    unifi    ${containerAddresses.unifi.local}/32    trust
     '';
 
-    settings.listen_addresses = lib.mkForce "localhost,${containerAddresses.docspell.host},${containerAddresses.unifi.host}";
+    settings.listen_addresses = lib.mkForce "localhost,${containerAddresses.unifi.host}";
   };
 
+  # NB: Needed because it's bind-mounted into containers.
   systemd.services.postgresql.serviceConfig.RuntimeDirectoryPreserve = true;
 
   services.caddy.virtualHosts."http://10.0.102.5".extraConfig = let
@@ -923,14 +923,16 @@ in
     oidcClientId       = lib.mkDefault "00000000-0000-0000-0000-000000000000";
     oidcAutheliaServer = "auth.vs49688.net";
 
-    jdbcUrl      = "jdbc:postgresql://${containerAddresses.docspell.host}:${toString config.services.postgresql.settings.port}/docspell";
+    # 127.0.0.1 is the socat listener inside the container, which forwards to
+    # the host's unix socket.
+    jdbcUrl      = "jdbc:postgresql://127.0.0.1:5432/docspell";
     jdbcUser     = "docspell";
     jdbcPassword = "";
 
     adminTokenFile = config.sops.secrets."docspell/admin_token".path;
     oidcClientSecretFile = config.sops.secrets."docspell/oidc_client_secret".path;
   };
-  networking.firewall.interfaces.ve-docspell.allowedTCPPorts = [ config.services.postgresql.settings.port ];
+
   systemd.services."container@docspell".after = [ "postgresql.target" ];
 
   services.caddy.virtualHosts."docs.vs49688.net".extraConfig = ''

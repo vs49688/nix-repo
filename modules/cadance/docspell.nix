@@ -26,6 +26,17 @@ in
       type    = types.str;
     };
 
+    uid = mkOption {
+      type    = types.int;
+      default = 970;
+      description = ''
+        System uid shared by the host and this container. The database is reached
+        over a unix socket with peer authentication, which resolves the
+        connecting process's uid through the server's user database, so the two
+        sides have to agree on it.
+      '';
+    };
+
     virtualHost = mkOption {
       type    = types.str;
       example = "docs.example.com";
@@ -80,6 +91,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    users.users.docspell = {
+      isSystemUser = true;
+      uid = cfg.uid;
+      group = "docspell";
+    };
+    users.groups.docspell = {};
+
     networking.nat.internalInterfaces   = [ "ve-${cfg.containerName}" ];
     networking.networkmanager.unmanaged = [ "interface-name:ve-${cfg.containerName}" ];
 
@@ -100,6 +118,12 @@ in
       };
 
       bindMounts."${cfg.oidcClientSecretFile}" = {
+        isReadOnly = true;
+      };
+
+      # postgres' unix socket directory. Read-only: the socket is created by the
+      # host, this end only connects to it.
+      bindMounts."/run/postgresql" = {
         isReadOnly = true;
       };
 
@@ -127,6 +151,31 @@ in
         ];
 
         networking.firewall.allowedTCPPorts = [ 7880 ];
+
+        # Peer authentication compares the connecting process's uid against the
+        # host's user database, so this has to match users.users.docspell on the
+        # host. The docspell module creates the user; only the uid is pinned.
+        users.users.docspell.uid = cfg.uid;
+
+        # JDBC cannot speak to a unix socket, so something in the container has
+        # to bridge. fork defers the connect to the child, so this listener comes
+        # up whether or not postgres has created the socket yet, and starts
+        # working the moment it does -- no ordering, and no restarting postgres.
+        systemd.services.postgres-socket = {
+          description = "Forward TCP to the host's postgres socket";
+          wantedBy = [ "multi-user.target" ];
+          serviceConfig = {
+            User = "docspell";
+            ExecStart = "${pkgs.socat}/bin/socat TCP-LISTEN:5432,bind=127.0.0.1,reuseaddr,fork UNIX-CONNECT:/run/postgresql/.s.PGSQL.5432";
+            Restart = "always";
+            RestartSec = 1;
+          };
+        };
+
+        systemd.services.docspell-restserver.after = [ "postgres-socket.service" ];
+        systemd.services.docspell-restserver.wants = [ "postgres-socket.service" ];
+        systemd.services.docspell-joex.after = [ "postgres-socket.service" ];
+        systemd.services.docspell-joex.wants = [ "postgres-socket.service" ];
 
         services.docspell-restserver = {
           enable = true;
