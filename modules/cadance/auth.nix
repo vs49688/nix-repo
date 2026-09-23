@@ -358,6 +358,22 @@ in {
             ];
           }
 
+          {
+            domain = "pr01-mfcl2703dw.vs49688.net";
+            policy = "two_factor";
+            subject = [
+              "group:Network Admins"
+            ];
+          }
+
+          {
+            domain = "pr02-mfcl2713dw.vs49688.net";
+            policy = "two_factor";
+            subject = [
+              "group:Network Admins"
+            ];
+          }
+
           ##
           # Allow "zane" access to HLDS.
           ##

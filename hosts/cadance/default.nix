@@ -731,6 +731,30 @@ in
     }
   '';
 
+  services.caddy.virtualHosts."pr01-mfcl2703dw.vs49688.net".extraConfig = ''
+    route {
+      forward_auth unix//run/authelia/authelia.sock {
+        uri /api/authz/forward-auth
+      }
+
+      reverse_proxy http://10.0.102.10:80 {
+        header_up Cookie "authelia_session=[^;]+" "authelia_session=_"
+      }
+    }
+  '';
+
+  services.caddy.virtualHosts."pr02-mfcl2713dw.vs49688.net".extraConfig = ''
+    route {
+      forward_auth unix//run/authelia/authelia.sock {
+        uri /api/authz/forward-auth
+      }
+
+      reverse_proxy http://10.0.102.11:80 {
+        header_up Cookie "authelia_session=[^;]+" "authelia_session=_"
+      }
+    }
+  '';
+
   sops.secrets."rustfs/env" = {
     restartUnits = [ "rustfs" ];
   };
