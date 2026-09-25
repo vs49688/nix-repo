@@ -374,6 +374,14 @@ in {
             ];
           }
 
+          {
+            domain = "gw01.vs49688.net";
+            policy = "two_factor";
+            subject = [
+              "group:Network Admins"
+            ];
+          }
+
           ##
           # Allow "zane" access to HLDS.
           ##

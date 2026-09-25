@@ -731,6 +731,22 @@ in
     }
   '';
 
+  services.caddy.virtualHosts."gw01.vs49688.net".extraConfig = ''
+    route {
+      forward_auth unix//run/authelia/authelia.sock {
+        uri /api/authz/forward-auth
+      }
+
+      reverse_proxy https://192.168.64.1:443 {
+        transport http {
+          tls_insecure_skip_verify
+        }
+
+        header_up Cookie "authelia_session=[^;]+" "authelia_session=_"
+      }
+    }
+  '';
+
   services.caddy.virtualHosts."pr01-mfcl2703dw.vs49688.net".extraConfig = ''
     route {
       forward_auth unix//run/authelia/authelia.sock {
