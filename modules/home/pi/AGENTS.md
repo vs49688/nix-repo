@@ -15,22 +15,33 @@ Format:
 ```
 component: short description
 
-Optional longer description if the change warrants it.
+Optional body. If the subject is enough, leave it at that.
 ```
 
-- The `component` prefix is usually the path to the changed code,
-  relative to the repo root — `modules/home/pi/...`, `pkgs/...`,
-  `hosts/...` — but it's a judgment call, not a mechanical rule. Trim
-  segments that don't add meaning: `frontend/MyComponent:` rather than
-  `frontend/src/components/MyComponent:`. If the subject would exceed
-  72 characters, drop leading directories from the left. The prefix
-  should be recognizable at a glance; don't stack multiple prefixes
-  (`pi: web-request:` isn't a path).
+- The `component` prefix names the component that changed, relative to the
+  repo root — `modules/home/pi/...`, `pkgs/...`, `hosts/...` — but it's a
+  judgment call, not a mechanical rule. Trim segments that don't add meaning:
+  `frontend/MyComponent:` rather than `frontend/src/components/MyComponent:`.
+  If the subject would exceed 72 characters, drop leading directories from the
+  left. The prefix should be recognizable at a glance; don't stack multiple
+  prefixes (`pi: web-request:` isn't a path).
+
+- Name the component, not the set of files it happened to touch: the wiring,
+  callers and config a change drags along don't broaden it. For example, given
+  a `service/` package holding `config.go`, `base.go` and `health.go`, a change
+  to the health endpoints is `service/health:` even if it also touches
+  `base.go` and `config.go`. Usually the component and the files align; fall
+  back to the directory (e.g. `persistence/postgres:`) when the change really is
+  spread across a package's files, and to the package alone only when it's
+  package-wide.
 
 - Each commit should be a single logical unit.
 - Make one commit per independent change. Commit immediately after the change builds and passes tests — do not let fixes pile up in the working tree.
 - Stage files individually with `git add <file>`. Never use `git add -A`, `git add .`, or any blanket staging command — they pick up unrelated untracked files.
 - Split work across multiple commits when touching independent subsystems (e.g., persistence changes separate from callers, frontend separate from backend).
+- Comment-only and test-only changes get their own commit: they document and
+  cover code that already exists, rather than belonging to the change that
+  introduced it. Tests for a change you are making are of course part of it.
 - **The end result has follow-ups squashed into their original commits**, so that
   each commit stands alone as a correct, complete unit — not a first attempt
   followed by repairs. While you are working, record a follow-up with
@@ -50,6 +61,18 @@ Optional longer description if the change warrants it.
   stabilizes.
 - Keep the subject line under ~72 characters. Body wrapped at 72 columns.
 - The subject should complete the sentence "This commit will...".
+- **Name the concrete thing** the commit adds, renames or removes — a symbol,
+  an endpoint, a config key — rather than the area it lives in or the
+  abstraction it implements: `add a package-level Submit()`, `split into /livez
+  and /readyz, drop /health`, `name qwerqwerqwerw something proper`.
+- **Don't add a body unnecessarily.** If the subject carries the change, leave
+  it at that. When you do write one, state the problem and the fix, or the
+  consequence a caller must know about, and stop — two sentences is normal, a
+  handful of bullets is long. A body that narrates how the change was found,
+  what was measured, or what a later commit does is an issue comment, not a log
+  entry.
+- **Enumerations are lists, not prose.** Several new knobs, call sites or
+  behaviours belong in a bulleted list under the subject line.
 - See the [FFmpeg developer guide — Commit messages](https://ffmpeg.org/developer.html#toc-Patches_002fCommitting).
 
 ### Examples
@@ -60,7 +83,7 @@ Trivial, no body needed:
 gitignore: ignore /build-*/
 ```
 
-Single-package change with brief body:
+Single-package change:
 
 ```
 persistence/postgres: add index on tracks.broadcast_date
