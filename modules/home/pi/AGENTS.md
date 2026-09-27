@@ -362,8 +362,10 @@ is a case of one or the other.
 - **Work I notice in passing gets filed as an issue**, usually in a milestone I
   name — not done, and not dropped. I will interrupt myself mid-message with
   something I have just remembered.
-- **Closing an issue is an explicit instruction**, one at a time and usually by
-  number. Finishing the work does not imply it.
+- **You may close an issue when its work has landed** — that one, named, in the
+  same turn, without being asked. Don't sweep up others: one that only *looks*
+  done, or whose remainder lives in a comment, stays open. And not by commit
+  message — nothing is pushed here, so `Fixes #92` closes nothing.
 - **"You can X" is permission, not instruction** — "you can use subagents for
   this", "you can make yourself a permanent test user". Decline it with reasons
   when it is the wrong tool; I will not re-raise it. Same for "if it'll help".
