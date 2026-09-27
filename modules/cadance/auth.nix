@@ -169,12 +169,21 @@ in {
       environment.LLDAP_KEY_FILE = "%d/key_file";
     };
 
-    systemd.services.lldap.serviceConfig.LoadCredential = [
-      "jwt_secret:${cfg.lldap.jwtSecretFile}"
-      "user_pass:${cfg.lldap.userPassFile}"
-      "key_file:${cfg.lldap.keyFile}"
-    ];
-    systemd.services.lldap.requires = [ "postgresql.target" ];
+    systemd.services.lldap = {
+      wants = [ "postgresql.target" ];
+      after = [ "postgresql.target" ];
+
+      serviceConfig = {
+        LoadCredential = [
+          "jwt_secret:${cfg.lldap.jwtSecretFile}"
+          "user_pass:${cfg.lldap.userPassFile}"
+          "key_file:${cfg.lldap.keyFile}"
+        ];
+
+        Restart = "always";
+        RestartSec = "5s";
+      };
+    };
 
     ##
     # Authelia
