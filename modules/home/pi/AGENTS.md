@@ -155,6 +155,20 @@ backend/graph/{blog,comment,resource}: validate urls in markdown content
 That last one is `hosts/cadance/docspell` — the docspell part of the host —
 and `modules/cadance/docspell` — the module itself.
 
+A change spanning packages that genuinely cannot be compiled in pieces —
+a dependency migration whose callers must move with it, say — fits
+neither shape. Naming one component would be a lie, and past two or
+three segments the brace stops being a prefix and becomes a list. That
+case gets the unbounded form:
+
+```
+treewide: migrate to goldmark/v2
+```
+
+The bar is the same as the brace's, and it is not a caveat: a change
+that *could* be split must be. The body names the affected packages,
+since the prefix carries no path to grep.
+
 ### Interface Changes That Break Compilation
 
 When an interface change would otherwise break the build, it's acceptable to fix or stub the immediate downstream callers in the same commit. This avoids a commit that doesn't compile on its own.
