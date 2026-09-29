@@ -96,6 +96,8 @@ in (({
 
   audio-cpp = super.callPackage ./pkgs/audio-cpp { };
 
+  open-annihilation = super.callPackage ./pkgs/open-annihilation { };
+
   ##
   # NX
   ##
