@@ -150,11 +150,10 @@ in
         ui.time_format = "browser";
 
         record.enabled = true;
-        record.sync_recordings = true;
-        record.retain.days = 28;
-        record.retain.mode = "all";
+        record.continuous.days = 28;
+        record.motion.days = 28;
 
-        version = "0.16-0";
+        version = "0.18-0";
       };
     };
 
@@ -167,15 +166,11 @@ in
   config = lib.mkIf cfg.enable {
     virtualisation.oci-containers.containers.frigate = let
       imageFile = pkgs.dockerTools.pullImage {
-        # imageName = "ghcr.io/blakeblackshear/frigate";
-        # imageDigest = "sha256:1f8dbaaa4c7c2855c2aef711842d13b0c20bfdc3f28ad88faf66aa1bc219b108";
-
-        # Digest changes due to https://github.com/docker/cli/issues/6812
         imageName = "git.vs49688.net/oci/frigate";
-        imageDigest = "sha256:0133187256e5f275e42d73ba5f8967c1768c5978540242eb39ee9ce17832f0be";
-        hash = "sha256-ms0AiKXkzUiTLOj/67kGI773vXRT4BbLg2I8nPKYFak=";
+        imageDigest = "sha256:e07203b1197852cddd18915cc968aa6bbf072200b88030c028f38bbe652e77c4";
+        hash = "sha256-ct66/bRy19PsbU4G37iMf/I8zQl6m91dRHePtkw3z7c=";
         finalImageName = "localhost/frigate";
-        finalImageTag = "0.16.4";
+        finalImageTag = "0.18.0";
       };
     in {
       inherit imageFile;
