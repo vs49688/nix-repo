@@ -6,76 +6,6 @@
 let
   cfg = config.cadance.containers.frigate;
   format = pkgs.formats.yaml { };
-
-  configFile = format.generate "config.yaml" ({
-    tls.enabled = false; # Handled by the reverse proxy
-    mqtt.enabled = false;
-
-    auth.enabled = false;
-    # auth.cookie_secure = false;
-
-    proxy = {
-      default_role = "viewer";
-      logout_url = cfg.logoutUrl;
-      header_map = {
-        user = "Remote-User";
-        role = "Remote-Groups";
-      };
-    };
-
-    detect.enabled = false; # FIXME: Figure out if possible.
-
-    # Record _with_ audio by default.
-    ffmpeg.output_args.record = "preset-record-generic-audio-aac";
-
-    # WebRTC needs Opus audio, transcode.
-    go2rtc.streams = lib.mergeAttrsList (lib.mapAttrsToList (name: value: {
-      "${name}_main" = [
-        value.mainUrl
-        "ffmpeg:${name}_main#audio=opus"
-      ];
-
-      "${name}_sub" = [
-        value.subUrl
-        "ffmpeg:${name}_sub#audio=opus"
-      ];
-    }) cfg.cameras);
-
-    go2rtc.webrtc.candidates = cfg.webrtcCandidates;
-
-    cameras = builtins.mapAttrs (name: value: {
-      enabled = value.enabled;
-      ffmpeg = {
-        hwaccel_args = "preset-vaapi";
-        inputs = [
-          {
-            path = "rtsp://127.0.0.1:8554/${name}_main";
-            input_args = "preset-rtsp-restream";
-            roles = [ "record" ];
-          }
-        ];
-      };
-      live.streams."${name}_sub" = "${name}_sub";
-
-      # onvif = value.onvif;
-    }) cfg.cameras;
-
-    birdseye.enabled = true;
-    birdseye.mode = "continuous";
-
-    snapshots.enabled = true;
-    snapshots.timestamp = false; # Cameras do this.
-
-    ui.timezone = config.time.timeZone;
-    ui.time_format = "browser";
-
-    record.enabled = true;
-    record.sync_recordings = true;
-    record.retain.days = 28;
-    record.retain.mode = "all";
-
-    version = "0.16-0";
-  });
 in
 {
   options.cadance.containers.frigate = with lib; {
@@ -104,7 +34,7 @@ in
 
     logoutUrl = mkOption {
       type = types.str;
-      example = "https://authelia.example.com/logout?redirect=https://nvr.example.com";
+      default = "https://authelia.example.com/logout?redirect=https://nvr.example.com";
     };
 
     webrtcCandidates = mkOption {
@@ -153,6 +83,85 @@ in
         };
       });
     };
+
+    config = lib.mkOption {
+      readOnly = true;
+      type = types.attrs;
+      default = {
+        tls.enabled = false; # Handled by the reverse proxy
+        mqtt.enabled = false;
+
+        auth.enabled = false;
+        # auth.cookie_secure = false;
+
+        proxy = {
+          default_role = "viewer";
+          logout_url = cfg.logoutUrl;
+          header_map = {
+            user = "Remote-User";
+            role = "Remote-Groups";
+          };
+        };
+
+        detect.enabled = false; # FIXME: Figure out if possible.
+
+        # Record _with_ audio by default.
+        ffmpeg.output_args.record = "preset-record-generic-audio-aac";
+
+        # WebRTC needs Opus audio, transcode.
+        go2rtc.streams = lib.mergeAttrsList (lib.mapAttrsToList (name: value: {
+          "${name}_main" = [
+            value.mainUrl
+            "ffmpeg:${name}_main#audio=opus"
+          ];
+
+          "${name}_sub" = [
+            value.subUrl
+            "ffmpeg:${name}_sub#audio=opus"
+          ];
+        }) cfg.cameras);
+
+        go2rtc.webrtc.candidates = cfg.webrtcCandidates;
+
+        cameras = builtins.mapAttrs (name: value: {
+          enabled = value.enabled;
+          ffmpeg = {
+            hwaccel_args = "preset-vaapi";
+            inputs = [
+              {
+                path = "rtsp://127.0.0.1:8554/${name}_main";
+                input_args = "preset-rtsp-restream";
+                roles = [ "record" ];
+              }
+            ];
+          };
+          live.streams."${name}_sub" = "${name}_sub";
+
+          # onvif = value.onvif;
+        }) cfg.cameras;
+
+        birdseye.enabled = true;
+        birdseye.mode = "continuous";
+
+        snapshots.enabled = true;
+        snapshots.timestamp = false; # Cameras do this.
+
+        ui.timezone = config.time.timeZone;
+        ui.time_format = "browser";
+
+        record.enabled = true;
+        record.sync_recordings = true;
+        record.retain.days = 28;
+        record.retain.mode = "all";
+
+        version = "0.16-0";
+      };
+    };
+
+    configFile = lib.mkOption {
+      readOnly = true;
+      default = format.generate "config.yaml" cfg.config;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -175,7 +184,7 @@ in
 
       volumes = [
         "${cfg.configPath}:/config:rw"
-        "${configFile}:/config/config.yml:ro"
+        "${cfg.configFile}:/config/config.yml:ro"
         "${cfg.mediaPath}:/media/frigate:rw"
         "${pkgs.go2rtc}/bin/go2rtc:/config/go2rtc:ro"
       ];
