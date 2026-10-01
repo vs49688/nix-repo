@@ -100,6 +100,11 @@ in
           header_map = {
             user = "Remote-User";
             role = "Remote-Groups";
+
+            role_map = {
+              admin = [ "NVR Admins" ];
+              viewer = [ "NVR Viewers" ];
+            };
           };
         };
 
@@ -210,45 +215,20 @@ in
       restartIfChanged = false;
     };
 
-    ##
-    # Can't use forward_auth because Frigate demands either "viewer" or "admin" roles,
-    # and Authelia doesn't allow rewriting them.
-    # Remove once https://github.com/blakeblackshear/frigate/pull/19758 hits stable
-    ##
     services.caddy.virtualHosts.${cfg.hostName}.extraConfig = ''
-      reverse_proxy unix//run/authelia/authelia.sock {
-        method GET
+      route {
+        forward_auth unix//run/authelia/authelia.sock {
+          uri /api/authz/forward-auth
 
-        rewrite /api/authz/forward-auth
-
-        header_up X-Forwarded-Method {method}
-        header_up X-Forwarded-Uri {uri}
-
-        @good status 2xx
-        handle_response @good {
-          @admins expression `{rp.header.Remote-Groups}.contains("NVR Admins")`
-          request_header @admins +Remote-Groups "admin"
-
-          @viewers expression `{rp.header.Remote-Groups}.contains("NVR Viewers")`
-          request_header @viewers +Remote-Groups "viewer"
-
-          @neither expression `!({rp.header.Remote-Groups}.contains("NVR Admins") || {rp.header.Remote-Groups}.contains("NVR Viewers"))`
-          handle @neither {
-              respond "Forbidden" 403
-          }
-
-          request_header Remote-User {rp.header.Remote-User}
-          request_header Remote-Name {rp.header.Remote-Name}
-          request_header Remote-Email {rp.header.Remote-Email}
-          # request_header X-OG-Remote-Groups {rp.header.Remote-Groups}
+          copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
         }
-      }
 
-      reverse_proxy http://127.0.0.1:${toString cfg.port} {
-        # Stop the Authelia session cookie being passed to Frigate.
-        header_up Cookie "authelia_session=[^;]+" "authelia_session=_"
+        reverse_proxy http://127.0.0.1:${toString cfg.port} {
+          # Stop the Authelia session cookie being passed to Frigate.
+          header_up Cookie "authelia_session=[^;]+" "authelia_session=_"
 
-        flush_interval -1
+          flush_interval -1
+        }
       }
     '';
 
