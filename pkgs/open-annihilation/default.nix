@@ -10,13 +10,13 @@
 }:
 stdenv.mkDerivation(finalAttrs: {
   pname = "open-annihilation";
-  version = "0.4.1";
+  version = "0.6.1";
 
   src = fetchFromGitHub {
     owner = "open-annihilation";
     repo = "open-annihilation";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-SNqrtNThPOZ5ZAfJNMp9yx5rBgFewjDOSgNB+vRYhrc=";
+    hash = "sha256-4Eazi/khWg7gx/0lXeAi3smTlAxN8v/IKD8xsrPZ/n8=";
   };
 
   nativeBuildInputs = [
