@@ -5,7 +5,7 @@
 , cmakerc
 , openssl
 , nlohmann_json
-, fmt_10
+, fmt
 }:
 
 stdenv.mkDerivation rec {
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     openssl
     nlohmann_json
-    fmt_10
+    fmt
   ];
 
   meta = with lib; {
