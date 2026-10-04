@@ -38,6 +38,7 @@ applyFiles --ro-bind        \
     /nix                    \
     /run/current-system     \
     /run/opengl-driver      \
+    /run/opengl-driver-32   \
     /etc                    \
     /sys/dev/char           \
     /sys/devices/pci0000:00 \
