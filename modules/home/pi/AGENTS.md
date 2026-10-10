@@ -65,12 +65,28 @@ Optional body. If the subject is enough, leave it at that.
   an endpoint, a config key — rather than the area it lives in or the
   abstraction it implements: `add a package-level Submit()`, `split into /livez
   and /readyz, drop /health`, `name qwerqwerqwerw something proper`.
-- **Don't add a body unnecessarily.** If the subject carries the change, leave
-  it at that. When you do write one, state the problem and the fix, or the
-  consequence a caller must know about, and stop — two sentences is normal, a
-  handful of bullets is long. A body that narrates how the change was found,
-  what was measured, or what a later commit does is an issue comment, not a log
-  entry.
+- **The default is no body.** Add one only when a reader with the subject and
+  the diff would be missing something; a subject that names what changed and
+  what must not be done leaves nothing to add. When there is a body, it carries
+  the consequence a caller must know about — a changed contract, a format,
+  something that must not be done — and stops. A body that narrates the defect
+  being fixed, how the change was found, what was measured, or what a later
+  commit does is an issue comment, not a log entry.
+- **Nothing that can go stale belongs in a body.** No commit hashes, no issue
+  numbers, no counts of files, fixtures or scenes, no bare measurements
+  (`5d23da96, 320x240 8bpp`). A rebase, a squash or a reordering invalidates the
+  first two; the tree grows out from under the rest. Say "the branch this was
+  ported from" and cite the scene or the spine instead.
+- **Say what a set is *for*, not what is in it.** The diff already lists the
+  fixtures, files and map channels, so a catalogue of them is padding; so is a
+  count that describes code shape rather than the tree ("seven parallel
+  arrays"). Prefer the consequence to the mechanism where they differ: "the
+  block is written per draw, which costs more than it saves at low resolution"
+  earns a line, the derivation does not.
+- **A reason belongs in the code, not the log.** If it is load-bearing — why the
+  obvious alternative is wrong, what a refusal is protecting against — it goes
+  in the code, a diagnostic message or the subject, where whoever hits it will
+  read it. Anything equally true as a code comment belongs in the code.
 - **Enumerations are lists, not prose.** Several new knobs, call sites or
   behaviours belong in a bulleted list under the subject line.
 - See the [FFmpeg developer guide — Commit messages](https://ffmpeg.org/developer.html#toc-Patches_002fCommitting).
@@ -89,16 +105,10 @@ Single-package change:
 persistence/postgres: add index on tracks.broadcast_date
 ```
 
-Bug fix explaining what was wrong and how it was fixed:
+Bug fix — the diff carries the mechanism, so no body:
 
 ```
 backend/auth: fix broken Auth0 enforcement in userpass login
-
-V4GetAuthenticationSourceLink was called with a user ID as source_id
-and the literal "auth0" string as subject, which never matched
-anything. Fix by first looking up the auth0 source by name, then
-checking for an authentication link by user_id + source_id using
-the new V4GetUserAuthenticationSourceLink method.
 ```
 
 Multi-step feature with bullet-point summary:
@@ -179,7 +189,7 @@ If the downstream changes are obvious (e.g., a new parameter that must be passed
 persistence: add includeArchived parameter to V4ListResources
 
 Pass the new parameter (as false) at all call sites so the project
-remains bisectable. Actual archive-filtering logic goes in a follow-up.
+remains bisectable.
 ```
 
 For obvious mechanical fallout, a bare subject with no body is fine — the downstream changes are implied by the fact that the project must compile:
