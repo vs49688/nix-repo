@@ -109,12 +109,12 @@ in
           lifecycle = "lazy";
         };
 
-        ddgs = {
-          command = "${myPy}/bin/ddgs";
-          args = ["mcp"];
-          lifecycle = "lazy";
-          directTools = true;
-        };
+        # ddgs = {
+        #   command = "${myPy}/bin/ddgs";
+        #   args = ["mcp"];
+        #   lifecycle = "lazy";
+        #   directTools = true;
+        # };
 
         firefox = {
           command = lib.getExe pkgs.firefox-devtools-mcp;
