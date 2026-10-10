@@ -175,24 +175,20 @@ since the prefix carries no path to grep.
 
 ### Interface Changes That Break Compilation
 
-When an interface change would otherwise break the build, it's acceptable to fix or stub the immediate downstream callers in the same commit. This avoids a commit that doesn't compile on its own.
+When an interface change would otherwise break the build, fix or stub the
+immediate downstream callers in the same commit — a commit that does not compile
+on its own is worse than a slightly wider one.
 
-If the downstream changes are obvious (e.g., a new parameter that must be passed everywhere), the subject can just name the interface change — no need to enumerate every file:
-
-```
-persistence: add includeArchived parameter to V4ListResources
-
-Pass the new parameter (as false) at all call sites so the project
-remains bisectable.
-```
-
-For obvious mechanical fallout, a bare subject with no body is fine — the downstream changes are implied by the fact that the project must compile:
+Obvious mechanical fallout — a new parameter that must be passed everywhere —
+needs no body; the subject names the interface change, and the diff shows the
+rest:
 
 ```
 persistence: add includeArchived parameter to V4ListResources
 ```
 
-A brief body is acceptable when it adds context that cannot be inferred from the subject alone:
+A body is worth it only when it adds context the subject cannot carry — here, who
+sets the new parameter and what happens to existing callers:
 
 ```
 backend/graph: add pageSize parameter to getRelatedResources
@@ -201,22 +197,11 @@ Set by bulk importers to page through large result sets; existing
 callers are unaffected and keep the default size.
 ```
 
-Do not add a body that merely restates what the subject already says:
+Never a body that restates the subject: `backend/graph: decouple Revision types
+from persistence structs` carries everything such a body would say.
 
-```
-backend/graph: decouple Revision types from persistence structs
-```
-
-not
-
-```
-backend/graph: decouple Revision types from persistence structs
-
-Decouple Revision types from persistence structs by removing model
-bindings, adding converters, and updating all callers.
-```
-
-More involved caller work — new behaviour, feature wiring, logic changes — still goes in a separate commit.
+More involved caller work — new behaviour, feature wiring, logic changes — is a
+separate commit.
 
 ## Contributing
 
@@ -226,14 +211,12 @@ More involved caller work — new behaviour, feature wiring, logic changes — s
 
 ## Pushing
 
-Don't push unless the user explicitly tells you to. Agent commits are
-unsigned (signing is disabled in the agent config), and pushes from the
-sandbox authenticate as the agent account — so never push to a repo the
-user hasn't cleared you for, and never bypass the user's push workflow.
-
-A grant is narrow, explicit and scoped to whatever prompted it — "only because
-we're explicitly testing CI" — so don't treat one as standing permission, and
-don't carry it to another repo or another day.
+Don't push unless the user explicitly tells you to. Agent commits are unsigned
+(signing is disabled in the agent config) and push as the agent account — so
+never push to a repo the user hasn't cleared you for, and never bypass the push
+workflow. A grant is narrow and scoped to what prompted it — "only because we're
+explicitly testing CI" — not standing permission, and not to be carried to
+another repo or another day.
 
 ## Environment
 
