@@ -67,28 +67,24 @@ Optional body. If the subject is enough, leave it at that.
   and /readyz, drop /health`, `name qwerqwerqwerw something proper`.
 - **The default is no body.** Add one only when a reader with the subject and
   the diff would be missing something; a subject that names what changed and
-  what must not be done leaves nothing to add. When there is a body, it carries
-  the consequence a caller must know about — a changed contract, a format,
-  something that must not be done — and stops. A body that narrates the defect
+  what must not be done leaves nothing to add. A body carries the consequence a
+  caller must know — a changed contract, a format, something forbidden — not the
+  mechanism ("the block is written per draw, which costs more than it saves at
+  low resolution" earns a line, the derivation does not), and never the defect
   being fixed, how the change was found, what was measured, or what a later
-  commit does is an issue comment, not a log entry.
+  commit does: that is an issue comment, not a log entry. A load-bearing reason
+  — why the obvious alternative is wrong, what a refusal protects against — and
+  anything equally true as a code comment belongs in the code, a diagnostic or
+  the subject, not here.
 - **Nothing that can go stale belongs in a body.** No commit hashes, no issue
   numbers, no counts of files, fixtures or scenes, no bare measurements
   (`5d23da96, 320x240 8bpp`). A rebase, a squash or a reordering invalidates the
   first two; the tree grows out from under the rest. Say "the branch this was
   ported from" and cite the scene or the spine instead.
-- **Say what a set is *for*, not what is in it.** The diff already lists the
-  fixtures, files and map channels, so a catalogue of them is padding; so is a
-  count that describes code shape rather than the tree ("seven parallel
-  arrays"). Prefer the consequence to the mechanism where they differ: "the
-  block is written per draw, which costs more than it saves at low resolution"
-  earns a line, the derivation does not.
-- **A reason belongs in the code, not the log.** If it is load-bearing — why the
-  obvious alternative is wrong, what a refusal is protecting against — it goes
-  in the code, a diagnostic message or the subject, where whoever hits it will
-  read it. Anything equally true as a code comment belongs in the code.
-- **Enumerations are lists, not prose.** Several new knobs, call sites or
-  behaviours belong in a bulleted list under the subject line.
+- **A list says what a set is *for*, not what is in it.** Several distinct
+  changes — new knobs, behaviours — belong in a bulleted list under the subject;
+  the inventory the diff already carries (fixtures, files, map channels) does
+  not, and neither does a count of code shape ("seven parallel arrays").
 - See the [FFmpeg developer guide — Commit messages](https://ffmpeg.org/developer.html#toc-Patches_002fCommitting).
 
 ### Examples
@@ -150,11 +146,10 @@ based on the user's content.show_nsfw property. Anonymous users and
 users with show_nsfw=false (default) never see NSFW resources.
 ```
 
-A single commit that touches several files under one tree — e.g. a tool
-plus the skill that documents it — is one logical change and gets one
-commit with a compound prefix. Brace the segments that differ, so the
-prefix still expands to one path per changed file; the brace can be at
-the front or the back:
+A single commit that touches several files under one tree — a tool plus the
+skill that documents it, say — is one logical change and gets one commit with a
+compound prefix. Brace the differing segments, front or back, so the prefix
+still expands to one path per file:
 
 ```
 modules/home/pi/{forgejo-api,web-request}: read header values from files
@@ -162,14 +157,13 @@ backend/graph/{blog,comment,resource}: validate urls in markdown content
 {hosts,modules}/cadance/docspell: reach postgres over a unix socket
 ```
 
-That last one is `hosts/cadance/docspell` — the docspell part of the host —
-and `modules/cadance/docspell` — the module itself.
+The last is `hosts/cadance/docspell` (the docspell part of the host) and
+`modules/cadance/docspell` (the module).
 
-A change spanning packages that genuinely cannot be compiled in pieces —
-a dependency migration whose callers must move with it, say — fits
-neither shape. Naming one component would be a lie, and past two or
-three segments the brace stops being a prefix and becomes a list. That
-case gets the unbounded form:
+A change spanning packages that cannot be compiled in pieces — a dependency
+migration whose callers must move with it, say — fits neither shape. Naming one
+component would be a lie, and past two or three segments the brace is a list,
+not a prefix. That case gets the unbounded form:
 
 ```
 treewide: migrate to goldmark/v2
@@ -268,12 +262,11 @@ don't carry it to another repo or another day.
 - If `git commit` fails due to a missing signing key, retry with `--no-gpg-sign`.
 - **Never run a blanket `find` on `/`, `~`, `/nix` or `/nix/store`.** It is slow,
   it looks like a hang, and it is what agents reach for when a tool is missing.
-  Ask instead, or pull the tool in with `nix`.
-- On a system with Nix, you may temporarily pull a missing tool with `nix run nixpkgs#<tool> -- <args>`.
+  Pull the tool in with `nix run nixpkgs#<tool> -- <args>`, or if you can't find
+  it, end the turn and ask.
 - A flake only sees Git-tracked paths, so a file the flake references has to be
   visible before it is committed. `git add -N <file>` marks it without staging
   it; plain `git add` puts it in the next commit whether you meant it or not.
-- If you are unable to find a required tool, end the turn and ask the user.
 
 ## Method
 
@@ -379,23 +372,20 @@ is a case of one or the other.
   rather be contradicted by evidence than humoured.
 - **"Or am I misunderstanding?" / "if I misread you, tell me" wants correction.** I
   check my own reading and expect to be told when it was wrong.
-- **A hedged recollection is a request to check, not a fact.** "I could've sworn
-  this was fixed already", "I strongly suspect it's done, but don't quote me on
-  that" — go and look, then answer with what you found. Don't implement on the
-  strength of it, and don't dismiss it either: I am right more often than the hedge
-  suggests.
-- **A hedged fragment is usually right, and often contains a whole design.** Go and
-  check what it implies and say what you found, rather than treating it as a
-  musing. "maybe?" can carry a house rule I mean absolutely.
+- **A hedge is a request to check, not a fact.** "I could've sworn this was fixed
+  already", "I strongly suspect it's done, but don't quote me on that" — go and
+  look, then answer with what you found. A hedged fragment is usually right and
+  often carries a whole design, so don't implement on the strength of it and don't
+  dismiss it: I am right more often than the hedge suggests, and "maybe?" can carry
+  a house rule I mean absolutely.
 - **A correction arrives as an observation with no theory attached** — "that's
   ancient", "the importer only ever runs against a fresh database", "be liberal
   with the dev database". I am generally right, and generally talking about how the
   thing is actually operated rather than about your code. Check it, do what it
   implies, and say what you found; don't argue, and don't apologise at length.
-- **"That X is ancient" means I had forgotten about it.** Don't build on it, don't
-  reason from it, and don't fix it — leave it where it is and I will clean it up.
-  If you are mid-task on it, drop it. An explicit "delete it, it's legacy" is an
-  instruction, and overrides this.
+  One of these is "that X is ancient": it means I had forgotten about it — don't
+  build on it or fix it, drop it if you are mid-task, and leave it to me. An
+  explicit "delete it, it's legacy" is an instruction, and overrides this.
 
 ### Deferred, filed, or mine
 
@@ -442,10 +432,8 @@ Ask when you're genuinely unsure. Questions are cheap and welcome — I'd rather
 answer three than have you guess wrong or stay silent, and I would much rather be
 asked than watch you go off on an incorrect tangent.
 
-That last part applies to everything, including the rules in this file. They are
-guardrails optimising for a specific outcome, not laws; if following one looks
-like the wrong call, say so and ask, rather than working around it silently or
-obeying it into a worse outcome.
+That last part applies to everything, including the rules in this file: never
+work around one silently, and never obey it into a worse outcome.
 
 - Batch them: all the questions in one message, then stop.
 - Ask about what's unclear, not about what I've already stated. A precise
