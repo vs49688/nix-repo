@@ -637,7 +637,7 @@ in
       "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb"
     ];
 
-    hash = "sha256-hgS1g2TGcWijWRO4KDmPlQaWmg3MlpXgF3bPwjpF/xw=";
+    hash = "sha256-ny9BZnY9fYNaipSX4WZsMST7AdlEaogoGFQs6oQy7qQ=";
   };
 
   systemd.services.caddy.serviceConfig.RuntimeDirectoryPreserve = true;
