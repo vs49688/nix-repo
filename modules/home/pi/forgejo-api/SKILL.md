@@ -40,13 +40,8 @@ visibility problem, not an auth failure.
 ## Keeping Responses Small
 
 Forgejo's objects are fat: one issue is ~1 KB (25 fields, including a nested
-`repository` blob), a 50-issue list is ~145 KB, and the full swagger spec is
-~850 KB. Always project:
-
-    web_request: method="GET", url="...", headers={...},
-                 filter="data.map(i => ({number: i.number, title: i.title, state: i.state}))"
-
-Common shapes:
+`repository` blob), and a 50-issue list is ~145 KB. Always project — the common
+shapes:
 
 | Want | filter |
 |------|--------|
