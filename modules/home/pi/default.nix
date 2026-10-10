@@ -38,10 +38,13 @@ in
         theme = "dark";
         defaultProvider = "deepseek";
         defaultModel = "deepseek-flash";
+        extensions = [
+          "-builtin:mcp"
+        ];
         packages = [
-          "npm:pi-subagents@0.67.0"
-          "npm:pi-mcp-adapter@2.32.1"
-          "git:github.com/samfoy/pi-lsp-extension@f2433d19c3bb1300dfdc5f4505b062f9c9c0a1a6"
+          "npm:pi-subagents@v0.77.0"
+          "npm:pi-mcp-adapter@v5.2.0"
+          "git:github.com/samfoy/pi-lsp-extension@v1.4.0"
         ];
 
         enableInstallTelemetry = false;
@@ -123,7 +126,8 @@ in
       };
     };
 
-    home.file.".pi/agent/mcp.json".source = jsonFormat.generate "mcp.json" {
+    home.file.".pi/agent/mcp-adapter.json".force = true;
+    home.file.".pi/agent/mcp-adapter.json".source = jsonFormat.generate "mcp-adapter.json" {
       mcpServers = cfg.mcpServers;
     };
 
