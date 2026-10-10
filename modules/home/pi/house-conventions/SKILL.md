@@ -189,51 +189,27 @@ the other way round.
 
 ### Bulk lookups and the per-key error
 
-- Results are **positionally aligned to the input keys**: one entry per key, a
-  `nil` record for an absent key, and **no error** for an absent key. Grouped
-  variants return `([][]*Record, []error)` with a `nil` slice per absent key.
-- The error slot is **per-key**: on query failure the mapper returns a `nil`
-  result slice plus the *same error repeated* `len(keys)` times. The loader reads
-  `errors[pos]` for each key, so returning a *shorter* slice is a bug it reports
-  as `bug in fetch function`.
-- **On success the error slice is `nil`, not `len(keys)` nils.** So `errs[0]`
-  panics precisely when everything worked. Index it only behind a length check —
-  `if len(errs) > 0 && errs[0] != nil` — or, for a consumer that does not need
-  per-key detail, collapse it nil-safely with `errors.Join(errs...)`, which is
-  what `dataloadgen`'s own `ErrorSlice.Unwrap` does.
-- **When the keys are meaningless** — "just get them all" — fetch once and fan
-  the result out with `slices.Repeat(result, len(keys))`, and on failure
-  `slices.Repeat([]error{err}, len(keys))`.
+The contract — positional alignment, the per-key error slice, and the nil slot
+for an absent key — is documented on `generic.MapSliceByID` and
+`GroupSliceByID`. Read those rather than a paraphrase here. What is house
+convention:
+
 - **A `nil` slot means *absent*, and what absent means is per-entity.** It can
   mean a missing entity, or a counter with no rows yet, which consumers render
   as zero rather than treating as missing. Each many-method's contract says
   which — read it rather than assuming.
-- The contract is enforced by the framework's `generic.MapSliceByID` and
-  `GroupSliceByID`. Read the mapper you are changing — it is what produces the
-  positional correspondence.
-- Queries batch with `WHERE key = ANY($1)` and `pgtype.FlatArray[T]`.
-
-**Missing entities are deliberately asymmetric, and it is not an oversight.**
-A single getter returns `persistence.ErrMissingEntity`; a bulk lookup returns a
-`nil` slot. A single-row not-found as a sentinel is the Go convention
-(`sql.ErrNoRows`), and it forces the caller to handle it rather than sail past a
-`(nil, nil)`. Positionally, the `nil` at the index you are already reading *is*
-the signal, and a sentinel there would have to be checked twice.
+- **When the keys are meaningless** — "just get them all" — fetch once and fan
+  the result out with `slices.Repeat(result, len(keys))`, not a query per key.
+- **Missing entities are asymmetric on purpose**, and it is not an oversight to
+  reconcile: a single getter returns `persistence.ErrMissingEntity`, a bulk
+  lookup returns a `nil` slot. The reasoning is on `ErrMissingEntity`.
 
 ### Data loaders
 
-The many-method's per-key shape is not a house preference — it is exactly the
-batch signature `dataloadgen` wants, so a many-method is handed to the loader
-directly, with no adapter:
-
-```go
-func NewLoader[KeyT comparable, ValueT any](
-    fetch func(ctx context.Context, keys []KeyT) ([]ValueT, []error),
-    options ...Option) *Loader[KeyT, ValueT]
-```
-
-That is the whole reason the contract is positional and per-key, and why the
-persistence layer must not collapse the error slice into a single error.
+A many-method's per-key shape is exactly the batch signature `dataloadgen`
+wants, so it is handed to the loader directly, with no adapter — which is why
+the persistence layer must not collapse the per-key error slice into a single
+error.
 
 - **One loader set per request**, built by middleware and fetched from the
   request context, so a batch within a request is deduplicated and a batch
