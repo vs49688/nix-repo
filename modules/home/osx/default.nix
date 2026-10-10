@@ -3,6 +3,17 @@ let
   homebrewPath = "/opt/homebrew";
 in {
   config = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
+
+    home.packages = with pkgs; [
+      ##
+      # Somehow fixes most focus issues on this damned OS.
+      # https://discussions.apple.com/thread/256145770
+      ##
+      (writeShellScriptBin "fuck-fixfocus" ''
+        exec osascript -e 'tell application "Screen Sharing" to quit'
+      '')
+    ];
+
     targets.darwin.defaults = {
       NSGlobalDomain = {
         # Dark mode
