@@ -125,6 +125,8 @@ in
     aha
     clinfo
 
+    wl-clipboard
+
     xboomer
   ]);
 
