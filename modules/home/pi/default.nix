@@ -50,6 +50,12 @@ in
         npmCommand = [
           "${lib.getExe pkgs.bun}"
         ];
+
+        compaction = {
+          enabled = false;
+          reserveTokens =  64000;
+          keepRecentTokens = 300000;
+        };
       };
 
       models = let
