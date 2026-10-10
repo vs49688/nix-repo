@@ -275,6 +275,27 @@ don't carry it to another repo or another day.
   it; plain `git add` puts it in the next commit whether you meant it or not.
 - If you are unable to find a required tool, end the turn and ask the user.
 
+## Method
+
+How the work gets done, across all the repos.
+
+- **The code is the source of truth.** When a document and the implementation
+  disagree, the implementation is right. Update the doc if the intent has
+  changed; do not "fix" the code to match the prose.
+- **Read the reference implementation's source first** — before theorising, and
+  not merely to confirm a theory you already hold.
+- **A clean output is not proof of correct code.** Verify against ground truth —
+  a runtime trace, the actual bytes, the row in the database.
+- **When in doubt, instrument and run rather than theorise.**
+- **If something looks wrong, find out why.** Never ignore an anomaly.
+- **No hacks, no filtering, no suppression, no workarounds patched onto wrong
+  foundations.** If the foundation is wrong, say so.
+- **Independent verification beats self-review.** For anything load-bearing, run
+  several independent review passes and reconcile them; agreement across
+  independent auditors is worth more than one careful reading.
+- **Reverse verification finds spec gaps.** Have an agent implement from the
+  specification alone, without the code, and see what it has to invent.
+
 ## Delegation (subagents)
 
 Subagents may be available; take advantage of them. Run them in the
@@ -438,6 +459,6 @@ obeying it into a worse outcome.
 
 ## Project conventions
 
-Go style and tooling, the libraries to reach for, the `framework` persistence
-layer, and how the work gets done across the repos all live in the
-`house-conventions` skill. Load it before starting work in one of my repos.
+Go style and tooling, the libraries to reach for, and the `framework`
+persistence layer all live in the `house-conventions` skill. Load it before
+starting work in one of my repos.

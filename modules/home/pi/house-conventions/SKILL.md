@@ -307,24 +307,3 @@ a copy in a document is wrong within a generation or two.
 - In a repo that has a test suite, tests are required where they pay — parsers,
   persistence, anything with specced behaviour — and the suite must be green
   before you commit.
-
-## Method
-
-How the work gets done, across all the repos.
-
-- **The code is the source of truth.** When a document and the implementation
-  disagree, the implementation is right. Update the doc if the intent has
-  changed; do not "fix" the code to match the prose.
-- **Read the reference implementation's source first** — before theorising, and
-  not merely to confirm a theory you already hold.
-- **A clean output is not proof of correct code.** Verify against ground truth —
-  a runtime trace, the actual bytes, the row in the database.
-- **When in doubt, instrument and run rather than theorise.**
-- **If something looks wrong, find out why.** Never ignore an anomaly.
-- **No hacks, no filtering, no suppression, no workarounds patched onto wrong
-  foundations.** If the foundation is wrong, say so.
-- **Independent verification beats self-review.** For anything load-bearing, run
-  several independent review passes and reconcile them; agreement across
-  independent auditors is worth more than one careful reading.
-- **Reverse verification finds spec gaps.** Have an agent implement from the
-  specification alone, without the code, and see what it has to invent.
