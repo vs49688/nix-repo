@@ -3,7 +3,7 @@
     nixpkgs.url = "nixpkgs";
     nixpkgs-nixos.url = "nixpkgs/nixos-unstable";
 
-    nixpkgs-cadance.url = "github:NixOS/nixpkgs?ref=c59305bab2065cfecc4944690d9eedbb56f3a9fa";
+    nixpkgs-cadance.url = "github:NixOS/nixpkgs?ref=e7439b6b14ad3cc35d05608ebca9bce01a25f5f8";
 
     home-manager = {
       url = "github:nix-community/home-manager";
