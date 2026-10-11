@@ -36,6 +36,8 @@ in
 
       settings = {
         theme = "dark";
+        tuiMode = "regular";
+        fullscreenCopyOnSelect = false;
         defaultProvider = "deepseek";
         defaultModel = "deepseek-flash";
         extensions = [
