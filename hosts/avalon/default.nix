@@ -43,6 +43,7 @@
     "nvidia"
   ];
 
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
   hardware.nvidia.modesetting.enable = true;
 
   services.fail2ban.enable = true;
