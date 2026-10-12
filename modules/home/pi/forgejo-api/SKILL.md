@@ -60,7 +60,7 @@ Milestone objects are already small (~200 B) — no need to project those.
 
 **Issues:**
 - List: `GET /repos/{owner}/{repo}/issues?milestone={id}&state=open` — always project (see above)
-- Create: `POST /repos/{owner}/{repo}/issues` — body: `{"title":"...", "body":"...", "milestone":{id}}`
+- Create: `POST /repos/{owner}/{repo}/issues` — body: `{"title":"...", "body":"...", "milestone":<id>}`. `milestone` is a bare integer, not `{"id":N}` — the object form returns 422 on this instance.
 - Update: `PATCH /repos/{owner}/{repo}/issues/{index}` — returns the full issue, so project it, e.g. `filter="({number: data.number, html_url: data.html_url})"`
 - Comment: `POST /repos/{owner}/{repo}/issues/{index}/comments` — body: `{"body":"..."}`; project to `({id: data.id, html_url: data.html_url})`
 
