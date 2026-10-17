@@ -101,7 +101,10 @@
       ;
 
     in {
-      x86_64-linux   = mkPackages { system = "x86_64-linux";   };
+      x86_64-linux = (mkPackages { system = "x86_64-linux"; }) // {
+        cadance-caddy = self.nixosConfigurations.CADANCE.config.services.caddy.package;
+      };
+
       aarch64-linux  = mkPackages { system = "aarch64-linux";  };
       aarch64-darwin = mkPackages { system = "aarch64-darwin"; };
     };
