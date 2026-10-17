@@ -76,6 +76,8 @@ in (({
 
   rom-parser = super.callPackage ./pkgs/rom-parser { };
 
+  rea-agents = super.callPackage ./pkgs/rea-agents { };
+
   xboomer = super.callPackage ./pkgs/xboomer { };
 
   redbean = super.callPackage ./pkgs/redbean { };
