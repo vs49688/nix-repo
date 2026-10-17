@@ -70,7 +70,7 @@ applyFiles --bind                   \
     /run/postgresql                 \
     /run/nscd                       \
     "$XDG_RUNTIME_DIR/wayland-0"    \
-    "$XDG_RUNTIME_DIR/pipewire-0"   \
+    "$XDG_RUNTIME_DIR/pipewire-0"
 
 command+=(
     --symlink /run /var/run
