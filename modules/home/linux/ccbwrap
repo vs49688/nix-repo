@@ -11,7 +11,7 @@ fi
 function applyFiles () {
     local flag=$1; shift
     for i in "$@"; do
-        [[ ( -d "$i" ) || ( -f "$i" ) || ( -S "$i" ) ]] && command+=("${flag}" "$i" "$i")
+        [[ ( -d "$i" ) || ( -f "$i" ) || ( -S "$i" ) || ( -c "$i" ) ]] && command+=("${flag}" "$i" "$i")
     done
 }
 
@@ -32,7 +32,7 @@ command=(
     --setenv GIT_CONFIG_GLOBAL "$HOME/.config/git/config.agent"
 )
 
-applyFiles --dev-bind /dev/dri /dev/dri
+applyFiles --dev-bind /dev/dri /dev/kvm
 
 applyFiles --ro-bind        \
     /nix                    \
