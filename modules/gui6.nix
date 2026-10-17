@@ -24,6 +24,7 @@ in
 
     # "Office" Packages
     libreoffice
+    wordcraft
     xournalpp
     thunderbird
     remmina
