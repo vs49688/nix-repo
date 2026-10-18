@@ -68,7 +68,7 @@ in
 
         compaction = {
           enabled = false;
-          reserveTokens =  64000;
+          reserveTokens =  100000;
           keepRecentTokens = 300000;
         };
       };
