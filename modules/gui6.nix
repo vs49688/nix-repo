@@ -191,6 +191,8 @@ in
   services.displayManager.sddm.wayland.enable = lib.mkDefault true;
   services.desktopManager.plasma6.enable = true;
 
+  programs.kde-pim.enable = false;
+
   environment.plasma6.excludePackages = [
     pkgs.kdePackages.discover
     pkgs.kdePackages.plasma-browser-integration
