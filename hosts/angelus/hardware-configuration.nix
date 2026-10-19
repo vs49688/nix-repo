@@ -13,10 +13,26 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  # 8fd91622-84c1-428d-93c5-e94bf27a859b
   fileSystems."/" =
-    { device = "/dev/mapper/nixos-root";
+    { device = "none";
+      fsType = "tmpfs";
+    };
+
+  fileSystems."/.root" =
+    { device = "/dev/disk/by-uuid/8fd91622-84c1-428d-93c5-e94bf27a859b";
       fsType = "ext4";
+    };
+
+  fileSystems."/nix" =
+    { device = "/.root/nix";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+
+  fileSystems."/data" =
+    { device = "/.root/data";
+      fsType = "none";
+      options = [ "bind" ];
     };
 
   fileSystems."/boot" =

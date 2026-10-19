@@ -44,7 +44,22 @@
   '';
 
   fileSystems."/" = {
-    options       = [ "noatime" "nodiratime" "discard" ];
+    options = [ "defaults" "size=25%" "mode=755" ];
+  };
+
+  fileSystems."/.root" = {
+    neededForBoot = true;
+    options = [ "noatime" "nodiratime" "discard" ];
+  };
+
+  fileSystems."/nix" = {
+    depends = [ "/.root" ];
+    neededForBoot = true;
+  };
+
+  fileSystems."/data" = {
+    depends = [ "/.root" ];
+    neededForBoot = true;
   };
 
   # THIS IS THE UUID OF THE LUKS PARTITION, /dev/vda2
@@ -62,7 +77,12 @@
     "ru_RU.UTF-8/UTF-8"
   ];
 
+  users.mutableUsers = false;
+  users.users.root.hashedPasswordFile = "/data/passwords/root";
+
   users.users.${config.settings.primaryUser.username} = {
+    hashedPasswordFile = "/data/passwords/${config.settings.primaryUser.username}";
+
     packages = with pkgs; [
       (croc-lotg.override { version = "1.5.7"; allowSubstitutes = true; })
     ];
@@ -71,6 +91,10 @@
   systemd.tmpfiles.rules = [
     "L /usr/lib/locale/locale-archive - - - - /run/current-system/sw/lib/locale/locale-archive"
   ];
+
+  environment.persistence."/data" = {
+    enable = true;
+  };
 
   system.stateVersion = "25.05";
 }
