@@ -14,8 +14,25 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
+    { device = "none";
+      fsType = "tmpfs";
+    };
+
+  fileSystems."/.root" =
     { device = "/dev/disk/by-uuid/9fe202ba-68f7-4049-9b5c-a31e1347202c";
       fsType = "ext4";
+    };
+
+  fileSystems."/nix" =
+    { device = "/.root/nix";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+
+  fileSystems."/data" =
+    { device = "/.root/data";
+      fsType = "none";
+      options = [ "bind" ];
     };
 
   fileSystems."/boot" =

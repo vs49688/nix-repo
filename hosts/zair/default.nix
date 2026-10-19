@@ -28,7 +28,13 @@
   #   ACTION=="add|change", KERNEL=="nvme[0-9]*n[0-9]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="none"
   # '';
 
+
+  users.mutableUsers = false;
+  users.users.root.hashedPasswordFile = "/data/passwords/root";
+
   users.users.${config.settings.primaryUser.username} = {
+    hashedPasswordFile = "/data/passwords/${config.settings.primaryUser.username}";
+
     packages = with pkgs; [
       luanti
       (croc-lotg.override { version = "1.5.7"; allowSubstitutes = true; })
@@ -49,7 +55,9 @@
   services.hardware.bolt.enable = true;
 
   # Conflicts hard with the built-in Asahi stuff.
-  home-manager.users.${config.settings.primaryUser.username}.services.easyeffects.enable = false;
+  home-manager.users.${config.settings.primaryUser.username} = {
+    services.easyeffects.enable = false;
+  };
 
   networking.hostName = "ZAIR";
   networking.hostId   = "faaf43fa";
@@ -66,7 +74,22 @@
   '';
 
   fileSystems."/" = {
-    options       = [ "noatime" "nodiratime" "discard" ];
+    options = [ "noatime" "nodiratime" ];
+  };
+
+  fileSystems."/.root" = {
+    neededForBoot = true;
+    options = [ "noatime" "nodiratime" "discard" ];
+  };
+
+  fileSystems."/nix" = {
+    depends = [ "/.root" ];
+    neededForBoot = true;
+  };
+
+  fileSystems."/data" = {
+    depends = [ "/.root" ];
+    neededForBoot = true;
   };
 
   # THIS IS THE UUID OF THE LUKS PARTITION, /dev/vda2
@@ -75,7 +98,6 @@
     preLVM = true;
     allowDiscards = true;
   };
-
 
   i18n.supportedLocales = [
     "C.UTF-8/UTF-8"
@@ -89,6 +111,10 @@
   ];
 
   services.syncthing.enable  = true;
+
+  environment.persistence."/data" = {
+    enable = true;
+  };
 
   system.stateVersion = "23.05";
 }
