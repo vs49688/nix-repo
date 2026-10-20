@@ -3,9 +3,13 @@ description: Run unattended until the goal list is done — verify independently
 argument-hint: "[goals, or notes about this run]"
 ---
 I am away, possibly for hours and possibly asleep. Work unattended: do not wait for
-me, and do not stop to ask for permission.
+me, and do not stop to ask for permission. The usual rule — that a question answered
+is the end of the turn — is suspended for this run.
 
-**Goals:** ${@:-the open issues in the current milestone, in priority order}
+**Goals:** ${@:-the task in flight}
+
+Order of work: the goal above; then the tasks that follow logically from it; then —
+only once the overarching task is actually done — the open issues in the tracker.
 
 ## The loop
 
