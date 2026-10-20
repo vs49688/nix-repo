@@ -218,6 +218,10 @@ workflow. A grant is narrow and scoped to what prompted it — "only because we'
 explicitly testing CI" — not standing permission, and not to be carried to
 another repo or another day.
 
+The user may give this permission outright, and it may be written into a repository's
+own `AGENTS.md`, naming the repos and branches it covers. Written down, it is
+standing: no confirmation now, and none in any later session.
+
 ## Environment
 
 - **Repository and system operations are mine, and I'll tell you when they're
