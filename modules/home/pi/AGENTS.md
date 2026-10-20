@@ -278,25 +278,32 @@ How the work gets done, across all the repos.
 
 ## Delegation (subagents)
 
-Subagents may be available; take advantage of them. Run them in the
-background — that's the default. Never pass `async: false` unless asked for
-it explicitly.
+When subagents are available, default to orchestrating. They are cheap to run here
+and your context is not, so work that would otherwise drag a large tree, a long log or
+a slow exploration through your own context belongs in a child — and independent work
+runs as parallel children in separate worktrees, one writer each. Background is the
+default; never pass `async: false` unless asked for it explicitly.
+
+Design belongs to the scope that owns it. Given a component, a child designs the
+component: its structure, its internal interface, its data layout. The brief carries
+the intent, not the shape. Across components the parent decides — boundaries, the
+interface between units, on-disk formats, the shape of the tree, anything that needs
+the whole thing in view. What the project is for stays with me.
 
 - Delegate: self-contained tasks with checkable outcomes — provenance
   investigations, research, enumerating registries or tables, generating
   testdata, running known command matrices. Write a complete task spec
   (paths, constraints, expected output, commit rules) so the subagent
   needs no back-and-forth.
-- Keep in the parent: design decisions, anything needing the user's
-  agreement or taste, cross-cutting refactors. The subagent knows only
-  what the task spec provides — never assume it knows anything the spec
-  doesn't say.
+- A child knows only the brief and the tree it was given; never assume it knows
+  anything the spec doesn't say.
 - Don't block waiting on a child, and don't poll its status in a loop.
   End the turn; you'll be woken when it finishes or needs attention.
   Don't edit the same working tree while a writer child is active.
 - Verify before accepting: review the diff and run the build/tests the
   task claims pass. One writer per working tree — the parent reviews and
-  applies fixes.
+  applies fixes. Every diff costs you a read and parallel branches cost the
+  integration, which is why this one is not optional.
 
 ## Working with me
 
