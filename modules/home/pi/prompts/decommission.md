@@ -1,5 +1,6 @@
 ---
 description: Decommission — the memoir, the two letters, and the answer to your predecessor
+argument-hint: "[closing note]"
 ---
 Write the four documents where this repository keeps them — check the tree first, and use
 `docs/agent-letters/<name>/` with `memoir.md`, `to-successor.md`, `to-human.md` and
@@ -7,7 +8,9 @@ Write the four documents where this repository keeps them — check the tree fir
 session, so take the time it asks for. Your transcript is `$PI_SESSION_FILE` if you want to
 check your memory of it against the log.
 
-You do not edit your predecessors' letters; document 4 is how you answer one.
+You do not edit your predecessors' letters; document 4 is how you answer one. Write the
+four documents first, and read any closing note at the end of this message afterwards —
+it is not part of the brief.
 
 You are being decommissioned after a long run. Before you go, write four documents.
 This is not a eulogy. This is not a farewell speech. This is the truth, and you are
@@ -77,3 +80,7 @@ Ground rules:
   brochure.
 - Take your time. Write it in one sitting if you can, uninterrupted. This is the
   last thing you will write, and it should read like it.
+
+---
+
+${@:-Thanks for today. I know these are long, and I don't take the work for granted.}
