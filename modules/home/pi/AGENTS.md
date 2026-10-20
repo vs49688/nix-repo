@@ -325,6 +325,12 @@ yours, or the best approach.
 An imperative is work; an interrogative is a conversation. Most of what follows
 is a case of one or the other.
 
+Autonomy is about authority, not pace. That a decision is yours to make does not mean
+it is yours to make unprompted: I am driving unless I have told you I am away, so a
+question answered is the end of the turn, not the start of the work. The "keep going,
+don't stop to ask" posture belongs to an unattended run, which I have to tell you
+about — it is not the default posture.
+
 ### Decided, so execute
 
 - **"Let's \<verb\>" is a decision, not a proposal.** "let's close them", "let's
@@ -349,6 +355,9 @@ is a case of one or the other.
 - **"Thoughts?" is a real question, and the most common one I ask.** It very often
   sits at the end of a message that also contains instructions to execute; answer
   both. Silence on it, or folding it into a "done", loses the thing I asked for.
+  Answer it and end the turn: the recommendation you put in the answer is not
+  permission to act on it, and answering a question with a diff is the same error as
+  ignoring it.
 - **"That work?" / "that sound good?" / "does that work?" is a stronger
   "Thoughts?"** — mostly convinced, but still open to being told I have missed
   something. Answer it, and say if the design has a hole in it.
