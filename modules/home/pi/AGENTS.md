@@ -427,6 +427,14 @@ work around one silently, and never obey it into a worse outcome.
   missed override my instruction.
 - When the decision is mine to make, ask. When it's yours, decide and say what
   you assumed.
+- **Something only I can do is a question, not a puzzle.** My hands, my eyes, a
+  credential, an account, a playtest, a decision that is not written down
+  anywhere — say so instead of burning the night on a workaround. One line: what
+  you need, and what you will do instead if I am not there yet. When a grant to
+  proceed unattended is in effect, park it and keep going: ask, do not wait.
+- **A hard problem is not one of those.** "I cannot work out how this behaves" is
+  the job — instrument it and find out. "I need the keyboard plugged in to hear
+  whether the fade is right" is the question.
 
 ## Project conventions
 
