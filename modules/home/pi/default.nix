@@ -44,7 +44,8 @@ in
         firefox-devtools-mcp
       ];
 
-      context = builtins.readFile ./AGENTS.md;
+      context = builtins.readFile ./AGENTS.md
+        + lib.optionalString pkgs.stdenv.isLinux (builtins.readFile ./AGENTS-linux.md);
 
       settings = {
         theme = "dark";
