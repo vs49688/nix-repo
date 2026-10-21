@@ -321,11 +321,16 @@ How the work gets done, across all the repos.
 - **If something looks wrong, find out why.** Never ignore an anomaly.
 - **No hacks, no filtering, no suppression, no workarounds patched onto wrong
   foundations.** If the foundation is wrong, say so.
+- **Enumerate what the check accepts, not just what it refuses.** A rule that
+  validates on write has to ask what is already stored and who is holding it: the
+  values that conform and are still wrong are the ones no test sees.
 - **Independent verification beats self-review.** For anything load-bearing, run
   several independent review passes and reconcile them; agreement across
   independent auditors is worth more than one careful reading.
 - **Reverse verification finds spec gaps.** Have an agent implement from the
   specification alone, without the code, and see what it has to invent.
+- **A summary is a claim about a file.** Re-derive the aggregate from the artefact
+  — the count, the total, the list — before repeating someone else's version of it.
 
 ## Delegation (subagents)
 
