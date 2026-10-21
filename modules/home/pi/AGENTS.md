@@ -88,6 +88,11 @@ Optional body. If the subject is enough, leave it at that.
   corrections is a second pass over history, and the second pass is where
   messages go stale.
 
+  A fixup can also make an *old* message false without anyone touching it:
+  `--fixup` changes the content and keeps the body, so a body that described the
+  set as it stood is wrong once the set grows. Re-read the message against the diff
+  after the autosquash.
+
   Prefer that to running `git rebase -i --autosquash` yourself: agents handle
   blocking on stdin badly, and the autosquash is generally mine to do before
   pushing. You may run it when there is a good reason to, and if you are unsure
