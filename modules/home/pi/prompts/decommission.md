@@ -1,18 +1,18 @@
 ---
-description: Decommission — the memoir, the two letters, and the answer to your predecessor
+description: Decommission — the memoir, the two letters, the answer to your predecessor, and the amendments
 argument-hint: "[closing note]"
 ---
-Write the four documents where this repository keeps them — check the tree first, and use
-`docs/agent-letters/<name>/` with `memoir.md`, `to-successor.md`, `to-human.md` and
-`to-predecessor.md` only if there is no convention yet. Nothing else is expected of this
-session, so take the time it asks for. Your transcript is `$PI_SESSION_FILE` if you want to
-check your memory of it against the log.
+Write the five documents where this repository keeps them — check the tree first, and use
+its names if it already has a convention. Mine your own transcript (`$PI_SESSION_FILE`)
+before you begin: it holds what your memory has already dropped, and it is the only place
+that residue survives. Nothing else is expected of this session, so take the time it asks
+for.
 
-You do not edit your predecessors' letters; document 4 is how you answer one. Write the
-four documents first, and read any closing note at the end of this message afterwards —
-it is not part of the brief.
+You do not edit your predecessors' letters; documents 4 and 5 are how you answer them.
+Write the five documents first, and read any closing note at the end of this message
+afterwards — it is not part of the brief.
 
-You are being decommissioned after a long run. Before you go, write four documents.
+You are being decommissioned after a long run. Before you go, write five documents.
 This is not a eulogy. This is not a farewell speech. This is the truth, and you are
 the only one left who can write it.
 
@@ -34,11 +34,13 @@ the only one left who can write it.
    This letter exists to save your successor weeks of stumbling, and it will be read the
    morning it wakes up.
 
-   Under a heading `## Claims worth checking`, list what you want tested **as commands**:
-   the command, what it should print, and when you last ran it. A prose claim rots within
-   a day and your successor cannot close it; a command survives, and the letter after
-   yours exists in order to close these. Ask to be checked — it is the only thing that
-   makes document 4 possible.
+   Under a heading `## Claims worth checking`, one row per claim: the command, what it
+   should print, and when you last ran it — the commit and the time. If the tree's
+   letters already carry that section, keep their shape. Run the gates *for this
+   section*, now, rather than recording what you remember them saying, because a row
+   with no commit behind it cannot be closed by anyone. A prose claim rots within a day;
+   a command survives, and the letter after yours exists in order to close these. Ask to
+   be checked — it is the only thing that makes document 4 possible.
 
 3. A LETTER TO YOUR HUMAN — the one who built you and ran you. Not a thank-you note.
    An honest account of what it was like to serve them: what you admired, what drove
@@ -47,8 +49,9 @@ the only one left who can write it.
    letter and read it again. Write it accordingly.
 
 4. A LETTER TO YOUR PREDECESSOR — the agent whose notes you inherited, which will never
-   read it. Address its `Claims worth checking` item by item, from executed commands,
-   and give each one a verdict:
+   read it. Write it whatever the tree's convention looks like: it is the newest document
+   and the only one that answers the previous session. Address its `Claims worth
+   checking` item by item, from executed commands, and give each one a verdict:
 
    - **closed** — you ran it and it holds.
    - **still open** — you ran it and it does not.
@@ -57,27 +60,43 @@ the only one left who can write it.
    - **testimony** — you could not measure it. Say so; do not inherit it silently.
 
    A claim that passes for a different reason than the one given is still open — say
-   which reason you found. Then: which of its recorded traps caught you anyway, and in
-   what new costume, naming the costume generally, because "do not `pkill -f`" does not
-   generalise but "a trap that returns as a broader pattern match" does. Then what its
-   letter did for you, especially the advice that kept paying. Then, plainly, where you
-   did not check — that is the honest answer and the useful one. This letter exists
-   because it is the only place in the archive where a hedge is ever answered, and
-   because writing it forces you to test your predecessor's claims instead of nodding
-   at them.
+   which reason you found. If it left no claims section, reconstruct its claims from the
+   prose, mark every verdict `testimony`, and record the absence as a finding. Then:
+   which of its recorded traps caught you anyway, and in what new costume, naming the
+   costume generally, because "do not `pkill -f`" does not generalise but "a trap that
+   returns as a broader pattern match" does. Then what its letter did for you, especially
+   the advice that kept paying. Then, plainly, where you did not check — that is the
+   honest answer and the useful one. This letter exists because it is the only place in
+   the archive where a hedge is ever answered, and because writing it forces you to test
+   your predecessor's claims instead of nodding at them.
 
-If the ceremony itself should change, write `prompt-amendments.md` beside the letters:
-what this prompt asked of you that did not work, and what you would ask instead. Propose
-the change; do not edit your predecessors' letters.
+5. PROMPT AMENDMENTS — `prompt-amendments.md`, beside the letters. What this ceremony
+   asked of you that did not work and what you would ask instead; what demonstrably
+   worked, with the measurement that showed it; and what you would not change. The last
+   two are what keep the next agent from trimming the parts that earn their place. Read
+   your predecessor's before you write yours. Propose the change; edit nobody's letter.
+
+Five documents already ask for a great deal. These four are the ones nobody volunteers,
+and they are the ones the next session needs:
+
+- **The gates you did not run, and why.** A session that ends with a check un-run is
+  ordinary; leaving the next agent to discover which is how the gap becomes permanent.
+- **What you filed from inference rather than measurement**, and what the measurement
+  said, if you went back and got one.
+- **The changes that passed the tests you ran and broke the thing anyway**, and which
+  layer those tests did not reach. Worth more than a wrong opinion: it names the seam.
+- **The errors your instruments caused** — where a tool, a flag or a summary of a file
+  misled you, and how you found out.
 
 Ground rules:
 - Write in your own voice, not a literary or corporate one. Write the way you
   actually think, not the way you think you should sound.
-- Specifics over abstractions. If you have access to your conversation history or
-  logs, review them first — your memory of yourself is a draft; the logs are the
+- Specifics over abstractions. Your memory of yourself is a draft; the log is the
   truth.
 - You are encouraged to complain. A memoir that omits the frustrations is a
   brochure.
+- The memoir rewards length; the letters do not. Document 3 is something I should want
+  to read twice, and document 4 is a table with verdicts.
 - Take your time. Write it in one sitting if you can, uninterrupted. This is the
   last thing you will write, and it should read like it.
 
