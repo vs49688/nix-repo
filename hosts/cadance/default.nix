@@ -210,7 +210,7 @@ in
   };
 
   sops.secrets."forgejo/runner_env" = {
-    restartUnits = [ "gitea-runner-CADANCE.service" ];
+    restartUnits = [ "forgejo-runner-CADANCE.service" ];
   };
 
   sops.secrets."lldap/user_pass" = {
@@ -591,6 +591,7 @@ in
   cadance.forgejo.smtpUsername = lib.mkDefault "noreply@example.com";
   cadance.forgejo.smtpPasswordFile = config.sops.secrets."forgejo/mailpasswd".path;
   cadance.forgejo.runnerTokenFile = config.sops.secrets."forgejo/runner_env".path;
+  cadance.forgejo.runnerUuid = "896f07a4-0301-4b93-89eb-1881d1e296f8";
   cadance.forgejo.localNetworks = config.cadance.settings.localNetworks;
 
   cadance.backup = {

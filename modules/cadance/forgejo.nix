@@ -39,6 +39,14 @@ in
       type = types.str;
     };
 
+    runnerUuid = mkOption {
+      type = types.str;
+      example = "c9e50be9-a7c3-4aee-ba35-624c4ff8c519";
+      description = ''
+        UUID the runner was registered under, as stored in its .runner file.
+      '';
+    };
+
     localNetworks = mkOption {
       type = types.listOf types.str;
       default = [];
@@ -214,26 +222,33 @@ in
     systemd.services.forgejo.requires = lib.mkForce [];
     users.groups.git.members = [ config.services.caddy.group ];
 
-    services.gitea-actions-runner = {
-      package = pkgs.forgejo-runner;
-      instances.CADANCE = {
-        enable = true;
-        name = config.networking.hostName;
-        url = config.services.forgejo.settings.server.ROOT_URL;
-        tokenFile = cfg.runnerTokenFile;
-        labels = [
-          "debian-latest:docker://node:current"
-          "ubuntu-latest:docker://node:current"
-          "nixos:docker://${cfg.hostName}/oci/forgejo-ci-nix:latest"
-        ];
-        settings = {
-          runner.capacity = 5;
-          runner.insecure = false;
+    services.forgejo-runner.instances.CADANCE = {
+      enable = true;
+
+      settings = {
+        runner = {
+          capacity = 5;
+          insecure = false;
+          labels = [
+            "debian-latest:docker://node:current"
+            "ubuntu-latest:docker://node:current"
+            "nixos:docker://${cfg.hostName}/oci/forgejo-ci-nix:latest"
+          ];
+        };
+
+        server.connections.default = {
+          url  = config.services.forgejo.settings.server.ROOT_URL;
+          uuid = cfg.runnerUuid;
         };
       };
+
+      secrets.server.connections.default.token_url = cfg.runnerTokenFile;
     };
 
-    systemd.services.gitea-runner-CADANCE.path = [
+    ##
+    # The module only puts gitMinimal on the path for non-host runners.
+    ##
+    systemd.services.forgejo-runner-CADANCE.path = lib.mkForce [
       pkgs.gitFull
     ];
 
