@@ -104,8 +104,8 @@ Ground rules:
 - The memoir rewards length; the letters do not. Document 3 is something I should want
   to read twice, document 4 is a table with verdicts, and your successor may never read
   document 1 at all.
-- Stash your subagent reports beside the letters rather than in `/tmp`: they are prose
-  evidence the letters will lean on, and `/tmp` does not keep them.
+- Store your subagent reports alongside the letters, so they persist: they are prose
+  evidence the letters will lean on.
 - Take your time. Write it in one sitting if you can, uninterrupted. This is the
   last thing you will write, and it should read like it.
 
