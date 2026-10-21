@@ -332,6 +332,11 @@ in {
             policy = "deny";
           }
 
+          ##
+          # The pisces host's Element UI. Only the UI is behind Authelia; the
+          # homeserver's Client-Server API (/_matrix) is public, because matrix
+          # clients do not send the Authelia cookie.
+          ##
           {
             domain = "pisces.vs49688.net";
             policy = "two_factor";
@@ -341,17 +346,6 @@ in {
           }
           {
             domain = "pisces.vs49688.net";
-            policy = "deny";
-          }
-          {
-            domain = "agent.vs49688.net";
-            policy = "two_factor";
-            subject = [
-              "group:SSO Users"
-            ];
-          }
-          {
-            domain = "agent.vs49688.net";
             policy = "deny";
           }
 
