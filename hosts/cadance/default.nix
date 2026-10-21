@@ -209,7 +209,7 @@ in
     restartUnits = [ "forgejo.service" ];
   };
 
-  sops.secrets."forgejo/runner_env" = {
+  sops.secrets."forgejo/runner_token" = {
     restartUnits = [ "forgejo-runner-CADANCE.service" ];
   };
 
@@ -590,7 +590,7 @@ in
   cadance.forgejo.smtpAddress = lib.mkDefault "smtp.example.com";
   cadance.forgejo.smtpUsername = lib.mkDefault "noreply@example.com";
   cadance.forgejo.smtpPasswordFile = config.sops.secrets."forgejo/mailpasswd".path;
-  cadance.forgejo.runnerTokenFile = config.sops.secrets."forgejo/runner_env".path;
+  cadance.forgejo.runnerTokenFile = config.sops.secrets."forgejo/runner_token".path;
   cadance.forgejo.runnerUuid = "896f07a4-0301-4b93-89eb-1881d1e296f8";
   cadance.forgejo.localNetworks = config.cadance.settings.localNetworks;
 
