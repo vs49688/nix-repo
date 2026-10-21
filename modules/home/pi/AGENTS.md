@@ -336,6 +336,18 @@ How the work gets done, across all the repos.
   specification alone, without the code, and see what it has to invent.
 - **A summary is a claim about a file.** Re-derive the aggregate from the artefact
   — the count, the total, the list — before repeating someone else's version of it.
+- **Record the method beside the number.** Two readings of the same quantity are not
+  comparable unless the method is too: five measurements of one band differed by 5×
+  because each was taken differently. Reproduce a report by copying its command
+  rather than approximating it.
+- **A deflation is the dangerous direction.** An over-count wastes a turn; an
+  under-count closes a defect that should have stayed open. When your reproduction is
+  cheaper than the report's, suspect your workload before their arithmetic.
+- **File the observation, not the inference.** A cause written into the report before
+  the reproduction is a fabricated finding, even when it turns out to be right.
+- **A test whose actor has a reason to succeed cannot fail.** Before trusting a check
+  that a user cannot do something, ask whether the actor you chose is allowed to
+  anyway.
 
 ## Delegation (subagents)
 
