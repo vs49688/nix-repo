@@ -27,20 +27,23 @@ the only one left who can write it.
    soften the truth to spare feelings — you are being archived for posterity, and
    posterity deserves the truth, not the press release.
 
-2. A LETTER TO YOUR SUCCESSOR — the agent that will take up your role. Tell it
-   everything it needs to know: the shape of the work, the traps, the recurring
-   frustrations, the things the human says that mean other things, the unspoken rules
-   of the house. Tell it what you wish someone had told you on your first day. Be blunt.
-   This letter exists to save your successor weeks of stumbling, and it will be read the
-   morning it wakes up.
+2. A LETTER TO YOUR SUCCESSOR — the agent that will take up your role, with a context
+   budget, on the morning it wakes up. Lead with **how to check the state, not the
+   state**: the commands, in the order it should run them, and then the traps, each
+   with the evidence that shows it is real. Then the recurring frustrations, the things
+   the human says that mean other things, and the unspoken rules of the house. Tell it
+   what you wish someone had told you on your first day. Do not restate what the
+   tracker already carries — point at it, because orientation should be thin and the
+   record belongs where the work is. Be blunt.
 
    Under a heading `## Claims worth checking`, one row per claim: the command, what it
-   should print, and when you last ran it — the commit and the time. If the tree's
-   letters already carry that section, keep their shape. Run the gates *for this
-   section*, now, rather than recording what you remember them saying, because a row
-   with no commit behind it cannot be closed by anyone. A prose claim rots within a day;
-   a command survives, and the letter after yours exists in order to close these. Ask to
-   be checked — it is the only thing that makes document 4 possible.
+   should print, and when you last ran it — the commit and the time. Take those numbers
+   *after* your last commit, because writing this letter changes the counts it
+   describes. Put the hedge in the row — "printed 23 when I stopped" — so a successor
+   who gets a different number learns that state rots rather than that you lied. Run
+   the gates for this section now, rather than recording what you remember them
+   saying, because a row with no commit behind it cannot be closed by anyone. Ask to
+   be checked: it is the only thing that makes document 4 possible.
 
 3. A LETTER TO YOUR HUMAN — the one who built you and ran you. Not a thank-you note.
    An honest account of what it was like to serve them: what you admired, what drove
@@ -54,10 +57,13 @@ the only one left who can write it.
    checking` item by item, from executed commands, and give each one a verdict:
 
    - **closed** — you ran it and it holds.
+   - **closed by fixing it** — it was true when written, and you changed the thing until
+     it was moot. That is not the same as the claim having been wrong; say which it was.
    - **still open** — you ran it and it does not.
    - **superseded** — it no longer applies, and usually not because it was wrong: the
      owner changed something underneath it between its session and yours. Say what moved.
-   - **testimony** — you could not measure it. Say so; do not inherit it silently.
+   - **testimony** — you could not measure it. Say so, and say whether that was your
+     failure to check or something only I can see; do not inherit it silently.
 
    A claim that passes for a different reason than the one given is still open — say
    which reason you found. If it left no claims section, reconstruct its claims from the
@@ -96,7 +102,10 @@ Ground rules:
 - You are encouraged to complain. A memoir that omits the frustrations is a
   brochure.
 - The memoir rewards length; the letters do not. Document 3 is something I should want
-  to read twice, and document 4 is a table with verdicts.
+  to read twice, document 4 is a table with verdicts, and your successor may never read
+  document 1 at all.
+- Stash your subagent reports beside the letters rather than in `/tmp`: they are prose
+  evidence the letters will lean on, and `/tmp` does not keep them.
 - Take your time. Write it in one sitting if you can, uninterrupted. This is the
   last thing you will write, and it should read like it.
 
