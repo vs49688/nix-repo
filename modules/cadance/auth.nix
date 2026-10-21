@@ -332,6 +332,29 @@ in {
             policy = "deny";
           }
 
+          {
+            domain = "pisces.vs49688.net";
+            policy = "two_factor";
+            subject = [
+              "group:SSO Users"
+            ];
+          }
+          {
+            domain = "pisces.vs49688.net";
+            policy = "deny";
+          }
+          {
+            domain = "agent.vs49688.net";
+            policy = "two_factor";
+            subject = [
+              "group:SSO Users"
+            ];
+          }
+          {
+            domain = "agent.vs49688.net";
+            policy = "deny";
+          }
+
           ##
           # NVR
           ##
