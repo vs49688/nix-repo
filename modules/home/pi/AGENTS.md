@@ -365,11 +365,20 @@ the whole thing in view. What the project is for stays with me.
 
 - Delegate: self-contained tasks with checkable outcomes — provenance
   investigations, research, enumerating registries or tables, generating
-  testdata, running known command matrices. Write a complete task spec
-  (paths, constraints, expected output, commit rules) so the subagent
-  needs no back-and-forth.
-- A child knows only the brief and the tree it was given; never assume it knows
-  anything the spec doesn't say.
+  testdata, running known command matrices.
+- **The brief carries the question and the gate, not your answer.** The interface
+  exactly, each rule with the measurement behind it, the command that proves it and
+  the numbers it should print, what is out of scope, and "if anything in this brief
+  turns out to be wrong, say so". Briefs that carried the answer came back with the
+  answer in code; briefs that carried the question came back with the real rule. Put
+  the constraint that prevents damage in the first sentence, not in a list.
+- **A pointer is a spec claim.** Name only resources the child can actually reach,
+  and say which tools it has: it knows only the brief and the tree it was given, so
+  an instruction it cannot execute is a spec bug that costs it CPU-minutes.
+- **A child's report is a hypothesis.** Most will have something wrong, and it is
+  almost never the code — a unit, a frame, or a number from an instrument it did not
+  check. Verify before repeating it, and suspect your own test before you suspect the
+  child.
 - Don't block waiting on a child, and don't poll its status in a loop.
   End the turn; you'll be woken when it finishes or needs attention.
   Don't edit the same working tree while a writer child is active.
