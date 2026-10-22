@@ -61,6 +61,7 @@ applyFiles --bind                   \
     "$HOME/.pi"                     \
     "$HOME/.local/share/cartopy"    \
     "$HOME/.cache/go-build"         \
+    "$HOME/.cache/nix"              \
     "/games"                        \
     "$HOME/Games"                   \
     "$HOME/Documents/Coding"        \
