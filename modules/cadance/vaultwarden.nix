@@ -97,7 +97,16 @@ in {
       };
     };
 
+    # /admin is a shared-token panel with control over every user, org and
+    # database on the instance, so it is not published on any interface.
+    # Reach it over an SSH tunnel to the Rocket listener instead.
     services.caddy.virtualHosts.${cfg.hostName}.extraConfig = ''
+      @admin path /admin /admin/*
+
+      handle @admin {
+        respond 404
+      }
+
       reverse_proxy http://${vwCfg.config.ROCKET_ADDRESS}:${vwCfg.config.ROCKET_PORT}
     '';
   };
