@@ -715,9 +715,16 @@ in
     }
 
     redir /sync /sync/
+
+    # Case-sensitive on purpose: Caddy's path matcher lowercases for matching
+    # while forward_auth proxies the URI as sent, so a case-insensitive match
+    # here reaches Syncthing with the API key injected while Authelia matches
+    # no resource and falls through to the bypass catch-all.
+    @sync path_regexp sync ^/sync/
+
     # Use "handle" to keep the path for Authelia,
     # then a nested "handle_path" to strip it for Syncthing.
-    handle /sync/* {
+    handle @sync {
       route {
         forward_auth unix//run/authelia/authelia.sock {
           uri /api/authz/forward-auth

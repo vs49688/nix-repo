@@ -425,6 +425,12 @@ in {
 
           ##
           # Allow "zane" access to transmission.
+          #
+          # The resource regexes here and for Syncthing below are
+          # case-insensitive on purpose. Caddy matches paths case-insensitively
+          # but forward_auth proxies the URI as the client sent it, so /Sync/
+          # reaches the backend while a case-sensitive regex matches no rule at
+          # all and falls through to the bypass at the end of this list.
           ##
           {
             domain = "cadance.vs49688.net";
@@ -433,8 +439,8 @@ in {
             ];
             policy = "one_factor";
             resources = [
-              "^/transmission$"
-              "^/transmission/"
+              "(?i)^/transmission$"
+              "(?i)^/transmission/"
             ];
           }
 
@@ -448,8 +454,8 @@ in {
             ];
             policy = "two_factor";
             resources = [
-              "^/sync$"
-              "^/sync/"
+              "(?i)^/sync$"
+              "(?i)^/sync/"
             ];
           }
 
@@ -460,10 +466,10 @@ in {
             domain = "cadance.vs49688.net";
             policy = "deny";
             resources = [
-              "^/transmission$"
-              "^/transmission/"
-              "^/sync$"
-              "^/sync/"
+              "(?i)^/transmission$"
+              "(?i)^/transmission/"
+              "(?i)^/sync$"
+              "(?i)^/sync/"
             ];
           }
 
