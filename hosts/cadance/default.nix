@@ -37,6 +37,7 @@ in
     ../../modules/postgres-ensure-roles.nix
     ../../modules/cadance/settings.nix
     ../../modules/cadance/auth.nix
+    ../../modules/cadance/ntp.nix
     ../../modules/cadance/unifi.nix
     ../../modules/cadance/nextcloud.nix
     ../../modules/cadance/frigate.nix
@@ -380,6 +381,12 @@ in
     settings = {
       server = [ { listen = "0.0.0.0:123"; } ];
     };
+
+    firewallInterfaces = [
+      "vlan64"
+      "vlan102"
+      "vlan103"
+    ];
   };
 
   networking.hostName = "CADANCE";
@@ -481,7 +488,7 @@ in
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 80 443 22000 631 ];
-  networking.firewall.allowedUDPPorts = [ 22000 631 123 ];
+  networking.firewall.allowedUDPPorts = [ 22000 631 ];
 
   services.avahi.enable = true;
   services.avahi.openFirewall = true;
