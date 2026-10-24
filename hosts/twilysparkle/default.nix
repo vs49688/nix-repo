@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
     ../../modules/gui6.nix
     ../../modules/devmachine
+    ../../modules/flasma.nix
   ];
 
   nix.settings.system-features = [
