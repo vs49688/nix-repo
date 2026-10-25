@@ -65,6 +65,8 @@ in
         "Prometheus.Enabled" = true;
         "Prometheus.MetricsPath" = "/metrics";
 
+        "Plugins.Enabled" = false;
+
         ReverseProxyWhitelist = "@";
 
         EnableSharing = true;
