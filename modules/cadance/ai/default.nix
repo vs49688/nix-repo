@@ -141,6 +141,55 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    ##
+    # python3Packages.posthog: unbreak, 7.71.0 -> 7.75.11.
+    #
+    # chromadb propagates posthog into open-webui's Python environment, and
+    # nixpkgs marks posthog as broken whenever mcp is 2.x, which fails
+    # evaluation of the whole system rather than just its test suite. This is
+    # nixpkgs PR #578265, applied ahead of it being merged.
+    ##
+    nixpkgs.overlays = [
+      (final: prev: {
+        pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+          (pythonFinal: pythonPrev: {
+            posthog = pythonPrev.posthog.overridePythonAttrs (old: {
+              version = "7.75.11";
+
+              src = final.fetchFromGitHub {
+                owner = "PostHog";
+                repo = "posthog-python";
+                tag = "posthog-v7.75.11";
+                hash = "sha256-oGq4IBeOpJ9PTy0HHHCfeDYLImhQIyRega3ZwREumHE=";
+              };
+
+              nativeCheckInputs = (old.nativeCheckInputs or [ ]) ++ (with pythonFinal; [
+                celery
+                fastapi
+                opentelemetry-instrumentation-celery
+              ]);
+
+              disabledTests = (old.disabledTests or [ ]) ++ [
+                # AttributeError: 'CallToolResult' object has no attribute 'structuredContent'
+                # (mcp>=2 renamed the field to `structured_content`)
+                "test_prepare_tool_result_delivers_into_call_tool_result_models"
+
+                # ModuleNotFoundError: No module named 'langchain_core'
+                "test_langchain_privacy_mode_sends_no_content_or_exception_event"
+
+                # Timing-sensitive: the worker subprocess times out under load
+                "test_capture_from_worker_thread_wakes_loop_bound_queue"
+              ];
+
+              meta = (old.meta or { }) // {
+                broken = false;
+              };
+            });
+          })
+        ];
+      })
+    ];
+
     services.postgresql.ensureDatabases = [ "open-webui" ];
     services.postgresql.ensureUsers = [
       { name = "open-webui"; ensureDBOwnership = true; }
