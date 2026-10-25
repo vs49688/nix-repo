@@ -55,8 +55,6 @@ in
         dbname = "nextcloud";
         dbuser = "nextcloud";
         dbhost = "/var/run/postgresql";
-
-        adminpassFile = cfg.adminpassFile;
       };
 
       settings.trusted_proxies = [ "127.0.0.1" ];
