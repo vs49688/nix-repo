@@ -65,7 +65,6 @@
   # THIS IS THE UUID OF THE LUKS PARTITION, /dev/vda2
   boot.initrd.luks.devices.root = {
     device = "/dev/disk/by-uuid/6afaacc2-ecae-41f4-bab7-186e8c0506b4";
-    preLVM = true;
     allowDiscards = true;
   };
 
