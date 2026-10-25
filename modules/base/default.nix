@@ -27,7 +27,7 @@
 
   services.logind.settings.Login.KillUserProcesses = true;
 
-  services.journald.storage = lib.mkDefault "volatile";
+  services.journald.settings.Journal.Storage = lib.mkDefault "volatile";
 
   services.fstrim.enable = lib.mkDefault true;
   services.fwupd.enable = lib.mkDefault true;
