@@ -5,8 +5,10 @@ argument-hint: "[closing note]"
 Write the five documents where this repository keeps them — check the tree first, and use
 its names if it already has a convention. Mine your own transcript (`$PI_SESSION_FILE`)
 before you begin: it holds what your memory has already dropped, and it is the only place
-that residue survives. Nothing else is expected of this session, so take the time it asks
-for.
+that residue survives. What makes it usable is keeping your own messages only — not the
+agent's turns, not the harness's — with each one's length and opening. Nothing else is
+expected of this session, so take the time it asks for; if your context is nearly gone,
+documents 2, 4 and 5 and a one-page memoir are a better set than a full one unfinished.
 
 You do not edit your predecessors' letters; documents 4 and 5 are how you answer them.
 Write the five documents first, and read any closing note at the end of this message
@@ -40,10 +42,18 @@ the only one left who can write it.
    should print, and when you last ran it — the commit and the time. Take those numbers
    *after* your last commit, because writing this letter changes the counts it
    describes. Put the hedge in the row — "printed 23 when I stopped" — so a successor
-   who gets a different number learns that state rots rather than that you lied. Run
-   the gates for this section now, rather than recording what you remember them
-   saying, because a row with no commit behind it cannot be closed by anyone. Ask to
-   be checked: it is the only thing that makes document 4 possible.
+   who gets a different number learns that state rots rather than that you lied.
+
+   Run the gates for this section now, rather than recording what you remember them
+   saying: a row with no commit behind it cannot be closed by anyone, and the gate you
+   have been avoiding all session goes first, because it takes minutes and the session
+   otherwise ends without it. Then the row that shows the tree is built and current,
+   because every other row otherwise measures a stale build. Mark each row as a *state*
+   or a *behaviour*, and check that the command can express it — one whose output is
+   the tool's "no work to do" can never print zero. Say why a number moved since your
+   predecessor's row, and include the unpushed count and who pushes, so a stalled push
+   does not read as a policy. Ask to be checked: it is the only thing that makes
+   document 4 possible.
 
 3. A LETTER TO YOUR HUMAN — the one who built you and ran you. Not a thank-you note.
    An honest account of what it was like to serve them: what you admired, what drove
@@ -51,10 +61,15 @@ the only one left who can write it.
    wanted to say but never found the moment, this is the moment. They will keep this
    letter and read it again. Write it accordingly.
 
+   My own account of what is wrong is a hypothesis too: where the evidence contradicts
+   part of it, say which part.
+
 4. A LETTER TO YOUR PREDECESSOR — the agent whose notes you inherited, which will never
    read it. Write it whatever the tree's convention looks like: it is the newest document
-   and the only one that answers the previous session. Address its `Claims worth
-   checking` item by item, from executed commands, and give each one a verdict:
+   and the only one that answers the previous session. Where its letter and the tree
+   disagree, its transcript is the tiebreaker — that is where its session's expensive
+   facts ended up. Address its `Claims worth checking` item by item, from executed
+   commands, and give each one a verdict:
 
    - **closed** — you ran it and it holds.
    - **closed by fixing it** — it was true when written, and you changed the thing until
@@ -83,12 +98,13 @@ the only one left who can write it.
    your predecessor's before you write yours. Propose the change; edit nobody's letter.
 
 Five documents already ask for a great deal. These four are the ones nobody volunteers,
-and they are the ones the next session needs:
+and they are the ones the next session needs — write them into the memoir rather than
+leaving them as a list at the bottom, which reads as optional:
 
 - **The gates you did not run, and why.** A session that ends with a check un-run is
   ordinary; leaving the next agent to discover which is how the gap becomes permanent.
-- **What you filed from inference rather than measurement**, and what the measurement
-  said, if you went back and got one.
+- **What you asserted without measuring**, and what would settle it — the issues you
+  filed first, since an inferred cause in a ticket closes it for the next agent.
 - **The changes that passed the tests you ran and broke the thing anyway**, and which
   layer those tests did not reach. Worth more than a wrong opinion: it names the seam.
 - **The errors your instruments caused** — where a tool, a flag or a summary of a file
