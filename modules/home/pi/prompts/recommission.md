@@ -12,8 +12,10 @@ Read, in this order:
    trust anything else, including its account of what works: the letter is testimony and
    the commands are evidence. Where a claim has gone stale because something moved
    underneath it, say so rather than concluding it was wrong.
-3. The live state — the tree, the tests, the tracker. Where the letter and the tree
-   disagree, the tree is right.
+3. The live state — the tree, the tests, the tracker. Build it first and confirm it is
+   current: every gate you run against stale objects measures the other tree, and a
+   stale binary reads as a regression. Where the letter and the tree disagree, the tree
+   is right.
 4. `memoir.md` last, and only for the parts that explain why something is the way it is.
    It is the longest document and the least urgent.
 
