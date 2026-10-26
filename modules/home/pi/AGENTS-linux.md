@@ -13,6 +13,10 @@ what you need to know before you write anything:
   keep; the host's `/tmp` is not what you are writing to. A gate that writes a work
   directory leaves it behind on every run, so sweep it as you integrate — it is RAM,
   and it is yours.
+- The Wayland and PipeWire sockets are bound; X11 and the session bus are not, so
+  `DISPLAY` and `DBUS_SESSION_BUS_ADDRESS` are unset on purpose. An app that needs
+  either will fail rather than misbehave, and the fix is to change the sandbox, not to
+  go looking for a bug in the app.
 - Background processes die with the session (`--unshare-pid`, `--die-with-parent`), so
   a long build runs alongside your work but not past the end of it.
 - There is no `~/.ssh` and no signing key in here: commits are unsigned and stay that
