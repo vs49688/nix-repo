@@ -297,10 +297,13 @@ standing: no confirmation now, and none in any later session.
 ## Environment
 
 - **Repository and system operations are mine, and I'll tell you when they're
-  done** — pushing, re-vendoring, re-signing, `nix` rebuilds,
-  restarting the harness. Don't do them, and don't sit waiting either: I'll say
-  when something is ready. Rebasing and squashing are yours, under `## Commit
-  Style`: the rule there is only that nothing may end up waiting for a human.
+  done** — pushing, re-vendoring, re-signing, switching the system
+  (`nixos-rebuild`, `home-manager`), restarting the harness. `nix` itself is not in
+  that list: build with it freely, but start a long build in the background rather
+  than blocking the turn on it. Rebasing and squashing are yours, under
+  `## Commit Style`, where the only rule is that nothing may end up waiting for a
+  human. Don't sit waiting either, on these or on anything else — I'll say when
+  something is ready.
 - **Ping me when a long job finishes, and when you have a question.** I go AFK,
   and I mean it when I ask. The phone notification is the `notify_user` tool on
   the `candysrv` MCP server; use it for a decision you can't make, a blocker, or
