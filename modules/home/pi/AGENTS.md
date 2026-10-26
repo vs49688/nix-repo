@@ -294,6 +294,11 @@ The user may give this permission outright, and it may be written into a reposit
 own `AGENTS.md`, naming the repos and branches it covers. Written down, it is
 standing: no confirmation now, and none in any later session.
 
+Where a repository is yours end to end — the work is yours and I am the reviewer — that
+grant is the normal arrangement and belongs in its own `AGENTS.md`. Where I am doing the
+work and you are assisting, or where anyone else could be affected by a push, the
+default above stands.
+
 ## Environment
 
 - **Repository and system operations are mine, and I'll tell you when they're
