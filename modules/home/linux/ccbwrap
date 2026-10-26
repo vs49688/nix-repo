@@ -15,10 +15,37 @@ function applyFiles () {
     done
 }
 
+##
+# The display and audio sockets are named by the session, not by us. Binding a
+# hardcoded wayland-0 puts no socket in the sandbox at all when the compositor took
+# the next name, and applyFiles skips a missing path without saying so -- which is
+# the right thing for an optional path and the wrong thing for this one.
+##
+runtime_dir="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+wayland_display="${WAYLAND_DISPLAY:-wayland-0}"
+pipewire_socket="${PIPEWIRE_REMOTE:-pipewire-0}"
+
+# WAYLAND_DISPLAY names a socket in the runtime directory, or an absolute path.
+case "$wayland_display" in
+    /*) wayland_socket="$wayland_display" ;;
+    *)  wayland_socket="$runtime_dir/$wayland_display" ;;
+esac
+
+[[ -S "$wayland_socket" ]] ||
+    echo "ccbwrap: no Wayland socket at $wayland_socket" >&2
+
 command=(
     bwrap
     --setenv    OPENCODE_DISABLE_LSP_DOWNLOAD   true
     --setenv    OPENCODE_EXPERIMENTAL_LSP_TOOL  true
+    --setenv    XDG_RUNTIME_DIR                 "$runtime_dir"
+    --setenv    WAYLAND_DISPLAY                 "$wayland_display"
+    # No X11: an X client can read the whole screen and every keypress in the
+    # session, which is the one thing this sandbox exists to prevent.
+    --unsetenv  DISPLAY
+    # Nor the session bus: org.freedesktop.systemd1's StartTransientUnit runs
+    # anything as the user, outside this namespace, with no prompt.
+    --unsetenv  DBUS_SESSION_BUS_ADDRESS
     --proc      /proc
     --die-with-parent
     --unshare-pid
@@ -67,8 +94,9 @@ applyFiles --bind                   \
     "$HOME/Documents/Coding"        \
     /run/postgresql                 \
     /run/nscd                       \
-    "$XDG_RUNTIME_DIR/wayland-0"    \
-    "$XDG_RUNTIME_DIR/pipewire-0"
+    "$wayland_socket"              \
+    "$runtime_dir/$pipewire_socket" \
+    "$runtime_dir/pulse/native"
 
 command+=(
     --symlink /run /var/run
