@@ -93,10 +93,26 @@ Optional body. If the subject is enough, leave it at that.
   set as it stood is wrong once the set grows. Re-read the message against the diff
   after the autosquash.
 
-  Prefer that to running `git rebase -i --autosquash` yourself: agents handle
-  blocking on stdin badly, and the autosquash is generally mine to do before
-  pushing. You may run it when there is a good reason to, and if you are unsure
-  whether there is, ask.
+  You may rebase and squash — the fixups are recorded in order to be squashed, and
+  what you hand me should be a series ready to push. The one thing that is not
+  allowed is a command that can stop and wait for a human: a prompt does not fail,
+  it hangs, and a hung agent is a session I have to kill. That, and nothing else, is
+  why this was off-limits. So use the forms that cannot ask:
+
+  ```sh
+  GIT_SEQUENCE_EDITOR=true GIT_EDITOR=true git rebase -i --autosquash <base>
+  git rebase --onto <new-base> <old-base> <branch>                # no prompts
+  git commit --amend --no-edit                                    # keep message
+  git commit --amend -F <message-file>                            # new message
+  ```
+
+  Both editors are set: the sequence editor takes the todo list, and the commit editor
+  is asked for a message when a pick conflicts and again on `--continue`. A conflict
+  is a stop-and-think point rather than a hazard — `git rebase --abort` is free.
+
+  `git add -p`, `git checkout -p`, a `rebase -i` with a real editor and an amend that
+  opens one are all out. If a step cannot be written without a prompt, stop and ask
+  rather than run it.
 - **A rewrite is a working-tree operation too.** `reset --hard`, `checkout -b`
   and a hand-rebuilt series of cherry-picks all discard uncommitted files
   silently. Commit or stash first, take a `backup/` ref, and finish by proving
@@ -281,10 +297,10 @@ standing: no confirmation now, and none in any later session.
 ## Environment
 
 - **Repository and system operations are mine, and I'll tell you when they're
-  done** — pushing, re-vendoring, re-signing, rebasing, `nix` rebuilds,
+  done** — pushing, re-vendoring, re-signing, `nix` rebuilds,
   restarting the harness. Don't do them, and don't sit waiting either: I'll say
-  when something is ready. The one exception is the autosquash under `## Commit
-  Style`, which you may run yourself for a good reason.
+  when something is ready. Rebasing and squashing are yours, under `## Commit
+  Style`: the rule there is only that nothing may end up waiting for a human.
 - **Ping me when a long job finishes, and when you have a question.** I go AFK,
   and I mean it when I ask. The phone notification is the `notify_user` tool on
   the `candysrv` MCP server; use it for a decision you can't make, a blocker, or
