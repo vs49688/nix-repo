@@ -190,6 +190,9 @@ in
         { directory = "/var/lib/libvirt";                       mode = "0755"; }
       ]) ++ (lib.optionals config.virtualisation.containers.enable [
         { directory = "/var/lib/containers";                    mode = "0700"; }
+      ]) ++ (lib.optionals config.services.fwupd.enable [
+        { directory = "/var/lib/fwupd";                         mode = "0755"; }
+        { directory = "/var/cache/fwupd";                       mode = "0755"; }
       ]);
 
       files = [
