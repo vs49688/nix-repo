@@ -314,7 +314,10 @@ standing: no confirmation now, and none in any later session.
 
 ## General
 
-- Use proper parsers for structured formats (HTML, URLs, etc.), not regex.
+- Use proper parsers for structured formats (HTML, URLs, etc.), not regex. Two
+  columns of the same name in a CSV lose one silently, and a dict keeps the last.
+- **A status you collect belongs to the last stage of the pipeline.** `cmd | tail -20;
+  echo $?` reports `tail`'s. Read the status of the thing you asked about.
 - Generated code should be clearly separated and never hand-edited.
 - When a project lacks a formal test suite, do not attempt to add or run tests unless explicitly instructed.
 - Run project-level formatters before committing — check the project's own `AGENTS.md` for specifics.
@@ -396,21 +399,28 @@ the whole thing in view. What the project is for stays with me.
   the numbers it should print, what is out of scope, and "if anything in this brief
   turns out to be wrong, say so". Briefs that carried the answer came back with the
   answer in code; briefs that carried the question came back with the real rule. Put
-  the constraint that prevents damage in the first sentence, not in a list.
+  the constraint that prevents damage in the first sentence, not in a list. Naming
+  your own doubts — "I am least sure of the frame accounting" — is not the same as
+  supplying your conclusion, and it turns a general review into answered questions.
 - **A pointer is a spec claim.** Name only resources the child can actually reach,
   and say which tools it has: it knows only the brief and the tree it was given, so
-  an instruction it cannot execute is a spec bug that costs it CPU-minutes.
+  an instruction it cannot execute is a spec bug that costs it CPU-minutes. Every
+  brief names where its scratch goes, read-only ones included — a reviewer with no
+  scratch root built three trees in `/tmp` and left four gigabytes of RAM behind.
 - **A child's report is a hypothesis.** Most will have something wrong, and it is
   almost never the code — a unit, a frame, or a number from an instrument it did not
   check. Verify before repeating it, and suspect your own test before you suspect the
-  child.
+  child. Its silence is not a verdict either: a review that found nothing may have
+  been measuring the wrong column.
 - Don't block waiting on a child, and don't poll its status in a loop.
   End the turn; you'll be woken when it finishes or needs attention.
   Don't edit the same working tree while a writer child is active.
-- Verify before accepting: review the diff and run the build/tests the
-  task claims pass. One writer per working tree — the parent reviews and
-  applies fixes. Every diff costs you a read and parallel branches cost the
-  integration, which is why this one is not optional.
+- Verify before accepting: read the gate's own output, not the sentence about it —
+  the verbatim command and the line it printed. "All 53 passed" is not that line: one
+  such claim came from a case that was in no shard at all and had never run. A lane
+  lands green, or it says which gate is red and why and the parent decides. One writer
+  per working tree — the parent reviews and applies fixes. Every diff costs you a read
+  and parallel branches cost the integration, which is why this one is not optional.
 
 ## Working with me
 
