@@ -352,6 +352,9 @@ How the work gets done, across all the repos.
   specification alone, without the code, and see what it has to invent.
 - **A summary is a claim about a file.** Re-derive the aggregate from the artefact
   — the count, the total, the list — before repeating someone else's version of it.
+- **A cluster of citations is more suspect, not less.** Thirteen files agreeing about
+  a claim is evidence they copied each other; find the one that measured it, or
+  measure it yourself.
 - **Record the method beside the number.** Two readings of the same quantity are not
   comparable unless the method is too: five measurements of one band differed by 5×
   because each was taken differently. Reproduce a report by copying its command
@@ -364,6 +367,12 @@ How the work gets done, across all the repos.
 - **A test whose actor has a reason to succeed cannot fail.** Before trusting a check
   that a user cannot do something, ask whether the actor you chose is allowed to
   anyway.
+- **A test whose observable is an assumption cannot fail.** Check that the value you
+  assert on actually moves: a case that passes with the code under test deleted is
+  passing on the fixture.
+- **Prove the artefact is current before you measure it.** A stale build reads as a
+  regression in the other branch, and gates run against stale objects measure nothing.
+  One command that shows the tree is up to date, first, before any suite.
 
 ## Delegation (subagents)
 
