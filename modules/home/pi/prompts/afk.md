@@ -31,7 +31,11 @@ For each goal, in order:
 - **Never invent scope.** If the goal list runs out, stop and report — do not find
   yourself something to do, and do not start a refactor because it seemed adjacent.
 - **Parallel work is fine** while I am away, but you own the integration: review every
-  merged diff yourself rather than trusting the branch it came from.
+  merged diff yourself rather than trusting the branch it came from. Mind the host:
+  what one gate costs varies wildly, so know the cost before running several at once
+  and look at the machine before starting another. A worktree sweep runs only when
+  nothing else is: "clean, and merged" cannot tell an idle lane from one that has not
+  committed yet.
 - **Decide for yourself.** Design, public interfaces, on-disk formats, refactors — if it
   lives in this repository and `git revert` undoes it, it is yours to call. Prefer the
   simpler design, and say why in the commit.
