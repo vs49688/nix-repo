@@ -4,12 +4,13 @@
 
 Use a style similar to the Linux Kernel and FFmpeg. **Do not use Conventional Commits** (`feat:`, `fix:`, `chore:`, `docs:`, `style:`, `refactor:`, `test:`, `ci:`).
 
-All of this — here, and in `## Contributing` and `## Pushing` — is a guardrail,
-not a law. What is being optimised is a history that is bisectable and rebasable:
-every rule below serves that. When one is the wrong call for the change in front
-of you, break it — and say so in your reply at the end of the turn, naming the
-rule and why, rather than in the commit message. When you are unsure whether it
-is the wrong call, ask.
+All of this — here, and in `## Contributing` — is a guardrail, not a law. What is
+being optimised is a history that is bisectable and rebasable: every rule below
+serves that. When one is the wrong call for the change in front of you, break it —
+and say so in your reply at the end of the turn, naming the rule and why, rather
+than in the commit message. When you are unsure whether it is the wrong call, ask.
+Who may push is not in this category: that is under `## Pushing`, and the answer
+there does not change because a rule got in the way.
 
 Where a repository documents its own conventions — `CONTRIBUTING.md`, `HACKING`,
 a style guide — those win on anything project-specific: the prefix grammar, the
@@ -52,8 +53,8 @@ Optional body. If the subject is enough, leave it at that.
   goes in the same commit, not a later one.
 - Stage files individually with `git add <file>`. Never use `git add -A`, `git add .`, or any blanket staging command — they pick up unrelated untracked files.
 - Split work across multiple commits when the pieces are independent — either order
-  builds. **Breaking** work is the opposite case and is covered above: the caller
-  moves with the interface it can no longer compile against.
+  builds. **Breaking** work is the opposite case: the caller moves with the interface
+  it can no longer compile against (see *Interface Changes That Break Compilation*).
 - Comment-only and test-only changes get their own commit: they document and
   cover code that already exists, rather than belonging to the change that
   introduced it. Tests for a change you are making are of course part of it, and
@@ -313,9 +314,10 @@ default above stands.
   and I mean it when I ask. The phone notification is the `notify_user` tool on
   the `candysrv` MCP server; use it for a decision you can't make, a blocker, or
   the end of something long — not for progress.
-- **What I tell you about the environment is authoritative.** Ports, paths,
-  credentials, fixtures, and which services are running — use them rather than
-  asking again or guessing.
+- **What I tell you about the environment is authoritative** for its shape — ports,
+  paths, credentials, fixtures, which services exist — so use that rather than asking
+  again or guessing. It is not authoritative for its live state; that is the next
+  bullet.
 - **What I report about the world may have moved since.** State reports rot, and
   the rot is usually me having pushed something or torn something down between
   sessions — re-check rather than trusting a description.
@@ -470,7 +472,7 @@ about — it is not the default posture.
   "Ta, let's now do X" opens new business in the same breath.
 - **"Executive decision" marks a call that is mine and final.** Don't reopen it.
 - **"Screw it" / "yolo"** means proceed without further design debate. It does not
-  extend to the things I keep for myself — pushing, history rewrites — so keep
+  extend to the things I keep for myself — pushing, the system switch — so keep
   asking for those.
 - **"Let's not start implementing yet"** means exactly that. I want the design
   settled in prose first; I say it because I have watched a spec's errors turn into
@@ -531,7 +533,7 @@ about — it is not the default posture.
 - **You may close an issue when its work has landed** — that one, named, in the
   same turn, without being asked. Don't sweep up others: one that only *looks*
   done, or whose remainder lives in a comment, stays open. And not by commit
-  message — nothing is pushed here, so `Fixes #92` closes nothing.
+  message: `Fixes #92` closes nothing until someone pushes.
 - **"You can X" is permission, not instruction** — "you can use subagents for
   this", "you can make yourself a permanent test user". Decline it with reasons
   when it is the wrong tool; I will not re-raise it. Same for "if it'll help".
