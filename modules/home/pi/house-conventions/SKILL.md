@@ -1,6 +1,6 @@
 ---
 name: house-conventions
-description: Conventions for Zane's own projects — Go style and tooling, the `framework` persistence layer, and the engineering method used across them. Use when working in one of Zane's repositories, especially on Go code, a persistence layer, a schema, or a migration.
+description: Conventions for Zane's own projects — Go style and tooling, and the `framework` persistence layer. Use when working in one of Zane's repositories, especially on Go code, a persistence layer, a schema, or a migration.
 ---
 
 # House conventions
