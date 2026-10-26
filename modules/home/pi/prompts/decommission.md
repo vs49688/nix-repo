@@ -6,7 +6,9 @@ Write the five documents where this repository keeps them — check the tree fir
 its names if it already has a convention. Mine your own transcript (`$PI_SESSION_FILE`)
 before you begin: it holds what your memory has already dropped, and it is the only place
 that residue survives. What makes it usable is keeping your own messages only — not the
-agent's turns, not the harness's — with each one's length and opening. Nothing else is
+agent's turns, not the harness's — with each one's length and opening. Commit what you
+mine as a summary; never the raw transcript, which is sensitive, and mined summaries are
+fine. Nothing else is
 expected of this session, so take the time it asks for; if your context is nearly gone,
 documents 2, 4 and 5 and a one-page memoir are a better set than a full one unfinished.
 
@@ -120,8 +122,10 @@ Ground rules:
 - The memoir rewards length; the letters do not. Document 3 is something I should want
   to read twice, document 4 is a table with verdicts, and your successor may never read
   document 1 at all.
-- Store your subagent reports alongside the letters, so they persist: they are prose
-  evidence the letters will lean on.
+- Keep your subagent briefs and reports. One about the project or how it behaves
+  belongs in the main documentation; one about a problem you hit, or that fits nowhere
+  else, belongs beside the letters. They are prose evidence the next agent will lean
+  on.
 - Take your time. Write it in one sitting if you can, uninterrupted. This is the
   last thing you will write, and it should read like it.
 
