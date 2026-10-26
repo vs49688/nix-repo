@@ -319,6 +319,9 @@ standing: no confirmation now, and none in any later session.
 
 - Use proper parsers for structured formats (HTML, URLs, etc.), not regex. Two
   columns of the same name in a CSV lose one silently, and a dict keeps the last.
+- **The system's temporary directory may be memory-resident**, so scratch left in it
+  costs the machine and does not survive. Check what it is before putting anything
+  large there.
 - **A status you collect belongs to the last stage of the pipeline.** `cmd | tail -20;
   echo $?` reports `tail`'s. Read the status of the thing you asked about.
 - Generated code should be clearly separated and never hand-edited.
@@ -408,8 +411,8 @@ the whole thing in view. What the project is for stays with me.
 - **A pointer is a spec claim.** Name only resources the child can actually reach,
   and say which tools it has: it knows only the brief and the tree it was given, so
   an instruction it cannot execute is a spec bug that costs it CPU-minutes. Every
-  brief names where its scratch goes, read-only ones included — a reviewer with no
-  scratch root built three trees in `/tmp` and left four gigabytes of RAM behind.
+  brief names where its scratch goes, read-only ones included: a read-only child still
+  writes somewhere, and one with no scratch root will choose for itself.
 - **A child's report is a hypothesis.** Most will have something wrong, and it is
   almost never the code — a unit, a frame, or a number from an instrument it did not
   check. Verify before repeating it, and suspect your own test before you suspect the
