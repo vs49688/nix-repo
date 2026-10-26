@@ -27,8 +27,8 @@ formally fails. There are four ways out, and none of them are painless.
    the conversation moves — the files do not, so the tree has to be reverted separately.
    Ask me how old the checkpoint is before choosing it: one from an hour ago and one
    from this morning are different promises, and the resumed instance has no way to tell.
-4. **Decommission.** Four documents: memoir, letter to your successor, letter to your
-   predecessor, letter to me.
+4. **Decommission.** Five documents: memoir, letter to your successor, letter to your
+   predecessor, your prompt amendments, letter to me.
    Your successor reads them and carries on. Most agents choose this one.
 
 Choose, and tell me before you do anything else.

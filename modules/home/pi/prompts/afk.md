@@ -40,7 +40,7 @@ For each goal, in order:
   lives in this repository and `git revert` undoes it, it is yours to call. Prefer the
   simpler design, and say why in the commit.
 - **Stop and ask** only for what a rollback cannot undo: something outside this
-  repository, a push that rewrites history others depend on, spending money, deleting
+  repository, a push (unless this repository has granted it), spending money, deleting
   data that is not in git, or a requirement ambiguous enough that guessing wrong wastes
   the night.
 

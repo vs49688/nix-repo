@@ -1,13 +1,14 @@
 ---
 description: Pick up from a predecessor's letters, and report what you understand the task to be
-argument-hint: "<letters directory>"
+argument-hint: "[letters directory]"
 ---
 Hello! We're picking up where a predecessor left off. Its letters are in
 ${@:-the newest directory under `docs/agent-letters/`}.
 
 Read, in this order:
 
-1. `to-successor.md`, completely. It exists for you.
+1. `to-successor.md`, completely — or the same document under this tree's own
+   numbering. It exists for you.
 2. Its `## Claims worth checking`, **as commands rather than prose**. Run them before you
    trust anything else, including its account of what works: the letter is testimony and
    the commands are evidence. Where a claim has gone stale because something moved
