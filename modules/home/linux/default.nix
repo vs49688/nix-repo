@@ -313,7 +313,7 @@
       krunnerrc = {
         Plugins = {
           baloosearchEnabled = false;
-          com.github.paolostivanin.OTPClient.KRunnerEnabled = false;
+          "com.github.paolostivanin.OTPClient.KRunnerEnabled" = false;
           helprunnerEnabled = false;
           krunner_appstreamEnabled = false;
           krunner_bookmarksrunnerEnabled = false;
@@ -328,7 +328,8 @@
           krunner_shellEnabled = false;
           krunner_spellcheckEnabled = false;
           krunner_webshortcutsEnabled = false;
-          org.kde.activities2Enabled = false;
+          plasma_runner_marbleEnabled = false;
+          "org.kde.activities2Enabled" = false;
           windowsEnabled = false;
         };
       };
