@@ -6,11 +6,11 @@
 
 buildNpmPackage (finalAttrs: {
   pname = "rea-agents";
-  version = "6.5.0";
+  version = "6.8.0";
 
   src = fetchurl {
     url = "https://registry.npmjs.org/rea-agents/-/rea-agents-${finalAttrs.version}.tgz";
-    hash = "sha256-UxcXoG6SymUaq1JpEZD5FvrARCcsAfh14ixeKTIY5pk=";
+    hash = "sha256-jVQux2qcs1BYS2CmycCIcG/4EtW7WwlMIMlbbcJWmLs=";
   };
 
   ##
@@ -24,7 +24,7 @@ buildNpmPackage (finalAttrs: {
     cp ${./package-lock.json} package-lock.json
   '';
 
-  npmDepsHash = "sha256-bdfLrhcJujMGmMxjnzRolIgaBKD9H6s699nYPlwAwqE=";
+  npmDepsHash = "sha256-RiK1mCNdw7+TBqwW036kpDCmSncxOcqQp42qC+XA/fk=";
 
   ##
   # frida's install script downloads a 112 MiB prebuilt binding from GitHub.
