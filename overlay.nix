@@ -77,6 +77,7 @@ in (({
   rom-parser = super.callPackage ./pkgs/rom-parser { };
 
   rea-agents = super.callPackage ./pkgs/rea-agents { };
+  kuna = super.callPackage ./pkgs/kuna { };
 
   xboomer = super.callPackage ./pkgs/xboomer { };
 
