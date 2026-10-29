@@ -38,6 +38,7 @@ in
         typescript-language-server
         lldb_22
         rizin   # REA's rizin_* tools shell out to it
+        kuna
         myPy
         poppler-utils # For pdftotext
         tinyxxd # LLMs seem to really like xxd
@@ -147,6 +148,11 @@ in
           env = {
             GHIDRA_INSTALL_DIR = "${pkgs.ghidra}/lib/ghidra";
             JAVA_HOME = "${pkgs.jdk21}/lib/openjdk";
+            # REA drives kuna as an optional provider, and will not go looking
+            # for it: the command has to be an absolute path. It reports any
+            # release other than the one it verified as unverified, which is
+            # the check passing with a note, not a refusal.
+            REA_KUNA_COMMAND = lib.getExe pkgs.kuna;
           };
           lifecycle = "lazy";
         };
@@ -174,5 +180,10 @@ in
     home.file.".pi/agent/skills/pdf-to-text".source = ./pdf-to-text;
     home.file.".pi/agent/skills/forgejo-api".source = ./forgejo-api;
     home.file.".pi/agent/skills/house-conventions".source = ./house-conventions;
+
+    # Likewise Kuna's, which is embedded in its binary. `kuna install-skill`
+    # would write a copy into $HOME; the package already carries the same bytes,
+    # and the skill names itself kuna-decompiler.
+    home.file.".pi/agent/skills/kuna-decompiler".source = "${pkgs.kuna}/share/kuna/skill";
   };
 }
