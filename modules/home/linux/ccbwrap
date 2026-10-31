@@ -85,6 +85,7 @@ applyFiles --ro-bind    \
     "$HOME/.config/Croc"
 
 applyFiles --bind                   \
+    "$HOME/.minetest"               \
     "$HOME/.pi"                     \
     "$HOME/.local/share/cartopy"    \
     "$HOME/.cache/go-build"         \
