@@ -1,0 +1,26 @@
+name: Update packages - WIP
+
+enable-openid-connect: true
+
+on:
+  # schedule:
+  #   # Sunday 20:00 UTC — Monday 06:00 in Brisbane.
+  #   - cron: "0 20 * * 0"
+  workflow_dispatch:
+
+concurrency:
+  group: update-packages
+  cancel-in-progress: false
+
+jobs:
+  update:
+    name: Update packages
+    runs-on: nixos
+    steps:
+      - name: Setup Cache
+        uses: actions/niks3-action@v1
+        with:
+          server-url: https://cache.vs49688.net
+
+      - name: Clone Repository
+        uses: actions/checkout@v4
