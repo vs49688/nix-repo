@@ -6,13 +6,13 @@
 
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "kuna";
-  version = "1.985";
+  version = "1.988";
 
   src = fetchFromGitHub {
     owner = "Noelo-Lab";
     repo = "kuna";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-JBPoSQH56UzLERTwoiBMPO6GGgl+qT8R/4UxJdIp0Qw=";
+    hash = "sha256-yXJFFzkgulA+mgktBAU2zhgmBpSceU2iXXHLZVqkP48=";
   };
 
   ##
@@ -20,7 +20,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
   # cargoSetupHook at decompiler/Cargo.lock and its vendored dependencies.
   ##
   cargoRoot = "decompiler";
-  cargoHash = "sha256-YgszQlq5uhmKqbgqpvbX/ox2Jtm3GB8QND61DB/Tohs=";
+  cargoHash = "sha256-sEveoznKZqEOEw5TMBxvDxk0dAos5sqeQ93xKhjlRnw=";
 
   ##
   # A `kuna` binary is only self-contained with the compiled SLEIGH tree
