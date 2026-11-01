@@ -214,6 +214,10 @@ in
     restartUnits = [ "forgejo-runner-CADANCE.service" ];
   };
 
+  sops.secrets."forgejo/signing_key" = {
+    restartUnits = [ "forgejo.service" ];
+  };
+
   sops.secrets."lldap/user_pass" = {
     restartUnits = [ "lldap.service" ];
   };
@@ -597,6 +601,10 @@ in
   cadance.forgejo.smtpPasswordFile = config.sops.secrets."forgejo/mailpasswd".path;
   cadance.forgejo.runnerTokenFile = config.sops.secrets."forgejo/runner_token".path;
   cadance.forgejo.runnerUuid = "896f07a4-0301-4b93-89eb-1881d1e296f8";
+  cadance.forgejo.sshSigningKey = {
+    publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEQVqP8fEqwHuPBGfGYRCylHHo1gvQBZagbQ0De3PPzx";
+    privateKeyFile = config.sops.secrets."forgejo/signing_key".path;
+  };
   cadance.forgejo.localNetworks = config.cadance.settings.localNetworks;
 
   cadance.backup = {

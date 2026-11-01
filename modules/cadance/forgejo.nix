@@ -39,6 +39,26 @@ in
       type = types.str;
     };
 
+    sshSigningKey = mkOption {
+      type = types.submodule({
+        options = {
+          publicKey = mkOption {
+            type = types.str;
+          };
+
+          privateKeyFile = mkOption {
+            type = types.str;
+          };
+
+          publicKeyFile = mkOption {
+            readOnly = true;
+            type = types.package;
+            default = pkgs.writeText "signing_key.pub" cfg.sshSigningKey.publicKey;
+          };
+        };
+      });
+    };
+
     runnerUuid = mkOption {
       type = types.str;
       example = "c9e50be9-a7c3-4aee-ba35-624c4ff8c519";
@@ -64,6 +84,13 @@ in
       uid          = 1001;
       home         = "/var/lib/forgejo";
     };
+
+    systemd.services.forgejo.serviceConfig.LoadCredential = [
+      "signing_key:${cfg.sshSigningKey.privateKeyFile}"
+
+      # Not a secret, but Forgejo needs them in the same folder.
+      "signing_key.pub:${cfg.sshSigningKey.publicKeyFile}"
+    ];
 
     services.forgejo = {
       enable              = true;
@@ -201,6 +228,13 @@ in
           DEFAULT_BRANCH          = "master";
           ENABLE_PUSH_CREATE_USER = true;
           ENABLE_PUSH_CREATE_ORG  = true;
+        };
+
+        "repository.signing" = {
+          FORMAT = "ssh";
+          SIGNING_KEY = "/run/credentials/forgejo.service/signing_key.pub";
+          SIGNING_NAME = "%(APP_NAME)s";
+          SIGNING_EMAIL = cfg.noreplyEmail;
         };
 
         "git.timeout" = {
