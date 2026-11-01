@@ -12,13 +12,13 @@
 }:
 stdenv.mkDerivation(finalAttrs: {
   pname = "audio.cpp";
-  version = "0.7.0";
+  version = "0.9.3";
 
   src = fetchFromGitHub {
     owner = "0xShug0";
     repo = "audio.cpp";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-p436ykT5Gj10WSaszHI+hhjGAbFRlYbc79WZ0OS08Kw=";
+    hash = "sha256-BLNmIQ5W1VWAIVVhzihO6KG/U6OxJBytEnmT+CEd8x0=";
   };
 
   nativeBuildInputs = [
