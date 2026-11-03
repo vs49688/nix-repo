@@ -1,13 +1,15 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: let
+  lanInterface = config.cadance.settings.lanInterface;
+in {
   config = lib.mkIf config.services.avahi.enable {
     services.avahi.openFirewall = false;
-    services.avahi.allowInterfaces = [ "enp42s0" ];
     services.avahi.nssmdns4 = true;
     services.avahi.publish.enable = true;
     services.avahi.publish.userServices = false;
 
-    networking.firewall.interfaces.enp42s0.allowedUDPPorts = [ 5353 ];
+    services.avahi.settings.server.allow-interfaces = [ lanInterface ];
+
+    networking.firewall.interfaces.${lanInterface}.allowedUDPPorts = [ 5353 ];
 
     environment.etc."avahi/hosts".text = ''
       10.0.102.10 BRW9CAD97B3AF49.local
