@@ -19,14 +19,12 @@ in {
     };
 
     networking.firewall.interfaces.${lanInterface} = {
+      ##
+      # nmbd: 137/udp, 138/udp, 139/tcp - explicitly disabled, so don't add them.
+      # smbd: only 445/tcp is needed for modern stuff.
+      ##
       allowedTCPPorts = [
-        139
         445
-      ];
-
-      allowedUDPPorts = [
-        137
-        138
       ];
     };
   };
