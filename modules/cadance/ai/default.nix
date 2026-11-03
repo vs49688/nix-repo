@@ -224,6 +224,14 @@ in
         # These are the current models in its place, both already in the map.
         ##
         {
+          model_name = "grok-4.7";
+          litellm_params = {
+            model = "xai/grok-4.7";
+            api_key = "os.environ/XAI_API_KEY";
+            additional_drop_params = dropForeignParams;
+          };
+        }
+        {
           model_name = "grok-4.3";
           litellm_params = {
             model = "xai/grok-4.3";
