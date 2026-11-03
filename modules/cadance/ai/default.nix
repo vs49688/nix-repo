@@ -5,6 +5,14 @@ let
   jsonFormat = pkgs.formats.json { };
   yamlFormat = pkgs.formats.yaml { };
 
+  ##
+  # `store` is OpenAI's server-side retention switch, and anthropic, xai and
+  # fireworks have no equivalent for it: litellm refuses the whole request over
+  # one rather than ignore it. Name it here so the proxy translates, and leave
+  # every other unknown parameter failing loudly.
+  ##
+  dropForeignParams = [ "store" ];
+
   makeAnthropicModel = name: {
     model_name = name;
     litellm_params = {
@@ -14,6 +22,7 @@ let
         { location = "message"; role = "system"; }
         { location = "message"; index = -1; }
       ];
+      additional_drop_params = dropForeignParams;
     };
   };
 
@@ -220,6 +229,7 @@ in
           litellm_params = {
             model = "xai/grok-4.3";
             api_key = "os.environ/XAI_API_KEY";
+            additional_drop_params = dropForeignParams;
           };
         }
         {
@@ -227,6 +237,7 @@ in
           litellm_params = {
             model = "xai/grok-4.20-0309-non-reasoning";
             api_key = "os.environ/XAI_API_KEY";
+            additional_drop_params = dropForeignParams;
           };
         }
         {
@@ -234,7 +245,7 @@ in
           litellm_params = {
             model = "xai/grok-imagine-image";
             api_key = "os.environ/XAI_API_KEY";
-            additional_drop_params = [
+            additional_drop_params = dropForeignParams ++ [
               "size"
             ];
           };
@@ -253,6 +264,7 @@ in
           litellm_params = {
             model = "fireworks_ai/deepseek-v4-pro-0813";
             api_key = "os.environ/FIREWORKS_AI_API_KEY";
+            additional_drop_params = dropForeignParams;
           };
         }
         {
@@ -260,6 +272,7 @@ in
           litellm_params = {
             model = "fireworks_ai/deepseek-v4-flash-0731";
             api_key = "os.environ/FIREWORKS_AI_API_KEY";
+            additional_drop_params = dropForeignParams;
           };
         }
         {
@@ -267,6 +280,7 @@ in
           litellm_params = {
             model = "fireworks_ai/kimi-k3";
             api_key = "os.environ/FIREWORKS_AI_API_KEY";
+            additional_drop_params = dropForeignParams;
           };
         }
         {
@@ -274,6 +288,7 @@ in
           litellm_params = {
             model = "fireworks_ai/gpt-oss-120b";
             api_key = "os.environ/FIREWORKS_AI_API_KEY";
+            additional_drop_params = dropForeignParams;
           };
         }
         {
@@ -281,6 +296,7 @@ in
           litellm_params = {
             model = "fireworks_ai/gpt-oss-20b";
             api_key = "os.environ/FIREWORKS_AI_API_KEY";
+            additional_drop_params = dropForeignParams;
           };
         }
         {
