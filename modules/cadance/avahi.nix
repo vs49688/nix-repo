@@ -6,6 +6,7 @@ in {
     services.avahi.nssmdns4 = true;
     services.avahi.publish.enable = true;
     services.avahi.publish.userServices = false;
+    services.avahi.publish.addresses = true;
 
     services.avahi.settings.server.allow-interfaces = [ lanInterface ];
 
