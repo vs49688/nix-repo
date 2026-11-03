@@ -16,6 +16,7 @@ in {
       "domain master" = "no";
       "preferred master" = "no";
       "security" = "user";
+      "server signing" = "mandatory";
     };
 
     networking.firewall.interfaces.${lanInterface} = {
