@@ -37,6 +37,7 @@ in
     ../../modules/postgres-ensure-roles.nix
     ../../modules/cadance/settings.nix
     ../../modules/cadance/auth.nix
+    ../../modules/cadance/avahi.nix
     ../../modules/cadance/ntp.nix
     ../../modules/cadance/unifi.nix
     ../../modules/cadance/nextcloud.nix
@@ -493,12 +494,6 @@ in
   networking.firewall.allowedUDPPorts = [ 22000 ];
 
   services.avahi.enable = true;
-  services.avahi.openFirewall = true;
-  services.avahi.nssmdns4 = true;
-  services.avahi.publish = {
-    enable = true;
-    userServices = true;
-  };
 
   services.printing.enable = false;
   hardware.sane.enable = false;
