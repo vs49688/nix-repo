@@ -264,20 +264,23 @@ in
           };
         })
       ]) ++ (lib.optionals cfg.enableXAIModels [
+        ##
+        # grok-4-1-fast-* is gone: xAI's documentation no longer lists it, and
+        # the cost map has no entry for it, so nothing describes or prices it.
+        # These are the current models in its place, both already in the map.
+        ##
         {
-          model_name = "grok-4-1-fast-reasoning";
+          model_name = "grok-4.3";
           litellm_params = {
-            model = "xai/grok-4-1-fast-reasoning";
+            model = "xai/grok-4.3";
             api_key = "os.environ/XAI_API_KEY";
-            merge_reasoning_content_in_choices = true;
           };
         }
         {
-          model_name = "grok-4-1-fast-non-reasoning";
+          model_name = "grok-4.20-non-reasoning";
           litellm_params = {
-            model = "xai/grok-4-1-fast-non-reasoning";
+            model = "xai/grok-4.20-0309-non-reasoning";
             api_key = "os.environ/XAI_API_KEY";
-            merge_reasoning_content_in_choices = true;
           };
         }
         {
