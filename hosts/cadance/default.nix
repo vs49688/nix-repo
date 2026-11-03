@@ -39,6 +39,7 @@ in
     ../../modules/cadance/auth.nix
     ../../modules/cadance/avahi.nix
     ../../modules/cadance/ntp.nix
+    ../../modules/cadance/samba.nix
     ../../modules/cadance/unifi.nix
     ../../modules/cadance/nextcloud.nix
     ../../modules/cadance/frigate.nix
@@ -539,25 +540,7 @@ in
     clientsYml                = config.sops.secrets."authelia/clients.yml".path;
   };
 
-
-  services.samba = {
-    enable          = true;
-    openFirewall    = true;
-    nmbd.enable     = false;
-    winbindd.enable = false;
-
-    settings.global = {
-      "workgroup" = "WORKGROUP";
-      "server string" = "%h";
-      "server role" = "standalone server";
-      "obey pam restrictions" = "yes";
-      "map to guest" = "bad user";
-      "local master" = "no";
-      "domain master" = "no";
-      "preferred master" = "no";
-      "security" = "user";
-    };
-  };
+  services.samba.enable = true;
 
   services.xserver.enable = false;
   services.xserver.videoDrivers = [ "amdgpu" ];
