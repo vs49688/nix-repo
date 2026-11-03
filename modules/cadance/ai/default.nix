@@ -213,10 +213,9 @@ in
         # litellm_params is only a default the client overrides, so a "-thinking"
         # twin buys a second entry per model and nothing else.
         ##
-        "claude-haiku-4-5-20251001"
-        "claude-sonnet-4-6"
-        "claude-opus-4-6"
-        "claude-opus-4-7"
+        "claude-haiku-5-5"
+        "claude-sonnet-5-5"
+        "claude-opus-5-5"
         "claude-opus-4-8"
       ])) ++ (lib.optionals cfg.enableXAIModels [
         ##
