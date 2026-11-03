@@ -97,13 +97,12 @@ in
           };
         };
       in {
+        # The deployment list comes from the litellm-models extension, which
+        # reads it off the proxy; only the endpoint and key belong here.
         providers.litellm = {
           baseUrl = "http://localhost:8080/v1"; # ssh -L8080:localhost:8080
-          api = "openai-responses";
+          api = "openai-completions";
           apiKey = "unnecessary";
-          models = [
-            (mkDeepseekModel "deepseek-flash")
-          ];
         };
 
         providers.deepseek = {
@@ -166,6 +165,7 @@ in
 
     home.file.".pi/agent/extensions/web-request".source = ./web-request;
     home.file.".pi/agent/extensions/context-gauge".source = ./context-gauge;
+    home.file.".pi/agent/extensions/litellm-models".source = ./litellm-models;
 
     home.file.".pi/agent/prompts/afk.md".source = ./prompts/afk.md;
     home.file.".pi/agent/prompts/context-low.md".source = ./prompts/context-low.md;
