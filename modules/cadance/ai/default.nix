@@ -13,15 +13,20 @@ let
   ##
   dropForeignParams = [ "store" ];
 
+  ##
+  # A top-level cache_control asks Claude for automatic caching: one breakpoint
+  # slot, placed at the last cacheable block and moved forward as the
+  # conversation grows. Injection points would instead pin two of them to blocks
+  # the proxy picked, on requests whose clients may have placed their own -- and
+  # chat completions has no syntax with which to ask, so this is also the only
+  # way to cache for those clients at all.
+  ##
   makeAnthropicModel = name: {
     model_name = name;
     litellm_params = {
       model = "anthropic/${name}";
       api_key = "os.environ/ANTHROPIC_API_KEY";
-      cache_control_injection_points = [
-        { location = "message"; role = "system"; }
-        { location = "message"; index = -1; }
-      ];
+      cache_control = { type = "ephemeral"; };
       additional_drop_params = dropForeignParams;
     };
   };

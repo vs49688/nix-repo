@@ -177,15 +177,6 @@ def fixture_config(stub):
                 "litellm_params": anthropic(cache_control={"type": "ephemeral"}),
             },
             {
-                "model_name": "cache-inject",
-                "litellm_params": anthropic(
-                    cache_control_injection_points=[
-                        {"location": "message", "role": "system"},
-                        {"location": "message", "index": -1},
-                    ]
-                ),
-            },
-            {
                 "model_name": "openai",
                 "litellm_params": {
                     "model": OPENAI_MODEL,
@@ -350,22 +341,6 @@ def cases():
                 "/v1/messages",
                 lambda b: b.get("cache_control") == {"type": "ephemeral"},
                 "no top-level cache_control upstream",
-            ),
-        ),
-        (
-            "injection points mark the system block and the last message",
-            chat("cache-inject", system=True),
-            lambda status, requests: expect_upstream(
-                status,
-                requests,
-                "/v1/messages",
-                lambda b: (
-                    isinstance(b.get("system"), list)
-                    and all(block.get("cache_control") for block in b["system"])
-                    and isinstance(b.get("messages"), list)
-                    and all(block.get("cache_control") for block in b["messages"][-1]["content"])
-                ),
-                "injected breakpoints missing",
             ),
         ),
         # The other half of the same rewrite: on an adaptive model the effort a
