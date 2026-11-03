@@ -26,7 +26,7 @@ in {
         <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
         <service-group>
           <name>Brother MFC-L2703DW</name>
-          <service>
+          <service protocol="ipv4">
             <type>_ipp._tcp</type>
             <subtype>_universal._sub._ipp._tcp</subtype>
             <host-name>BRW9CAD97B3AF49.local.</host-name>
