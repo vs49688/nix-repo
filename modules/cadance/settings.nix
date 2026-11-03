@@ -30,5 +30,10 @@
       type = types.str;
       default = "/storage/SyncRoot/Music";
     };
+
+    lanInterface = mkOption {
+      type = types.str;
+      default = "enp42s0";
+    };
   };
 }
