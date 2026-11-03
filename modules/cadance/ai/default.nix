@@ -17,6 +17,21 @@ let
       ];
     }) // extra;
   };
+
+  ##
+  # The model string is the cost-map key, and the proxy describes and bills a
+  # deployment from that record. "openai/responses/<name>" is not a key, so the
+  # Responses hop left every one of these without a context window, capability
+  # flags or a rate -- and clients asking for /v1/responses reach it anyway.
+  ##
+  makeOpenAIModel = name: {
+    model_name = name;
+    litellm_params = {
+      model = "openai/${name}";
+      api_key = "os.environ/OPENAI_API_KEY";
+      store = false;
+    };
+  };
 in
 {
   options.cadance.ai = with lib; {
@@ -179,40 +194,12 @@ in
 
       environmentFile = cfg.litellmEnvironmentFile;
 
-      settings.model_list = (lib.optionals cfg.enableOpenAIModels [
-        {
-          model_name = "gpt-6-astra";
-          litellm_params = {
-            model = "openai/responses/gpt-6-astra";
-            api_key = "os.environ/OPENAI_API_KEY";
-            store = false;
-          };
-        }
-        {
-          model_name = "gpt-5.6-sol";
-          litellm_params = {
-            model = "openai/responses/gpt-5.6-sol";
-            api_key = "os.environ/OPENAI_API_KEY";
-            store = false;
-          };
-        }
-        {
-          model_name = "gpt-5.6-terra";
-          litellm_params = {
-            model = "openai/responses/gpt-5.6-terra";
-            api_key = "os.environ/OPENAI_API_KEY";
-            store = false;
-          };
-        }
-        {
-          model_name = "gpt-5.6-luna";
-          litellm_params = {
-            model = "openai/responses/gpt-5.6-luna";
-            api_key = "os.environ/OPENAI_API_KEY";
-            store = false;
-          };
-        }
-      ]) ++ (lib.optionals cfg.enableAnthropicModels [
+      settings.model_list = (lib.optionals cfg.enableOpenAIModels (map makeOpenAIModel [
+        "gpt-6-astra"
+        "gpt-5.6-sol"
+        "gpt-5.6-terra"
+        "gpt-5.6-luna"
+      ])) ++ (lib.optionals cfg.enableAnthropicModels [
         ##
         # Haiku 4.5
         ##
@@ -354,6 +341,9 @@ in
             api_base = "http://localhost:${toString cfg.kokoroTTS.port}/v1";
             api_key = "unnecessary";
           };
+          # A local server has no cost-map entry, and without a mode the proxy
+          # advertises it as untyped, which offers it to clients as a chat model.
+          model_info.mode = "audio_speech";
         }
         {
           model_name = "whisper-1";
