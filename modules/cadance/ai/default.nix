@@ -5,17 +5,16 @@ let
   jsonFormat = pkgs.formats.json { };
   yamlFormat = pkgs.formats.yaml { };
 
-  makeAnthropicModel = { name, modelName ? name, withCaching ? true, extra ? {} }: {
-    model_name = modelName;
+  makeAnthropicModel = name: {
+    model_name = name;
     litellm_params = {
       model = "anthropic/${name}";
       api_key = "os.environ/ANTHROPIC_API_KEY";
-    } // (lib.optionalAttrs withCaching {
       cache_control_injection_points = [
         { location = "message"; role = "system"; }
         { location = "message"; index = -1; }
       ];
-    }) // extra;
+    };
   };
 
   ##
@@ -199,71 +198,18 @@ in
         "gpt-5.6-sol"
         "gpt-5.6-terra"
         "gpt-5.6-luna"
-      ])) ++ (lib.optionals cfg.enableAnthropicModels [
+      ])) ++ (lib.optionals cfg.enableAnthropicModels (map makeAnthropicModel [
         ##
-        # Haiku 4.5
+        # Thinking is a request parameter, not a deployment: `thinking` pinned in
+        # litellm_params is only a default the client overrides, so a "-thinking"
+        # twin buys a second entry per model and nothing else.
         ##
-        (makeAnthropicModel { name = "claude-haiku-4-5-20251001"; })
-        (makeAnthropicModel {
-          name = "claude-haiku-4-5-20251001";
-          modelName = "claude-haiku-4-5-20251001-thinking";
-          extra = {
-            thinking = { type = "enabled"; budget_tokens = 8192; };
-          };
-        })
-
-        ##
-        # Sonnet 4.6
-        ##
-        (makeAnthropicModel { name = "claude-sonnet-4-6"; })
-        (makeAnthropicModel {
-          name = "claude-sonnet-4-6";
-          modelName = "claude-sonnet-4-6-thinking";
-          extra = {
-            thinking = { type = "adaptive"; };
-            output_config = { effort = "high"; };
-          };
-        })
-
-        ##
-        # Opus 4.6
-        ##
-        (makeAnthropicModel { name = "claude-opus-4-6"; })
-        (makeAnthropicModel {
-          name = "claude-opus-4-6";
-          modelName = "claude-opus-4-6-thinking";
-          extra = {
-            thinking = { type = "adaptive"; };
-            output_config = { effort = "high"; };
-          };
-        })
-
-        ##
-        # Opus 4.7
-        ##
-        (makeAnthropicModel { name = "claude-opus-4-7"; })
-        (makeAnthropicModel {
-          name = "claude-opus-4-7";
-          modelName = "claude-opus-4-7-thinking";
-          extra = {
-            thinking = { type = "adaptive"; };
-            output_config = { effort = "high"; };
-          };
-        })
-
-        ##
-        # Opus 4.8
-        ##
-        (makeAnthropicModel { name = "claude-opus-4-8"; })
-        (makeAnthropicModel {
-          name = "claude-opus-4-8";
-          modelName = "claude-opus-4-8-thinking";
-          extra = {
-            thinking = { type = "adaptive"; };
-            output_config = { effort = "high"; };
-          };
-        })
-      ]) ++ (lib.optionals cfg.enableXAIModels [
+        "claude-haiku-4-5-20251001"
+        "claude-sonnet-4-6"
+        "claude-opus-4-6"
+        "claude-opus-4-7"
+        "claude-opus-4-8"
+      ])) ++ (lib.optionals cfg.enableXAIModels [
         ##
         # grok-4-1-fast-* is gone: xAI's documentation no longer lists it, and
         # the cost map has no entry for it, so nothing describes or prices it.
