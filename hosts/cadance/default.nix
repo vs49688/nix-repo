@@ -489,8 +489,8 @@ in
   security.pam.oath.usersFile = "/etc/nixos/users.oath";
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 22000 631 ];
-  networking.firewall.allowedUDPPorts = [ 22000 631 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 22000 ];
+  networking.firewall.allowedUDPPorts = [ 22000 ];
 
   services.avahi.enable = true;
   services.avahi.openFirewall = true;
