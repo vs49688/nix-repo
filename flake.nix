@@ -208,6 +208,22 @@
       touch $out
     '';
 
+    ##
+    # What the litellm proxy actually sends upstream, in the deployment shapes
+    # the AI module generates: parameters it must drop, thinking it must pass
+    # through, caching it must translate, and endpoints it must not rewrite.
+    # Built against the same nixpkgs CADANCE runs, so a litellm bump that
+    # changes any of it fails here rather than in a session.
+    ##
+    checks.x86_64-linux.litellm-proxy-contract = let
+      pkgs = self.inputs.nixpkgs-cadance.legacyPackages.x86_64-linux;
+    in pkgs.runCommandLocal "check-litellm-proxy-contract" {
+      nativeBuildInputs = [ pkgs.python3 pkgs.litellm ];
+    } ''
+      python3 ${./modules/cadance/ai/tests/proxy-contract.py} --litellm ${pkgs.litellm}/bin/litellm
+      touch $out
+    '';
+
     checks.x86_64-linux.context-gauge = let
       pkgs = self.inputs.nixpkgs.legacyPackages.x86_64-linux;
     in pkgs.runCommandLocal "check-context-gauge" {
