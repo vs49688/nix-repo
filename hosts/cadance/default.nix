@@ -500,17 +500,7 @@ in
     userServices = true;
   };
 
-  services.printing.enable = true;
-  services.printing.browsing = true;
-  services.printing.defaultShared = true;
-  services.printing.drivers = [ pkgs.gutenprint ];
-
-  services.printing.listenAddresses = [ "*:631" ];
-  services.printing.allowFrom = [ "all" ];
-  services.printing.extraConf = ''
-    DefaultPaperSize A4
-  '';
-
+  services.printing.enable = false;
   hardware.sane.enable = false;
 
   cadance.vaultwarden = {
