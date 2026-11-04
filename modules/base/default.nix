@@ -18,6 +18,14 @@
 
   nixpkgs.config.allowUnfree = lib.mkDefault true;
 
+  ##
+  # nixpkgs marks GTK2 broken and will remove it before 27.05, on the grounds
+  # that packages can migrate to GTK3/4. These two cannot: helltaker ships
+  # ScreenSelector.so, its only resolution picker, and X3's config GUIs are
+  # 2005-era proprietary binaries. Keyed on the pname so only gtk2 is affected.
+  ##
+  nixpkgs.config.problems.handlers."gtk+".broken = "warn";
+
   boot.tmp.cleanOnBoot = lib.mkDefault true;
 
   # https://github.com/NixOS/nixpkgs/issues/41426

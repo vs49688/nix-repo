@@ -56,7 +56,13 @@
         self.overlays.default
         self.overlays.mongodb
       ];
-      config.allowUnfree = true;
+      config = {
+        allowUnfree = true;
+
+        # See modules/base/default.nix -- helltaker and X3 need GTK2 for
+        # proprietary plugins and config GUIs that cannot migrate.
+        problems.handlers."gtk+".broken = "warn";
+      };
     };
   in {
     overlays = {
