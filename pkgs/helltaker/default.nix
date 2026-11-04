@@ -10,6 +10,7 @@
 , atk
 , gdk-pixbuf
 , pango
+, zlib
 , SDL2
 , alsa-lib
 , libjack2
@@ -46,6 +47,7 @@ stdenv.mkDerivation(finalAttrs: {
     atk
     gdk-pixbuf
     pango
+    zlib
   ];
 
   dontBuild = true;
