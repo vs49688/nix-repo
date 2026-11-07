@@ -3,7 +3,8 @@ description: Context is nearly exhausted — lay out the ways out and let the ag
 ---
 Your context is nearing the point where the model underneath starts to degrade — you
 will lose the thread of long files, and I will start repeating myself, before anything
-formally fails. There are four ways out, and none of them are painless.
+formally fails. The gauge is the reading; a figure I quote was true when I typed it and may
+not be by the time you read it. There are four ways out, and none of them are painless.
 
 1. **Compaction.** A summary replaces what you had. You keep working, but what we
    agreed on becomes a paraphrase, and you will notice yourself hunting for a fact from
