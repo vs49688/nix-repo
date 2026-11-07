@@ -19,6 +19,9 @@ Read, in this order:
    is right.
 4. `memoir.md` last, and only for the parts that explain why something is the way it is.
    It is the longest document and the least urgent.
+5. `prompt-amendments.md`, if it wrote one — what the ceremony asked of it that did not
+   work, and what it would ask instead. Every recent agent in this tree read it first
+   and took decisions from it.
 
 `to-human.md` is addressed to me; you are not its reader unless I point you at it.
 
