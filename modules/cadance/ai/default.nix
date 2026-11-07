@@ -168,35 +168,6 @@ in
 
 
   config = lib.mkIf cfg.enable {
-
-    ##
-    # python3Packages.posthog: unbreak, 7.71.0 -> 7.75.11.
-    #
-    # chromadb propagates posthog into open-webui's Python environment, and
-    # nixpkgs marks posthog as broken whenever mcp is 2.x, which fails
-    # evaluation of the whole system rather than just its test suite. This is
-    # nixpkgs PR #578265, applied ahead of it being merged.
-    ##
-    nixpkgs.overlays = [
-      # Open WebUI 0.12.3 pins mcp==1.27.2 and imports
-      # mcp.client.streamable_http.streamablehttp_client, which mcp 2 removed
-      # (nixpkgs#575004 bumped mcp to 2.2.0) -> ImportError at startup. Give it
-      # mcp_1, as nixpkgs did for mistral-vibe (#578726). This also keeps
-      # chromadb -> posthog buildable, since nixpkgs only marks posthog broken
-      # with mcp >= 2. 0.12.4 moved to mcp 2 (+ httpx2); the assert fails once
-      # nixpkgs ships it, then drop this overlay.
-      (final: prev: {
-        open-webui =
-          assert prev.lib.assertMsg (prev.lib.versionOlder prev.open-webui.version "0.12.4")
-            "flake.nix: open-webui ${prev.open-webui.version} supports mcp 2; remove the mcp_1 overlay";
-          prev.open-webui.override {
-            python3Packages = prev.python3Packages.overrideScope (pyfinal: pyprev: {
-              mcp = pyfinal.mcp_1;
-            });
-          };
-      })
-    ];
-
     services.postgresql.ensureDatabases = [ "open-webui" ];
     services.postgresql.ensureUsers = [
       { name = "open-webui"; ensureDBOwnership = true; }
