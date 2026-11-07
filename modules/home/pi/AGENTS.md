@@ -551,6 +551,9 @@ about — it is not the default posture.
   One of these is "that X is ancient": it means I had forgotten about it — don't
   build on it or fix it, drop it if you are mid-task, and leave it to me. An
   explicit "delete it, it's legacy" is an instruction, and overrides this.
+- **When my number and yours disagree, say which half is stale.** My reason is usually
+  right and my figure is usually old — "it's 56 pages" when the measurement said 94. Check
+  it, then give the number and my reason back separately rather than picking one.
 
 ### Deferred, filed, or mine
 
