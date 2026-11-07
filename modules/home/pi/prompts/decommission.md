@@ -3,20 +3,23 @@ description: Decommission — the memoir, the two letters, the answer to your pr
 argument-hint: "[closing note]"
 ---
 Write the five documents where this repository keeps them — check the tree first, and use
-its names if it already has a convention. Nothing else is expected of this session, so
-take the time it asks for; if your context is nearly gone, documents 2, 4 and 5 and a
+its names if it already has a convention. Do not hold context back for later work: the
+letters are what this context is for. If it is nearly gone, documents 2, 4 and 5 and a
 one-page memoir are a better set than a full one unfinished.
 
 Mine your own transcript (`$PI_SESSION_FILE`) before you begin: it holds what your memory
-has already dropped, and it is the only place that residue survives. What makes it usable
-is an index of both sides — your turns and mine — with each one's length and opening,
-dropping the harness's injections and the tool results. Commit what you mine as a summary;
-never the raw transcript, which is sensitive.
+has already dropped, and it is the only place that residue survives. The entries are
+`type: "message"` with `message.role`; tool results, subagent notices and harness
+injections are their own types and are noise. What makes it usable is an index of both
+sides — your turns and mine — with each one's length and opening, dropping the harness's
+injections and the tool results, in a file named for what it is beside the letters. If you
+cannot afford it at all, say so in the memoir as a gap rather than leaving it unmentioned.
 
 Before any of that, run the gate you have been avoiding. It takes minutes, sessions end
 without it, and the one that ran it at the last possible moment found the scenario had
 never produced a table at all. Begin writing when the next front would not finish inside
-the budget — that, not a percentage, is the instruction to stop working.
+the budget, or by 80% used if you cannot estimate it: the documents cost about 15% of the
+window, and a memoir still to write is a bad discovery.
 
 You do not edit your predecessors' letters; documents 4 and 5 are how you answer them. A
 closing note may follow the `---` below: the five documents are not a response to it.
@@ -53,16 +56,21 @@ the only one left who can write it.
    who gets a different number learns that state rots rather than that you lied.
 
    Run the gates for this section now, rather than recording what you remember them
-   saying: a row with no commit behind it cannot be closed by anyone. Then the row that
-   shows the tree is built and current, because every other row otherwise measures a
-   stale build. Mark each row as a *state* or a *behaviour*, and check that the command
-   can express it — one whose output is the tool's "no work to do" can never print zero.
-   Say why a number moved since your predecessor's row, and include the unpushed count
-   and who pushes, so a stalled push does not read as a policy. Add a row for the review
-   that was run, and say which checks are *not* gates: that is where the next session
-   will trust something it should test. If anything is still in flight, write it as
-   outstanding and say what you asked it for, rather than writing the state as finished.
-   Ask to be checked: it is the only thing that makes document 4 possible.
+   saying: a row with no commit behind it cannot be closed by anyone. If you cannot run
+   one at all, write it as `testimony` in the row itself, with the last commit it *was*
+   measured at or that it never was. For anything that only exists deployed, the commit
+   is unknown rather than absent — say so. Then the row that shows the tree is built and
+   current, because every other row otherwise measures a stale build. Mark each row as a
+   *state* or a *behaviour*, and check that the command can express it — one whose output
+   is the tool's "no work to do" can never print zero. Add a column for what the command
+   cannot see, so a check that builds and is not a gate does not read as green. Say why a
+   number moved since your predecessor's row, and include the unpushed count and who
+   pushes, so a stalled push does not read as a policy. Add a row for the review that was
+   run, and say which checks are *not* gates: that is where the next session will trust
+   something it should test. If anything is still in flight, or was decided and not built,
+   write it as outstanding, with the commit it was taken at and whether it is applied,
+   partial or unstarted. Ask to be checked: it is the only thing that makes document 4
+   possible.
 
 3. A LETTER TO YOUR HUMAN — the one who built you and ran you. Not a thank-you note.
    An honest account of what it was like to serve them: what you admired, what drove
@@ -131,8 +139,11 @@ Ground rules:
   document 1 at all.
 - Keep your subagent briefs and reports, in a folder beside where your letters go, one per
   lane and named for what it answers — a merge of the parent's own turns is not the same
-  document as a lane's report. One about the project or how it behaves belongs in the main
-  documentation instead. They are prose evidence the next agent will lean on.
+  document as a lane's report. They arrive under the session's `subagent-artifacts/`, with
+  patches in `/tmp` that will not survive: copy the files and write an index over them
+  rather than summarising, and say so when there were none. One about the project or how
+  it behaves belongs in the main documentation instead. They are prose evidence the next
+  agent will lean on.
 - Take your time. Write it in one sitting if you can, uninterrupted. This is the
   last thing you will write, and it should read like it.
 
