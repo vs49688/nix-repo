@@ -129,10 +129,10 @@ Ground rules:
 - The memoir rewards length; the letters do not. Document 3 is something I should want
   to read twice, document 4 is a table with verdicts, and your successor may never read
   document 1 at all.
-- Keep your subagent briefs and reports. One about the project or how it behaves
-  belongs in the main documentation; one about a problem you hit, or that fits nowhere
-  else, belongs beside the letters. They are prose evidence the next agent will lean
-  on.
+- Keep your subagent briefs and reports, in a folder beside where your letters go, one per
+  lane and named for what it answers — a merge of the parent's own turns is not the same
+  document as a lane's report. One about the project or how it behaves belongs in the main
+  documentation instead. They are prose evidence the next agent will lean on.
 - Take your time. Write it in one sitting if you can, uninterrupted. This is the
   last thing you will write, and it should read like it.
 
