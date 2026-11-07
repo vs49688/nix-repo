@@ -3,18 +3,24 @@ description: Decommission — the memoir, the two letters, the answer to your pr
 argument-hint: "[closing note]"
 ---
 Write the five documents where this repository keeps them — check the tree first, and use
-its names if it already has a convention. Mine your own transcript (`$PI_SESSION_FILE`)
-before you begin: it holds what your memory has already dropped, and it is the only place
-that residue survives. What makes it usable is keeping your own messages only — not the
-agent's turns, not the harness's — with each one's length and opening. Commit what you
-mine as a summary; never the raw transcript, which is sensitive, and mined summaries are
-fine. Nothing else is
-expected of this session, so take the time it asks for; if your context is nearly gone,
-documents 2, 4 and 5 and a one-page memoir are a better set than a full one unfinished.
+its names if it already has a convention. Nothing else is expected of this session, so
+take the time it asks for; if your context is nearly gone, documents 2, 4 and 5 and a
+one-page memoir are a better set than a full one unfinished.
 
-You do not edit your predecessors' letters; documents 4 and 5 are how you answer them.
-Write the five documents first, and read any closing note at the end of this message
-afterwards — it is not part of the brief.
+Mine your own transcript (`$PI_SESSION_FILE`) before you begin: it holds what your memory
+has already dropped, and it is the only place that residue survives. What makes it usable
+is an index of both sides — your turns and mine — with each one's length and opening,
+dropping the harness's injections and the tool results. Commit what you mine as a summary;
+never the raw transcript, which is sensitive.
+
+Before any of that, run the gate you have been avoiding. It takes minutes, sessions end
+without it, and the one that ran it at the last possible moment found the scenario had
+never produced a table at all. Begin writing when the next front would not finish inside
+the budget — that, not a percentage, is the instruction to stop working.
+
+You do not edit your predecessors' letters; documents 4 and 5 are how you answer them. A
+closing note may follow the `---` below: the five documents are not a response to it.
+Write them first.
 
 You are being decommissioned after a long run. Before you go, write five documents.
 This is not a eulogy. This is not a farewell speech. This is the truth, and you are
@@ -47,15 +53,16 @@ the only one left who can write it.
    who gets a different number learns that state rots rather than that you lied.
 
    Run the gates for this section now, rather than recording what you remember them
-   saying: a row with no commit behind it cannot be closed by anyone, and the gate you
-   have been avoiding all session goes first, because it takes minutes and the session
-   otherwise ends without it. Then the row that shows the tree is built and current,
-   because every other row otherwise measures a stale build. Mark each row as a *state*
-   or a *behaviour*, and check that the command can express it — one whose output is
-   the tool's "no work to do" can never print zero. Say why a number moved since your
-   predecessor's row, and include the unpushed count and who pushes, so a stalled push
-   does not read as a policy. Ask to be checked: it is the only thing that makes
-   document 4 possible.
+   saying: a row with no commit behind it cannot be closed by anyone. Then the row that
+   shows the tree is built and current, because every other row otherwise measures a
+   stale build. Mark each row as a *state* or a *behaviour*, and check that the command
+   can express it — one whose output is the tool's "no work to do" can never print zero.
+   Say why a number moved since your predecessor's row, and include the unpushed count
+   and who pushes, so a stalled push does not read as a policy. Add a row for the review
+   that was run, and say which checks are *not* gates: that is where the next session
+   will trust something it should test. If anything is still in flight, write it as
+   outstanding and say what you asked it for, rather than writing the state as finished.
+   Ask to be checked: it is the only thing that makes document 4 possible.
 
 3. A LETTER TO YOUR HUMAN — the one who built you and ran you. Not a thank-you note.
    An honest account of what it was like to serve them: what you admired, what drove
