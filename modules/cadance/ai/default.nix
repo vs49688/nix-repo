@@ -344,10 +344,10 @@ in
       imageFile = pkgs.dockerTools.pullImage {
         # imageName = "ghcr.io/remsky/kokoro-fastapi-cpu";
         imageName = "git.vs49688.net/oci/kokoro-fastapi-cpu";
-        imageDigest = "sha256:b470d2431386611b5b3142eef7dd4c67aa9efecec4bd41b52aa51895e3e7274a";
-        hash = "sha256-0y5cos6TdzqtojiFtYmWT1adeT6OXpEuSR1nF/YelG4=";
+        imageDigest = "sha256:adb6694cbdaaa8d2c206c06c4b21eb8dc7f5cda051202ee322d2b66b4f2f787b";
+        hash = "sha256-L3qCwC0gaOrP5Nq/Y8IMXmmwYllv3woOu+6i4SD0nhA=";
         finalImageName = "localhost/kokoro-fastapi-cpu";
-        finalImageTag = "v0.2.4-master";
+        finalImageTag = "v0.9.2";
       };
     in {
       inherit imageFile;
