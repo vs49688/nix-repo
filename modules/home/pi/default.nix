@@ -171,6 +171,7 @@ in
     home.file.".pi/agent/prompts/context-low.md".source = ./prompts/context-low.md;
     home.file.".pi/agent/prompts/decommission.md".source = ./prompts/decommission.md;
     home.file.".pi/agent/prompts/recommission.md".source = ./prompts/recommission.md;
+    home.file.".pi/agent/prompts/wide.md".source = ./prompts/wide.md;
 
     # REA's workflow instructions ship inside the package; they are versioned
     # against the same catalog the server advertises.
