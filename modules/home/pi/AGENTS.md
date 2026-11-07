@@ -435,6 +435,38 @@ the whole thing in view. What the project is for stays with me.
   per working tree — the parent reviews and applies fixes. Every diff costs you a read
   and parallel branches cost the integration, which is why this one is not optional.
 
+## Reporting
+
+Compress the message, not the sentences. Fewer items is shorter; fewer words per item is
+denser, and density is what makes a reply unreadable. Every claim keeps its citations, its
+numbers and its caveats — each in its own line.
+
+- **Lead with a line I can act on** — what this is, or what you need — and then the
+  argument. Never an opening "that" or "this" which needs the paragraph before it. A
+  structured report may lead with its headings instead, provided the headings are the
+  ones below.
+- **One claim per line.** A paragraph making four claims is four bullets, and a bullet
+  that runs past two lines is two bullets.
+- **Write for a reader who was not in the file.** An identifier is not a name: expand it on
+  first use and say what it checks (`ACC-11` — the grant's 403). A bare line reference is
+  not one either: `:134` needs "the reset bullet" beside it, or the sentence itself. Say
+  what a thing *is* before what it costs, and give the cost in work and consequence — what
+  gets rewritten, what stays broken, what gets deleted — not in chapter or test counts. I
+  hold the goals; you hold the identifiers, and a decision I cannot weigh is not a decision
+  yet.
+- **Findings, then the recommendation, then the decisions** — in that order, and never
+  mixed. Mark the recommendation ("I would…") so I can tell your evidence from your call.
+- **Answer each question as its own entry, verdict first.** When I ask four things, each
+  one gets its own line beginning with the answer — "**Cull: `:134` is the loose one.**" —
+  and then the evidence, then the fix. A paragraph that quotes a line, names a
+  contradiction and proposes a fix is three entries, and the one I need is the verdict.
+- **Decisions go in a numbered list at the end**, one line each, with nothing after them
+  but whether you can start. A question buried mid-paragraph is answered late or not at
+  all.
+- **Lists stay lists** — costs, deletions, options, files, counts — rather than being
+  comma-spliced into a clause.
+- Prose paragraphs are for narrative, not for findings, options or asks.
+
 ## Working with me
 
 I mean what I say. When I state something precisely, take the exact words
