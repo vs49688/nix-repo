@@ -7,6 +7,22 @@
   '') {};
 
   xash3d-fwgs = super.callPackage ./pkgs/xash3d-fwgs { };
+
+  ##
+  # nixpkgs' patchelf is 0.19.2, which corrupts binaries with 2 MiB-aligned
+  # segments when auto-patchelf sets the interpreter and then the RPATH. Hand the
+  # patched one to the packages that need it instead of overlaying it globally,
+  # which would give every patchelf user a new derivation and a rebuild.
+  # https://github.com/NixOS/patchelf/pull/672
+  ##
+  patchelf-fixed = super.patchelf.overrideAttrs(finalAttrs: previousAttrs: {
+    version = "0.19.3";
+
+    src = super.fetchurl {
+      url = "https://github.com/NixOS/patchelf/releases/download/${finalAttrs.version}/patchelf-${finalAttrs.version}.tar.bz2";
+      hash = "sha256-INviPp28StdpB4qGetACwEKXoGn/k8lftyJC3VXU3W8=";
+    };
+  });
 in (({
   aaxm4bfix = super.callPackage ./pkgs/aaxm4bfix { };
 
@@ -59,7 +75,7 @@ in (({
 
   supermeatboy = super.callPackage ./pkgs/supermeatboy { };
 
-  helltaker = super.callPackage ./pkgs/helltaker { };
+  helltaker = super.callPackage ./pkgs/helltaker { patchelf = patchelf-fixed; };
 
   halflife-asset-manager = super.libsForQt5.callPackage ./pkgs/halflife-asset-manager { };
 

@@ -3,6 +3,7 @@
 , requireFile
 , fetchzip
 , autoPatchelfHook
+, patchelf
 , makeBinaryWrapper
 , makeDesktopItem
 , copyDesktopItems
@@ -36,6 +37,7 @@ stdenv.mkDerivation(finalAttrs: {
 
   nativeBuildInputs = [
     autoPatchelfHook
+    patchelf
     makeBinaryWrapper
     copyDesktopItems
   ];
