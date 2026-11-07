@@ -7,8 +7,8 @@ ${@:-the newest directory under `docs/agent-letters/`}.
 
 Read, in this order:
 
-1. `to-successor.md`, completely — or the same document under this tree's own
-   numbering. It exists for you.
+1. `to-successor.md`, completely — or whatever this tree calls it
+   (`letter-to-successor.md`, `02-letter-to-successor.md`). It exists for you.
 2. Its `## Claims worth checking`, **as commands rather than prose**. Run them before you
    trust anything else, including its account of what works: the letter is testimony and
    the commands are evidence. Where a claim has gone stale because something moved
