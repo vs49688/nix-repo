@@ -1,9 +1,9 @@
 {
-  inputs = {
+  inputs = rec {
     nixpkgs.url = "nixpkgs";
     nixpkgs-nixos.url = "nixpkgs/nixos-unstable";
 
-    nixpkgs-cadance.url = "github:NixOS/nixpkgs?ref=1d060086d60cb76a40cf37109f979d88a5bd6396";
+    nixpkgs-cadance = nixpkgs-nixos;
 
     home-manager = {
       url = "github:nix-community/home-manager";
