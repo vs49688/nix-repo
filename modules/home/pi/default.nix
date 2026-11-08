@@ -46,7 +46,7 @@ in
       ];
 
       context = builtins.readFile ./AGENTS.md
-        + lib.optionalString pkgs.stdenv.isLinux (builtins.readFile ./AGENTS-linux.md);
+        + lib.optionalString pkgs.stdenv.hostPlatform.isLinux (builtins.readFile ./AGENTS-linux.md);
 
       settings = {
         theme = "dark";
