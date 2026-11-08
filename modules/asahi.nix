@@ -1,4 +1,13 @@
 { pkgs, utils, ... }: {
+  ##
+  # Build the Asahi components — the kernel above all — as a cross derivation from
+  # x86_64, so the x86 builder can produce them and this machine substitutes rather than
+  # spending hours on it. The module re-imports nixpkgs with `crossSystem` and the same
+  # overlay, so the derivation is one any x86 builder produces; ZAIR and ANGELUS agree on
+  # it, so one build and one cache entry serve both.
+  ##
+  hardware.asahi.pkgsSystem = "x86_64-linux";
+
   nix.settings.extra-substituters = [
     "https://nixos-apple-silicon.cachix.org"
   ];
