@@ -72,7 +72,7 @@
     mingw32-cc
     # djgpp_i586
     # djgpp_i686
-    uasm
+    # uasm
     # dosbox-x
 
     # Kubernetes/Container Stuff
