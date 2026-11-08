@@ -27,6 +27,9 @@ jobs:
         run: nix flake check --all-systems
 
       # We're letting Nix do the parallelism here to take advantage of our cache.
+      #
+      # The Asahi kernels are x86_64-system derivations for aarch64 hosts, so this
+      # runner builds them and niks3 serves the result to the machines.
       - name: Build Systems
         run: |
           set -x
@@ -35,18 +38,11 @@ jobs:
             .#systems.MORNINGSTAR \
             .#systems.CAPRICA \
             .#systems.AVALON \
-            .#systems.TWILYSPARKLE
-
-      # The Asahi kernels are x86_64-system derivations for aarch64 hosts, so this
-      # runner builds them and niks3 serves the result to the machines.
-      - name: Build Asahi kernels & m1n1
-        run: |
-          set -x
-          nix build --print-build-logs --no-link --keep-going --max-jobs auto \
+            .#systems.TWILYSPARKLE \
             .#nixosConfigurations.ZAIR.config.system.build.kernel \
             .#nixosConfigurations.ZAIR.config.system.build.m1n1 \
             .#nixosConfigurations.ANGELUS.config.system.build.kernel \
-            .#nixosConfigurations.ANGELUS.config.system.build.m1n1 \
+            .#nixosConfigurations.ANGELUS.config.system.build.m1n1
 
       # - name: Dump niks3 log
       #   if: always()
