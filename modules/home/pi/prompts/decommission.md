@@ -9,11 +9,13 @@ one-page memoir are a better set than a full one unfinished.
 
 Mine your own transcript (`$PI_SESSION_FILE`) before you begin: it holds what your memory
 has already dropped, and it is the only place that residue survives. The entries are
-`type: "message"` with `message.role`; tool results, subagent notices and harness
-injections are their own types and are noise. What makes it usable is an index of both
-sides — your turns and mine — with each one's length and opening, dropping the harness's
-injections and the tool results, in a file named for what it is beside the letters. If you
-cannot afford it at all, say so in the memoir as a gap rather than leaving it unmentioned.
+`type: "message"` with `message.role`; tool results and subagent notices are their own
+types. What makes it usable is an index of both sides — your turns and mine — with each
+one's length and opening, and a mark on the harness's own lines: they come through in the
+*user* role, byte-identical and beginning `Inspect subagent updates above`, so filtering on
+role alone will not find me. Write the index in a file named for what it is beside the
+letters. If you cannot afford it at all, say so in the memoir as a gap rather than leaving
+it unmentioned.
 
 Before any of that, run the gate you have been avoiding. It takes minutes, sessions end
 without it, and the one that ran it at the last possible moment found the scenario had
