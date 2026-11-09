@@ -830,7 +830,9 @@ in
             repository_owner = [ "zane" ];
           };
 
-          boundSubject = [ "repo:zane/nix-repo:*" ];
+          boundSubject = [
+            "repo:zane-1/nix-repo-530:*"
+          ];
           scopes = [ "write" ];
         }
       ];
