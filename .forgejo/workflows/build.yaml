@@ -40,9 +40,9 @@ jobs:
             .#systems.AVALON \
             .#systems.TWILYSPARKLE \
             .#nixosConfigurations.ZAIR.config.system.build.kernel \
-            .#nixosConfigurations.ZAIR.config.system.build.m1n1 \
+            .#nixosConfigurations.ZAIR.config.hardware.asahi.pkgs.avd-fw \
             .#nixosConfigurations.ANGELUS.config.system.build.kernel \
-            .#nixosConfigurations.ANGELUS.config.system.build.m1n1
+            .#nixosConfigurations.ANGELUS.config.hardware.asahi.pkgs.avd-fw \
 
       # - name: Dump niks3 log
       #   if: always()
