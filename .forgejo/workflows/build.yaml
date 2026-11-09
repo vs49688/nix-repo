@@ -41,10 +41,8 @@ jobs:
             .#systems.TWILYSPARKLE \
             .#nixosConfigurations.ZAIR.config.system.build.kernel \
             .#nixosConfigurations.ZAIR.config.hardware.asahi.pkgs.avd-fw \
-            .#nixosConfigurations.ZAIR.config.boot.kernelPackages.vhba \
             .#nixosConfigurations.ANGELUS.config.system.build.kernel \
             .#nixosConfigurations.ANGELUS.config.hardware.asahi.pkgs.avd-fw \
-            .#nixosConfigurations.ANGELUS.config.boot.kernelPackages.vhba
 
       # - name: Dump niks3 log
       #   if: always()
