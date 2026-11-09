@@ -19,6 +19,10 @@
     asahi-nvram
   ];
 
+  # Pulls in the out-of-tree vhba kernel module
+  # which fucks with cross-building modules.
+  programs.cdemu.enable = false;
+
   systemd.services.set-battery-threshold = {
     description = "set battery charge threshold";
 
