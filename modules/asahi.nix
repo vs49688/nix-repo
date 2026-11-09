@@ -1,4 +1,4 @@
-{ pkgs, utils, ... }: {
+{ pkgs, utils, lib, ... }: {
   ##
   # Build the Asahi components — the kernel above all — as a cross derivation from
   # x86_64, so the x86 builder can produce them and this machine substitutes rather than
@@ -21,7 +21,7 @@
 
   # Pulls in the out-of-tree vhba kernel module
   # which fucks with cross-building modules.
-  programs.cdemu.enable = false;
+  programs.cdemu.enable = lib.mkForce false;
 
   systemd.services.set-battery-threshold = {
     description = "set battery charge threshold";
