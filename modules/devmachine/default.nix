@@ -33,7 +33,7 @@
   programs.java.enable  = true;
   programs.java.package = pkgs.jdk;
 
-  programs.cdemu.enable = lib.mkDefault true;
+  programs.cdemu.enable = lib.mkDefault false;
 
   environment.systemPackages = let
     myPy = (pkgs.python3.withPackages (pi: with pi; [
