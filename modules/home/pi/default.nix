@@ -21,6 +21,23 @@
     ${lib.getExe' pkgs.iproute2 "ip"} link set lo up
     exec ${lib.getExe pkgs.rea-agents} mcp
   '';
+
+  ##
+  # 1.5.0's postInstall copies every workspace into node_modules but not
+  # `packages/schema`, the new home of `@earendil-works/pi-schema` -- then
+  # deletes its symlink as dangling. pi-ai imports it at load, so `pi --version`
+  # works while every extension and every subagent dies with
+  # ERR_MODULE_NOT_FOUND. Copy it the way the other workspaces are copied; the
+  # extra lines do nothing once upstream's postInstall mentions pi-schema.
+  # https://github.com/NixOS/nixpkgs/issues/583791 (fix in #582756)
+  ##
+  piCodingAgent = pkgs.pi-coding-agent.overrideAttrs (previous: {
+    postInstall = previous.postInstall + pkgs.lib.optionalString
+      (!pkgs.lib.hasInfix "pi-schema" previous.postInstall) ''
+        nm="$out/lib/node_modules/pi-monorepo/node_modules"
+        cp -r packages/schema "$nm/@earendil-works/pi-schema"
+      '';
+  });
 in
 {
   options.programs.pi-coding-agent.mcpServers = with lib; mkOption {
@@ -30,6 +47,7 @@ in
   config = {
     programs.pi-coding-agent = {
       enable = lib.mkDefault true;
+      package = piCodingAgent;
       extraPackages = with pkgs; [
         bun
         nodejs
