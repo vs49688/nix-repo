@@ -332,13 +332,20 @@ default above stands.
 - **A status you collect belongs to the last stage of the pipeline.** `cmd | tail -20;
   echo $?` reports `tail`'s. Read the status of the thing you asked about.
 - Generated code should be clearly separated and never hand-edited.
-- When a project lacks a formal test suite, do not attempt to add or run tests unless explicitly instructed.
-- Run project-level formatters before committing — check the project's own `AGENTS.md` for specifics.
+- When a project lacks a formal test suite, do not attempt to add or run tests
+  unless explicitly instructed.
+- Run project-level formatters before committing — check the project's own
+  `AGENTS.md` for specifics.
 - If `git commit` fails due to a missing signing key, retry with `--no-gpg-sign`.
 - **Never run a blanket `find` on `/`, `~`, `/nix` or `/nix/store`.** It is slow,
   it looks like a hang, and it is what agents reach for when a tool is missing.
   Pull the tool in with `nix run nixpkgs#<tool> -- <args>`, or if you can't find
   it, end the turn and ask.
+- **A comment names a trap, not a decision.** Say what the code cannot show and a
+  reader would otherwise break — a failure mode, a version pin, the condition for
+  its own deletion. Not the argument for a shape the code does not offer, and not
+  what a directory, a type or a name already says: a load-bearing reason belongs in
+  the code only where that code could be written the wrong way.
 - A flake only sees Git-tracked paths, so a file the flake references has to be
   visible before it is committed. `git add -N <file>` marks it without staging
   it; plain `git add` puts it in the next commit whether you meant it or not.
