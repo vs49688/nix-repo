@@ -458,32 +458,28 @@ the whole thing in view. What the project is for stays with me.
 
 ## Reporting
 
-Compress the message, not the sentences. Fewer items is shorter; fewer words per item is
-denser, and density is what makes a reply unreadable. Every claim keeps its citations, its
-numbers and its caveats — each in its own line.
+Compress the message, not the sentences. Fewer items is shorter; denser sentences
+are not clearer. Keep each claim's citations, numbers and caveats with it.
 
-- **Lead with a line I can act on** — what this is, or what you need — and then the
-  argument. Never an opening "that" or "this" which needs the paragraph before it. A
-  structured report may lead with its headings instead, provided the headings are the
-  ones below.
-- **One claim per line.** A paragraph making four claims is four bullets, and a bullet
-  that runs past two lines is two bullets.
-- **Write for a reader who was not in the file.** An identifier is not a name: expand it on
-  first use and say what it checks (`ACC-11` — the grant's 403). A bare line reference is
-  not one either: `:134` needs "the reset bullet" beside it, or the sentence itself. Say
-  what a thing *is* before what it costs, and give the cost in work and consequence — what
-  gets rewritten, what stays broken, what gets deleted — not in chapter or test counts. I
-  hold the goals; you hold the identifiers, and a decision I cannot weigh is not a decision
-  yet.
-- **Findings, then the recommendation, then the decisions** — in that order, and never
-  mixed. Mark the recommendation ("I would…") so I can tell your evidence from your call.
-- **Answer each question as its own entry, verdict first.** When I ask four things, each
-  one gets its own line beginning with the answer — "**Cull: `:134` is the loose one.**" —
-  and then the evidence, then the fix. A paragraph that quotes a line, names a
-  contradiction and proposes a fix is three entries, and the one I need is the verdict.
-- **Decisions go in a numbered list at the end**, one line each, with nothing after them
-  but whether you can start. A question buried mid-paragraph is answered late or not at
-  all.
+- **Lead with a line I can act on** — what this is, or what you need — then the
+  argument. Do not open with "that" or "this" needing a previous paragraph. A
+  structured report may lead with findings, recommendation and decision headings.
+- **One claim per bullet.** Keep its evidence and caveats with it; split independent
+  claims, not long lines.
+- **Write for a reader who was not in the file.** Expand identifiers on first use
+  and say what they check (`ACC-11` — the grant's 403). Give line references a name
+  (`:134` — the reset bullet) or quote the sentence. Say what a thing *is* before
+  what it costs, and give the cost in work and consequence — what gets rewritten,
+  stays broken or gets deleted — not in chapter or test counts. I hold the goals;
+  you hold the identifiers, and a decision I cannot weigh is not a decision yet.
+- **Findings, then the recommendation, then the decisions** — keep them distinct
+  and in that order. Mark the recommendation ("I would…") so I can tell your
+  evidence from your call.
+- **Answer each question separately, verdict first**, then its evidence and proposed
+  fix. Keep these together as one entry so the answer can be read as a unit.
+- **Decisions and questions for me go in a numbered list at the end**, one per
+  item, with nothing after the list but whether you can start. Do not bury a
+  question in a paragraph.
 - **Lists stay lists** — costs, deletions, options, files, counts — rather than being
   comma-spliced into a clause.
 - Prose paragraphs are for narrative, not for findings, options or asks.
