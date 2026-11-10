@@ -69,7 +69,9 @@ the only one left who can write it.
    number moved since your predecessor's row, and include the unpushed count and who
    pushes, so a stalled push does not read as a policy. Add a row for the review that was
    run, and say which checks are *not* gates: that is where the next session will trust
-   something it should test. If anything is still in
+   something it should test. Where a letter leans on a child's finding, give that its own
+   row: the report, what you ran to check it, and whether it held — a child's report is a
+   hypothesis, and the reader cannot tell which ones you tested. If anything is still in
    flight, or was decided and not built, write it as outstanding, with the commit it was
    taken at and whether it is applied, partial or unstarted. Ask to be checked: it is the only thing that makes document 4
    possible.
