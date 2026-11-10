@@ -24,13 +24,12 @@ component: short description
 Optional body. If the subject is enough, leave it at that.
 ```
 
-- The `component` prefix names the component that changed, relative to the
-  repo root — `modules/home/pi/...`, `pkgs/...`, `hosts/...` — but it's a
-  judgment call, not a mechanical rule. Trim segments that don't add meaning:
-  `frontend/MyComponent:` rather than `frontend/src/components/MyComponent:`.
-  If the subject would exceed 72 characters, drop leading directories from the
-  left. The prefix should be recognizable at a glance; don't stack multiple
-  prefixes (`pi: web-request:` isn't a path).
+- The `component` prefix names the component that changed. Usually that is the
+  path, and sometimes it is a thing with no directory of its own —
+  `modules/home/pi/mcp/ddgs` for one server's config inside `default.nix`. Trim
+  segments that don't add meaning: `frontend/MyComponent:` rather than
+  `frontend/src/components/MyComponent:`. It should be recognizable at a glance;
+  don't stack two prefixes (`pi: web-request:` isn't a path).
 
 - Name the component, not the set of files it happened to touch: the wiring,
   callers and config a change drags along don't broaden it. For example, given
@@ -123,7 +122,9 @@ Optional body. If the subject is enough, leave it at that.
   finding their shape, blanket checkpoint commits are fine — commit freely and
   don't over-polish history; apply the squash discipline once the project
   stabilizes.
-- Keep the subject line under ~72 characters. Body wrapped at 72 columns.
+- 72 characters is a guideline, not a limit. A subject slightly over it that
+  names the thing beats a shorter one that doesn't, and a body written only to
+  shorten a subject is worse than the long subject. Body wrapped at 72 columns.
 - The subject should complete the sentence "This commit will...".
 - **Name the concrete thing** the commit adds, renames or removes — a symbol,
   an endpoint, a config key — rather than the area it lives in or the
