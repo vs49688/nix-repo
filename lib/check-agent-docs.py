@@ -58,13 +58,25 @@ def read_frontmatter(path):
     except ValueError:
         return None, "frontmatter block is never closed"
     fields = {}
+    last = None
+    listing = False
     for raw in lines[1:end]:
         if not raw.strip() or raw.lstrip().startswith("#"):
+            continue
+        item = raw.strip()
+        # A simple-scalar list may be written as `- item` lines under its key, and
+        # pi accepts that and the comma form alike, so this must too. Only a key
+        # whose value is empty opens a list: an item under a populated scalar is
+        # still an error rather than a silent continuation.
+        if listing and item.startswith("- "):
+            fields[last] = f"{fields[last]},{item[2:].strip()}" if fields[last] else item[2:].strip()
             continue
         if ":" not in raw:
             return None, f"not a key: value line: {raw!r}"
         key, value = raw.split(":", 1)
-        fields[key.strip()] = value.strip()
+        last = key.strip()
+        fields[last] = value.strip()
+        listing = not value.strip()
     return fields, None
 
 
