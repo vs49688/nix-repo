@@ -140,7 +140,6 @@
   in [
     goPackage
     (mockgen.override  { inherit buildGoModule; })
-    (gotools.override  { inherit buildGoModule; })
     (gosec.override    { inherit buildGoModule; })
     (govulncheck.override { }) # Uses buildGoLatestModule
     (gops.override { inherit buildGoModule; })
