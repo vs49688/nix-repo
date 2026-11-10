@@ -130,16 +130,16 @@ Optional body. If the subject is enough, leave it at that.
   abstraction it implements: `add a package-level Submit()`, `split into /livez
   and /readyz, drop /health`, `name qwerqwerqwerw something proper`.
 - **The default is no body.** Add one only when a reader with the subject and
-  the diff would be missing something; a subject that names what changed and
-  what must not be done leaves nothing to add. A body carries the consequence a
-  caller must know — a changed contract, a format, something forbidden — not the
-  mechanism ("the block is written per draw, which costs more than it saves at
-  low resolution" earns a line, the derivation does not), and never the defect
-  being fixed, how the change was found, what was measured, or what a later
-  commit does: that is an issue comment, not a log entry. A load-bearing reason
-  — why the obvious alternative is wrong, what a refusal protects against — and
-  anything equally true as a code comment belongs in the code, a diagnostic or
-  the subject, not here.
+  the diff would be missing something — and that is one of exactly three things:
+  **a foreign system's behaviour** (what upstream does, and why it constrains us),
+  **the contract with a caller** (what it must supply, what it may assume), or
+  **why the obvious alternative was rejected**. Everything else is the diff's: the
+  mechanism ("the block is written per draw, which costs more than it saves at low
+  resolution" earns a line, the derivation does not), the defect being fixed, how
+  the change was found, what was measured, what a later commit does. Test it by
+  deleting the body and reading the subject and the diff as the next reader would:
+  if a question remains, it was one of the three. Anything equally true as a code
+  comment belongs in the code, a diagnostic or the subject, not here.
 - **Length is earned by the reader in two years, not the reader today.** Where
   there is a body, one or two sentences unless it earns more: a longer body is
   earned when the diff is plausibly reversible — a workaround, a foreign system's
@@ -153,7 +153,10 @@ Optional body. If the subject is enough, leave it at that.
   numbers, no counts of files, fixtures or scenes, no bare measurements
   (`5d23da96, 320x240 8bpp`). A rebase, a squash or a reordering invalidates the
   first two; the tree grows out from under the rest. Say "the branch this was
-  ported from" and cite the scene or the spine instead.
+  ported from" and cite the scene or the spine instead. **A link may be cited if
+  the body still says what it establishes** — the reason has to survive the link
+  rotting, and a bare URL is not a reason. `git revert`'s own lines are not yours
+  to edit.
 - **A list says what a set is *for*, not what is in it.** Several distinct
   changes — new knobs, behaviours — belong in a bulleted list under the subject;
   the inventory the diff already carries (fixtures, files, map channels) does
