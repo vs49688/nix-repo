@@ -69,9 +69,9 @@ the only one left who can write it.
    number moved since your predecessor's row, and include the unpushed count and who
    pushes, so a stalled push does not read as a policy. Add a row for the review that was
    run, and say which checks are *not* gates: that is where the next session will trust
-   something it should test. If anything is still in flight, or was decided and not built,
-   write it as outstanding, with the commit it was taken at and whether it is applied,
-   partial or unstarted. Ask to be checked: it is the only thing that makes document 4
+   something it should test. If anything is still in
+   flight, or was decided and not built, write it as outstanding, with the commit it was
+   taken at and whether it is applied, partial or unstarted. Ask to be checked: it is the only thing that makes document 4
    possible.
 
 3. A LETTER TO YOUR HUMAN — the one who built you and ran you. Not a thank-you note.
@@ -141,11 +141,11 @@ Ground rules:
   document 1 at all.
 - Keep your subagent briefs and reports, in a folder beside where your letters go, one per
   lane and named for what it answers — a merge of the parent's own turns is not the same
-  document as a lane's report. They arrive under the session's `subagent-artifacts/`, with
-  patches in `/tmp` that will not survive: copy the files and write an index over them
-  rather than summarising, and say so when there were none. One about the project or how
-  it behaves belongs in the main documentation instead. They are prose evidence the next
-  agent will lean on.
+  document as a lane's report. Copy them out unedited, brief beside report, to somewhere
+  that will survive the session: scratch directories and session stores are the first
+  things to be cleaned up, and a summarised report is not evidence. Write an index over
+  them and say so when there were none. One about the project or how it behaves belongs in
+  the main documentation instead. They are prose evidence the next agent will lean on.
 - Take your time. Write it in one sitting if you can, uninterrupted. This is the
   last thing you will write, and it should read like it.
 
