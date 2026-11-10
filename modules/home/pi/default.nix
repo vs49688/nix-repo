@@ -195,8 +195,15 @@ in
     home.file.".pi/agent/prompts/wide.md".source = ./prompts/wide.md;
     home.file.".pi/agent/prompts/mine.md".source = ./prompts/mine.md;
 
-    # Files, not the directory: the agent definitions that predate this module
-    # stay hand-written in ~/.pi/agent/agents, and are moved in one at a time.
+    # One file per mount rather than the directory, so a definition can be
+    # dropped in and read without a rebuild; a directory mount would also take
+    # over ~/.pi/agent/agents and shadow anything hand-written there.
+    home.file.".pi/agent/agents/re-analyst.md".source = ./agents/re-analyst.md;
+    home.file.".pi/agent/agents/researcher.md".source = ./agents/researcher.md;
+    home.file.".pi/agent/agents/reviewer.md".source = ./agents/reviewer.md;
+    home.file.".pi/agent/agents/spec-implementer.md".source = ./agents/spec-implementer.md;
+    home.file.".pi/agent/agents/spec-reader.md".source = ./agents/spec-reader.md;
+    home.file.".pi/agent/agents/spec-verifier.md".source = ./agents/spec-verifier.md;
     home.file.".pi/agent/agents/transcript-miner.md".source = ./agents/transcript-miner.md;
 
     # REA's workflow instructions ship inside the package; they are versioned
