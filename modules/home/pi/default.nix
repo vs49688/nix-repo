@@ -144,7 +144,7 @@ in
           command = "${myPy}/bin/ddgs";
           args = ["mcp"];
           lifecycle = "lazy";
-          directTools = true;
+          directTools = [ "search_text" "extract_content" ];
         };
 
         firefox = {
