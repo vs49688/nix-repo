@@ -15,7 +15,12 @@ there is one.
   4. Every prompt template in prompts/ is mounted in default.nix, and every prompt
      mount resolves to a file. The same two-edit failure with a quieter outcome: an
      unmounted template is simply not a command, and nothing says why.
-  5. Every `<name>` skill reference in an AGENTS*.md file names a skill that exists.
+  5. Every agent definition in agents/ is mounted in default.nix by file, and its
+     frontmatter name matches the file. The directory itself is deliberately not
+     mounted: definitions that predate this module are hand-written in
+     ~/.pi/agent/agents and are moved in one at a time, so a directory mount would
+     take the whole tree over -- and a definition nothing mounts is not an agent.
+  6. Every `<name>` skill reference in an AGENTS*.md file names a skill that exists.
 
 What it deliberately does not check is whether a rule is in the right file --
 AGENTS.md against a skill. That is a judgement about content, and a text-matcher
@@ -35,6 +40,9 @@ MOUNT_RE = re.compile(
 )
 PROMPT_MOUNT_RE = re.compile(
     r'"\.pi/agent/prompts/(?P<name>[^"]+)"\s*\.source\s*=\s*\./(?P<src>[A-Za-z0-9_./-]+)'
+)
+AGENT_MOUNT_RE = re.compile(
+    r'"\.pi/agent/agents/(?P<name>[^"]+)"\s*\.source\s*=\s*\./(?P<src>[A-Za-z0-9_./-]+)'
 )
 REF_RE = re.compile(r"`([a-z0-9][a-z0-9-]*)`\s+skill\b")
 
@@ -132,6 +140,40 @@ def main(root):
         problems.append(f"default.nix: prompts/{name} exists but nothing mounts it")
     for name in sorted(set(mounted_prompts) - set(prompts)):
         problems.append(f"default.nix: prompts/{name} is mounted but there is no such file")
+
+    agents_dir = os.path.join(root, "agents")
+    agent_files = {}
+    for entry in sorted(os.listdir(agents_dir) if os.path.isdir(agents_dir) else []):
+        path = os.path.join(agents_dir, entry)
+        if not entry.endswith(".md") or not os.path.isfile(path):
+            continue
+        agent_files[entry] = path
+
+        fields, err = read_frontmatter(path)
+        if err:
+            problems.append(f"agents/{entry}: {err}")
+            continue
+        name = fields.get("name", "")
+        if not name:
+            problems.append(f"agents/{entry}: frontmatter has no name")
+        elif name != entry[: -len(".md")]:
+            problems.append(
+                f"agents/{entry}: name {name!r} does not match the file name"
+            )
+        if not fields.get("description"):
+            problems.append(f"agents/{entry}: frontmatter has no description")
+
+    mounted_agents = {}
+    for match in AGENT_MOUNT_RE.finditer(nix):
+        name, src = match.group("name"), match.group("src")
+        mounted_agents[name] = src
+        if not os.path.isfile(os.path.join(root, src)):
+            problems.append(f"default.nix: agents/{name} -> ./{src} does not exist")
+
+    for name in sorted(set(agent_files) - set(mounted_agents)):
+        problems.append(f"default.nix: agents/{name} exists but nothing mounts it")
+    for name in sorted(set(mounted_agents) - set(agent_files)):
+        problems.append(f"default.nix: agents/{name} is mounted but there is no such file")
 
     agents_files = sorted(
         os.path.join(root, entry)
