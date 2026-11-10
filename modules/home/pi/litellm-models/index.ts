@@ -18,7 +18,7 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 const PROVIDER_ID = "litellm";
-const DEFAULT_BASE_URL = "http://localhost:8080/v1";
+const DEFAULT_BASE_URL = "http://localhost:8080/v1"; // ssh -L8080:localhost:8080
 
 /** The subset of `/model/info` this needs, as litellm actually emits it. */
 interface LiteLLMDeployment {

@@ -118,14 +118,6 @@ in
           };
         };
       in {
-        # The deployment list comes from the litellm-models extension, which
-        # reads it off the proxy; only the endpoint and key belong here.
-        providers.litellm = {
-          baseUrl = "http://localhost:8080/v1"; # ssh -L8080:localhost:8080
-          api = "openai-completions";
-          apiKey = "unnecessary";
-        };
-
         providers.deepseek = {
           baseUrl = "https://api.deepseek.com";
           api = "openai-completions";
