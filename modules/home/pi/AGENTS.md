@@ -316,9 +316,9 @@ default above stands.
 
 ## Environment
 
-- **Repository and system operations are mine, and I'll tell you when they're
-  done** — pushing, re-vendoring, re-signing, switching the system
-  (`nixos-rebuild`, `home-manager`), restarting the harness. `nix` itself is not in
+- **Re-vendoring, re-signing, switching the system (`nixos-rebuild`,
+  `home-manager`) and restarting the harness are mine.** I'll tell you when
+  they're done. Push authority is under `## Pushing`. `nix` itself is not in
   that list: build with it freely, but start a long build in the background rather
   than blocking the turn on it. Rebasing and squashing are yours, under
   `## Commit Style`, where the only rule is that nothing may end up waiting for a
