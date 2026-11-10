@@ -5,13 +5,10 @@ import { readFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import vm from "node:vm";
 
-// Evaluate a JavaScript expression against the parsed JSON response body, with
-// the body bound as `data`. Used to project large API responses down to the
-// fields that matter before they reach the model. Runs in a fresh VM context
-// with a timeout and with string code generation disabled, so an accidental
-// `Function`/`eval` constructor escape can't reach the host process. This is
-// not a security boundary (the agent already has code execution), but it
-// keeps filters from touching process/fs by accident and stops a runaway
+// Evaluate a filter expression against the parsed body, bound as `data`, in a
+// fresh VM context with string code generation disabled and a 1s timeout. This
+// is not a security boundary (the agent already has code execution), but it
+// keeps a filter from touching process/fs by accident and stops a runaway
 // expression from hanging the tool.
 function runFilter(expression: string, body: string): string {
   let data: unknown;
@@ -45,8 +42,8 @@ type HeaderFileValue = { file: string; prefix?: string; suffix?: string };
 
 // A header value is either a literal string or a reference to a file whose
 // (whitespace-trimmed) contents become the value. This is how secret headers
-// (e.g. API tokens stored in files) are supplied: web_request never runs
-// shell expansions, so "$(cat ...)" or "$VAR" in a value is sent literally.
+// are supplied. Values are never shell-expanded, so "$(cat ...)" or "$VAR" in a
+// value is sent literally.
 async function resolveHeaderValue(value: string | HeaderFileValue): Promise<string> {
   if (typeof value === "string") return value;
   if (!value.file) {
@@ -74,18 +71,13 @@ export default function (pi: ExtensionAPI) {
     name: "web_request",
     label: "Web Request",
     description:
-      "Make an HTTP request to a URL. Use for calling REST APIs, fetching docs, or any HTTP interaction. " +
-      "Returns status, headers, and body. The body is returned as text — use JSON.parse() in your code if you need structured data. " +
-      "For large responses, pass filter to project a JSON body down to the fields you need before it reaches you. " +
-      "Request bodies are sent as application/json unless you set your own Content-Type header. " +
-      "Header values may reference a file instead of a literal string, for secrets: " +
-      'pass {"file":"<path>","prefix":"token "} as the value and the file contents (trimmed) are read and sent. ' +
-      'The file path expands "~" to the home directory. Values are sent literally — no shell expansion — so ' +
-      '"$(cat ...)" or "$VAR" would be sent as-is and not authenticate.',
+      "Make HTTP requests, including authenticated REST API calls. Returns response text; HTTP status and response headers are recorded in the result details. " +
+      "Successful output has no automatic size cap. Non-2xx output is capped at 4000 UTF-16 code units; filter failures return an error with up to 2000 code units of the raw body. " +
+      'Truncated text has a "... (truncated)" marker appended.',
     promptSnippet: "Make HTTP requests: GET, POST, PUT, PATCH, DELETE",
     promptGuidelines: [
-      "Use web_request for REST APIs and web content in preference to curl in bash — it returns structured results and has no output truncation. The exception is a body you want on disk to grep, where curl -o is the right tool.",
-      "For APIs that return fat objects — issue trackers, spec documents — pass filter to project the response down to the fields you need rather than reading the whole thing into context.",
+      "Prefer web_request to curl in bash for REST APIs and raw HTTP responses. Use curl -o when the response should go to a file.",
+      "Use web_request's filter to project large JSON responses before they enter context.",
     ],
     parameters: Type.Object({
       url: Type.String({ description: "Full URL including protocol (https://...)" }),
@@ -100,7 +92,7 @@ export default function (pi: ExtensionAPI) {
             Type.Object({
               file: Type.String({
                 description:
-                  'Path to a file whose trimmed contents become the header value. "~" expands to the home directory; a leading "@" is ignored. Use this form for secrets — $(cat ...) or $VAR in a literal value would be sent as-is.',
+                  'Path to a file whose trimmed contents become the header value. "~" expands to the home directory; a leading "@" is ignored.',
               }),
               prefix: Type.Optional(
                 Type.String({
@@ -112,7 +104,10 @@ export default function (pi: ExtensionAPI) {
               ),
             }),
           ]),
-          { description: "HTTP headers as key-value pairs; values may be literal strings or file references" },
+          {
+            description:
+              'HTTP headers as key-value pairs. A value is either a literal string or a file reference for a secret, e.g. {"file":"<path>","prefix":"token "}: the file\'s trimmed contents become the value. Values are sent literally — there is no shell expansion — so "$(cat ...)" or "$VAR" would be sent as-is and not authenticate.',
+          },
         ),
       ),
       body: Type.Optional(
@@ -124,12 +119,13 @@ export default function (pi: ExtensionAPI) {
       filter: Type.Optional(
         Type.String({
           description:
-            'JavaScript expression evaluated against the parsed JSON response, with the body bound as `data`. Its result replaces the body, so a large response can be projected down to the fields you need, e.g. filter="data.map(i => ({number: i.number, title: i.title}))" or filter="Object.keys(data)". Requires a JSON body.',
+            'JavaScript expression evaluated against the parsed JSON response, with the body bound as `data`. Its result replaces the body, so a large response can be projected down to the fields you need, e.g. filter="data.map(i => ({number: i.number, title: i.title}))" or filter="Object.keys(data)". Requires a JSON body; if the expression fails, the error comes back with a capped preview of the raw body.',
         }),
       ),
       maxBytes: Type.Optional(
         Type.Number({
-          description: "Truncate the returned body to this many bytes (appends a truncation marker).",
+          description:
+            'Limit response text after filtering to this many UTF-16 code units (legacy name; not bytes). The truncation marker is extra. Does not apply to filter-failure previews or raise the automatic non-2xx cap.',
         }),
       ),
       timeout: Type.Optional(
