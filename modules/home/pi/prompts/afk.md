@@ -1,5 +1,5 @@
 ---
-description: Run unattended until the goal list is done — verify independently, don't stop early
+description: Run unattended through the goals and tracker queue — verify independently, don't stop early
 argument-hint: "[goals, or notes about this run]"
 ---
 I am away, possibly for hours and possibly asleep. Work unattended: do not wait for
@@ -8,12 +8,12 @@ is the end of the turn — is suspended for this run.
 
 **Goals:** ${@:-the task in flight}
 
-Order of work: the goal above; then the tasks that follow logically from it; then —
-only once the overarching task is actually done — the open issues in the tracker.
+Order of work: the goals above; then their necessary follow-ups; then — only once the
+overarching task is actually done — the open issues in this project's tracker.
 
 ## The loop
 
-For each goal, in order:
+For each work item, in that order:
 
 1. Do it.
 2. **Verify it independently**, before moving on. A clean build, a green test run and
@@ -22,14 +22,15 @@ For each goal, in order:
    it to argue against the change. For anything load-bearing, two independent reviewers
    and reconcile them; agreement is worth more than one careful pass. Where the thing
    can be run, run it and read the output.
-3. **Then take the next goal.** Finishing the first one is not finishing the run.
+3. **Then take the next item.** Finishing the first one is not finishing the run.
 
 ## Do not stop early
 
-- **A blocker parks one goal, not the run.** Record why in the tracker, move on to the
-  next goal, and come back if you can. Stop only when nothing at all can progress.
-- **Never invent scope.** If the goal list runs out, stop and report — do not find
-  yourself something to do, and do not start a refactor because it seemed adjacent.
+- **A blocker parks one item, not the run.** Record why in the tracker, move on to the
+  next item, and come back if you can.
+- **Never invent scope.** The goals, follow-ups and tracker queue above are the
+  authorized work; do not start a refactor because it seemed adjacent. Stop when
+  that work is exhausted or none of it can progress.
 - **Parallel work is fine** while I am away, but you own the integration: review every
   merged diff yourself rather than trusting the branch it came from. Mind the host:
   what one gate costs varies wildly, so know the cost before running several at once
@@ -49,8 +50,8 @@ For each goal, in order:
 - Commit each logical change as you go. The tree survives a harness restart and `/tmp`
   does not, so an uncommitted afternoon is an afternoon of nothing.
 - When you stop, leave the state where it can be read without me: what is done, what is
-  next, what is known-broken, and which goal list you were working. Not in the
-  conversation.
+  next, what is known-broken, and which goals or tracker queue you were working.
+  Not in the conversation.
 
 ## Interrupting me
 
