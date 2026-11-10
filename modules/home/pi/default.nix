@@ -195,6 +195,10 @@ in
     home.file.".pi/agent/prompts/wide.md".source = ./prompts/wide.md;
     home.file.".pi/agent/prompts/mine.md".source = ./prompts/mine.md;
 
+    # Files, not the directory: the agent definitions that predate this module
+    # stay hand-written in ~/.pi/agent/agents, and are moved in one at a time.
+    home.file.".pi/agent/agents/transcript-miner.md".source = ./agents/transcript-miner.md;
+
     # REA's workflow instructions ship inside the package; they are versioned
     # against the same catalog the server advertises.
     home.file.".pi/agent/skills/reverse-engineer-anything".source =
