@@ -37,11 +37,11 @@ transcript, and never reproduce more of it than the harvest needs.
   few KB each, and they name the decisions and their commits cheaply. Where they
   disagree with the transcript, the transcript is right — and that disagreement
   is a finding.
-- **`session.html` is the same session, larger** — typically 1.35 to 1.7 times,
-  because the JSON is embedded in it base64'd (one pair on this disk is thirteen
-  times the size, and is not the same session at all). The JSONL holds the system
-  prompt and the tool schemas too, in `message.sections` and `message.toolsAdded`,
-  behind an empty `content`. Prefer the JSONL; do not read the rendering for text.
+- **Prefer JSONL to `session.html`.** HTML exports can embed encoded session
+  data; confirm identity rather than assuming two files hold the same session
+  from their names or sizes. JSONL also holds the system prompt and tool schemas
+  in `message.sections` and `message.toolsAdded`, behind an empty `content`.
+  Do not read the rendering for text.
 - **If the transcript does not exist** — not in the letters directory, not in the
   store, never in git — say so first, and mine the newest harvest as the source.
   Census the harvest instead, keep each claim's original `file:line` even though it
@@ -97,21 +97,19 @@ has no topic boundaries — one line is one message, and a few are megabytes.
 
 Read with `python3`, line by line; `jq` is fine.
 
-- **Never a bounded `grep` window.** `.{0,1500}(a|b).{0,1500}` costs GNU grep
-  about half a minute whatever the input: 52 s on a three-byte file, 52 s on a
-  four-megabyte one, 0.003 s for the same search without the window. It is a fixed
-  cost, not a scaling one, so skipping long lines does not help. `rg` runs the
-  same pattern in 0.02 s.
-- **Never two unbounded character classes that can match the same text**, even
-  with an optional literal between them. `[ab]*[cd]*` returns instantly because
-  it matches empty; `(?:[A-Za-z0-9_.\-{}$/]*/)?[A-Za-z0-9_.\-{}$/]*\.(?:png|jpg)`
-  is quadratic and your parent kills the call.
-- **An enumeration of a tree uses `find`, never a recursive `glob`.** Python's
-  `glob('**/x', recursive=True)` walks in Python and follows directory symlinks:
-  over one machine's coding tree — 429 repositories, 61 directory symlinks — it ran
-  an hour at full CPU without printing, where `find . -name x` answered in thirty
-  seconds. In a scan you write yourself, skip any line too long to be a sentence:
-  the prose you want is not inside base64 or a tool dump.
+- **Avoid bounded `grep` windows.** Large counted repetitions around an
+  alternation, such as `.{0,1500}(a|b).{0,1500}`, can make GNU grep spend a long
+  time compiling even on tiny input. Use `rg`, or match first and take a bounded
+  preview in Python; skipping long lines does not avoid compilation cost.
+- **Avoid overlapping unbounded repetitions in Python's `re`.** For example,
+  `(?:[A-Za-z0-9_.\-{}$/]*/)?[A-Za-z0-9_.\-{}$/]*\.(?:png|jpg)` can cause severe
+  backtracking on long non-matching lines. Use bounded string operations or `rg`
+  for that search rather than building a scanner around the pattern.
+- **Enumerate trees with `find`, not a recursive Python `glob`.** Recursive glob
+  follows directory symlinks and can revisit subtrees. `find` without `-L` avoids
+  following those directory symlinks. Parse JSONL records before selecting prose
+  fields and bounding previews; never discard a whole record merely because its
+  line is long.
 - When the projection includes the session's own children,
   `mine-sessions --root <session.jsonl, or its directory> --all --list` lists
   every brief in it — and `--all` belongs on `--show` too, when the hash came
