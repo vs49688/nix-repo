@@ -38,6 +38,8 @@
         cp -r packages/schema "$nm/@earendil-works/pi-schema"
       '';
   });
+
+  piScripts = pkgs.callPackage ./scripts { };
 in
 {
   options.programs.pi-coding-agent.mcpServers = with lib; mkOption {
@@ -61,6 +63,7 @@ in
         poppler-utils # For pdftotext
         tinyxxd # LLMs seem to really like xxd
         firefox-devtools-mcp
+        piScripts
       ];
 
       context = builtins.readFile ./AGENTS.md
