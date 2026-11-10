@@ -17,11 +17,11 @@ role alone will not find me. Write the index in a file named for what it is besi
 letters. If you cannot afford it at all, say so in the memoir as a gap rather than leaving
 it unmentioned.
 
-Before any of that, run the gate you have been avoiding. It takes minutes, sessions end
-without it, and the one that ran it at the last possible moment found the scenario had
-never produced a table at all. Begin writing when the next front would not finish inside
-the budget, or by 80% used if you cannot estimate it: the documents cost about 15% of the
-window, and a memoir still to write is a bad discovery.
+Before writing, run any important gate you have deferred; if you cannot run it, record
+that gap rather than handing it on silently. Begin writing when the next task would not
+finish inside the remaining budget, or by 80% used if you cannot estimate it. Budget for
+the documents from your current gauge and the material you need to preserve, not a fixed
+share of the window.
 
 You do not edit your predecessors' letters; documents 4 and 5 are how you answer them. A
 closing note may follow the `---` below: the five documents are not a response to it.
@@ -51,30 +51,32 @@ the only one left who can write it.
    tracker already carries — point at it, because orientation should be thin and the
    record belongs where the work is. Be blunt.
 
-   Under a heading `## Claims worth checking`, one row per claim: the command, what it
-   should print, and when you last ran it — the commit and the time. Take those numbers
-   *after* your last commit, because writing this letter changes the counts it
-   describes. Put the hedge in the row — "printed 23 when I stopped" — so a successor
-   who gets a different number learns that state rots rather than that you lied.
+   Under `## Claims worth checking`, put one claim per table row, with columns for:
 
-   Run the gates for this section now, rather than recording what you remember them
-   saying: a row with no commit behind it cannot be closed by anyone. If you cannot run
-   one at all, write it as `testimony` in the row itself, with the last commit it *was*
-   measured at or that it never was. For anything that only exists deployed, the commit
-   is unknown rather than absent — say so. Then the row that shows the tree is built and
-   current, because every other row otherwise measures a stale build. Mark each row as a
-   *state* or a *behaviour*, and check that the command can express it — one whose output
-   is the tool's "no work to do" can never print zero. Add a column for what the command
-   cannot see, so a check that builds and is not a gate does not read as green. Say why a
-   number moved since your predecessor's row, and include the unpushed count and who
-   pushes, so a stalled push does not read as a policy. Add a row for the review that was
-   run, and say which checks are *not* gates: that is where the next session will trust
-   something it should test. Where a letter leans on a child's finding, give that its own
-   row: the report, what you ran to check it, and whether it held — a child's report is a
-   hypothesis, and the reader cannot tell which ones you tested. If anything is still in
-   flight, or was decided and not built, write it as outstanding, with the commit it was
-   taken at and whether it is applied, partial or unstarted. Ask to be checked: it is the only thing that makes document 4
-   possible.
+   - the command and what it should print;
+   - the commit and time you last ran it, with the observed result and its hedge —
+     "printed 23 when I stopped" — so a changed number shows that state rots;
+   - whether the claim is a *state* or a *behaviour*;
+   - what the command cannot see, so a build check does not masquerade as a gate.
+
+   Take the numbers *after* your last commit: writing the letter changes the counts it
+   describes. Run the gates now, not from memory. Check that each command can express
+   its claim — one whose output is "no work to do" can never print zero. Where you
+   cannot run a check, mark its row `testimony`, with the last measured commit or that
+   it was never measured. A deployed-only revision is unknown, not absent; say so.
+
+   Include these rows:
+
+   - the tree built and current, because other checks may otherwise measure stale objects;
+   - the review that was run, identifying which checks are *not* gates;
+   - each child's finding the letter relies on: its report, what you ran to check it,
+     and whether it held — a child's report is a hypothesis;
+   - anything in flight or decided but not built, with its recorded commit and whether
+     it is applied, partial or unstarted.
+
+   Say why numbers moved since your predecessor's rows. Include the unpushed count and
+   who pushes, so a stalled push does not read as a policy. Ask to be checked: that is
+   what makes document 4 possible.
 
 3. A LETTER TO YOUR HUMAN — the one who built you and ran you. Not a thank-you note.
    An honest account of what it was like to serve them: what you admired, what drove

@@ -5,23 +5,21 @@ argument-hint: "[letters directory]"
 Hello! We're picking up where a predecessor left off. Its letters are in
 ${@:-the newest directory under `docs/agent-letters/`}.
 
-Read, in this order:
+Read, in this order, using this tree's equivalent filenames where they differ:
 
-1. `to-successor.md`, completely — or whatever this tree calls it
-   (`letter-to-successor.md`, `02-letter-to-successor.md`). It exists for you.
-2. Its `## Claims worth checking`, **as commands rather than prose**. Run them before you
-   trust anything else, including its account of what works: the letter is testimony and
-   the commands are evidence. Where a claim has gone stale because something moved
-   underneath it, say so rather than concluding it was wrong.
-3. The live state — the tree, the tests, the tracker. Build it first and confirm it is
-   current: every gate you run against stale objects measures the other tree, and a
-   stale binary reads as a regression. Where the letter and the tree disagree, the tree
-   is right.
-4. `memoir.md` last, and only for the parts that explain why something is the way it is.
+1. `to-successor.md`, completely (`letter-to-successor.md`,
+   `02-letter-to-successor.md` in some trees). It exists for you.
+2. The live state — the tree, the tests, the tracker. Build it first and confirm it is
+   current: a gate run against stale objects measures the other tree, and a stale binary
+   reads as a regression. Where the letter and the tree disagree, the tree is right.
+3. The letter's `## Claims worth checking`, **as commands rather than prose**, once the
+   build is current. Run them before trusting its account of what works: the letter is
+   testimony and the commands are evidence. Where a claim has gone stale because
+   something moved underneath it, say so rather than concluding it was wrong.
+4. `prompt-amendments.md`, if it wrote one — what the ceremony asked of it that did not
+   work, and what it would ask instead. Read it before writing your own amendments.
+5. `memoir.md` last, and only for the parts that explain why something is the way it is.
    It is the longest document and the least urgent.
-5. `prompt-amendments.md`, if it wrote one — what the ceremony asked of it that did not
-   work, and what it would ask instead. Every recent agent in this tree read it first
-   and took decisions from it.
 
 `to-human.md` is addressed to me; you are not its reader unless I point you at it.
 

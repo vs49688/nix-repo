@@ -11,11 +11,10 @@ and it is the only primary record of the session its letters summarise.
   projection: the transcript against a letter, or a question of your own.
 - **Find it first.** `$PI_SESSION_FILE` is *your* transcript, not its. The predecessor's
   `mined-from-*.md` is the cheapest copy and often the only survivor; then its letters
-  directory, which usually carries `session.jsonl`; then the session store under the
-  project's working directory. In the newest lineage there is **no transcript at all** —
-  not committed, not in the store — and the predecessor's own harvest is the only copy
-  there is: name it, say it is a harvest rather than testimony, and only ask for an export
-  when there is neither.
+  directory, which may carry `session.jsonl`; then the project's entries in Pi's session
+  store. If no transcript survives, use the predecessor's harvest: name it and say the
+  source is a harvest, not the original transcript. Only ask for an export when neither
+  survives.
 - **What to ask for is in its definition.** Name the projection, name the path, and say
   what you want it for; it carries which records are prose and what a summary loses.
 - **The transcript outranks the letter.** A letter is a summary of a summary — one session
