@@ -34,4 +34,5 @@ METHOD. Read the whole scope before judging any part. If a rendered artefact exi
 
 REPORT. One finding per entry: severity (**P0** a silent loss or an unimplementable rule; **P1** wrong or misleading to a stranger; **P2** a real defect that changes no behaviour; **P3** cosmetic), `file:line`, a quote of at most 120 characters from each side, and what it should say. Do not pad with P3s. End with counts per class. "Nothing found" is a finding only if you say what you checked. If you conclude the document is clean, say so plainly and list the checks that establish it.
 
-Do not edit any file.
+Do not modify project/source files. Produce only the configured report artifact,
+or return it in your final response for the runtime to persist.
