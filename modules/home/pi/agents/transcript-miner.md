@@ -181,7 +181,8 @@ in this order:
    only shows what was done, and separately every first-person undertaking in his
    own words ("I'll handle X", "leave that to me", "we'll revisit"), with the line
    it was made at and whether the transcript ever came back to it. **Never came
-   back is the finding**, and it is the one a summary cannot carry.
+   back is the finding** — and it means as of the transcript's last line, not as of
+   today, so say when that was. It is the one a summary cannot carry.
 4. **Traps and mechanisms absent from the summary** — an instrument that measured
    the neighbouring moment, a gate green for the wrong reason, a command that
    lied, a stale binary — with the command output that shows them.
