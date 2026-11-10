@@ -5,23 +5,25 @@ argument-hint: "[letters directory, if it is not the obvious one]"
 Mine your predecessor's transcript for context: it has been invaluable in prior sessions,
 and it is the only primary record of the session its letters summarise.
 
-- **Do not read it yourself.** A session's transcript is megabytes, and your context is the
-  thing these letters need. Give it to a child and ask for an index, not a digest: line
-  number, role, length, and the first hundred characters of each prose record.
-- **Find it first.** `$PI_SESSION_FILE` is *your* transcript, not its — the letters
-  directory usually carries its session as `session.jsonl`; failing that, the session
-  store holds it under the project's working directory. In this harness the entries are
-  `type: "message"` with `message.role`; tool results and subagent notices are their own
-  types, and they are noise for this.
-- **A third of the `user` role is not the owner.** The harness injects its own lines into
-  that role — byte-identical, beginning "Inspect subagent updates above" — so mark those as
-  nudges in the index. "The owner said" has to mean he said it.
-- **Look for the four things letters lose**: the owner's own words and one-liners; a claim
-  the letter makes that the transcript contradicts; an experiment that was tried and
-  reverted, so you do not try it again; and a file or dossier cited once and nowhere else.
+- **Hand it over.** `transcript-miner` indexes the prose records and reads the regions the
+  index points at, which is the part your context cannot afford. Ask for the default — his
+  decisions, then its prose, then the commands behind each measurement — or name a
+  projection: the transcript against a letter, or a question of your own.
+- **Find it first.** `$PI_SESSION_FILE` is *your* transcript, not its. The predecessor's
+  `mined-from-*.md` is the cheapest copy and often the only survivor; then its letters
+  directory, which usually carries `session.jsonl`; then the session store under the
+  project's working directory. In the newest lineage there is **no transcript at all** —
+  not committed, not in the store — and the predecessor's own harvest is the only copy
+  there is: name it, say it is a harvest rather than testimony, and only ask for an export
+  when there is neither.
+- **What to ask for is in its definition.** Name the projection, name the path, and say
+  what you want it for; it carries which records are prose and what a summary loses.
 - **The transcript outranks the letter.** A letter is a summary of a summary — one session
-  found its predecessor's most-cited fact was a recording of the wrong build, which its
-  letters had recorded the other way round.
-- **Keep the index, not the transcript.** Commit it in your own folder, beside where your
-  letters will go, named for what it answers. Never the raw transcript: it quotes whatever
-  the session printed, including anything that should not be published.
+  found its predecessor's most expensive fact was a reference recording of the port, which
+  the letters had recorded as the original.
+- **Keep the harvest, not the transcript.** Name the path, and a second one for the index
+  if you want one: it writes those and nowhere else. `mined-from-<source>.md` — one file
+  per predecessor, so two of them do not collide — in *your* letters directory, the one
+  your own letters will be written to, which you create if it does not exist yet. *You*
+  commit it; the miner does not. Never the raw transcript: it quotes whatever the session
+  printed, and the harvest is what gets published.
