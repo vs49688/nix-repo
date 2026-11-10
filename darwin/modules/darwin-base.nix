@@ -40,7 +40,6 @@
   in [
     goPackage
     (mockgen.override  { inherit buildGoModule; })
-    (gotools.override  { inherit buildGoModule; })
     (gosec.override    { inherit buildGoModule; })
     (govulncheck.override { /* inherit buildGoModule; */ })
     (delve.override { inherit buildGoModule; })
