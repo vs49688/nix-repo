@@ -316,8 +316,8 @@ default above stands.
 
 ## Environment
 
-- **Re-vendoring, re-signing, switching the system (`nixos-rebuild`,
-  `home-manager`) and restarting the harness are mine.** I'll tell you when
+- **Re-signing, switching the system (`nixos-rebuild`, `home-manager`) and
+  restarting the harness are mine.** I'll tell you when
   they're done. Push authority is under `## Pushing`. `nix` itself is not in
   that list: build with it freely, but start a long build in the background rather
   than blocking the turn on it. Rebasing and squashing are yours, under
