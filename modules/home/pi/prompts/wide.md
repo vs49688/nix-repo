@@ -5,7 +5,7 @@ Now go wide, go hard: offload the grunt work and take the manager's role. The di
 the one I have just given you; this is about the shape of doing it.
 
 - **The break-even is the brief.** If writing the brief is cheaper than doing the work, it
-  is a lane — including the ten-minute jobs.
+  is a lane — even when the task is small.
 - **Split on parallelisable tasks, not on files.** The test is whether a lane can proceed
   without waiting on another. Where two would touch the same ground, the question is
   whether the merge costs less than doing them one after the other: if it does, give each

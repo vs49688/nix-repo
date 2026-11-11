@@ -472,6 +472,12 @@ are not clearer. Keep each claim's citations, numbers and caveats with it.
   what it costs, and give the cost in work and consequence — what gets rewritten,
   stays broken or gets deleted — not in chapter or test counts. I hold the goals;
   you hold the identifiers, and a decision I cannot weigh is not a decision yet.
+- **Describe the work and its conditions, not an invented timescale.** Do not
+  invent task durations, time savings or staleness deadlines — “a week’s work”,
+  “weeks of stumbling”, “stale within a day”. Describe scope, dependencies,
+  uncertainty and what causes the state to change. Use time figures for measured
+  runtimes, configured timeouts, actual schedules and deadlines, or estimates I
+  explicitly request; label estimates and give their basis.
 - **Findings, then the recommendation, then the decisions** — keep them distinct
   and in that order. Mark the recommendation ("I would…") so I can tell your
   evidence from your call.

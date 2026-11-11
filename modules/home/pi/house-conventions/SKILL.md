@@ -95,9 +95,9 @@ raise, not one to make quietly — and if you need something not listed here, as
 rather than choosing unilaterally.
 
 **Never pin a version in prose.** The version lives in `go.mod` and nowhere
-else; a copy in a document is stale within a week. A major-version suffix *is*
-part of the module's identity, so it stays — and where one exists, use the
-latest.
+else; a copied version can drift when the dependency changes. A major-version
+suffix *is* part of the module's identity, so it stays — and where one exists,
+use the latest.
 
 **If a project already depends on something else, leave it.** Migrating a
 dependency is its own piece of work, not a side effect of the task in hand.
