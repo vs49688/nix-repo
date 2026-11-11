@@ -51,6 +51,14 @@ in
     type = types.attrsOf types.package;
 
     default = {
+
+      cloudflare-security-audit-skill = pkgs.fetchFromGitHub {
+        owner = "cloudflare";
+        repo = "security-audit-skill";
+        rev = "c1c8a8c1471069fb0e188eeaff69b8e8db6564a8";
+        hash = "sha256-oVVACjotkHvllQGxEP8yWaEt4c3GxT0d909TUM5P3NM=";
+      };
+
       lsp-extension = pkgs.fetchFromGitHub {
         owner = "samfoy";
         repo = "pi-lsp-extension";
@@ -230,6 +238,8 @@ in
     home.file.".pi/agent/skills/pdf-to-text".source = ./pdf-to-text;
     home.file.".pi/agent/skills/forgejo-api".source = ./forgejo-api;
     home.file.".pi/agent/skills/house-conventions".source = ./house-conventions;
+
+    home.file.".pi/agent/skills/security-audit".source = "${config.settings.pi.packages.cloudflare-security-audit-skill}/skills/security-audit";
 
     # Likewise Kuna's, which is embedded in its binary. `kuna install-skill`
     # would write a copy into $HOME; the package already carries the same bytes,
