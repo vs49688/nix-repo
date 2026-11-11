@@ -46,27 +46,24 @@ in
     type = types.attrsOf types.attrs;
   };
 
-  options.settings.pi.packages.lsp-extension = with lib; mkOption {
+  options.settings.pi.packages = with lib; mkOption {
     readOnly = true;
-    type = types.package;
+    type = types.attrsOf types.package;
 
-    default = pkgs.fetchFromGitHub {
-      owner = "samfoy";
-      repo = "pi-lsp-extension";
-      tag = "v1.4.0";
-      hash = "sha256-rg6UfftvnSmX880Kf9vAg89FWeQOB0rOltN1cKoocwE=";
-    };
-  };
+    default = {
+      lsp-extension = pkgs.fetchFromGitHub {
+        owner = "samfoy";
+        repo = "pi-lsp-extension";
+        tag = "v1.4.0";
+        hash = "sha256-rg6UfftvnSmX880Kf9vAg89FWeQOB0rOltN1cKoocwE=";
+      };
 
-  options.settings.pi.packages.openai-long-context = with lib; mkOption {
-    readOnly = true;
-    type = types.package;
-
-    default = pkgs.fetchFromGitHub {
-      owner = "johnhenaot";
-      repo = "pi-openai-long-context";
-      rev = "8c4cccdf296805f12053558d9dd671ad579fc53a";
-      hash = "sha256-SbX0mvyyHk5wVDbJnzWBR9tI9iI7R8DNdEhlPBOPvdI=";
+      openai-long-context = pkgs.fetchFromGitHub {
+        owner = "johnhenaot";
+        repo = "pi-openai-long-context";
+        rev = "8c4cccdf296805f12053558d9dd671ad579fc53a";
+        hash = "sha256-SbX0mvyyHk5wVDbJnzWBR9tI9iI7R8DNdEhlPBOPvdI=";
+      };
     };
   };
 
