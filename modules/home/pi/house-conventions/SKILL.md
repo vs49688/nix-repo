@@ -14,14 +14,15 @@ projects, and the rest inherit it**. That is why the rules below are
 framework-level policy rather than one repo's taste: where a repo differs from
 them, it is drift to reconcile, not a variant to preserve.
 
-Two scoping notes:
+Scope:
 
 - **Per-repo deltas do not belong here.** Domain rules, ports, service names,
   build quirks and project history live in each repo's own `AGENTS.md`.
-- **This document carries policy, usage patterns and naming. It deliberately
-  does not restate API contracts** — for those, read the package doc comments.
-  Paraphrasing an API is how the previous copies of these conventions drifted
-  away from the code.
+- **Package doc comments own the API contracts; this document carries policy,
+  usage patterns and naming.** Where it describes an API it is flagging a usage
+  trap, not restating the contract — read the doc comment for the contract
+  itself. A paraphrase here is how the previous copies of these conventions
+  drifted away from the code.
 - **This elaborates the global agent guide for Go and the framework; it does not
   restate it.** The guide is loaded into every session and this is not, so a rule
   that is true in any language belongs there and only there.
@@ -39,8 +40,7 @@ Two scoping notes:
   `go tool <name>`, or as `go run <module>` where the module's main package is
   the thing you want. Never `go install` them — that puts the version outside the
   repo.
-- Regenerate generated code after an interface change — committing stale mocks
-  breaks the project. Where CI can enforce freshness, it regenerates and diffs.
+- Where CI can enforce generated-code freshness, it regenerates and diffs.
 
 ### Dependencies
 
@@ -240,9 +240,6 @@ Entity interfaces are **unexported, grouped by domain, and embedded** into the
 exported generation client, which is itself embedded into the repo's `Client`
 alongside `persistence.Client`. Never exported one at a time.
 
-An interface change, its implementations and the regenerated mocks are one
-logical change.
-
 ### Migrations
 
 Adding a migration means all four of:
@@ -285,8 +282,7 @@ a copy in a document is wrong within a generation or two.
 - A mocks package sits beside the interface it serves, with the `//go:generate`
   directive in a hand-written `package.go` and the generated file beside it. What
   the generated file is called is the repo's business.
-- Regenerate with `go generate ./...` after any interface change, and squash the
-  regenerated mocks into the commit that changed the interface.
+- Regenerate with `go generate ./...` after any interface change.
 
 ### Testing
 
@@ -303,7 +299,6 @@ a copy in a document is wrong within a generation or two.
   break a test, then make that change; a test that fails for the wrong reason is
   no better than one that cannot fail.
 - Golden files are regenerated only when the rendered output intentionally
-  changes, and the regeneration is part of the commit that changed it.
+  changes.
 - In a repo that has a test suite, tests are required where they pay — parsers,
-  persistence, anything with specced behaviour — and the suite must be green
-  before you commit.
+  persistence, anything with specced behaviour.
