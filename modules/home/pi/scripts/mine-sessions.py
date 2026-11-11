@@ -1,28 +1,25 @@
 #!/usr/bin/env python3
 """Query the subagent briefs in the pi session store.
 
-A `subagent` call carries its brief as structured data: one `task`, or one per
-lane in a `tasks` array. So the population of briefs on some subject is a query,
-not a mining job.
-This is the query. It was written to converge on a subagent definition from the
-briefs that preceded it, which is why the default filter is the
-transcript-mining keyword set rather than nothing.
+Read briefs stored directly in `subagent` calls: one `task`, or one per lane
+in a `tasks` array. Workflow identifiers and paths can be listed, but this tool
+does not decode JavaScript workflow bodies or recover the child briefs inside them.
+
+The default filter is the transcript-mining keyword set rather than nothing:
+a bare run should return briefs about mining a transcript, not every brief in
+the store.
 
     mine-sessions --stats                 # the population, and which agents
     mine-sessions --list                  # one line per brief
     mine-sessions --dump /tmp/briefs      # each brief, in full
     mine-sessions --show 0e3554035        # one, by hash
     mine-sessions --kind steer --list     # what parents said *after* launching
-    mine-sessions --all --list            # every brief ever written
+    mine-sessions --all --list            # all recoverable briefs, no keyword filter
 
 Three kinds of call are told apart: `brief` (a `task`, a `workflow`, or the
-lanes of a `tasks` array), `steer` (a message to a running child) and `other`
-(status, resume, and so on). Only `brief` is a brief; the steers are worth
-reading separately because they are where a parent corrects the brief it wrote.
-
-`workflowScript` is a fourth form, historical: pi-subagents removed it in 0.77.0
-in favour of `workflow: true` or a path, and its lanes live inside one JavaScript
-string with no boundary this tool can see. Those calls are `other`.
+lanes of a `tasks` array), `steer` (a call carrying a message, including a resume)
+and `other` (such as status). Read steers separately: they are where a parent
+corrects an earlier brief.
 
 The filter is a net, not a classifier: it looks for a named transcript plus a
 mining verb, and it catches a few briefs that only mention one in passing. Use
@@ -57,15 +54,16 @@ DEFAULT_PATTERN = (
 
 
 def records(args):
-    """Yield (kind, agent, key, text) for each brief one call carries.
+    """Yield (kind, agent, key, text) records from one call's arguments.
 
     A fleet call puts one brief per lane in `tasks`, so it is several briefs and
-    each is yielded on its own; yielding the array whole would collapse ninety
-    distinct briefs into one row with no text at all. Everything else is one.
+    each is yielded on its own; yielding the array whole would collapse the lanes
+    into one row with no text at all. Everything else is one.
 
-    `workflowScript` is historical -- pi-subagents removed it in 0.77.0 in favour
-    of `workflow: true` or a path -- and its lanes live inside one JavaScript
-    string with no boundary this tool can see, so those calls are `other`.
+    `workflowScript` is historical: pi-subagents removed it in 0.77.0 in favour
+    of `workflow: true` or a path, and its lanes live inside one JavaScript
+    string with no boundary this tool can see. A call carrying only
+    `workflowScript` is classified `other`; its lanes are not decoded.
     """
     lanes = args.get("tasks")
     if not isinstance(lanes, list):
@@ -102,7 +100,7 @@ def records(args):
 
 
 def walk(path):
-    """Yield (kind, agent, text) for every subagent tool call in one session."""
+    """Yield (kind, agent, key, text) for every subagent tool call in `path`."""
     with open(path, errors="ignore") as fh:
         for line in fh:
             if "subagent" not in line or len(line) < 120:
