@@ -1,15 +1,15 @@
 /**
- * The litellm proxy serves one catalogue and Pi should not keep a copy of it.
+ * The litellm proxy owns the catalogue: `/model/info` reports each deployment
+ * with the fields a Pi model needs -- context window, output limit, capability
+ * flags, per-token rates -- so a model the proxy gains or loses appears without
+ * this file changing.
  *
- * `/model/info` reports each deployment with the fields a Pi model needs --
- * context window, output limit, capability flags, per-token rates -- so the list
- * is read from the proxy, and a model it gains or loses appears without this
- * file changing.
- *
- * The runtime's startup refresh is cache-only (`allowNetwork: false`), which a
- * provider that lives on loopback does not need: the fetch is a read of a local
- * socket, not a network round trip. So a loopback base URL is fetched anyway,
- * and anything else waits for a refresh that is allowed to use the network.
+ * A cache-only refresh (`allowNetwork: false`) still fetches when the base URL
+ * is loopback or the catalogue is empty; only a populated catalogue on a
+ * non-loopback URL waits for a network-allowed refresh. The loopback exemption
+ * is about the common local proxy, not proof of locality: the default base URL
+ * here is an SSH forward, so that fetch can still cross the network. PI_OFFLINE
+ * suppresses fetching either way.
  *
  * Only chat deployments are taken: the same catalogue carries image, speech and
  * transcription models, which are not models Pi can hold a conversation with.
