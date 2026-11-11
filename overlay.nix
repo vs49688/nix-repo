@@ -44,6 +44,8 @@ in (({
 
   pimidid = super.callPackage ./pkgs/pimidid { };
 
+  pi-lsp-extension = super.callPackage ./pkgs/pi-lsp-extension { };
+
   jdownloader = super.callPackage ./pkgs/jdownloader {
     ##
     # Needs to be built with max 11:

@@ -243,6 +243,23 @@
     '';
 
     ##
+    # Pi loads this extension as a local package, so the derivation root has to
+    # work as one: runtime imports, WASM grammars and the host peer boundary are
+    # checked with Pi's own loader, a fresh HOME and no package caches.
+    ##
+    checks.x86_64-linux.pi-lsp-extension = let
+      pkgs = self.inputs.nixpkgs.legacyPackages.x86_64-linux;
+    in pkgs.runCommandLocal "check-pi-lsp-extension" {
+      nativeBuildInputs = [ pkgs.nodejs ];
+    } ''
+      export HOME="$TMPDIR/home"
+      mkdir -p "$HOME"
+      unset NODE_PATH
+      node ${./pkgs/pi-lsp-extension/check-load.mjs} ${self.packages.x86_64-linux.pi-lsp-extension} ${pkgs.callPackage ./modules/home/pi/pi-coding-agent.nix { }}
+      touch $out
+    '';
+
+    ##
     # I actively despise this shit OS.
     # How do they manage to make it so f***ing user-unfriendly?
     ##

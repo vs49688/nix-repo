@@ -22,22 +22,7 @@
     exec ${lib.getExe pkgs.rea-agents} mcp
   '';
 
-  ##
-  # 1.5.0's postInstall copies every workspace into node_modules but not
-  # `packages/schema`, the new home of `@earendil-works/pi-schema` -- then
-  # deletes its symlink as dangling. pi-ai imports it at load, so `pi --version`
-  # works while every extension and every subagent dies with
-  # ERR_MODULE_NOT_FOUND. Copy it the way the other workspaces are copied; the
-  # extra lines do nothing once upstream's postInstall mentions pi-schema.
-  # https://github.com/NixOS/nixpkgs/issues/583791 (fix in #582756)
-  ##
-  piCodingAgent = pkgs.pi-coding-agent.overrideAttrs (previous: {
-    postInstall = previous.postInstall + pkgs.lib.optionalString
-      (!pkgs.lib.hasInfix "pi-schema" previous.postInstall) ''
-        nm="$out/lib/node_modules/pi-monorepo/node_modules"
-        cp -r packages/schema "$nm/@earendil-works/pi-schema"
-      '';
-  });
+  piCodingAgent = pkgs.callPackage ./pi-coding-agent.nix { };
 
   piScripts = pkgs.callPackage ./scripts { };
 in
@@ -59,12 +44,7 @@ in
         hash = "sha256-oVVACjotkHvllQGxEP8yWaEt4c3GxT0d909TUM5P3NM=";
       };
 
-      lsp-extension = pkgs.fetchFromGitHub {
-        owner = "samfoy";
-        repo = "pi-lsp-extension";
-        tag = "v1.4.0";
-        hash = "sha256-rg6UfftvnSmX880Kf9vAg89FWeQOB0rOltN1cKoocwE=";
-      };
+      lsp-extension = pkgs.pi-lsp-extension;
 
       openai-long-context = pkgs.fetchFromGitHub {
         owner = "johnhenaot";
