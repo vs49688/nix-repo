@@ -46,6 +46,18 @@ in
     type = types.attrsOf types.attrs;
   };
 
+  options.settings.pi.packages.openai-long-context = with lib; mkOption {
+    readOnly = true;
+    type = types.package;
+
+    default = pkgs.fetchFromGitHub {
+      owner = "johnhenaot";
+      repo = "pi-openai-long-context";
+      rev = "8c4cccdf296805f12053558d9dd671ad579fc53a";
+      hash = "sha256-SbX0mvyyHk5wVDbJnzWBR9tI9iI7R8DNdEhlPBOPvdI=";
+    };
+  };
+
   config = {
     programs.pi-coding-agent = {
       enable = lib.mkDefault true;
@@ -80,6 +92,7 @@ in
           "npm:pi-subagents@v0.77.0"
           "npm:pi-mcp-adapter@v5.2.0"
           "git:github.com/samfoy/pi-lsp-extension@v1.4.0"
+          "${config.settings.pi.packages.openai-long-context}"
         ];
 
         enableInstallTelemetry = false;
