@@ -14,8 +14,6 @@ const DEFAULT_BANDS = [50, 60, 70, 80, 90];
 const BANDS_FLAG = "context-gauge-bands";
 // Bands at or above this get a "wrap up" hint appended to the waypoint.
 const HINT_FROM_BAND = 80;
-const ENABLE_BANDS = true;
-const ENABLE_TOOL = true;
 // ──────────────────────────────────────────────────────────────────────────
 
 type Reading = { tokens: number; window: number; pct: number };
@@ -88,61 +86,57 @@ export default function (pi: ExtensionAPI) {
     lastBand = r ? bandFor(r.pct, bands) : undefined;
   });
 
-  if (ENABLE_TOOL) {
-    pi.registerTool({
-      name: "context_usage",
-      label: "Context Usage",
-      description:
-        "Report how much of the model's context window is currently used: tokens " +
-        "consumed, the window size, and the percentage. Worth calling before " +
-        "starting work that will consume a lot of context.",
-      promptSnippet: "Report current context window usage (tokens and percentage)",
-      parameters: Type.Object({}),
-      async execute(_toolCallId, _params, _signal, _onUpdate, ctx) {
-        const r = read(ctx);
-        if (!r) {
-          return {
-            content: [{ type: "text", text: unavailableText(ctx) }],
-            details: {},
-          };
-        }
-        return {
-          content: [{ type: "text", text: format(r) }],
-          details: { ...r },
-        };
-      },
-    });
-  }
-
-  if (ENABLE_BANDS) {
-    pi.on("turn_end", async (_event, ctx) => {
+  pi.registerTool({
+    name: "context_usage",
+    label: "Context Usage",
+    description:
+      "Report how much of the model's context window is currently used: tokens " +
+      "consumed, the window size, and the percentage. Worth calling before " +
+      "starting work that will consume a lot of context.",
+    promptSnippet: "Report current context window usage (tokens and percentage)",
+    parameters: Type.Object({}),
+    async execute(_toolCallId, _params, _signal, _onUpdate, ctx) {
       const r = read(ctx);
-      if (!r) return;
+      if (!r) {
+        return {
+          content: [{ type: "text", text: unavailableText(ctx) }],
+          details: {},
+        };
+      }
+      return {
+        content: [{ type: "text", text: format(r) }],
+        details: { ...r },
+      };
+    },
+  });
 
-      const band = bandFor(r.pct, bands);
-      const previous = lastBand;
-      lastBand = band;
+  pi.on("turn_end", async (_event, ctx) => {
+    const r = read(ctx);
+    if (!r) return;
 
-      // Fire only on an upward crossing. Falling back below the lowest band
-      // resets silently, so a second crossing (after a compaction or branch
-      // switch) still reports. A jump over several bands reports the highest.
-      if (band === undefined) return;
-      if (previous !== undefined && band <= previous) return;
+    const band = bandFor(r.pct, bands);
+    const previous = lastBand;
+    lastBand = band;
 
-      pi.sendMessage(
-        {
-          customType: "context-gauge",
-          content: waypointText(r, band),
-          display: true,
-          details: { band, ...r },
-        },
-        // triggerTurn: false routes this through Pi's passive custom-message
-        // path: it is appended at the turn boundary (never between a tool call
-        // and its result) and can never start a turn of its own.
-        { triggerTurn: false },
-      );
-    });
-  }
+    // Fire only on an upward crossing. Falling back below the lowest band
+    // resets silently, so a second crossing (after a compaction or branch
+    // switch) still reports. A jump over several bands reports the highest.
+    if (band === undefined) return;
+    if (previous !== undefined && band <= previous) return;
+
+    pi.sendMessage(
+      {
+        customType: "context-gauge",
+        content: waypointText(r, band),
+        display: true,
+        details: { band, ...r },
+      },
+      // triggerTurn: false routes this through Pi's passive custom-message
+      // path: it is appended at the turn boundary (never between a tool call
+      // and its result) and can never start a turn of its own.
+      { triggerTurn: false },
+    );
+  });
 
   // Doubles as the probe for the raw shape of getContextUsage().
   pi.registerCommand("context", {
