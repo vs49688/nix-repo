@@ -46,6 +46,18 @@ in
     type = types.attrsOf types.attrs;
   };
 
+  options.settings.pi.packages.lsp-extension = with lib; mkOption {
+    readOnly = true;
+    type = types.package;
+
+    default = pkgs.fetchFromGitHub {
+      owner = "samfoy";
+      repo = "pi-lsp-extension";
+      tag = "v1.4.0";
+      hash = "sha256-rg6UfftvnSmX880Kf9vAg89FWeQOB0rOltN1cKoocwE=";
+    };
+  };
+
   options.settings.pi.packages.openai-long-context = with lib; mkOption {
     readOnly = true;
     type = types.package;
@@ -91,7 +103,7 @@ in
         packages = [
           "npm:pi-subagents@v0.77.0"
           "npm:pi-mcp-adapter@v5.2.0"
-          "git:github.com/samfoy/pi-lsp-extension@v1.4.0"
+          "${config.settings.pi.packages.lsp-extension}"
           "${config.settings.pi.packages.openai-long-context}"
         ];
 
