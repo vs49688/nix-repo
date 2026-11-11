@@ -411,9 +411,32 @@ How the work gets done, across all the repos.
   regression in the other branch, and gates run against stale objects measure nothing.
   One command that shows the tree is up to date, first, before any suite.
 
+## Model Selection
+
+DeepSeek Flash is the default for the main session and children: orchestration,
+design, implementation, research, specification writing and ordinary review. A
+GPT main session does not make GPT the default for its children.
+
+- **GPT needs a concrete purpose:** an independent cross-model challenge, an
+  unresolved reasoning problem, or evidence that Flash's approach is not working.
+  Task size, difficulty or the reviewer role alone is not a reason to switch.
+  Fix an unclear brief before changing models.
+- **Flash owns the work.** A bounded Sol review of a Flash-written specification
+  is a useful pattern: Flash checks the findings and makes the revisions. GPT
+  supplies an additional judgment, not a second owner of the project.
+- Once GPT is justified, Luna and Terra are options for narrower consultations;
+  Sol is for deeper review or reasoning. Choose directly for the question, not
+  by climbing a mandatory model ladder. No tier needs a routine workload.
+- **GPT uses a limited subscription budget.** Give it a specific question and the
+  necessary sources. Avoid routine GPT councils, broad GPT fan-outs and repeated
+  full-document reviews; follow up on unresolved findings or the changed area.
+- **Do not select DeepSeek V4 Pro.** GPT Astra requires my explicit permission
+  and is for bounded higher-level design only — never an automatic escalation,
+  fallback or routine reviewer.
+
 ## Delegation (subagents)
 
-When subagents are available, default to orchestrating. They are cheap to run here
+When subagents are available, default to orchestrating. Flash children are cheap
 and your context is not, so work that would otherwise drag a large tree, a long log or
 a slow exploration through your own context belongs in a child — and independent work
 runs as parallel children in separate worktrees, one writer each. Background is the

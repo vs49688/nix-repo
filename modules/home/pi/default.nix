@@ -97,6 +97,8 @@ in
         theme = "dark";
         defaultProvider = "deepseek";
         defaultModel = "deepseek-flash";
+        # A GPT parent must not silently make ordinary delegations use GPT too.
+        subagents.defaultModel = "deepseek/deepseek-flash";
         extensions = [
           "-builtin:mcp"
         ];
