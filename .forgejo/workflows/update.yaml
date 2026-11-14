@@ -1,11 +1,11 @@
-name: Update packages - WIP
+name: Update packages
 
 enable-openid-connect: true
 
 on:
-  # schedule:
-  #   # Sunday 20:00 UTC — Monday 06:00 in Brisbane.
-  #   - cron: "0 20 * * 0"
+  schedule:
+    # Sunday 20:00 UTC — Monday 06:00 in Brisbane.
+    - cron: "0 20 * * 0"
   workflow_dispatch:
 
 concurrency:
@@ -14,8 +14,14 @@ concurrency:
 
 jobs:
   update:
-    name: Update packages
+    name: Update ${{ matrix.attribute }}
     runs-on: nixos
+    strategy:
+      matrix:
+        attribute:
+          - kuna
+          - rea-agents
+          - audio-cpp
     steps:
       - name: Setup Cache
         uses: actions/niks3-action@v1
@@ -24,3 +30,63 @@ jobs:
 
       - name: Clone Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        env:
+          CI_SIGNING_KEY: ${{ secrets.CI_SIGNING_KEY }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${CI_SIGNING_KEY:-}" ]]; then
+            echo "::error::CI_SIGNING_KEY is unset: commits would be unsigned and the merge would not be signed"
+            exit 1
+          fi
+
+          keydir="${RUNNER_TEMP:-$(mktemp -d)}/signing"
+          install -d -m 0700 "$keydir"
+          printf '%s\n' "$CI_SIGNING_KEY" > "$keydir/id_ed25519"
+          chmod 600 "$keydir/id_ed25519"
+
+          git config user.name "Forgejo Actions"
+          # Must be an address attached to the account the public key is
+          # registered on, or the signature shows as unverified.
+          git config user.email "noreply@git.vs49688.net"
+          git config gpg.format ssh
+          git config user.signingkey "$keydir/id_ed25519"
+          git config commit.gpgsign true
+
+      - name: Update
+        env:
+          UPDATE_PUSH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          API: ${{ github.server_url }}/api/v1/repos/${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          pkg="${{ matrix.attribute }}"
+          before=$(nix eval --raw ".#${pkg}.version")
+
+          git reset --hard origin/master
+          git switch --force-create "auto/$pkg" origin/master
+
+          # No --build: nix-update cannot know whether the update script did
+          # anything, so it builds even on a quiet week. The gate below builds,
+          # and it is only reached when something changed.
+          nix run nixpkgs#nix-update -- -F "$pkg" -u --commit
+
+          if git diff origin/master --quiet; then
+            echo "::endgroup::"
+            exit 0
+          fi
+
+          after=$(nix eval --raw ".#${pkg}.version")
+
+          git push --force origin "HEAD:refs/heads/auto/$pkg"
+          curl -sS -o /dev/null -X POST \
+            -H "Authorization: token ${UPDATE_PUSH_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d "{\"head\":\"auto/$pkg\",\"base\":\"master\",\"title\":\"pkgs/$pkg: $before -> $after\"}" \
+            "${API}/pulls" || true
+
+          echo "::endgroup::"
