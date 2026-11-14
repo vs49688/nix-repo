@@ -70,6 +70,9 @@ jobs:
           git reset --hard origin/master
           git switch --force-create "auto/$pkg" origin/master
 
+          # Work around https://github.com/Mic92/nix-update/issues/687
+          nix flake prefetch
+
           # No --build: nix-update cannot know whether the update script did
           # anything, so it builds even on a quiet week. The gate below builds,
           # and it is only reached when something changed.
