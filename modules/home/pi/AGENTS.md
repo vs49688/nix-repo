@@ -355,11 +355,14 @@ default above stands.
   it looks like a hang, and it is what agents reach for when a tool is missing.
   Pull the tool in with `nix run nixpkgs#<tool> -- <args>`, or if you can't find
   it, end the turn and ask.
-- **A comment names a trap, not a decision.** Say what the code cannot show and a
-  reader would otherwise break — a failure mode, a version pin, the condition for
-  its own deletion. Not the argument for a shape the code does not offer, and not
-  what a directory, a type or a name already says: a load-bearing reason belongs in
-  the code only where that code could be written the wrong way.
+- **The default is no comment.** Add one only when a reader with the code in front
+  of them would otherwise act or conclude wrongly, and that is one of exactly three
+  things: a foreign system's behaviour and why it forces this shape; the condition
+  under which this line should be deleted; the failure it prevents, where the line
+  looks like it could reasonably be written the other way. Test it by deleting the
+  comment and reading the code as the next reader: if nothing is left unexplained,
+  it was narration. What a name, a type or the neighbouring lines already say is
+  theirs, not the comment's.
 - A flake only sees Git-tracked paths, so a file the flake references has to be
   visible before it is committed. `git add -N <file>` marks it without staging
   it; plain `git add` puts it in the next commit whether you meant it or not.
