@@ -21,6 +21,9 @@ there is one.
      ~/.pi/agent/agents and are moved in one at a time, so a directory mount would
      take the whole tree over -- and a definition nothing mounts is not an agent.
   6. Every `<name>` skill reference in an AGENTS*.md file names a skill that exists.
+  7. Every AGENTS*.md file is appended to `context` in default.nix. A section
+     nothing appends is text in git and nowhere else -- the same two-edit
+     failure as a skill, with less to see.
 
 What it deliberately does not check is whether a rule is in the right file --
 AGENTS.md against a skill. That is a judgement about content, and a text-matcher
@@ -195,6 +198,11 @@ def main(root):
     if not agents_files:
         problems.append("AGENTS.md: missing")
         return problems
+
+    for path in agents_files:
+        name = os.path.basename(path)
+        if f"./{name}" not in nix:
+            problems.append(f"default.nix: {name} is not appended to context")
 
     for path in agents_files:
         with open(path, encoding="utf-8") as fh:
