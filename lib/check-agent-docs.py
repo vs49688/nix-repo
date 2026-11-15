@@ -24,6 +24,9 @@ there is one.
   7. Every AGENTS*.md file is appended to `context` in default.nix. A section
      nothing appends is text in git and nowhere else -- the same two-edit
      failure as a skill, with less to see.
+  8. Every AGENTS*.md file carries exactly one top-level heading, and it comes
+     first. A title-less file reads as a continuation of the one concatenated
+     before it, which is what the harness would otherwise make it.
 
 What it deliberately does not check is whether a rule is in the right file --
 AGENTS.md against a skill. That is a judgement about content, and a text-matcher
@@ -48,6 +51,31 @@ AGENT_MOUNT_RE = re.compile(
     r'"\.pi/agent/agents/(?P<name>[^"]+)"\s*\.source\s*=\s*\./(?P<src>[A-Za-z0-9_./-]+)'
 )
 REF_RE = re.compile(r"`([a-z0-9][a-z0-9-]*)`\s+skill\b")
+HEADING_RE = re.compile(r"(#{1,6})\s")
+
+
+def headings(text):
+    """Return (line, level) for each ATX heading, skipping fenced code blocks.
+
+    The fences matter: a `# comment` inside a shell example is not a heading, and
+    counting it as one would report a file that no reader can see a problem in.
+    """
+    found = []
+    fence = None
+    for number, line in enumerate(text.splitlines(), 1):
+        marker = line.lstrip()[:3]
+        if marker in ("```", "~~~"):
+            if fence is None:
+                fence = marker
+            elif fence == marker:
+                fence = None
+            continue
+        if fence is not None:
+            continue
+        match = HEADING_RE.match(line)
+        if match:
+            found.append((number, len(match.group(1))))
+    return found
 
 
 def read_frontmatter(path):
@@ -207,11 +235,18 @@ def main(root):
     for path in agents_files:
         with open(path, encoding="utf-8") as fh:
             text = fh.read()
+        name = os.path.basename(path)
+        found = headings(text)
+        titles = [number for number, level in found if level == 1]
+        if not found or found[0][1] != 1:
+            problems.append(f"{name}: does not open with a top-level heading")
+        elif len(titles) > 1:
+            listed = ", ".join(str(number) for number in titles)
+            problems.append(f"{name}: {len(titles)} top-level headings (lines {listed})")
         for ref in sorted(set(REF_RE.findall(text))):
             if ref not in skills:
                 problems.append(
-                    f"{os.path.basename(path)}: refers to the {ref!r} skill, "
-                    "which does not exist"
+                    f"{name}: refers to the {ref!r} skill, which does not exist"
                 )
 
     return problems
