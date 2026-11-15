@@ -934,7 +934,7 @@ in
     enable = true;
     hostName = "vs49688.net";
     adminpassFile = config.sops.secrets."nextcloud/adminpass".path;
-    package = pkgs.nextcloud34;
+    package = pkgs.nextcloud35;
   };
 
 
