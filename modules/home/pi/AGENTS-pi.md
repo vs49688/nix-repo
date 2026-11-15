@@ -1,3 +1,5 @@
+# Agent Guidance — Pi
+
 ## Editing files
 
 Change a file's text with the `edit` tool. The reason is not tidiness: every layer

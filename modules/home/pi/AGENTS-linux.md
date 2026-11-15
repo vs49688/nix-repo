@@ -1,3 +1,5 @@
+# Agent Guidance — Linux
+
 ## Your sandbox
 
 On Linux you run inside `ccbwrap`. Read the script that made this namespace —
