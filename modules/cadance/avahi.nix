@@ -4,9 +4,10 @@ in {
   config = lib.mkIf config.services.avahi.enable {
     services.avahi.openFirewall = false;
     services.avahi.nssmdns4 = true;
-    services.avahi.publish.enable = true;
-    services.avahi.publish.userServices = false;
-    services.avahi.publish.addresses = true;
+
+    services.avahi.settings.publish.disable-publishing = false;
+    services.avahi.settings.publish.disable-user-service-publishing = true;
+    services.avahi.settings.publish.publish-addresses = true;
 
     services.avahi.settings.server.allow-interfaces = [ lanInterface ];
 
