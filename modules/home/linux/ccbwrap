@@ -99,6 +99,8 @@ applyFiles --bind                   \
     "$runtime_dir/$pipewire_socket" \
     "$runtime_dir/pulse/native"
 
+applyFiles --bind "$HOME/.config/bench"
+
 command+=(
     --symlink /run /var/run
 )
