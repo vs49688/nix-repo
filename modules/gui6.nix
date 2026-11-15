@@ -31,7 +31,7 @@ in
     foliate
 
     wordcraft # doc
-    gridcraft # xls
+    # gridcraft # xls
     deckcraft # ppt
 
     photocraft  # ps
