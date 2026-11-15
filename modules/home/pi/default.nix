@@ -75,8 +75,12 @@ in
         piScripts
       ];
 
+      # Each appended file gets a leading newline of its own; without it the next
+      # section's heading lands on the last line of prose in the file before.
       context = builtins.readFile ./AGENTS.md
-        + lib.optionalString pkgs.stdenv.hostPlatform.isLinux (builtins.readFile ./AGENTS-linux.md);
+        + "\n" + builtins.readFile ./AGENTS-pi.md
+        + lib.optionalString pkgs.stdenv.hostPlatform.isLinux
+          ("\n" + builtins.readFile ./AGENTS-linux.md);
 
       settings = {
         theme = "dark";
