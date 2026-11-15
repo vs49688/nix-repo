@@ -40,9 +40,17 @@ jobs:
             .#systems.AVALON \
             .#systems.TWILYSPARKLE \
             .#nixosConfigurations.ZAIR.config.system.build.kernel \
+            .#nixosConfigurations.ZAIR.config.boot.m1n1Package \
+            .#nixosConfigurations.ZAIR.config.boot.kernelPackages.cpupower \
+            .#nixosConfigurations.ZAIR.config.hardware.asahi.pkgs.uboot-asahi \
             .#nixosConfigurations.ZAIR.config.hardware.asahi.pkgs.avd-fw \
+            .#nixosConfigurations.ZAIR.pkgs.nixos-icons \
             .#nixosConfigurations.ANGELUS.config.system.build.kernel \
+            .#nixosConfigurations.ANGELUS.config.boot.m1n1Package \
+            .#nixosConfigurations.ANGELUS.config.boot.kernelPackages.cpupower \
+            .#nixosConfigurations.ANGELUS.config.hardware.asahi.pkgs.uboot-asahi \
             .#nixosConfigurations.ANGELUS.config.hardware.asahi.pkgs.avd-fw \
+            .#nixosConfigurations.ANGELUS.pkgs.nixos-icons
 
       # - name: Dump niks3 log
       #   if: always()
