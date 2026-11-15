@@ -1055,7 +1055,7 @@ in
     "z /var/lib/private 0700 root root  - -"
   ];
 
-  cadance.crypto.enable = true;
+  cadance.crypto.enable = false;
 
   environment.persistence."/data".enable = true;
 
