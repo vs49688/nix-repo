@@ -24,12 +24,18 @@ in
 
     # "Office" Packages
     libreoffice
-    wordcraft
     xournalpp
     thunderbird
     remmina
     simple-scan
     foliate
+
+    wordcraft # doc
+    gridcraft # xls
+    deckcraft # ppt
+
+    photocraft  # ps
+    vectorcraft # ai
 
     # Comms
     #nheko
