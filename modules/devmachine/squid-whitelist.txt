@@ -69,6 +69,7 @@
 ##
 ^api\.audible\.com\.au$
 ^dze5l2jxnquy5\.cloudfront\.net$
+^d1ecqdo8ne10p4\.cloudfront\.net$
 
 ##
 # Amazon
