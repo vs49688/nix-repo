@@ -59,7 +59,6 @@ in
       # Technically dev tools, but I feel safer if I have these
       ##
       binutils
-      gitFull
       gnumake
       cmake
       pkg-config
@@ -87,6 +86,9 @@ in
     ];
 
     virtualisation.libvirtd.enable = lib.mkDefault true;
+
+    programs.git.enable = lib.mkDefault true;
+    programs.git.lfs.enable = lib.mkDefault true;
 
     programs.gnupg.agent = {
       enable           = true;
