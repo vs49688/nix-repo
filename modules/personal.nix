@@ -172,7 +172,8 @@
 
     cdrdao
     cdparanoia
-    cdrkit
+    # cdrkit
+    cdrtools
     lgogdownloader
 
     # Misc
