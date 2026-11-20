@@ -166,6 +166,7 @@
   ];
 
   services.postgresql.enable = true;
+  services.postgresql.package = pkgs.postgresql_18;
 
   systemd.services.set-battery-threshold = {
     description = "set battery charge threshold";
