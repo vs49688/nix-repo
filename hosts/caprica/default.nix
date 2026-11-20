@@ -134,6 +134,7 @@ in
 
   # Development database
   services.postgresql.enable = true;
+  services.postgresql.package = pkgs.postgresql_18;
 
   users.mutableUsers = false;
   users.users.root.hashedPasswordFile = "/data/passwords/root";
