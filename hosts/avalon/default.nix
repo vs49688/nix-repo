@@ -54,10 +54,6 @@
   environment.systemPackages = with pkgs; [
     gzdoom
     scummvm
-
-    sweethome3d.application
-    sweethome3d.furniture-editor
-    sweethome3d.textures-editor
   ];
 
   services.smartd = {
