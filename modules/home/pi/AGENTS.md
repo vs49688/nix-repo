@@ -363,6 +363,16 @@ default above stands.
   comment and reading the code as the next reader: if nothing is left unexplained,
   it was narration. What a name, a type or the neighbouring lines already say is
   theirs, not the comment's.
+- **A comment that stays has to read in one pass.** The bar is not brevity: a
+  reason condensed into a denser sentence is a regression, not a simplification.
+  Put it where the reader meets the condition — the branch, the argument — not in
+  a header above the function.
+- **Nothing that goes stale.** No counts of files, fixtures or scenes, no
+  measurements of output, no value that belongs to another call site, no issue
+  numbers. They outlive the change that invalidates them, and then they lie. A
+  comment asserting an invariant of another file is the same bet, because that
+  file can change without this one: either make it a claim the tests execute, or
+  leave it out.
 - A flake only sees Git-tracked paths, so a file the flake references has to be
   visible before it is committed. `git add -N <file>` marks it without staging
   it; plain `git add` puts it in the next commit whether you meant it or not.
