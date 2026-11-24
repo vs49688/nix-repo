@@ -52,6 +52,13 @@ in
         rev = "8c4cccdf296805f12053558d9dd671ad579fc53a";
         hash = "sha256-SbX0mvyyHk5wVDbJnzWBR9tI9iI7R8DNdEhlPBOPvdI=";
       };
+
+      jvm-pi-mono = pkgs.fetchFromGitHub {
+        owner = "jvm";
+        repo = "pi-mono";
+        rev = "9c8f99dcdfca454b8d829f6e9772a6aec087050f";
+        hash = "sha256-pupzXG97GCWsRFl/cdSNCOql7zMb+beBba5366V0ryk=";
+      };
     };
   };
 
@@ -96,6 +103,7 @@ in
           "npm:pi-mcp-adapter@v5.2.0"
           "${config.settings.pi.packages.lsp-extension}"
           "${config.settings.pi.packages.openai-long-context}"
+          "${config.settings.pi.packages.jvm-pi-mono}/packages/pi-codex-compaction"
         ];
 
         enableInstallTelemetry = false;
