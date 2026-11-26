@@ -62,6 +62,7 @@
 
     home.sessionVariables.GPG_TTY   = "$(tty)";
     home.sessionVariables.GOPRIVATE = (builtins.concatStringsSep "," config.common.goPrivate);
+    home.sessionVariables.GOTOOLCHAIN = "local";
     # home.sessionVariables.GOPROXY   = "direct";
     home.sessionVariables.EDITOR    = "${config.programs.neovim.package}/bin/nvim";
     home.sessionVariables.MANPAGER  = "${pkgs.most}/bin/most";
